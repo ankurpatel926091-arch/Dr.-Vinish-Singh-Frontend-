@@ -1,0 +1,256 @@
+import React, { useState, useEffect, useCallback } from "react";
+import { NavLink } from "react-router-dom";
+import {
+  BookOpen,
+  Calendar,
+  Clock,
+  ChevronLeft,
+  ChevronRight,
+  ArrowRight,
+  User,
+  Sparkles,
+} from "lucide-react";
+
+import img1 from "../../assets/images/Img1.jpeg";
+import img2 from "../../assets/images/img2.jpeg";
+import img3 from "../../assets/images/img3.jpeg";
+import img4 from "../../assets/images/img4.jpeg";
+import img5 from "../../assets/images/img5.jpeg";
+import img7 from "../../assets/images/img7.jpeg";
+
+const blogsData = [
+  {
+    id: "b1",
+    category: "KIDNEY STONES & RIRS",
+    title: "Laser RIRS vs. Traditional Surgery: Myths vs. Clinical Facts Explained",
+    date: "28 May 2025",
+    readTime: "6 min read",
+    excerpt:
+      "Demystifying painless laser stone dusting, flexible ureteroscopy (RIRS), stitchless procedures, and faster recovery timelines for complex kidney stones.",
+    image: img2,
+    author: "Dr. Vinish Kumar Singh",
+  },
+  {
+    id: "b2",
+    category: "PROSTATE CARE (BPH)",
+    title: "Enlarged Prostate (BPH): Key Symptoms & Laser HolEP Treatment",
+    date: "14 Apr 2025",
+    readTime: "5 min read",
+    excerpt:
+      "Understanding urinary stream difficulties in men above 50, routine diagnostics, and gold-standard Holmium laser prostate enucleation.",
+    image: img5,
+    author: "Dr. Vinish Kumar Singh",
+  },
+  {
+    id: "b3",
+    category: "ANDROLOGY & WELLNESS",
+    title: "Male Infertility & Sexual Health: Clinical Facts & Precaution Tips",
+    date: "02 Mar 2025",
+    readTime: "4 min read",
+    excerpt:
+      "Crucial clinical guidance on hormonal evaluation, micro-TESE, varicoceles checks, and modern evidence-based treatments for couples planning parenthood.",
+    image: img4,
+    author: "Dr. Vinish Kumar Singh",
+  },
+  {
+    id: "b4",
+    category: "UTI & BLADDER CARE",
+    title: "Preventing Recurrent Urinary Infections (UTI) in Adults",
+    date: "18 Feb 2025",
+    readTime: "5 min read",
+    excerpt:
+      "Essential hydration habits, dietary modifications, early diagnostic indicators, and antibiotic stewardship for long-term bladder health.",
+    image: img3,
+    author: "Dr. Vinish Kumar Singh",
+  },
+  {
+    id: "b5",
+    category: "LASER SURGERY",
+    title: "Stitchless Laser Urology: Why Minimally Invasive Means Fast Recovery",
+    date: "05 Jan 2025",
+    readTime: "7 min read",
+    excerpt:
+      "How precision laser fibers eliminate external cuts, reduce hospital stay to 24 hours, and minimize post-operative pain for patients.",
+    image: img1,
+    author: "Dr. Vinish Kumar Singh",
+  },
+  {
+    id: "b6",
+    category: "CLINIC & RECOVERY",
+    title: "Post-Operative Care & Diet Guidelines After Laser Kidney Surgery",
+    date: "20 Dec 2024",
+    readTime: "4 min read",
+    excerpt:
+      "Actionable post-surgery dietary advice, fluid intake goals, stent management tips, and routine follow-up schedules for smooth healing.",
+    image: img7,
+    author: "Dr. Vinish Kumar Singh",
+  },
+];
+
+export default function BlogSection() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  const totalPages = Math.ceil(blogsData.length / 3);
+
+  const nextSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % totalPages);
+  }, [totalPages]);
+
+  const prevSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + totalPages) % totalPages);
+  }, [totalPages]);
+
+  // Automatic slide interval every 2 seconds (pauses on hover)
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [isPaused, nextSlide]);
+
+  // Get current 3 visible blogs based on index
+  const visibleBlogs = blogsData.slice(currentIndex * 3, currentIndex * 3 + 3);
+
+  return (
+    <section
+      className="py-12 lg:py-16 bg-slate-50/70 overflow-hidden font-sans border-t border-slate-200/60"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+        
+        {/* ================= CENTERED SECTION HEADER ================= */}
+        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
+          {/* Top Pill Badge */}
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-orange-50 border border-orange-200/80 text-orange-600 text-[11px] font-extrabold uppercase tracking-wider mb-3 shadow-2xs">
+            <BookOpen size={13} className="text-orange-500" />
+            <span>HEALTH INSIGHTS &amp; BLOGS</span>
+          </div>
+
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            Latest Articles &amp; Patient Advice
+          </h2>
+
+          <p className="mt-2 text-xs sm:text-sm text-slate-500 font-normal leading-relaxed max-w-2xl mx-auto">
+            Stay updated with expert medical insights, kidney stone prevention guidance, and urological wellness tips from Dr. Vinish Kumar Singh.
+          </p>
+
+          {/* Centered Navigation Buttons */}
+          <div className="flex items-center justify-center gap-3 mt-5">
+            <button
+              type="button"
+              onClick={prevSlide}
+              aria-label="Previous Articles"
+              className="w-10 h-10 rounded-2xl bg-white hover:bg-[#103F7C] hover:text-white text-slate-700 border border-slate-200/90 shadow-2xs flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
+            >
+              <ChevronLeft size={18} />
+            </button>
+            <button
+              type="button"
+              onClick={nextSlide}
+              aria-label="Next Articles"
+              className="w-10 h-10 rounded-2xl bg-white hover:bg-[#103F7C] hover:text-white text-slate-700 border border-slate-200/90 shadow-2xs flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
+            >
+              <ChevronRight size={18} />
+            </button>
+          </div>
+        </div>
+
+        {/* ================= 3-CARDS CAROUSEL GRID ================= */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-8">
+          {visibleBlogs.map((blog) => (
+            <article
+              key={blog.id}
+              className="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-2xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group"
+            >
+              <div>
+                {/* Blog Image Container with Overlay Category Tag */}
+                <div className="relative h-56 sm:h-60 overflow-hidden bg-slate-900">
+                  <img
+                    src={blog.image}
+                    alt={blog.title}
+                    className="w-full h-full object-cover object-[center_28%] transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-80" />
+
+                  {/* Floating Category Pill Badge */}
+                  <div className="absolute top-4 left-4 z-10">
+                    <span className="bg-white/95 backdrop-blur-md px-3 py-1 rounded-md text-[10px] font-extrabold uppercase tracking-wider text-orange-600 border border-orange-100 shadow-2xs">
+                      {blog.category}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Article Content */}
+                <div className="p-6">
+                  {/* Meta info: Date & Read time */}
+                  <div className="flex items-center gap-2.5 text-xs font-semibold text-slate-400 mb-3">
+                    <span className="flex items-center gap-1.5 text-orange-600 font-bold">
+                      <Calendar size={13} />
+                      <span>{blog.date}</span>
+                    </span>
+                    <span>•</span>
+                    <span className="flex items-center gap-1.5 text-slate-500 font-medium">
+                      <Clock size={13} />
+                      <span>{blog.readTime}</span>
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="font-extrabold text-slate-900 text-base sm:text-lg leading-snug group-hover:text-[#103F7C] transition-colors mb-2.5 line-clamp-2">
+                    {blog.title}
+                  </h3>
+
+                  {/* Excerpt */}
+                  <p className="text-xs sm:text-sm text-slate-500 font-normal leading-relaxed line-clamp-3">
+                    {blog.excerpt}
+                  </p>
+                </div>
+              </div>
+
+              {/* Card Footer: Author & Read Link */}
+              <div className="px-6 pb-6 pt-4 border-t border-slate-100 flex items-center justify-between gap-3 bg-white">
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="w-6 h-6 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center shrink-0">
+                    <User size={12} />
+                  </div>
+                  <span className="text-xs font-bold text-slate-700 truncate">
+                    {blog.author}
+                  </span>
+                </div>
+
+                <NavLink
+                  to="/contact"
+                  className="text-xs font-extrabold text-orange-500 hover:text-orange-600 transition-colors flex items-center gap-1 shrink-0 group-hover:translate-x-0.5"
+                >
+                  <span>Read Article</span>
+                  <ArrowRight size={14} />
+                </NavLink>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        {/* ================= CAROUSEL DOTS INDICATOR ================= */}
+        <div className="flex items-center justify-center gap-2">
+          {Array.from({ length: totalPages }).map((_, idx) => (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => setCurrentIndex(idx)}
+              aria-label={`Go to slide ${idx + 1}`}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                currentIndex === idx
+                  ? "w-8 bg-[#103F7C]"
+                  : "w-2 bg-slate-300 hover:bg-slate-400"
+              }`}
+            />
+          ))}
+        </div>
+
+      </div>
+    </section>
+  );
+}
