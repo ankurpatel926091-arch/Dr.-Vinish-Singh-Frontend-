@@ -24,6 +24,7 @@ import {
 
 import doctorImage from "../assets/doctor.jpg";
 import PageHero from "../components/PageHero";
+import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
 
 // Academic Qualification Data (Extracted from photo)
 const academicQualifications = [
@@ -182,7 +183,7 @@ export default function DrVinishKumarSingh() {
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           
           {/* Left Column - Doctor Image Frame */}
-          <div className="lg:col-span-5 relative flex justify-center">
+          <ScrollReveal variant="scale-up" duration={800} className="lg:col-span-5 relative flex justify-center">
             <div className="relative w-full max-w-md">
               {/* Outer Decorative Border */}
               <div className="relative rounded-3xl p-2 bg-gradient-to-b from-[#103F7C]/15 via-blue-500/10 to-orange-500/15 shadow-xl">
@@ -242,10 +243,10 @@ export default function DrVinishKumarSingh() {
                 </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Right Column - Doctor Biography & Quote Banner */}
-          <div className="lg:col-span-7 flex flex-col items-start">
+          <ScrollReveal variant="slide-left" delay={150} className="lg:col-span-7 flex flex-col items-start">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-50 text-[#103F7C] border border-blue-200/60 text-xs font-semibold uppercase tracking-wider mb-3">
               <Sparkles size={13} className="text-orange-500" />
               <span>Medical Profile &amp; Bio</span>
@@ -319,7 +320,7 @@ export default function DrVinishKumarSingh() {
                 <span>Call +91 72759 81480</span>
               </a>
             </div>
-          </div>
+          </ScrollReveal>
 
         </div>
       </div>
@@ -329,7 +330,7 @@ export default function DrVinishKumarSingh() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           
           {/* Section Header */}
-          <div className="text-center max-w-3xl mx-auto mb-10">
+          <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-10">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-50 text-[#103F7C] border border-blue-200/60 text-xs font-semibold uppercase tracking-wider mb-2">
               <GraduationCap size={15} className="text-orange-500" />
               <span>Medical Credentials</span>
@@ -340,10 +341,10 @@ export default function DrVinishKumarSingh() {
             <p className="mt-2 text-xs sm:text-sm text-slate-600">
               Rigorous medical degrees and super-speciality surgical qualifications from premier universities in India.
             </p>
-          </div>
+          </ScrollReveal>
 
           {/* Academic Table Card */}
-          <div className="bg-slate-50/80 rounded-3xl p-4 sm:p-6 border border-slate-200/90 shadow-2xs overflow-hidden">
+          <ScrollReveal variant="fade-up" delay={150} className="bg-slate-50/80 rounded-3xl p-4 sm:p-6 border border-slate-200/90 shadow-2xs overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse min-w-[640px]">
                 <thead>
@@ -387,7 +388,7 @@ export default function DrVinishKumarSingh() {
                 </tbody>
               </table>
             </div>
-          </div>
+          </ScrollReveal>
 
         </div>
       </div>
@@ -397,7 +398,7 @@ export default function DrVinishKumarSingh() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           
           {/* Header */}
-          <div className="text-center max-w-3xl mx-auto mb-10">
+          <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-10">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100/70 text-orange-700 text-xs font-semibold uppercase tracking-wider mb-2">
               <Briefcase size={14} className="text-orange-500" />
               <span>Professional Portfolio</span>
@@ -409,7 +410,7 @@ export default function DrVinishKumarSingh() {
             <p className="mt-2 text-xs sm:text-sm text-slate-600">
               Detailed breakdown of clinical appointments, research work, and medical society memberships.
             </p>
-          </div>
+          </ScrollReveal>
 
           {/* Navigation Tabs Bar */}
           <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-3 mb-8">
@@ -468,7 +469,7 @@ export default function DrVinishKumarSingh() {
 
           {/* TAB 1: WORK EXPERIENCE TABLE */}
           {activeTab === "experience" && (
-            <div className="bg-white rounded-3xl p-4 sm:p-6 border border-slate-200/90 shadow-sm overflow-hidden animate-fadeIn">
+            <ScrollReveal variant="fade-up" className="bg-white rounded-3xl p-4 sm:p-6 border border-slate-200/90 shadow-sm overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse min-w-[640px]">
                   <thead>
@@ -500,12 +501,12 @@ export default function DrVinishKumarSingh() {
                   </tbody>
                 </table>
               </div>
-            </div>
+            </ScrollReveal>
           )}
 
           {/* TAB 2: CURRICULAR ACTIVITIES */}
           {activeTab === "activities" && (
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm animate-fadeIn">
+            <ScrollReveal variant="fade-up" className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm">
               <h3 className="text-lg font-extrabold text-slate-900 mb-6 flex items-center gap-2">
                 <BookOpen className="text-orange-500" size={20} />
                 <span>Academic &amp; Curricular Highlights</span>
@@ -521,12 +522,12 @@ export default function DrVinishKumarSingh() {
                   </div>
                 ))}
               </div>
-            </div>
+            </ScrollReveal>
           )}
 
           {/* TAB 3: THESIS & RESEARCH WORK */}
           {activeTab === "thesis" && (
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm animate-fadeIn">
+            <ScrollReveal variant="fade-up" className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm">
               <h3 className="text-lg font-extrabold text-slate-900 mb-6 flex items-center gap-2">
                 <FileText className="text-[#103F7C]" size={20} />
                 <span>Super Speciality Thesis &amp; Published Research</span>
@@ -547,12 +548,12 @@ export default function DrVinishKumarSingh() {
                   </div>
                 ))}
               </div>
-            </div>
+            </ScrollReveal>
           )}
 
           {/* TAB 4: MEMBERSHIPS */}
           {activeTab === "memberships" && (
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm animate-fadeIn">
+            <ScrollReveal variant="fade-up" className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm">
               <h3 className="text-lg font-extrabold text-slate-900 mb-6 flex items-center gap-2">
                 <Users className="text-emerald-600" size={20} />
                 <span>Medical Society &amp; Professional Memberships</span>
@@ -572,7 +573,7 @@ export default function DrVinishKumarSingh() {
                   </div>
                 ))}
               </div>
-            </div>
+            </ScrollReveal>
           )}
 
         </div>
@@ -583,7 +584,7 @@ export default function DrVinishKumarSingh() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           
           {/* Header */}
-          <div className="text-center max-w-3xl mx-auto mb-12">
+          <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-12">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100/70 text-orange-700 text-xs font-semibold uppercase tracking-wider mb-3">
               <Trophy size={13} className="text-orange-500" />
               <span>Honors &amp; Accreditations</span>
@@ -595,42 +596,43 @@ export default function DrVinishKumarSingh() {
             <p className="mt-2 text-xs sm:text-sm text-slate-600">
               Acknowledging medical research presentations, clinical excellence, and urology innovation.
             </p>
-          </div>
+          </ScrollReveal>
 
           {/* Awards 4-Cards Grid */}
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {awardsData.map((award, index) => {
               const IconComp = award.icon;
               return (
-                <div
-                  key={index}
-                  className="bg-slate-50/80 rounded-2xl p-6 border border-slate-200/90 shadow-2xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between group"
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <div
-                        className={`w-12 h-12 rounded-2xl flex items-center justify-center border ${award.bgIcon}`}
-                      >
-                        <IconComp size={22} />
+                <ScrollReveal key={index} variant="scale-up" delay={index * 100} className="h-full">
+                  <div
+                    className="bg-slate-50/80 rounded-2xl p-6 border border-slate-200/90 shadow-2xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between group h-full"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-4">
+                        <div
+                          className={`w-12 h-12 rounded-2xl flex items-center justify-center border ${award.bgIcon}`}
+                        >
+                          <IconComp size={22} />
+                        </div>
+                        <span className="text-xs font-extrabold text-orange-600 bg-orange-50 px-3 py-1 rounded-full border border-orange-200">
+                          {award.year}
+                        </span>
                       </div>
-                      <span className="text-xs font-extrabold text-orange-600 bg-orange-50 px-3 py-1 rounded-full border border-orange-200">
-                        {award.year}
-                      </span>
+
+                      <h3 className="font-bold text-slate-900 text-sm sm:text-base leading-snug group-hover:text-[#103F7C] transition-colors mb-2">
+                        {award.title}
+                      </h3>
+
+                      <p className="text-xs font-semibold text-[#103F7C] mb-3">
+                        {award.organization}
+                      </p>
+
+                      <p className="text-xs text-slate-500 leading-relaxed font-normal">
+                        {award.description}
+                      </p>
                     </div>
-
-                    <h3 className="font-bold text-slate-900 text-sm sm:text-base leading-snug group-hover:text-[#103F7C] transition-colors mb-2">
-                      {award.title}
-                    </h3>
-
-                    <p className="text-xs font-semibold text-[#103F7C] mb-3">
-                      {award.organization}
-                    </p>
-
-                    <p className="text-xs text-slate-500 leading-relaxed font-normal">
-                      {award.description}
-                    </p>
                   </div>
-                </div>
+                </ScrollReveal>
               );
             })}
           </div>
@@ -639,7 +641,7 @@ export default function DrVinishKumarSingh() {
       </div>
 
       {/* ================= 5. CTA BANNER SECTION ================= */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14">
+      <ScrollReveal variant="fade-up" delay={200} className="max-w-7xl mx-auto px-4 sm:px-6 py-14">
         <div className="rounded-3xl bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#103F7C] text-white p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-orange-300 text-xs font-bold uppercase tracking-wider mb-2">
@@ -659,7 +661,7 @@ export default function DrVinishKumarSingh() {
             <ArrowRight size={16} />
           </NavLink>
         </div>
-      </div>
+      </ScrollReveal>
 
     </section>
   );

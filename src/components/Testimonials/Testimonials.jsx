@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Star, ChevronLeft, ChevronRight, Quote, Sparkles, CheckCircle2 } from "lucide-react";
+import ScrollReveal from "../ScrollReveal/ScrollReveal";
 
 const googleReviews = [
   {
@@ -146,7 +147,7 @@ export default function Testimonials() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         
         {/* Section Header (Centered Layout) */}
-        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
+        <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-100/80 text-[#103F7C] text-xs font-semibold uppercase tracking-wider mb-3">
             <Sparkles size={13} className="text-orange-500" />
             <span>Patient Feedback</span>
@@ -172,18 +173,20 @@ export default function Testimonials() {
               <span className="text-[10px] text-slate-500 font-medium">Verified Google Reviews</span>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Elfsight Live Google Reviews Embed */}
-        <div className="w-full mb-8 min-h-[100px]">
+        <ScrollReveal variant="fade-in" delay={150} className="w-full mb-8 min-h-[100px]">
           <div
             className="elfsight-app-05ca5de9-0458-4330-937a-98a07e1a1bc1 w-full"
             data-elfsight-app-lazy
           />
-        </div>
+        </ScrollReveal>
 
         {/* Auto-Moving Reviews Carousel */}
-        <div
+        <ScrollReveal
+          variant="scale-up"
+          delay={250}
           className="relative group px-1"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
@@ -249,9 +252,10 @@ export default function Testimonials() {
               </div>
             ))}
           </div>
-        </div>
+        </ScrollReveal>
 
       </div>
     </section>
   );
 }
+

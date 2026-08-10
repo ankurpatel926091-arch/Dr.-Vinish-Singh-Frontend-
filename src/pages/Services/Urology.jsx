@@ -14,6 +14,7 @@ import {
   Building2,
 } from "lucide-react";
 import PageHero from "../../components/PageHero";
+import ScrollReveal from "../../components/ScrollReveal/ScrollReveal";
 
 const urologyProcedures = [
   {
@@ -58,7 +59,7 @@ export default function UrologyService() {
           <div className="lg:col-span-8 space-y-8">
             
             {/* Overview Card */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-2xs">
+            <ScrollReveal variant="fade-up" className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-2xs">
               <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-50 text-[#103F7C] text-xs font-bold uppercase tracking-wider mb-3">
                 <Stethoscope size={14} className="text-orange-500" />
                 <span>Specialty Overview</span>
@@ -75,10 +76,10 @@ export default function UrologyService() {
               <p className="mt-3 text-xs sm:text-sm lg:text-base text-slate-600 leading-relaxed font-normal">
                 Under the expertise of <strong>Dr. Vinish Kumar Singh</strong> (M.Ch Urology, INU Bangalore), patients receive cutting-edge <strong>painless, stitchless laser surgeries</strong> that eliminate external incisions, reduce bleeding risk, and ensure recovery within 24–48 hours.
               </p>
-            </div>
+            </ScrollReveal>
 
             {/* Key Procedures Grid */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-2xs">
+            <ScrollReveal variant="fade-up" delay={100} className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-2xs">
               <h3 className="text-xl font-extrabold text-slate-900 mb-6 flex items-center gap-2">
                 <Zap size={20} className="text-orange-500" />
                 <span>Specialized Surgical Procedures</span>
@@ -86,26 +87,27 @@ export default function UrologyService() {
 
               <div className="grid sm:grid-cols-2 gap-4">
                 {urologyProcedures.map((proc, idx) => (
-                  <div
-                    key={idx}
-                    className="bg-slate-50/80 p-5 rounded-2xl border border-slate-200/80 hover:border-blue-300 hover:bg-white transition-all duration-300 group"
-                  >
-                    <div className="flex items-center gap-2 mb-2">
-                      <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
-                      <h4 className="font-extrabold text-slate-900 text-sm group-hover:text-[#103F7C] transition-colors">
-                        {proc.title}
-                      </h4>
+                  <ScrollReveal key={idx} variant="scale-up" delay={idx * 60}>
+                    <div
+                      className="bg-slate-50/80 p-5 rounded-2xl border border-slate-200/80 hover:border-blue-300 hover:bg-white transition-all duration-300 group h-full"
+                    >
+                      <div className="flex items-center gap-2 mb-2">
+                        <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+                        <h4 className="font-extrabold text-slate-900 text-sm group-hover:text-[#103F7C] transition-colors">
+                          {proc.title}
+                        </h4>
+                      </div>
+                      <p className="text-xs text-slate-500 font-normal leading-relaxed">
+                        {proc.desc}
+                      </p>
                     </div>
-                    <p className="text-xs text-slate-500 font-normal leading-relaxed">
-                      {proc.desc}
-                    </p>
-                  </div>
+                  </ScrollReveal>
                 ))}
               </div>
-            </div>
+            </ScrollReveal>
 
             {/* Patient Benefits Grid */}
-            <div className="bg-gradient-to-r from-[#103F7C] to-blue-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl">
+            <ScrollReveal variant="fade-up" delay={200} className="bg-gradient-to-r from-[#103F7C] to-blue-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl">
               <h3 className="text-xl font-extrabold mb-4">Why Choose Laser Urology Care?</h3>
               <div className="grid sm:grid-cols-3 gap-4 text-xs">
                 <div className="bg-white/10 p-4 rounded-2xl border border-white/10">
@@ -121,12 +123,12 @@ export default function UrologyService() {
                   <p className="text-blue-100 font-normal">Over 5,000+ successful laser stone &amp; prostate procedures executed.</p>
                 </div>
               </div>
-            </div>
+            </ScrollReveal>
 
           </div>
 
           {/* Sidebar CTA & OPD Schedule (4 Cols) */}
-          <div className="lg:col-span-4 space-y-6">
+          <ScrollReveal variant="slide-left" delay={150} className="lg:col-span-4 space-y-6">
             
             {/* OPD Timings Card */}
             <div className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-2xs space-y-4">
@@ -174,10 +176,11 @@ export default function UrologyService() {
               </NavLink>
             </div>
 
-          </div>
+          </ScrollReveal>
 
         </div>
       </div>
     </section>
   );
 }
+

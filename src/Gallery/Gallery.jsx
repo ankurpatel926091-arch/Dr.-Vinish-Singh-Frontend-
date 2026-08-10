@@ -15,6 +15,7 @@ import {
   ZoomOut,
   RotateCw,
 } from "lucide-react";
+import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
 
 // Image Imports
 import img1 from "../assets/images/Img1.jpeg";
@@ -255,7 +256,7 @@ export default function Gallery() {
         <div className="absolute -left-20 -top-20 w-80 h-80 bg-blue-400/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute right-0 bottom-0 w-80 h-80 bg-orange-400/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 text-center sm:text-left">
+        <ScrollReveal variant="fade-up" className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 text-center sm:text-left">
           <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white/10 border border-white/15 text-orange-300 text-[11px] font-semibold uppercase tracking-wider mb-3">
             <Sparkles size={12} />
             <span>Infrastructure &amp; Clinical Care</span>
@@ -268,14 +269,14 @@ export default function Gallery() {
           <p className="mt-2 text-blue-100 text-xs sm:text-sm max-w-2xl font-normal leading-relaxed">
             Explore state-of-the-art laser urology equipment, modern surgical setup, patient care facilities, and procedure videos in Lucknow.
           </p>
-        </div>
+        </ScrollReveal>
       </div>
 
       {/* ================= MAIN GALLERY SECTION ================= */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 lg:py-14">
         
         {/* Category Filter Tabs */}
-        <div className="flex items-center justify-center sm:justify-start flex-wrap gap-2 mb-10">
+        <ScrollReveal variant="fade-up" delay={100} className="flex items-center justify-center sm:justify-start flex-wrap gap-2 mb-10">
           {categories.map((cat) => (
             <button
               key={cat}
@@ -295,80 +296,86 @@ export default function Gallery() {
               {cat}
             </button>
           ))}
-        </div>
+        </ScrollReveal>
 
         {/* Media Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredItems.map((item, idx) => (
-            <div
+            <ScrollReveal
               key={item.id}
-              onClick={() => openLightbox(idx)}
-              onMouseEnter={(e) => handleCardMouseEnter(e, item.type)}
-              onMouseLeave={(e) => handleCardMouseLeave(e, item.type)}
-              className="group cursor-pointer bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col"
+              variant="scale-up"
+              delay={idx * 80}
+              className="h-full"
             >
-              {/* Media Display Box */}
-              <div className="relative h-72 sm:h-80 overflow-hidden bg-slate-900">
-                {item.type === "photo" ? (
-                  <img
-                    src={item.media}
-                    alt={item.title}
-                    className="w-full h-full object-cover object-[center_28%] transition-transform duration-700 group-hover:scale-105"
-                  />
-                ) : (
-                  <div className="relative w-full h-full">
-                    <video
+              <div
+                onClick={() => openLightbox(idx)}
+                onMouseEnter={(e) => handleCardMouseEnter(e, item.type)}
+                onMouseLeave={(e) => handleCardMouseLeave(e, item.type)}
+                className="group cursor-pointer bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col h-full"
+              >
+                {/* Media Display Box */}
+                <div className="relative h-72 sm:h-80 overflow-hidden bg-slate-900">
+                  {item.type === "photo" ? (
+                    <img
                       src={item.media}
-                      muted
-                      loop
-                      playsInline
-                      preload="metadata"
-                      className="w-full h-full object-cover object-[center_28%] opacity-85 group-hover:opacity-100 transition-all duration-300"
+                      alt={item.title}
+                      className="w-full h-full object-cover object-[center_28%] transition-transform duration-700 group-hover:scale-105"
                     />
-                    
-                    {/* Hover Play Indicator Overlay */}
-                    <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 group-hover:opacity-40">
-                      <div className="w-14 h-14 rounded-full bg-orange-500/90 text-white flex items-center justify-center shadow-lg border-2 border-white/40">
-                        <Play size={24} className="ml-1 fill-white" />
+                  ) : (
+                    <div className="relative w-full h-full">
+                      <video
+                        src={item.media}
+                        muted
+                        loop
+                        playsInline
+                        preload="metadata"
+                        className="w-full h-full object-cover object-[center_28%] opacity-85 group-hover:opacity-100 transition-all duration-300"
+                      />
+                      
+                      {/* Hover Play Indicator Overlay */}
+                      <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 group-hover:opacity-40">
+                        <div className="w-14 h-14 rounded-full bg-orange-500/90 text-white flex items-center justify-center shadow-lg border-2 border-white/40">
+                          <Play size={24} className="ml-1 fill-white" />
+                        </div>
                       </div>
                     </div>
+                  )}
+
+                  {/* Overlay gradient & tags - Hidden by default (no bottom shadow), visible on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-4 pointer-events-none">
+                    <span className="text-white text-xs font-bold flex items-center gap-1.5">
+                      {item.type === "photo" ? (
+                        <>
+                          <Maximize2 size={14} className="text-orange-400" />
+                          <span>Expand Photo</span>
+                        </>
+                      ) : (
+                        <>
+                          <Video size={14} className="text-orange-400" />
+                          <span>Hovering Plays Video</span>
+                        </>
+                      )}
+                    </span>
+                    <span className="text-[10px] font-bold text-orange-300 uppercase tracking-wider bg-black/60 backdrop-blur-xs px-2.5 py-1 rounded-full border border-white/20">
+                      {item.tag}
+                    </span>
                   </div>
-                )}
+                </div>
 
-                {/* Overlay gradient & tags - Hidden by default (no bottom shadow), visible on hover */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-4 pointer-events-none">
-                  <span className="text-white text-xs font-bold flex items-center gap-1.5">
-                    {item.type === "photo" ? (
-                      <>
-                        <Maximize2 size={14} className="text-orange-400" />
-                        <span>Expand Photo</span>
-                      </>
-                    ) : (
-                      <>
-                        <Video size={14} className="text-orange-400" />
-                        <span>Hovering Plays Video</span>
-                      </>
-                    )}
-                  </span>
-                  <span className="text-[10px] font-bold text-orange-300 uppercase tracking-wider bg-black/60 backdrop-blur-xs px-2.5 py-1 rounded-full border border-white/20">
-                    {item.tag}
-                  </span>
+                {/* Caption */}
+                <div className="p-4 flex items-center justify-between gap-3 bg-white">
+                  <div>
+                    <h3 className="font-bold text-slate-900 text-sm leading-snug group-hover:text-[#103F7C] transition-colors">
+                      {item.title}
+                    </h3>
+                    <p className="text-[11px] text-slate-400 font-medium mt-0.5 flex items-center gap-1">
+                      {item.type === "video" ? <Video size={12} className="text-orange-500" /> : <ImageIcon size={12} className="text-blue-500" />}
+                      <span>{item.category}</span>
+                    </p>
+                  </div>
                 </div>
               </div>
-
-              {/* Caption */}
-              <div className="p-4 flex items-center justify-between gap-3 bg-white">
-                <div>
-                  <h3 className="font-bold text-slate-900 text-sm leading-snug group-hover:text-[#103F7C] transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-[11px] text-slate-400 font-medium mt-0.5 flex items-center gap-1">
-                    {item.type === "video" ? <Video size={12} className="text-orange-500" /> : <ImageIcon size={12} className="text-blue-500" />}
-                    <span>{item.category}</span>
-                  </p>
-                </div>
-              </div>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
 
@@ -474,7 +481,7 @@ export default function Gallery() {
       )}
 
       {/* Minimal CTA Banner */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-16">
+      <ScrollReveal variant="fade-up" delay={200} className="max-w-7xl mx-auto px-4 sm:px-6 pb-16">
         <div className="rounded-3xl bg-gradient-to-r from-[#103F7C] to-blue-900 text-white p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md">
           <div>
             <h3 className="text-xl sm:text-2xl font-extrabold">Visit Our Clinic in Alambagh</h3>
@@ -489,8 +496,9 @@ export default function Gallery() {
             <ArrowRight size={16} />
           </NavLink>
         </div>
-      </div>
+      </ScrollReveal>
 
     </section>
   );
 }
+

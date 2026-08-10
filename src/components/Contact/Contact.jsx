@@ -13,6 +13,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import PageHero from "../PageHero";
+import ScrollReveal from "../ScrollReveal/ScrollReveal";
 
 const hospitalLocations = {
   morning: {
@@ -77,7 +78,7 @@ export default function Contact({ isHomePage = false }) {
     <div className="bg-gradient-to-b from-transparent via-blue-50/20 to-transparent font-sans">
       {/* Header Choice: Section Header for Home Page vs PageHero for Standalone Page */}
       {isHomePage ? (
-        <div className="pt-8 sm:pt-10 max-w-2xl mx-auto text-center px-4">
+        <ScrollReveal variant="fade-up" className="pt-8 sm:pt-10 max-w-2xl mx-auto text-center px-4">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-50 text-[#103F7C] text-xs font-bold uppercase tracking-wider mb-2.5">
             <Sparkles size={13} className="text-orange-500" />
             <span>GET IN TOUCH</span>
@@ -93,7 +94,7 @@ export default function Contact({ isHomePage = false }) {
           <p className="mt-1.5 text-xs sm:text-sm text-slate-500 font-normal">
             Select a hospital location below to view OPD timings, directions, and direct helpline numbers.
           </p>
-        </div>
+        </ScrollReveal>
       ) : (
         <PageHero
           title="CLINIC LOCATIONS & CONSULTATION"
@@ -107,59 +108,65 @@ export default function Contact({ isHomePage = false }) {
         {/* ================= 3 Contact Feature Cards arranged HORIZONTALLY ================= */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           {/* Card 1: Morning OPD Helpline */}
-          <div className="bg-white rounded-2xl p-5 shadow-2xs border border-slate-200/80 flex items-center gap-3.5 hover:shadow-md transition-all">
-            <div className="w-11 h-11 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">
-              <Phone size={20} />
+          <ScrollReveal variant="scale-up" delay={100}>
+            <div className="bg-white rounded-2xl p-5 shadow-2xs border border-slate-200/80 flex items-center gap-3.5 hover:shadow-md transition-all h-full">
+              <div className="w-11 h-11 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">
+                <Phone size={20} />
+              </div>
+              <div>
+                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Morning OPD Helpline</p>
+                <a
+                  href="tel:8960068307"
+                  className="text-sm font-extrabold text-slate-900 hover:text-orange-500 transition-colors"
+                >
+                  +91 89600 68307
+                </a>
+              </div>
             </div>
-            <div>
-              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Morning OPD Helpline</p>
-              <a
-                href="tel:8960068307"
-                className="text-sm font-extrabold text-slate-900 hover:text-orange-500 transition-colors"
-              >
-                +91 89600 68307
-              </a>
-            </div>
-          </div>
+          </ScrollReveal>
 
           {/* Card 2: Evening OPD Helpline */}
-          <div className="bg-white rounded-2xl p-5 shadow-2xs border border-slate-200/80 flex items-center gap-3.5 hover:shadow-md transition-all">
-            <div className="w-11 h-11 rounded-xl bg-blue-50 text-[#103F7C] flex items-center justify-center shrink-0">
-              <Phone size={20} />
+          <ScrollReveal variant="scale-up" delay={200}>
+            <div className="bg-white rounded-2xl p-5 shadow-2xs border border-slate-200/80 flex items-center gap-3.5 hover:shadow-md transition-all h-full">
+              <div className="w-11 h-11 rounded-xl bg-blue-50 text-[#103F7C] flex items-center justify-center shrink-0">
+                <Phone size={20} />
+              </div>
+              <div className="min-w-0">
+                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Evening OPD Helpline</p>
+                <a
+                  href="tel:8604891955"
+                  className="text-sm font-extrabold text-slate-900 hover:text-[#103F7C] transition-colors truncate block"
+                >
+                  +91 86048 91955
+                </a>
+              </div>
             </div>
-            <div className="min-w-0">
-              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Evening OPD Helpline</p>
-              <a
-                href="tel:8604891955"
-                className="text-sm font-extrabold text-slate-900 hover:text-[#103F7C] transition-colors truncate block"
-              >
-                +91 86048 91955
-              </a>
-            </div>
-          </div>
+          </ScrollReveal>
 
           {/* Card 3: Official Email */}
-          <div className="bg-white rounded-2xl p-5 shadow-2xs border border-slate-200/80 flex items-center gap-3.5 hover:shadow-md transition-all">
-            <div className="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-              <Mail size={20} />
+          <ScrollReveal variant="scale-up" delay={300}>
+            <div className="bg-white rounded-2xl p-5 shadow-2xs border border-slate-200/80 flex items-center gap-3.5 hover:shadow-md transition-all h-full">
+              <div className="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                <Mail size={20} />
+              </div>
+              <div className="min-w-0">
+                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Email Inquiry</p>
+                <a
+                  href="mailto:info@urosurgeondrvinish.com"
+                  className="text-xs sm:text-sm font-extrabold text-slate-900 hover:text-orange-500 transition-colors truncate block"
+                >
+                  info@urosurgeondrvinish.com
+                </a>
+              </div>
             </div>
-            <div className="min-w-0">
-              <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Email Inquiry</p>
-              <a
-                href="mailto:info@urosurgeondrvinish.com"
-                className="text-xs sm:text-sm font-extrabold text-slate-900 hover:text-orange-500 transition-colors truncate block"
-              >
-                info@urosurgeondrvinish.com
-              </a>
-            </div>
-          </div>
+          </ScrollReveal>
         </div>
 
         {/* ================= 2-Column Grid: Hospital Switcher Map & Form ================= */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Left Column: Hospital Switcher Tabs & Live Map (5 Cols) */}
-          <div className="lg:col-span-5 space-y-4">
+          <ScrollReveal variant="slide-right" delay={150} className="lg:col-span-5 space-y-4">
             
             {/* Interactive Hospital Selector Tabs */}
             <div className="bg-white p-1.5 rounded-2xl border border-slate-200 shadow-2xs flex items-center gap-2">
@@ -250,10 +257,10 @@ export default function Contact({ isHomePage = false }) {
               />
             </div>
 
-          </div>
+          </ScrollReveal>
 
           {/* Right Column: Appointment Form (7 Cols) */}
-          <div className="lg:col-span-7 bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
+          <ScrollReveal variant="slide-left" delay={250} className="lg:col-span-7 bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
             <h2 className="text-xl font-extrabold text-slate-900 mb-1">Book Appointment</h2>
             <p className="text-xs text-slate-500 mb-5 font-normal">
               Select your preferred hospital centre and submit your request for direct OPD confirmation.
@@ -347,7 +354,7 @@ export default function Contact({ isHomePage = false }) {
                 </button>
               </form>
             )}
-          </div>
+          </ScrollReveal>
 
         </div>
       </div>

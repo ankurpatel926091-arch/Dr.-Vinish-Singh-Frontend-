@@ -10,6 +10,7 @@ import {
   CheckCircle2,
   ShieldCheck,
 } from "lucide-react";
+import ScrollReveal from "../ScrollReveal/ScrollReveal";
 
 export const servicesData = [
   {
@@ -92,7 +93,7 @@ export default function ServicesSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         
         {/* ================= CENTERED SECTION HEADER ================= */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-14">
+        <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-12 sm:mb-14">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-50 text-[#103F7C] border border-blue-200/60 text-xs font-bold uppercase tracking-wider mb-3">
             <Sparkles size={13} className="text-orange-500" />
             <span>CORE MEDICAL SPECIALTIES</span>
@@ -108,95 +109,102 @@ export default function ServicesSection() {
           <p className="mt-2.5 text-xs sm:text-sm text-slate-500 leading-relaxed font-normal max-w-2xl mx-auto">
             Delivering world-class laser surgical precision, evidence-based andrological treatments, and dedicated kidney care in Lucknow.
           </p>
-        </div>
+        </ScrollReveal>
 
         {/* ================= 4 SERVICES CARDS GRID ================= */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-7">
-          {servicesData.map((service) => {
+          {servicesData.map((service, index) => {
             const IconComp = service.icon;
             return (
-              <div
+              <ScrollReveal
                 key={service.id}
-                className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-2xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group relative overflow-hidden"
+                variant="scale-up"
+                delay={index * 120}
+                className="h-full"
               >
-                {/* Top Accent Line */}
-                <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${service.accentColor}`} />
+                <div className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-2xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group relative overflow-hidden h-full">
+                  {/* Top Accent Line */}
+                  <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${service.accentColor}`} />
 
-                <div>
-                  {/* Icon & Badge */}
-                  <div className="flex items-center justify-between mb-5">
-                    <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center justify-center text-[#103F7C] group-hover:bg-[#103F7C] group-hover:text-white transition-all duration-300 shadow-2xs">
-                      <IconComp size={22} />
+                  <div>
+                    {/* Icon & Badge */}
+                    <div className="flex items-center justify-between mb-5">
+                      <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center justify-center text-[#103F7C] group-hover:bg-[#103F7C] group-hover:text-white transition-all duration-300 shadow-2xs">
+                        <IconComp size={22} />
+                      </div>
+
+                      <span className={`text-[10px] font-extrabold px-2.5 py-1 rounded-full border ${service.badgeBg}`}>
+                        Specialty
+                      </span>
                     </div>
 
-                    <span className={`text-[10px] font-extrabold px-2.5 py-1 rounded-full border ${service.badgeBg}`}>
-                      Specialty
-                    </span>
+                    {/* Title & Subtitle */}
+                    <h3 className="font-extrabold text-slate-900 text-lg sm:text-xl leading-snug group-hover:text-[#103F7C] transition-colors mb-1">
+                      {service.title}
+                    </h3>
+
+                    <p className="text-[11px] font-bold text-orange-600 mb-3 uppercase tracking-wider">
+                      {service.subtitle}
+                    </p>
+
+                    {/* Description */}
+                    <p className="text-xs text-slate-500 leading-relaxed font-normal mb-5 line-clamp-3">
+                      {service.description}
+                    </p>
+
+                    {/* Key Highlights Checklist */}
+                    <div className="space-y-2 border-t border-slate-100 pt-4 mb-6">
+                      {service.highlights.map((highlight, idx) => (
+                        <div key={idx} className="flex items-start gap-2 text-xs font-semibold text-slate-700">
+                          <CheckCircle2 size={13} className="text-emerald-600 shrink-0 mt-0.5" />
+                          <span className="leading-tight text-[11px]">{highlight}</span>
+                        </div>
+                      ))}
+                    </div>
                   </div>
 
-                  {/* Title & Subtitle */}
-                  <h3 className="font-extrabold text-slate-900 text-lg sm:text-xl leading-snug group-hover:text-[#103F7C] transition-colors mb-1">
-                    {service.title}
-                  </h3>
-
-                  <p className="text-[11px] font-bold text-orange-600 mb-3 uppercase tracking-wider">
-                    {service.subtitle}
-                  </p>
-
-                  {/* Description */}
-                  <p className="text-xs text-slate-500 leading-relaxed font-normal mb-5 line-clamp-3">
-                    {service.description}
-                  </p>
-
-                  {/* Key Highlights Checklist */}
-                  <div className="space-y-2 border-t border-slate-100 pt-4 mb-6">
-                    {service.highlights.map((highlight, idx) => (
-                      <div key={idx} className="flex items-start gap-2 text-xs font-semibold text-slate-700">
-                        <CheckCircle2 size={13} className="text-emerald-600 shrink-0 mt-0.5" />
-                        <span className="leading-tight text-[11px]">{highlight}</span>
-                      </div>
-                    ))}
-                  </div>
+                  {/* Card Action Link */}
+                  <NavLink
+                    to={service.path}
+                    className="w-full py-2.5 px-4 rounded-xl bg-slate-50 hover:bg-[#103F7C] text-[#103F7C] hover:text-white border border-slate-200/80 font-bold text-xs flex items-center justify-between transition-all duration-300 group-hover:shadow-md cursor-pointer"
+                  >
+                    <span>Explore Specialty</span>
+                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                  </NavLink>
                 </div>
-
-                {/* Card Action Link */}
-                <NavLink
-                  to={service.path}
-                  className="w-full py-2.5 px-4 rounded-xl bg-slate-50 hover:bg-[#103F7C] text-[#103F7C] hover:text-white border border-slate-200/80 font-bold text-xs flex items-center justify-between transition-all duration-300 group-hover:shadow-md cursor-pointer"
-                >
-                  <span>Explore Specialty</span>
-                  <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                </NavLink>
-              </div>
+              </ScrollReveal>
             );
           })}
         </div>
 
         {/* ================= BOTTOM QUALITY ASSURANCE BANNER ================= */}
-        <div className="mt-12 bg-white rounded-2xl p-5 border border-slate-200/80 shadow-2xs flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-              <ShieldCheck size={20} />
+        <ScrollReveal variant="fade-up" delay={300} className="mt-12">
+          <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-2xs flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                <ShieldCheck size={20} />
+              </div>
+              <div>
+                <h4 className="text-xs sm:text-sm font-bold text-slate-900">
+                  15+ Years Clinical Surgical Mastery &amp; 5,000+ Laser Surgeries
+                </h4>
+                <p className="text-[11px] text-slate-500 font-normal">
+                  Practicing at Rudraksh IVF &amp; Urology Centre &amp; Dr. Shilpi Maternity &amp; Urology Centre in Lucknow.
+                </p>
+              </div>
             </div>
-            <div>
-              <h4 className="text-xs sm:text-sm font-bold text-slate-900">
-                15+ Years Clinical Surgical Mastery &amp; 5,000+ Laser Surgeries
-              </h4>
-              <p className="text-[11px] text-slate-500 font-normal">
-                Practicing at Rudraksh IVF &amp; Urology Centre &amp; Dr. Shilpi Maternity &amp; Urology Centre in Lucknow.
-              </p>
-            </div>
-          </div>
 
-          <NavLink
-            to="/contact"
-            className="px-5 py-2.5 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold shrink-0 transition-all hover:scale-105 shadow-2xs"
-          >
-            Book Appointment
-          </NavLink>
-        </div>
+            <NavLink
+              to="/contact"
+              className="px-5 py-2.5 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold shrink-0 transition-all hover:scale-105 shadow-2xs"
+            >
+              Book Appointment
+            </NavLink>
+          </div>
+        </ScrollReveal>
 
       </div>
     </section>
   );
 }
+

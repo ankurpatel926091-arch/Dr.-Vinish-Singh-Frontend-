@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Plus, MapPin, Phone, Clock, Navigation, Sparkles } from "lucide-react";
+import ScrollReveal from "../ScrollReveal/ScrollReveal";
 
 const faqs = [
   {
@@ -34,7 +35,7 @@ export default function FaqSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         
         {/* Section Header (Centered Alignment above Grid for Perfect Balance) */}
-        <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
+        <ScrollReveal variant="fade-up" className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-[#103F7C] text-xs font-semibold uppercase tracking-wider mb-2.5">
             <Sparkles size={12} className="text-orange-500" />
             <span>Common Doubts</span>
@@ -46,7 +47,7 @@ export default function FaqSection() {
           <p className="mt-1.5 text-xs sm:text-sm text-slate-500 font-normal">
             Quick answers to common patient questions regarding urology consultations and laser procedures.
           </p>
-        </div>
+        </ScrollReveal>
 
         {/* 2-Column Grid with Equal Alignment */}
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-start">
@@ -56,54 +57,59 @@ export default function FaqSection() {
             {faqs.map((faq, index) => {
               const isOpen = openIndex === index;
               return (
-                <div
+                <ScrollReveal
                   key={index}
-                  className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
-                    isOpen
-                      ? "border-blue-300 bg-white shadow-md shadow-blue-900/5 ring-1 ring-blue-100/80"
-                      : "border-slate-200/80 bg-white hover:border-slate-300 hover:shadow-xs"
-                  }`}
+                  variant="fade-up"
+                  delay={index * 80}
                 >
-                  <button
-                    type="button"
-                    onClick={() => toggleFaq(index)}
-                    className="w-full flex items-center justify-between p-4 sm:p-5 text-left font-bold text-slate-900 text-xs sm:text-sm leading-snug gap-4 group"
-                  >
-                    <span className={`transition-colors duration-200 ${isOpen ? "text-[#103F7C] font-extrabold" : "group-hover:text-[#103F7C]"}`}>
-                      {faq.q}
-                    </span>
-
-                    {/* Smooth Rotating Plus Icon Container */}
-                    <div
-                      className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${
-                        isOpen
-                          ? "bg-orange-500 text-white rotate-45 shadow-sm"
-                          : "bg-slate-100 text-slate-600 group-hover:bg-blue-100 group-hover:text-[#103F7C]"
-                      }`}
-                    >
-                      <Plus size={16} className="transition-transform duration-300" />
-                    </div>
-                  </button>
-
-                  {/* Smooth Fluid Height & Opacity Expansion */}
                   <div
-                    className={`grid transition-all duration-300 ease-in-out ${
-                      isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                    className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
+                      isOpen
+                        ? "border-blue-300 bg-white shadow-md shadow-blue-900/5 ring-1 ring-blue-100/80"
+                        : "border-slate-200/80 bg-white hover:border-slate-300 hover:shadow-xs"
                     }`}
                   >
-                    <div className="overflow-hidden">
-                      <div className="px-4 sm:px-5 pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal border-t border-blue-100/60 pt-3">
-                        {faq.a}
+                    <button
+                      type="button"
+                      onClick={() => toggleFaq(index)}
+                      className="w-full flex items-center justify-between p-4 sm:p-5 text-left font-bold text-slate-900 text-xs sm:text-sm leading-snug gap-4 group"
+                    >
+                      <span className={`transition-colors duration-200 ${isOpen ? "text-[#103F7C] font-extrabold" : "group-hover:text-[#103F7C]"}`}>
+                        {faq.q}
+                      </span>
+
+                      {/* Smooth Rotating Plus Icon Container */}
+                      <div
+                        className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${
+                          isOpen
+                            ? "bg-orange-500 text-white rotate-45 shadow-sm"
+                            : "bg-slate-100 text-slate-600 group-hover:bg-blue-100 group-hover:text-[#103F7C]"
+                        }`}
+                      >
+                        <Plus size={16} className="transition-transform duration-300" />
+                      </div>
+                    </button>
+
+                    {/* Smooth Fluid Height & Opacity Expansion */}
+                    <div
+                      className={`grid transition-all duration-300 ease-in-out ${
+                        isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                      }`}
+                    >
+                      <div className="overflow-hidden">
+                        <div className="px-4 sm:px-5 pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal border-t border-blue-100/60 pt-3">
+                          {faq.a}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                </ScrollReveal>
               );
             })}
           </div>
 
           {/* Right Column - Clinic Quick Info Card (5 cols) */}
-          <div className="lg:col-span-5">
+          <ScrollReveal variant="scale-up" delay={200} className="lg:col-span-5 h-full">
             <div className="bg-gradient-to-br from-[#103F7C] via-blue-900 to-[#0d3364] text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden h-full flex flex-col justify-between">
               {/* Background Glow Orb */}
               <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-orange-500/20 rounded-full blur-2xl pointer-events-none" />
@@ -154,7 +160,7 @@ export default function FaqSection() {
                 </a>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
         </div>
 
@@ -162,3 +168,4 @@ export default function FaqSection() {
     </section>
   );
 }
+

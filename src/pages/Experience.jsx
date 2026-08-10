@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { BriefcaseBusiness, Building2, CalendarDays, BadgeCheck, Sparkles, Calendar, ArrowRight } from "lucide-react";
 import PageHero from "../components/PageHero";
+import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
 
 const experienceData = [
   {
@@ -42,7 +43,7 @@ export default function Experience() {
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-14">
           
           {/* Left Summary Column */}
-          <div className="lg:col-span-5 flex flex-col items-start">
+          <ScrollReveal variant="slide-right" className="lg:col-span-5 flex flex-col items-start">
             <span className="text-xs font-bold text-orange-500 uppercase tracking-widest">
               SURGICAL EXPERTISE
             </span>
@@ -72,7 +73,7 @@ export default function Experience() {
                 </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Right Timeline Column */}
           <div className="lg:col-span-7 relative">
@@ -81,8 +82,10 @@ export default function Experience() {
 
             <div className="space-y-6">
               {experienceData.map((item, index) => (
-                <div
+                <ScrollReveal
                   key={index}
+                  variant="scale-up"
+                  delay={index * 120}
                   className="relative pl-14 group"
                 >
                   {/* Node Dot */}
@@ -109,7 +112,7 @@ export default function Experience() {
                       {item.description}
                     </p>
                   </div>
-                </div>
+                </ScrollReveal>
               ))}
             </div>
           </div>
@@ -118,7 +121,7 @@ export default function Experience() {
       </div>
 
       {/* CTA Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-16">
+      <ScrollReveal variant="fade-up" delay={200} className="max-w-7xl mx-auto px-4 sm:px-6 pb-16">
         <div className="rounded-3xl bg-gradient-to-r from-[#103F7C] to-blue-900 text-white p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md">
           <div>
             <h3 className="text-xl sm:text-2xl font-extrabold">Consult with Senior Urologist</h3>
@@ -133,7 +136,7 @@ export default function Experience() {
             <ArrowRight size={16} />
           </NavLink>
         </div>
-      </div>
+      </ScrollReveal>
     </section>
   );
 }

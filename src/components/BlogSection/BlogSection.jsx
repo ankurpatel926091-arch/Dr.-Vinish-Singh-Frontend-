@@ -10,6 +10,7 @@ import {
   User,
   Sparkles,
 } from "lucide-react";
+import ScrollReveal from "../ScrollReveal/ScrollReveal";
 
 import img1 from "../../assets/images/Img1.jpeg";
 import img2 from "../../assets/images/img2.jpeg";
@@ -122,7 +123,7 @@ export default function BlogSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         
         {/* ================= CENTERED SECTION HEADER ================= */}
-        <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
+        <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
           {/* Top Pill Badge */}
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-orange-50 border border-orange-200/80 text-orange-600 text-[11px] font-extrabold uppercase tracking-wider mb-3 shadow-2xs">
             <BookOpen size={13} className="text-orange-500" />
@@ -156,80 +157,86 @@ export default function BlogSection() {
               <ChevronRight size={18} />
             </button>
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* ================= 3-CARDS CAROUSEL GRID ================= */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-8">
-          {visibleBlogs.map((blog) => (
-            <article
+          {visibleBlogs.map((blog, index) => (
+            <ScrollReveal
               key={blog.id}
-              className="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-2xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group"
+              variant="scale-up"
+              delay={index * 120}
+              className="h-full"
             >
-              <div>
-                {/* Blog Image Container with Overlay Category Tag */}
-                <div className="relative h-56 sm:h-60 overflow-hidden bg-slate-900">
-                  <img
-                    src={blog.image}
-                    alt={blog.title}
-                    className="w-full h-full object-cover object-[center_28%] transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-80" />
+              <article
+                className="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-2xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group h-full"
+              >
+                <div>
+                  {/* Blog Image Container with Overlay Category Tag */}
+                  <div className="relative h-56 sm:h-60 overflow-hidden bg-slate-900">
+                    <img
+                      src={blog.image}
+                      alt={blog.title}
+                      className="w-full h-full object-cover object-[center_28%] transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-80" />
 
-                  {/* Floating Category Pill Badge */}
-                  <div className="absolute top-4 left-4 z-10">
-                    <span className="bg-white/95 backdrop-blur-md px-3 py-1 rounded-md text-[10px] font-extrabold uppercase tracking-wider text-orange-600 border border-orange-100 shadow-2xs">
-                      {blog.category}
-                    </span>
+                    {/* Floating Category Pill Badge */}
+                    <div className="absolute top-4 left-4 z-10">
+                      <span className="bg-white/95 backdrop-blur-md px-3 py-1 rounded-md text-[10px] font-extrabold uppercase tracking-wider text-orange-600 border border-orange-100 shadow-2xs">
+                        {blog.category}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Article Content */}
+                  <div className="p-6">
+                    {/* Meta info: Date & Read time */}
+                    <div className="flex items-center gap-2.5 text-xs font-semibold text-slate-400 mb-3">
+                      <span className="flex items-center gap-1.5 text-orange-600 font-bold">
+                        <Calendar size={13} />
+                        <span>{blog.date}</span>
+                      </span>
+                      <span>•</span>
+                      <span className="flex items-center gap-1.5 text-slate-500 font-medium">
+                        <Clock size={13} />
+                        <span>{blog.readTime}</span>
+                      </span>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="font-extrabold text-slate-900 text-base sm:text-lg leading-snug group-hover:text-[#103F7C] transition-colors mb-2.5 line-clamp-2">
+                      {blog.title}
+                    </h3>
+
+                    {/* Excerpt */}
+                    <p className="text-xs sm:text-sm text-slate-500 font-normal leading-relaxed line-clamp-3">
+                      {blog.excerpt}
+                    </p>
                   </div>
                 </div>
 
-                {/* Article Content */}
-                <div className="p-6">
-                  {/* Meta info: Date & Read time */}
-                  <div className="flex items-center gap-2.5 text-xs font-semibold text-slate-400 mb-3">
-                    <span className="flex items-center gap-1.5 text-orange-600 font-bold">
-                      <Calendar size={13} />
-                      <span>{blog.date}</span>
-                    </span>
-                    <span>•</span>
-                    <span className="flex items-center gap-1.5 text-slate-500 font-medium">
-                      <Clock size={13} />
-                      <span>{blog.readTime}</span>
+                {/* Card Footer: Author & Read Link */}
+                <div className="px-6 pb-6 pt-4 border-t border-slate-100 flex items-center justify-between gap-3 bg-white">
+                  <div className="flex items-center gap-2 min-w-0">
+                    <div className="w-6 h-6 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center shrink-0">
+                      <User size={12} />
+                    </div>
+                    <span className="text-xs font-bold text-slate-700 truncate">
+                      {blog.author}
                     </span>
                   </div>
 
-                  {/* Title */}
-                  <h3 className="font-extrabold text-slate-900 text-base sm:text-lg leading-snug group-hover:text-[#103F7C] transition-colors mb-2.5 line-clamp-2">
-                    {blog.title}
-                  </h3>
-
-                  {/* Excerpt */}
-                  <p className="text-xs sm:text-sm text-slate-500 font-normal leading-relaxed line-clamp-3">
-                    {blog.excerpt}
-                  </p>
+                  <NavLink
+                    to="/contact"
+                    className="text-xs font-extrabold text-orange-500 hover:text-orange-600 transition-colors flex items-center gap-1 shrink-0 group-hover:translate-x-0.5"
+                  >
+                    <span>Read Article</span>
+                    <ArrowRight size={14} />
+                  </NavLink>
                 </div>
-              </div>
-
-              {/* Card Footer: Author & Read Link */}
-              <div className="px-6 pb-6 pt-4 border-t border-slate-100 flex items-center justify-between gap-3 bg-white">
-                <div className="flex items-center gap-2 min-w-0">
-                  <div className="w-6 h-6 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center shrink-0">
-                    <User size={12} />
-                  </div>
-                  <span className="text-xs font-bold text-slate-700 truncate">
-                    {blog.author}
-                  </span>
-                </div>
-
-                <NavLink
-                  to="/contact"
-                  className="text-xs font-extrabold text-orange-500 hover:text-orange-600 transition-colors flex items-center gap-1 shrink-0 group-hover:translate-x-0.5"
-                >
-                  <span>Read Article</span>
-                  <ArrowRight size={14} />
-                </NavLink>
-              </div>
-            </article>
+              </article>
+            </ScrollReveal>
           ))}
         </div>
 

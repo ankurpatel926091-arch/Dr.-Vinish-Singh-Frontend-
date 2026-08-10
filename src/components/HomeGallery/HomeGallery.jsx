@@ -11,6 +11,7 @@ import {
   ArrowRight,
   Maximize2,
 } from "lucide-react";
+import ScrollReveal from "../ScrollReveal/ScrollReveal";
 
 import img1 from "../../assets/images/Img1.jpeg";
 import img2 from "../../assets/images/img2.jpeg";
@@ -134,52 +135,58 @@ export default function HomeGallery() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
+        <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
           <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-blue-100/70 text-[#103F7C] text-xs font-semibold uppercase tracking-wider mb-2.5">
             <Sparkles size={12} className="text-orange-500" />
             <span>OUR GALLERY</span>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-[#103F7C] tracking-tight leading-tight">
             Visual Tour Of Our Center
           </h2>
 
           <p className="mt-1.5 text-xs sm:text-sm text-slate-500 font-normal leading-relaxed">
             Take a look at our modern facility, active campaigns, medical operations, and happy recovery milestones.
           </p>
-        </div>
+        </ScrollReveal>
 
         {/* 6 Photos Grid (3x2 Grid Matching Reference Image 1) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6 sm:mb-8">
           {galleryPhotos.map((item, idx) => (
-            <div
+            <ScrollReveal
               key={item.id}
-              onClick={() => openLightbox(idx)}
-              className="group cursor-pointer bg-white rounded-3xl overflow-hidden shadow-xs hover:shadow-xl border border-slate-200/80 transition-all duration-300 hover:-translate-y-1.5 flex flex-col"
+              variant="scale-up"
+              delay={idx * 100}
+              className="h-full"
             >
-              {/* Photo Box */}
-              <div className="relative h-72 sm:h-80 overflow-hidden bg-slate-900">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  className="w-full h-full object-cover object-[center_28%] transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-4">
-                  <span className="text-white text-xs font-bold flex items-center gap-1.5">
-                    <Maximize2 size={14} className="text-orange-400" />
-                    <span>Expand Photo</span>
-                  </span>
-                  <span className="text-[10px] font-bold text-orange-300 uppercase tracking-wider bg-black/50 px-2.5 py-1 rounded-full border border-white/20">
-                    {item.category}
-                  </span>
+              <div
+                onClick={() => openLightbox(idx)}
+                className="group cursor-pointer bg-white rounded-3xl overflow-hidden shadow-xs hover:shadow-xl border border-slate-200/80 transition-all duration-300 hover:-translate-y-1.5 flex flex-col h-full"
+              >
+                {/* Photo Box */}
+                <div className="relative h-72 sm:h-80 overflow-hidden bg-slate-900">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="w-full h-full object-cover object-[center_28%] transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-4">
+                    <span className="text-white text-xs font-bold flex items-center gap-1.5">
+                      <Maximize2 size={14} className="text-orange-400" />
+                      <span>Expand Photo</span>
+                    </span>
+                    <span className="text-[10px] font-bold text-orange-300 uppercase tracking-wider bg-black/50 px-2.5 py-1 rounded-full border border-white/20">
+                      {item.category}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
 
         {/* View Full Gallery CTA Button */}
-        <div className="text-center">
+        <ScrollReveal variant="fade-up" delay={250} className="text-center">
           <NavLink
             to="/gallery"
             className="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-xs sm:text-sm font-bold shadow-md shadow-orange-500/20 hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
@@ -187,7 +194,7 @@ export default function HomeGallery() {
             <span>View Full Gallery</span>
             <ArrowRight size={16} />
           </NavLink>
-        </div>
+        </ScrollReveal>
 
       </div>
 
@@ -273,3 +280,4 @@ export default function HomeGallery() {
     </section>
   );
 }
+

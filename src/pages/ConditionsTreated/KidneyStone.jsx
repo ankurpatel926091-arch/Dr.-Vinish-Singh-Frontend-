@@ -22,6 +22,7 @@ import {
   Award,
 } from "lucide-react";
 import PageHero from "../../components/PageHero";
+import ScrollReveal from "../../components/ScrollReveal/ScrollReveal";
 
 // Image Import
 import kidneyStoneImg from "../../assets/Male Urology/Kidney Stone Surgery.png";
@@ -150,7 +151,7 @@ export default function KidneyStone() {
 
       {/* ================= 0. VISUAL CLINICAL FEATURE SHOWCASE ================= */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-10 pb-4">
-        <div className="bg-gradient-to-r from-white via-blue-50/60 to-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm flex flex-col lg:flex-row items-center gap-8">
+        <ScrollReveal variant="fade-up" className="bg-gradient-to-r from-white via-blue-50/60 to-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm flex flex-col lg:flex-row items-center gap-8">
           {/* Left Text Box */}
           <div className="lg:w-1/2">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100 text-orange-700 text-xs font-extrabold uppercase tracking-wider mb-3">
@@ -210,12 +211,12 @@ export default function KidneyStone() {
               </div>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
       </div>
 
       {/* ================= 1. CORE TREATMENTS OFFERED ================= */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-16">
-        <div className="text-center max-w-3xl mx-auto mb-12">
+        <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-100/70 text-[#103F7C] text-xs font-extrabold uppercase tracking-wider mb-3">
             <Sparkles size={13} className="text-orange-500" />
             <span>MINIMALLY INVASIVE SURGERY</span>
@@ -226,58 +227,64 @@ export default function KidneyStone() {
           <p className="text-xs sm:text-sm text-slate-600 mt-2 font-normal leading-relaxed">
             Modern, evidence-based surgical solutions tailored to exact stone size, location, and hardness.
           </p>
-        </div>
+        </ScrollReveal>
 
         {/* 3-Column Treatment Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {treatments.map((item, idx) => (
-            <div
+            <ScrollReveal
               key={idx}
-              className={`bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 ${item.borderAccent} shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group`}
+              variant="scale-up"
+              delay={idx * 100}
+              className="h-full"
             >
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div
-                    className={`w-12 h-12 rounded-2xl flex items-center justify-center border ${item.bgIcon}`}
-                  >
-                    <Stethoscope size={22} />
-                  </div>
-                  <span className="text-[10px] font-extrabold text-orange-600 bg-orange-50 px-3 py-1 rounded-full border border-orange-200 uppercase tracking-wider">
-                    {item.tag}
-                  </span>
-                </div>
-
-                <h3 className="font-extrabold text-slate-900 text-lg leading-snug group-hover:text-[#103F7C] transition-colors mb-1">
-                  {item.title}
-                </h3>
-                <p className="text-xs font-bold text-[#103F7C] mb-3">
-                  {item.subtitle}
-                </p>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal mb-5">
-                  {item.desc}
-                </p>
-
-                {/* Highlights Checklist */}
-                <div className="space-y-2 mb-6 pt-3 border-t border-slate-100">
-                  {item.highlights.map((h, i) => (
-                    <div key={i} className="flex items-center gap-2 text-xs font-semibold text-slate-700">
-                      <CheckCircle2 size={14} className="text-orange-500 shrink-0" />
-                      <span>{h}</span>
+              <div
+                className={`bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 ${item.borderAccent} shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group h-full`}
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div
+                      className={`w-12 h-12 rounded-2xl flex items-center justify-center border ${item.bgIcon}`}
+                    >
+                      <Stethoscope size={22} />
                     </div>
-                  ))}
+                    <span className="text-[10px] font-extrabold text-orange-600 bg-orange-50 px-3 py-1 rounded-full border border-orange-200 uppercase tracking-wider">
+                      {item.tag}
+                    </span>
+                  </div>
+
+                  <h3 className="font-extrabold text-slate-900 text-lg leading-snug group-hover:text-[#103F7C] transition-colors mb-1">
+                    {item.title}
+                  </h3>
+                  <p className="text-xs font-bold text-[#103F7C] mb-3">
+                    {item.subtitle}
+                  </p>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal mb-5">
+                    {item.desc}
+                  </p>
+
+                  {/* Highlights Checklist */}
+                  <div className="space-y-2 mb-6 pt-3 border-t border-slate-100">
+                    {item.highlights.map((h, i) => (
+                      <div key={i} className="flex items-center gap-2 text-xs font-semibold text-slate-700">
+                        <CheckCircle2 size={14} className="text-orange-500 shrink-0" />
+                        <span>{h}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-slate-100">
+                  <NavLink
+                    to="/contact"
+                    className="inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-full bg-slate-50 hover:bg-[#103F7C] text-[#103F7C] hover:text-white border border-slate-200 text-xs font-bold transition-all duration-300"
+                  >
+                    <span>Inquire Procedure</span>
+                    <ChevronRight size={14} />
+                  </NavLink>
                 </div>
               </div>
-
-              <div className="pt-4 border-t border-slate-100">
-                <NavLink
-                  to="/contact"
-                  className="inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-full bg-slate-50 hover:bg-[#103F7C] text-[#103F7C] hover:text-white border border-slate-200 text-xs font-bold transition-all duration-300"
-                >
-                  <span>Inquire Procedure</span>
-                  <ChevronRight size={14} />
-                </NavLink>
-              </div>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
       </div>
@@ -285,7 +292,7 @@ export default function KidneyStone() {
       {/* ================= 2. WHY CHOOSE LASER SURGERY (4 BENEFITS) ================= */}
       <div className="bg-white py-14 lg:py-16 border-y border-slate-200/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center max-w-3xl mx-auto mb-12">
+          <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-12">
             <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-orange-100/70 text-orange-700 text-xs font-extrabold uppercase tracking-wider mb-2">
               <Zap size={13} className="text-orange-500" />
               <span>TECHNOLOGY ADVANTAGES</span>
@@ -296,26 +303,27 @@ export default function KidneyStone() {
             <p className="mt-1.5 text-xs sm:text-sm text-slate-600">
               Comparing painless laser stone dusting with traditional surgical methods.
             </p>
-          </div>
+          </ScrollReveal>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {laserBenefits.map((b, i) => {
               const IconComp = b.icon;
               return (
-                <div
-                  key={i}
-                  className="bg-slate-50/90 rounded-2xl p-5 border border-slate-200/80 hover:bg-white hover:shadow-lg transition-all duration-300"
-                >
-                  <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#103F7C] flex items-center justify-center mb-3 border border-blue-200">
-                    <IconComp size={20} />
+                <ScrollReveal key={i} variant="scale-up" delay={i * 80} className="h-full">
+                  <div
+                    className="bg-slate-50/90 rounded-2xl p-5 border border-slate-200/80 hover:bg-white hover:shadow-lg transition-all duration-300 h-full"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#103F7C] flex items-center justify-center mb-3 border border-blue-200">
+                      <IconComp size={20} />
+                    </div>
+                    <h3 className="font-extrabold text-slate-900 text-base mb-1">
+                      {b.title}
+                    </h3>
+                    <p className="text-xs text-slate-600 leading-relaxed">
+                      {b.desc}
+                    </p>
                   </div>
-                  <h3 className="font-extrabold text-slate-900 text-base mb-1">
-                    {b.title}
-                  </h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">
-                    {b.desc}
-                  </p>
-                </div>
+                </ScrollReveal>
               );
             })}
           </div>
@@ -327,7 +335,7 @@ export default function KidneyStone() {
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           
           {/* Left Column: Symptoms Checklist (7 cols) */}
-          <div className="lg:col-span-7">
+          <ScrollReveal variant="slide-right" className="lg:col-span-7">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-50 text-orange-600 text-xs font-extrabold uppercase tracking-wider mb-3">
               <AlertTriangle size={13} />
               <span>WARNING SIGNS</span>
@@ -352,10 +360,10 @@ export default function KidneyStone() {
                 </div>
               ))}
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Right Column: Diagnostic Glass Card (5 cols) */}
-          <div className="lg:col-span-5">
+          <ScrollReveal variant="slide-left" delay={150} className="lg:col-span-5">
             <div className="bg-gradient-to-br from-[#103F7C] via-blue-900 to-[#103F7C] text-white rounded-3xl p-7 sm:p-8 shadow-xl relative overflow-hidden">
               <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-orange-500/20 rounded-full blur-2xl pointer-events-none" />
 
@@ -390,13 +398,13 @@ export default function KidneyStone() {
                 <span>Schedule Evaluation</span>
               </NavLink>
             </div>
-          </div>
+          </ScrollReveal>
 
         </div>
       </div>
 
       {/* ================= 4. CTA BANNER ================= */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-16">
+      <ScrollReveal variant="fade-up" delay={200} className="max-w-7xl mx-auto px-4 sm:px-6 pb-16">
         <div className="rounded-3xl bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#103F7C] text-white p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
           <div>
             <h3 className="text-xl sm:text-2xl font-extrabold">Facing Kidney Stone Pain?</h3>
@@ -411,7 +419,7 @@ export default function KidneyStone() {
             <ArrowRight size={16} />
           </NavLink>
         </div>
-      </div>
+      </ScrollReveal>
 
       {/* LIGHTBOX OVERLAY MODAL */}
       {lightboxOpen && (

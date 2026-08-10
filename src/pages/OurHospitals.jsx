@@ -31,6 +31,7 @@ import {
   Navigation,
 } from "lucide-react";
 import PageHero from "../components/PageHero";
+import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
 
 // Image Imports
 import hospitalBuildingImg from "../assets/OurHospital/1.jpg";
@@ -226,7 +227,7 @@ export default function OurHospitals() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 lg:py-16">
         
         {/* Section Intro */}
-        <div className="text-center max-w-3xl mx-auto mb-10">
+        <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-10">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100/80 text-[#103F7C] text-xs font-bold uppercase tracking-wider mb-4 border border-blue-200/60 shadow-xs">
             <Building2 size={15} className="text-orange-500 animate-pulse" />
             <span>2 Convenient Healthcare Centres in Lucknow</span>
@@ -258,210 +259,216 @@ export default function OurHospitals() {
               </button>
             ))}
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* 2 Hospital Cards Grid */}
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 mb-16">
-          {filteredHospitals.map((hosp) => (
-            <div
+          {filteredHospitals.map((hosp, idx) => (
+            <ScrollReveal
               key={hosp.id}
-              className="bg-white rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden group"
+              variant="scale-up"
+              delay={idx * 150}
+              className="h-full"
             >
-              <div>
-                {/* Hospital Photo Header Box with Lightbox Trigger */}
-                <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-slate-900 group">
-                  <img
-                    src={hosp.image}
-                    alt={hosp.name}
-                    className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-                  />
-                  {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
+              <div
+                className="bg-white rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden group h-full"
+              >
+                <div>
+                  {/* Hospital Photo Header Box with Lightbox Trigger */}
+                  <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-slate-900 group">
+                    <img
+                      src={hosp.image}
+                      alt={hosp.name}
+                      className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                    />
+                    {/* Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
 
-                  {/* Top Floating Badges */}
-                  <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2 z-10">
-                    <span
-                      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-md border ${hosp.badgeColor}`}
-                    >
-                      <Clock size={13} />
-                      <span>{hosp.tagline}</span>
-                    </span>
-
-                    <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-800 bg-emerald-50/95 backdrop-blur-md px-3 py-1 rounded-full border border-emerald-300 shadow-xs">
-                      <ShieldCheck size={13} className="text-emerald-600" />
-                      <span>Active OPD</span>
-                    </span>
-                  </div>
-
-                  {/* Bottom Photo Overlay Info */}
-                  <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between z-10 text-white">
-                    <div>
-                      <span className="text-[11px] font-bold uppercase tracking-widest text-orange-300 bg-black/50 backdrop-blur-xs px-2.5 py-0.5 rounded-full border border-white/20">
-                        {hosp.badgeText}
+                    {/* Top Floating Badges */}
+                    <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2 z-10">
+                      <span
+                        className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-md border ${hosp.badgeColor}`}
+                      >
+                        <Clock size={13} />
+                        <span>{hosp.tagline}</span>
                       </span>
-                      <h4 className="text-sm font-bold mt-1 text-white/90 drop-shadow-sm flex items-center gap-1.5">
-                        <MapPin size={14} className="text-orange-400" />
-                        {hosp.locality}
-                      </h4>
+
+                      <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-800 bg-emerald-50/95 backdrop-blur-md px-3 py-1 rounded-full border border-emerald-300 shadow-xs">
+                        <ShieldCheck size={13} className="text-emerald-600" />
+                        <span>Active OPD</span>
+                      </span>
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={() => openLightbox(hosp.image, hosp.name)}
-                      className="px-3 py-1.5 rounded-xl bg-black/60 hover:bg-orange-500 text-white text-xs font-bold backdrop-blur-md border border-white/30 flex items-center gap-1.5 transition-all duration-300 shadow-lg hover:scale-105"
-                    >
-                      <Maximize2 size={13} />
-                      <span>Full Photo</span>
-                    </button>
-                  </div>
-                </div>
-
-                {/* Card Content Body */}
-                <div className="p-6 sm:p-8">
-                  {/* Title */}
-                  <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 group-hover:text-[#103F7C] transition-colors leading-snug mb-4">
-                    {hosp.name}
-                  </h3>
-
-                  {/* Info Cards: Timing, Phone, Address */}
-                  <div className="space-y-3 mb-6 text-xs sm:text-sm text-slate-700">
-                    {/* Timing */}
-                    <div className="flex items-center gap-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-100 hover:border-slate-200 transition-colors">
-                      <div className="w-9 h-9 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center shrink-0 shadow-xs">
-                        <Clock size={18} />
-                      </div>
+                    {/* Bottom Photo Overlay Info */}
+                    <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between z-10 text-white">
                       <div>
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
-                          OPD Consultation Hours
+                        <span className="text-[11px] font-bold uppercase tracking-widest text-orange-300 bg-black/50 backdrop-blur-xs px-2.5 py-0.5 rounded-full border border-white/20">
+                          {hosp.badgeText}
                         </span>
-                        <span className="font-extrabold text-slate-900 text-sm">
-                          {hosp.timing}
-                        </span>
+                        <h4 className="text-sm font-bold mt-1 text-white/90 drop-shadow-sm flex items-center gap-1.5">
+                          <MapPin size={14} className="text-orange-400" />
+                          {hosp.locality}
+                        </h4>
                       </div>
-                    </div>
 
-                    {/* Phone */}
-                    <div className="flex items-center gap-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-100 hover:border-slate-200 transition-colors">
-                      <div className="w-9 h-9 rounded-xl bg-blue-100 text-[#103F7C] flex items-center justify-center shrink-0 shadow-xs">
-                        <Phone size={18} />
-                      </div>
-                      <div className="flex-1 flex items-center justify-between gap-2">
+                      <button
+                        type="button"
+                        onClick={() => openLightbox(hosp.image, hosp.name)}
+                        className="px-3 py-1.5 rounded-xl bg-black/60 hover:bg-orange-500 text-white text-xs font-bold backdrop-blur-md border border-white/30 flex items-center gap-1.5 transition-all duration-300 shadow-lg hover:scale-105"
+                      >
+                        <Maximize2 size={13} />
+                        <span>Full Photo</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Card Content Body */}
+                  <div className="p-6 sm:p-8">
+                    {/* Title */}
+                    <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 group-hover:text-[#103F7C] transition-colors leading-snug mb-4">
+                      {hosp.name}
+                    </h3>
+
+                    {/* Info Cards: Timing, Phone, Address */}
+                    <div className="space-y-3 mb-6 text-xs sm:text-sm text-slate-700">
+                      {/* Timing */}
+                      <div className="flex items-center gap-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-100 hover:border-slate-200 transition-colors">
+                        <div className="w-9 h-9 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center shrink-0 shadow-xs">
+                          <Clock size={18} />
+                        </div>
                         <div>
                           <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
-                            Appointments &amp; Helpline
+                            OPD Consultation Hours
                           </span>
+                          <span className="font-extrabold text-slate-900 text-sm">
+                            {hosp.timing}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Phone */}
+                      <div className="flex items-center gap-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-100 hover:border-slate-200 transition-colors">
+                        <div className="w-9 h-9 rounded-xl bg-blue-100 text-[#103F7C] flex items-center justify-center shrink-0 shadow-xs">
+                          <Phone size={18} />
+                        </div>
+                        <div className="flex-1 flex items-center justify-between gap-2">
+                          <div>
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                              Appointments &amp; Helpline
+                            </span>
+                            <a
+                              href={hosp.phoneRaw}
+                              className="font-extrabold text-[#103F7C] hover:underline text-sm"
+                            >
+                              {hosp.phone}
+                            </a>
+                          </div>
                           <a
                             href={hosp.phoneRaw}
-                            className="font-extrabold text-[#103F7C] hover:underline text-sm"
+                            className="px-3.5 py-1.5 rounded-full bg-[#103F7C] hover:bg-blue-900 text-white text-xs font-bold transition-all shadow-xs shrink-0 flex items-center gap-1"
                           >
-                            {hosp.phone}
+                            <Phone size={12} />
+                            <span>Call</span>
                           </a>
                         </div>
-                        <a
-                          href={hosp.phoneRaw}
-                          className="px-3.5 py-1.5 rounded-full bg-[#103F7C] hover:bg-blue-900 text-white text-xs font-bold transition-all shadow-xs shrink-0 flex items-center gap-1"
-                        >
-                          <Phone size={12} />
-                          <span>Call</span>
-                        </a>
                       </div>
-                    </div>
 
-                    {/* Address */}
-                    <div className="flex items-start gap-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-100 hover:border-slate-200 transition-colors">
-                      <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
-                        <MapPin size={18} />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between gap-2">
-                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
-                            Full Hospital Address
-                          </span>
-                          <button
-                            type="button"
-                            onClick={() => handleCopyAddress(hosp.id, hosp.address)}
-                            className="text-[11px] font-bold text-[#103F7C] hover:text-orange-600 flex items-center gap-1 transition-colors"
-                          >
-                            {copiedId === hosp.id ? (
-                              <>
-                                <Check size={12} className="text-emerald-600" />
-                                <span className="text-emerald-600">Copied!</span>
-                              </>
-                            ) : (
-                              <>
-                                <Copy size={12} />
-                                <span>Copy</span>
-                              </>
-                            )}
-                          </button>
+                      {/* Address */}
+                      <div className="flex items-start gap-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-100 hover:border-slate-200 transition-colors">
+                        <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+                          <MapPin size={18} />
                         </div>
-                        <p className="text-xs text-slate-700 font-medium leading-relaxed mt-1">
-                          {hosp.address}
-                        </p>
+                        <div className="flex-1">
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                              Full Hospital Address
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => handleCopyAddress(hosp.id, hosp.address)}
+                              className="text-[11px] font-bold text-[#103F7C] hover:text-orange-600 flex items-center gap-1 transition-colors"
+                            >
+                              {copiedId === hosp.id ? (
+                                <>
+                                  <Check size={12} className="text-emerald-600" />
+                                  <span className="text-emerald-600">Copied!</span>
+                                </>
+                              ) : (
+                                <>
+                                  <Copy size={12} />
+                                  <span>Copy</span>
+                                </>
+                              )}
+                            </button>
+                          </div>
+                          <p className="text-xs text-slate-700 font-medium leading-relaxed mt-1">
+                            {hosp.address}
+                          </p>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Facility Tags */}
-                  <div className="mb-6">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-2">
-                      Key Services &amp; Facilities:
-                    </span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {hosp.facilities.map((fac, i) => (
-                        <span
-                          key={i}
-                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-blue-50/80 text-[#103F7C] text-[11px] font-semibold border border-blue-100"
-                        >
-                          <CheckCircle2 size={11} className="text-emerald-600" />
-                          <span>{fac}</span>
-                        </span>
-                      ))}
+                    {/* Facility Tags */}
+                    <div className="mb-6">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-2">
+                        Key Services &amp; Facilities:
+                      </span>
+                      <div className="flex flex-wrap gap-1.5">
+                        {hosp.facilities.map((fac, i) => (
+                          <span
+                            key={i}
+                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-blue-50/80 text-[#103F7C] text-[11px] font-semibold border border-blue-100"
+                          >
+                            <CheckCircle2 size={11} className="text-emerald-600" />
+                            <span>{fac}</span>
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Embedded Map Box */}
-                  <div className="w-full h-44 rounded-2xl overflow-hidden border border-slate-200 mb-2 bg-slate-100 relative group/map">
-                    <iframe
-                      title={hosp.name}
-                      src={hosp.mapIframe}
-                      width="100%"
-                      height="100%"
-                      style={{ border: 0 }}
-                      allowFullScreen=""
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                    />
+                    {/* Embedded Map Box */}
+                    <div className="w-full h-44 rounded-2xl overflow-hidden border border-slate-200 mb-2 bg-slate-100 relative group/map">
+                      <iframe
+                        title={hosp.name}
+                        src={hosp.mapIframe}
+                        width="100%"
+                        height="100%"
+                        style={{ border: 0 }}
+                        allowFullScreen=""
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                      />
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Action Buttons Footer */}
-              <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex flex-wrap items-center gap-3">
-                <a
-                  href={hosp.mapUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-slate-300 hover:border-[#103F7C] text-[#103F7C] hover:bg-[#103F7C] hover:text-white font-bold text-xs transition-all duration-300"
-                >
-                  <Navigation size={14} />
-                  <span>Get Directions</span>
-                </a>
+                {/* Action Buttons Footer */}
+                <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex flex-wrap items-center gap-3">
+                  <a
+                    href={hosp.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-slate-300 hover:border-[#103F7C] text-[#103F7C] hover:bg-[#103F7C] hover:text-white font-bold text-xs transition-all duration-300"
+                  >
+                    <Navigation size={14} />
+                    <span>Get Directions</span>
+                  </a>
 
-                <NavLink
-                  to="/contact"
-                  className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-xs shadow-xs transition-all duration-300 hover:scale-102"
-                >
-                  <Calendar size={14} />
-                  <span>Book Appointment</span>
-                </NavLink>
+                  <NavLink
+                    to="/contact"
+                    className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-xs shadow-xs transition-all duration-300 hover:scale-102"
+                  >
+                    <Calendar size={14} />
+                    <span>Book Appointment</span>
+                  </NavLink>
+                </div>
               </div>
-            </div>
+            </ScrollReveal>
           ))}
         </div>
 
         {/* Hospital Facilities & Infrastructure Showcase Gallery */}
-        <div className="mt-16 bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/90 shadow-sm">
+        <ScrollReveal variant="fade-up" className="mt-16 bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/90 shadow-sm">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-xs font-bold uppercase tracking-wider mb-2">
               <Sparkles size={13} />
@@ -476,44 +483,45 @@ export default function OurHospitals() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {facilityGallery.map((fac) => (
-              <div
-                key={fac.id}
-                onClick={() => openLightbox(fac.image, fac.title)}
-                className="group cursor-pointer rounded-2xl overflow-hidden border border-slate-200/80 bg-slate-900 relative h-64 shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-              >
-                <img
-                  src={fac.image}
-                  alt={fac.title}
-                  className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
+            {facilityGallery.map((fac, idx) => (
+              <ScrollReveal key={fac.id} variant="scale-up" delay={idx * 100}>
+                <div
+                  onClick={() => openLightbox(fac.image, fac.title)}
+                  className="group cursor-pointer rounded-2xl overflow-hidden border border-slate-200/80 bg-slate-900 relative h-64 shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                >
+                  <img
+                    src={fac.image}
+                    alt={fac.title}
+                    className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
 
-                <div className="absolute top-3 right-3 z-10">
-                  <span className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-bold text-orange-300 uppercase tracking-wider border border-white/20">
-                    {fac.category}
-                  </span>
-                </div>
+                  <div className="absolute top-3 right-3 z-10">
+                    <span className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-bold text-orange-300 uppercase tracking-wider border border-white/20">
+                      {fac.category}
+                    </span>
+                  </div>
 
-                <div className="absolute bottom-4 left-4 right-4 z-10 text-white">
-                  <h4 className="font-extrabold text-sm sm:text-base leading-snug group-hover:text-orange-300 transition-colors">
-                    {fac.title}
-                  </h4>
-                  <p className="text-xs text-slate-300 mt-1 font-normal line-clamp-1">
-                    {fac.subtitle}
-                  </p>
-                  <div className="mt-2 text-[11px] font-bold text-orange-400 flex items-center gap-1">
-                    <Maximize2 size={12} />
-                    <span>Click to Expand Photo</span>
+                  <div className="absolute bottom-4 left-4 right-4 z-10 text-white">
+                    <h4 className="font-extrabold text-sm sm:text-base leading-snug group-hover:text-orange-300 transition-colors">
+                      {fac.title}
+                    </h4>
+                    <p className="text-xs text-slate-300 mt-1 font-normal line-clamp-1">
+                      {fac.subtitle}
+                    </p>
+                    <div className="mt-2 text-[11px] font-bold text-orange-400 flex items-center gap-1">
+                      <Maximize2 size={12} />
+                      <span>Click to Expand Photo</span>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
-        </div>
+        </ScrollReveal>
 
         {/* Why Patients Choose Our Hospitals Highlights Grid */}
-        <div className="mt-14 rounded-3xl bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#103F7C] text-white p-8 sm:p-12 shadow-lg">
+        <ScrollReveal variant="fade-up" delay={200} className="mt-14 rounded-3xl bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#103F7C] text-white p-8 sm:p-12 shadow-lg">
           <div className="text-center max-w-xl mx-auto mb-8">
             <h3 className="text-2xl font-extrabold">Comprehensive Urologic Care in Lucknow</h3>
             <p className="text-xs sm:text-sm text-blue-100 mt-1">Dedicated to patient comfort, laser surgery precision, and ethical medical standards.</p>
@@ -557,7 +565,7 @@ export default function OurHospitals() {
               <span>Call Helpline: +91 89600 68307</span>
             </a>
           </div>
-        </div>
+        </ScrollReveal>
 
       </div>
 
