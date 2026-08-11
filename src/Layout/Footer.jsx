@@ -3,10 +3,12 @@ import {
   FaMapMarkerAlt,
   FaFacebookF,
   FaInstagram,
+  FaLinkedinIn,
   FaYoutube,
   FaChevronRight,
   FaHospital,
 } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import codeCrafterLogo from "../assets/CLogoFooter.png";
 import logo from "../assets/logo.png";
@@ -73,22 +75,32 @@ export default function Footer() {
             </p>
 
             {/* Social Links Bar */}
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2 flex-wrap">
               {[
                 {
                   icon: FaFacebookF,
                   label: "Facebook",
-                  href: "https://www.facebook.com/drvinishsinghurosurgeon/",
+                  href: "https://www.facebook.com/vinishingh",
                 },
                 {
                   icon: FaInstagram,
                   label: "Instagram",
-                  href: "https://www.instagram.com/drvinishurosurgeon/?hl=en",
+                  href: "https://www.instagram.com/drvinishurosurgeon/",
+                },
+                {
+                  icon: FaLinkedinIn,
+                  label: "LinkedIn",
+                  href: "https://www.linkedin.com/company/106467207/admin/dashboard/",
                 },
                 {
                   icon: FaYoutube,
                   label: "YouTube",
-                  href: "https://www.youtube.com/@drvinishinghurosurgeon/",
+                  href: "https://www.youtube.com/@drvinishinghurosurgeon",
+                },
+                {
+                  icon: FaXTwitter,
+                  label: "Twitter",
+                  href: "https://x.com/dr_vinish",
                 },
               ].map((item, i) => {
                 const IconComp = item.icon;
@@ -99,6 +111,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={item.label}
+                    title={item.label}
                     className="w-9 h-9 rounded-full flex items-center justify-center bg-white/10 hover:bg-[#F5821F] text-white border border-white/10 transition-all duration-300 hover:scale-110 shadow-xs"
                   >
                     <IconComp size={13} />

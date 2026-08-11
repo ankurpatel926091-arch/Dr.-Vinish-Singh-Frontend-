@@ -21,6 +21,13 @@ import {
   Users,
   Quote,
 } from "lucide-react";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+  FaYoutube,
+} from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 import doctorImage from "../assets/doctor.jpg";
 import PageHero from "../components/PageHero";
@@ -319,6 +326,61 @@ export default function DrVinishKumarSingh() {
                 <Phone size={15} />
                 <span>Call +91 72759 81480</span>
               </a>
+            </div>
+
+            {/* Social Media Connect Bar */}
+            <div className="mt-5 flex items-center gap-3 flex-wrap">
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+                Follow Doctor:
+              </span>
+              <div className="flex items-center gap-2">
+                {[
+                  {
+                    icon: FaFacebookF,
+                    label: "Facebook",
+                    href: "https://www.facebook.com/vinishingh",
+                    bg: "bg-[#1877F2]",
+                  },
+                  {
+                    icon: FaInstagram,
+                    label: "Instagram",
+                    href: "https://www.instagram.com/drvinishurosurgeon/",
+                    bg: "bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045]",
+                  },
+                  {
+                    icon: FaLinkedinIn,
+                    label: "LinkedIn",
+                    href: "https://www.linkedin.com/company/106467207/admin/dashboard/",
+                    bg: "bg-[#0A66C2]",
+                  },
+                  {
+                    icon: FaYoutube,
+                    label: "YouTube",
+                    href: "https://www.youtube.com/@drvinishinghurosurgeon",
+                    bg: "bg-[#FF0000]",
+                  },
+                  {
+                    icon: FaXTwitter,
+                    label: "Twitter / X",
+                    href: "https://x.com/dr_vinish",
+                    bg: "bg-[#000000]",
+                  },
+                ].map((social, i) => {
+                  const Icon = social.icon;
+                  return (
+                    <a
+                      key={i}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={social.label}
+                      className={`w-8 h-8 rounded-full ${social.bg} text-white flex items-center justify-center shadow-xs transition-all duration-300 hover:scale-115`}
+                    >
+                      <Icon size={12} />
+                    </a>
+                  );
+                })}
+              </div>
             </div>
           </ScrollReveal>
 

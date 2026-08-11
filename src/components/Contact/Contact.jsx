@@ -12,8 +12,53 @@ import {
   Moon,
   ExternalLink,
 } from "lucide-react";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedinIn,
+  FaYoutube,
+} from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import PageHero from "../PageHero";
 import ScrollReveal from "../ScrollReveal/ScrollReveal";
+
+const socialAccounts = [
+  {
+    name: "Facebook",
+    handle: "vinishingh",
+    icon: FaFacebookF,
+    url: "https://www.facebook.com/vinishingh",
+    bgColor: "bg-[#1877F2]",
+  },
+  {
+    name: "Instagram",
+    handle: "@drvinishurosurgeon",
+    icon: FaInstagram,
+    url: "https://www.instagram.com/drvinishurosurgeon/",
+    bgColor: "bg-gradient-to-r from-[#833ab4] via-[#fd1d1d] to-[#fcb045]",
+  },
+  {
+    name: "LinkedIn",
+    handle: "Dr Vinish Singh",
+    icon: FaLinkedinIn,
+    url: "https://www.linkedin.com/company/106467207/admin/dashboard/",
+    bgColor: "bg-[#0A66C2]",
+  },
+  {
+    name: "YouTube",
+    handle: "@drvinishinghurosurgeon",
+    icon: FaYoutube,
+    url: "https://www.youtube.com/@drvinishinghurosurgeon",
+    bgColor: "bg-[#FF0000]",
+  },
+  {
+    name: "Twitter / X",
+    handle: "@dr_vinish",
+    icon: FaXTwitter,
+    url: "https://x.com/dr_vinish",
+    bgColor: "bg-[#000000]",
+  },
+];
 
 const hospitalLocations = {
   morning: {
@@ -244,7 +289,7 @@ export default function Contact({ isHomePage = false }) {
             </div>
 
             {/* Map Container */}
-            <div className="bg-white rounded-2xl p-2 shadow-sm border border-slate-200/80 overflow-hidden h-[300px] relative">
+            <div className="bg-white rounded-2xl p-2 shadow-sm border border-slate-200/80 overflow-hidden h-[260px] relative">
               <iframe
                 title={currentLocation.title}
                 src={currentLocation.embedUrl}
@@ -255,6 +300,52 @@ export default function Contact({ isHomePage = false }) {
                 loading="lazy"
                 className="rounded-xl w-full h-full"
               />
+            </div>
+
+            {/* Social Media Connections Card */}
+            <div className="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-2xs space-y-3">
+              <div className="flex items-center justify-between">
+                <h3 className="font-extrabold text-slate-900 text-sm flex items-center gap-2">
+                  <Sparkles size={15} className="text-orange-500" />
+                  <span>Connect on Social Media</span>
+                </h3>
+                <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                  Official Channels
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                {socialAccounts.map((item) => {
+                  const IconComponent = item.icon;
+                  return (
+                    <a
+                      key={item.name}
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2.5 p-2.5 rounded-xl bg-slate-50/80 hover:bg-blue-50/60 border border-slate-200/70 hover:border-blue-200 transition-all duration-200 group"
+                    >
+                      <div
+                        className={`w-7 h-7 rounded-lg text-white flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-110 shadow-xs ${item.bgColor}`}
+                      >
+                        <IconComponent size={13} />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-bold text-slate-800 group-hover:text-[#103F7C] truncate leading-tight">
+                          {item.name}
+                        </p>
+                        <p className="text-[10px] text-slate-500 truncate leading-tight mt-0.5">
+                          {item.handle}
+                        </p>
+                      </div>
+                      <ExternalLink
+                        size={11}
+                        className="text-slate-400 group-hover:text-orange-500 transition-colors shrink-0 mr-1"
+                      />
+                    </a>
+                  );
+                })}
+              </div>
             </div>
 
           </ScrollReveal>
