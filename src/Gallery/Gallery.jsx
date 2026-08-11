@@ -438,9 +438,9 @@ export default function Gallery() {
             onClick={prevMedia}
             aria-label="Previous (Left Arrow)"
             title="Previous (Left Arrow Key)"
-            className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-slate-900/80 hover:bg-orange-500 text-white flex items-center justify-center transition-all duration-300 border border-white/15 z-50 shadow-lg hover:scale-110 active:scale-95"
+            className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-slate-900/80 hover:bg-orange-500 text-white flex items-center justify-center transition-all duration-300 border border-white/15 z-50 shadow-lg hover:scale-110 active:scale-95"
           >
-            <ChevronLeft size={22} />
+            <ChevronLeft size={20} />
           </button>
 
           {/* Right Navigation Arrow (Keyboard ArrowRight) */}
@@ -449,21 +449,21 @@ export default function Gallery() {
             onClick={nextMedia}
             aria-label="Next (Right Arrow)"
             title="Next (Right Arrow Key)"
-            className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-slate-900/80 hover:bg-orange-500 text-white flex items-center justify-center transition-all duration-300 border border-white/15 z-50 shadow-lg hover:scale-110 active:scale-95"
+            className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-slate-900/80 hover:bg-orange-500 text-white flex items-center justify-center transition-all duration-300 border border-white/15 z-50 shadow-lg hover:scale-110 active:scale-95"
           >
-            <ChevronRight size={22} />
+            <ChevronRight size={20} />
           </button>
 
-          {/* Modal Centered Media Container (Exact 577px x 728px dimensions) */}
+          {/* Modal Centered Media Container */}
           <div
-            className="relative w-full max-w-[577px] h-[728px] max-h-[80vh] flex items-center justify-center overflow-hidden rounded-2xl"
+            className="relative w-full max-w-[577px] max-h-[75vh] sm:max-h-[85vh] flex items-center justify-center overflow-hidden rounded-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {currentMediaItem.type === "photo" ? (
               <img
                 src={currentMediaItem.media}
                 alt={currentMediaItem.title}
-                className="w-full h-full max-w-[577px] max-h-[728px] object-cover object-center rounded-2xl shadow-2xl transition-transform duration-300 ease-out"
+                className="w-auto h-auto max-w-full max-h-[75vh] sm:max-h-[85vh] object-contain object-center rounded-2xl shadow-2xl transition-transform duration-300 ease-out"
                 style={{
                   transform: `scale(${zoomLevel}) rotate(${rotation}deg)`,
                 }}
@@ -473,7 +473,7 @@ export default function Gallery() {
                 src={currentMediaItem.media}
                 controls
                 autoPlay
-                className="w-full h-full max-w-[577px] max-h-[728px] rounded-2xl shadow-2xl"
+                className="w-auto h-auto max-w-full max-h-[75vh] sm:max-h-[85vh] rounded-2xl shadow-2xl object-contain"
               />
             )}
           </div>

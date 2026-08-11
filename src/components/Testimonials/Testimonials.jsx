@@ -196,9 +196,9 @@ export default function Testimonials() {
             type="button"
             onClick={scrollLeft}
             aria-label="Scroll left"
-            className="absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white text-[#103F7C] hover:bg-[#103F7C] hover:text-white shadow-md border border-slate-200 flex items-center justify-center transition-all duration-300 z-20 hover:scale-110 active:scale-95"
+            className="absolute left-0 sm:-left-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-[#103F7C] hover:bg-[#103F7C] hover:text-white shadow-md border border-slate-200 flex items-center justify-center transition-all duration-300 z-20 hover:scale-110 active:scale-95"
           >
-            <ChevronLeft size={20} />
+            <ChevronLeft size={19} />
           </button>
 
           {/* Right Arrow Button */}
@@ -206,9 +206,9 @@ export default function Testimonials() {
             type="button"
             onClick={scrollRight}
             aria-label="Scroll right"
-            className="absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white text-[#103F7C] hover:bg-[#103F7C] hover:text-white shadow-md border border-slate-200 flex items-center justify-center transition-all duration-300 z-20 hover:scale-110 active:scale-95"
+            className="absolute right-0 sm:-right-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-[#103F7C] hover:bg-[#103F7C] hover:text-white shadow-md border border-slate-200 flex items-center justify-center transition-all duration-300 z-20 hover:scale-110 active:scale-95"
           >
-            <ChevronRight size={20} />
+            <ChevronRight size={19} />
           </button>
 
           {/* Cards Track (Auto-Moves smoothly every 2.8s) */}
@@ -220,7 +220,7 @@ export default function Testimonials() {
             {googleReviews.map((rev) => (
               <div
                 key={rev.id}
-                className="shrink-0 w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)] bg-white rounded-2xl p-6 border border-slate-200/90 shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
+                className="shrink-0 w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)] bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
@@ -240,12 +240,12 @@ export default function Testimonials() {
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
+                <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
                   <div>
                     <h4 className="font-bold text-xs sm:text-sm text-slate-900">{rev.name}</h4>
                     <p className="text-[10px] text-slate-400 font-medium">{rev.location} • {rev.date}</p>
                   </div>
-                  <span className="text-[10px] font-semibold text-[#103F7C] bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100">
+                  <span className="self-start sm:self-auto text-[10px] font-semibold text-[#103F7C] bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100 whitespace-nowrap">
                     {rev.treatment}
                   </span>
                 </div>

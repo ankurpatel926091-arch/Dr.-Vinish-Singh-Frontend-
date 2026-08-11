@@ -201,43 +201,43 @@ export default function HomeGallery() {
       {/* ================= LIGHTBOX OVERLAY MODAL (Matching Reference Image 2) ================= */}
       {selectedIndex !== null && (
         <div
-          className="fixed inset-0 z-50 bg-slate-950/92 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 animate-fadeIn"
+          className="fixed inset-0 z-50 bg-slate-950/92 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-fadeIn"
           onClick={closeLightbox}
         >
           {/* Top Control Bar (Zoom In, Zoom Out, Rotate, Close) */}
-          <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-50 flex items-center gap-2 bg-slate-900/80 backdrop-blur-md p-1.5 rounded-2xl border border-white/15 text-white">
+          <div className="absolute top-3 right-3 sm:top-6 sm:right-6 z-50 flex items-center gap-1.5 sm:gap-2 bg-slate-900/80 backdrop-blur-md p-1.5 rounded-2xl border border-white/15 text-white">
             <button
               type="button"
               onClick={handleZoomIn}
               title="Zoom In"
-              className="w-8 h-8 rounded-xl hover:bg-white/20 flex items-center justify-center transition-colors"
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl hover:bg-white/20 flex items-center justify-center transition-colors"
             >
-              <ZoomIn size={16} />
+              <ZoomIn size={15} />
             </button>
             <button
               type="button"
               onClick={handleZoomOut}
               title="Zoom Out"
-              className="w-8 h-8 rounded-xl hover:bg-white/20 flex items-center justify-center transition-colors"
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl hover:bg-white/20 flex items-center justify-center transition-colors"
             >
-              <ZoomOut size={16} />
+              <ZoomOut size={15} />
             </button>
             <button
               type="button"
               onClick={handleRotate}
               title="Rotate"
-              className="w-8 h-8 rounded-xl hover:bg-white/20 flex items-center justify-center transition-colors"
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl hover:bg-white/20 flex items-center justify-center transition-colors"
             >
-              <RotateCw size={15} />
+              <RotateCw size={14} />
             </button>
             <div className="w-px h-5 bg-white/20 mx-0.5" />
             <button
               type="button"
               onClick={closeLightbox}
               title="Close"
-              className="w-8 h-8 rounded-xl hover:bg-red-500/80 flex items-center justify-center transition-colors"
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-xl hover:bg-red-500/80 flex items-center justify-center transition-colors"
             >
-              <X size={18} />
+              <X size={17} />
             </button>
           </div>
 
@@ -246,9 +246,9 @@ export default function HomeGallery() {
             type="button"
             onClick={prevPhoto}
             aria-label="Previous Photo"
-            className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-slate-900/80 hover:bg-orange-500 text-white flex items-center justify-center transition-all duration-300 border border-white/15 z-50 shadow-lg"
+            className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-slate-900/80 hover:bg-orange-500 text-white flex items-center justify-center transition-all duration-300 border border-white/15 z-50 shadow-lg"
           >
-            <ChevronLeft size={22} />
+            <ChevronLeft size={20} />
           </button>
 
           {/* Right Navigation Arrow */}
@@ -256,20 +256,20 @@ export default function HomeGallery() {
             type="button"
             onClick={nextPhoto}
             aria-label="Next Photo"
-            className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-slate-900/80 hover:bg-orange-500 text-white flex items-center justify-center transition-all duration-300 border border-white/15 z-50 shadow-lg"
+            className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-slate-900/80 hover:bg-orange-500 text-white flex items-center justify-center transition-all duration-300 border border-white/15 z-50 shadow-lg"
           >
-            <ChevronRight size={22} />
+            <ChevronRight size={20} />
           </button>
 
-          {/* Modal Centered Image Display (Exact 577px x 728px dimensions) */}
+          {/* Modal Centered Image Display */}
           <div
-            className="relative w-full max-w-[577px] h-[728px] max-h-[80vh] flex items-center justify-center overflow-hidden rounded-2xl"
+            className="relative w-full max-w-[577px] max-h-[75vh] sm:max-h-[85vh] flex items-center justify-center overflow-hidden rounded-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <img
               src={galleryPhotos[selectedIndex].image}
               alt={galleryPhotos[selectedIndex].title}
-              className="w-full h-full max-w-[577px] max-h-[728px] object-cover object-center rounded-2xl shadow-2xl transition-transform duration-300 ease-out"
+              className="w-auto h-auto max-w-full max-h-[75vh] sm:max-h-[85vh] object-contain object-center rounded-2xl shadow-2xl transition-transform duration-300 ease-out"
               style={{
                 transform: `scale(${zoomLevel}) rotate(${rotation}deg)`,
               }}

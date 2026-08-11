@@ -214,30 +214,30 @@ export default function DrVinishKumarSingh() {
               </div>
 
               {/* Floating Badge 1 (Top Left): M.Ch Urology */}
-              <div className="absolute top-5 -left-3 sm:-left-5 bg-white/95 backdrop-blur-md shadow-md border border-slate-200/80 rounded-2xl p-3 flex items-center gap-3 z-20 hover:scale-105 transition-transform duration-300">
-                <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#103F7C] flex items-center justify-center shrink-0">
-                  <GraduationCap size={20} />
+              <div className="absolute top-3 left-2 sm:top-5 sm:-left-5 bg-white/95 backdrop-blur-md shadow-md border border-slate-200/80 rounded-2xl p-2.5 sm:p-3 flex items-center gap-2.5 sm:gap-3 z-20 hover:scale-105 transition-transform duration-300">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-blue-50 text-[#103F7C] flex items-center justify-center shrink-0">
+                  <GraduationCap size={19} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-xs sm:text-sm text-slate-900 leading-tight">
+                  <h4 className="font-bold text-[11px] sm:text-sm text-slate-900 leading-tight">
                     M.Ch Urology
                   </h4>
-                  <p className="text-[10px] text-slate-500 font-medium">
+                  <p className="text-[9.5px] sm:text-[10px] text-slate-500 font-medium">
                     INU, Bangalore (2017)
                   </p>
                 </div>
               </div>
 
               {/* Floating Badge 2 (Bottom Right): 15+ Yrs Experience */}
-              <div className="absolute bottom-6 -right-3 sm:-right-5 bg-white/95 backdrop-blur-md shadow-md border border-slate-200/80 rounded-2xl p-3 flex items-center gap-3 z-20 hover:scale-105 transition-transform duration-300">
-                <div className="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">
-                  <Award size={20} />
+              <div className="absolute bottom-4 right-2 sm:bottom-6 sm:-right-5 bg-white/95 backdrop-blur-md shadow-md border border-slate-200/80 rounded-2xl p-2.5 sm:p-3 flex items-center gap-2.5 sm:gap-3 z-20 hover:scale-105 transition-transform duration-300">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">
+                  <Award size={19} />
                 </div>
                 <div>
-                  <h4 className="font-bold text-xs sm:text-sm text-slate-900 leading-tight">
+                  <h4 className="font-bold text-[11px] sm:text-sm text-slate-900 leading-tight">
                     15+ Yrs Excellence
                   </h4>
-                  <p className="text-[10px] text-slate-500 font-medium">
+                  <p className="text-[9.5px] sm:text-[10px] text-slate-500 font-medium">
                     5000+ Laser Procedures
                   </p>
                 </div>
@@ -345,6 +345,12 @@ export default function DrVinishKumarSingh() {
 
           {/* Academic Table Card */}
           <ScrollReveal variant="fade-up" delay={150} className="bg-slate-50/80 rounded-3xl p-4 sm:p-6 border border-slate-200/90 shadow-2xs overflow-hidden">
+            <div className="sm:hidden text-right mb-2">
+              <span className="inline-flex items-center gap-1 text-[10px] font-bold text-orange-600 bg-orange-50 px-2.5 py-1 rounded-full border border-orange-200/60">
+                Swipe horizontal to view full table ➔
+              </span>
+            </div>
+
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse min-w-[640px]">
                 <thead>
@@ -412,12 +418,12 @@ export default function DrVinishKumarSingh() {
             </p>
           </ScrollReveal>
 
-          {/* Navigation Tabs Bar */}
-          <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-3 mb-8">
+          {/* Navigation Tabs Bar (Scrollable on Mobile) */}
+          <div className="flex items-center justify-start sm:justify-center overflow-x-auto whitespace-nowrap py-1 px-1 no-scrollbar gap-2 sm:gap-3 mb-8 w-full max-w-full">
             <button
               type="button"
               onClick={() => setActiveTab("experience")}
-              className={`px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-extrabold flex items-center gap-2 transition-all duration-300 cursor-pointer ${
+              className={`shrink-0 px-4 sm:px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-extrabold flex items-center gap-2 transition-all duration-300 cursor-pointer ${
                 activeTab === "experience"
                   ? "bg-[#103F7C] text-white shadow-md scale-102"
                   : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
@@ -430,7 +436,7 @@ export default function DrVinishKumarSingh() {
             <button
               type="button"
               onClick={() => setActiveTab("activities")}
-              className={`px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-extrabold flex items-center gap-2 transition-all duration-300 cursor-pointer ${
+              className={`shrink-0 px-4 sm:px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-extrabold flex items-center gap-2 transition-all duration-300 cursor-pointer ${
                 activeTab === "activities"
                   ? "bg-[#103F7C] text-white shadow-md scale-102"
                   : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
@@ -443,7 +449,7 @@ export default function DrVinishKumarSingh() {
             <button
               type="button"
               onClick={() => setActiveTab("thesis")}
-              className={`px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-extrabold flex items-center gap-2 transition-all duration-300 cursor-pointer ${
+              className={`shrink-0 px-4 sm:px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-extrabold flex items-center gap-2 transition-all duration-300 cursor-pointer ${
                 activeTab === "thesis"
                   ? "bg-[#103F7C] text-white shadow-md scale-102"
                   : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
@@ -456,7 +462,7 @@ export default function DrVinishKumarSingh() {
             <button
               type="button"
               onClick={() => setActiveTab("memberships")}
-              className={`px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-extrabold flex items-center gap-2 transition-all duration-300 cursor-pointer ${
+              className={`shrink-0 px-4 sm:px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-extrabold flex items-center gap-2 transition-all duration-300 cursor-pointer ${
                 activeTab === "memberships"
                   ? "bg-[#103F7C] text-white shadow-md scale-102"
                   : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200"
@@ -470,6 +476,11 @@ export default function DrVinishKumarSingh() {
           {/* TAB 1: WORK EXPERIENCE TABLE */}
           {activeTab === "experience" && (
             <ScrollReveal variant="fade-up" className="bg-white rounded-3xl p-4 sm:p-6 border border-slate-200/90 shadow-sm overflow-hidden">
+              <div className="sm:hidden text-right mb-2">
+                <span className="inline-flex items-center gap-1 text-[10px] font-bold text-orange-600 bg-orange-50 px-2.5 py-1 rounded-full border border-orange-200/60">
+                  Swipe horizontal to view full table ➔
+                </span>
+              </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-left border-collapse min-w-[640px]">
                   <thead>

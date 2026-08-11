@@ -78,16 +78,16 @@ export default function FloatingActions() {
   )}`;
 
   return (
-    <div className="fixed bottom-6 right-4 sm:right-6 z-50 flex flex-col items-center gap-3">
+    <div className="fixed bottom-4 right-3 sm:bottom-6 sm:right-6 z-50 flex flex-col items-center gap-2.5 sm:gap-3">
       
       {/* 1. Phone Call Button (Pink/Magenta Circle) */}
       <a
         href="tel:+917275981480"
         aria-label="Call Doctor"
         title="Call Doctor"
-        className="w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-[#FF2D75] hover:bg-[#e01b63] text-white flex items-center justify-center shadow-lg shadow-pink-500/30 transition-all duration-300 hover:scale-110 active:scale-95"
+        className="w-10 h-10 sm:w-13 sm:h-13 rounded-full bg-[#FF2D75] hover:bg-[#e01b63] text-white flex items-center justify-center shadow-lg shadow-pink-500/30 transition-all duration-300 hover:scale-110 active:scale-95"
       >
-        <FaPhoneAlt size={19} />
+        <FaPhoneAlt className="text-base sm:text-lg" />
       </a>
 
       {/* 2. WhatsApp Button (Vibrant Green Circle) */}
@@ -97,9 +97,9 @@ export default function FloatingActions() {
         rel="noopener noreferrer"
         aria-label="Chat on WhatsApp"
         title="Chat on WhatsApp"
-        className="w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-[#25D366] hover:bg-[#1ebd59] text-white flex items-center justify-center shadow-lg shadow-emerald-500/30 transition-all duration-300 hover:scale-110 active:scale-95"
+        className="w-10 h-10 sm:w-13 sm:h-13 rounded-full bg-[#25D366] hover:bg-[#1ebd59] text-white flex items-center justify-center shadow-lg shadow-emerald-500/30 transition-all duration-300 hover:scale-110 active:scale-95"
       >
-        <FaWhatsapp size={24} />
+        <FaWhatsapp className="text-xl sm:text-2xl" />
       </a>
 
       {/* 3. Book Appointment Button (Cyan / Sky Blue Circle) */}
@@ -107,9 +107,9 @@ export default function FloatingActions() {
         to="/contact"
         aria-label="Book Appointment"
         title="Book Appointment"
-        className="w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-[#00A8E8] hover:bg-[#0092c9] text-white flex items-center justify-center shadow-lg shadow-sky-500/30 transition-all duration-300 hover:scale-110 active:scale-95"
+        className="w-10 h-10 sm:w-13 sm:h-13 rounded-full bg-[#00A8E8] hover:bg-[#0092c9] text-white flex items-center justify-center shadow-lg shadow-sky-500/30 transition-all duration-300 hover:scale-110 active:scale-95"
       >
-        <FaCalendarAlt size={19} />
+        <FaCalendarAlt className="text-base sm:text-lg" />
       </NavLink>
 
       {/* 4. Scroll-to-Top Button (White Circle with Rotating Pink Dashed Outer Ring) */}
@@ -119,7 +119,7 @@ export default function FloatingActions() {
           onClick={scrollToTop}
           aria-label="Scroll to top"
           title="Scroll to Top"
-          className="relative w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-white text-[#FF2D75] shadow-lg flex items-center justify-center transition-transform duration-300 hover:scale-110 active:scale-95 group"
+          className="relative w-10 h-10 sm:w-13 sm:h-13 rounded-full bg-white text-[#FF2D75] shadow-lg flex items-center justify-center transition-transform duration-300 hover:scale-110 active:scale-95 group"
         >
           {/* Very Slow Rotating Outer Dashed/Dotted Ring (10s duration for ultra slow spin) */}
           <span
@@ -128,7 +128,7 @@ export default function FloatingActions() {
           />
 
           {/* Static Upward Chevron Icon */}
-          <FaChevronUp size={17} className="relative z-10 transition-transform group-hover:-translate-y-0.5" />
+          <FaChevronUp className="relative z-10 text-sm sm:text-base transition-transform group-hover:-translate-y-0.5" />
         </button>
       )}
 

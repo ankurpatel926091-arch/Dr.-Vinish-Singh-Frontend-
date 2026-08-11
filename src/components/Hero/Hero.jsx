@@ -66,16 +66,16 @@ export default function Hero() {
                 <ScrollReveal
                   variant="fade-up"
                   delay={300}
-                  className="absolute top-5 -left-3 sm:-left-5 bg-white/95 backdrop-blur-md shadow-md border border-slate-200/80 rounded-2xl p-3 flex items-center gap-3 z-20 hover:scale-105 transition-transform duration-300"
+                  className="absolute top-3 left-2 sm:top-5 sm:-left-5 bg-white/95 backdrop-blur-md shadow-md border border-slate-200/80 rounded-2xl p-2.5 sm:p-3 flex items-center gap-2.5 sm:gap-3 z-20 hover:scale-105 transition-transform duration-300"
                 >
-                  <div className="w-9 h-9 rounded-xl bg-blue-50 text-[#103F7C] flex items-center justify-center shrink-0">
-                    <GraduationCap size={19} />
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-blue-50 text-[#103F7C] flex items-center justify-center shrink-0">
+                    <GraduationCap size={18} />
                   </div>
                   <div>
-                    <h4 className="font-bold text-xs sm:text-sm text-slate-900 leading-tight">
+                    <h4 className="font-bold text-[11px] sm:text-sm text-slate-900 leading-tight">
                       M.Ch Urology
                     </h4>
-                    <p className="text-[10px] text-slate-500 font-medium">
+                    <p className="text-[9.5px] sm:text-[10px] text-slate-500 font-medium">
                       INU, Bangalore (2017)
                     </p>
                   </div>
@@ -85,16 +85,16 @@ export default function Hero() {
                 <ScrollReveal
                   variant="fade-up"
                   delay={450}
-                  className="absolute bottom-6 -right-3 sm:-right-5 bg-white/95 backdrop-blur-md shadow-md border border-slate-200/80 rounded-2xl p-3 flex items-center gap-3 z-20 hover:scale-105 transition-transform duration-300"
+                  className="absolute bottom-4 right-2 sm:bottom-6 sm:-right-5 bg-white/95 backdrop-blur-md shadow-md border border-slate-200/80 rounded-2xl p-2.5 sm:p-3 flex items-center gap-2.5 sm:gap-3 z-20 hover:scale-105 transition-transform duration-300"
                 >
-                  <div className="w-9 h-9 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">
-                    <Award size={19} />
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">
+                    <Award size={18} />
                   </div>
                   <div>
-                    <h4 className="font-bold text-xs sm:text-sm text-slate-900 leading-tight">
+                    <h4 className="font-bold text-[11px] sm:text-sm text-slate-900 leading-tight">
                       15+ Yrs Experience
                     </h4>
-                    <p className="text-[10px] text-slate-500 font-medium">
+                    <p className="text-[9.5px] sm:text-[10px] text-slate-500 font-medium">
                       5000+ Laser Surgeries
                     </p>
                   </div>

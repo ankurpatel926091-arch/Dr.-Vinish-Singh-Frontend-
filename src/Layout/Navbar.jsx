@@ -263,15 +263,15 @@ export default function Navbar() {
                 <img
                   src={logo}
                   alt="Dr. Vinish Kumar Singh Logo"
-                  className="w-10 h-10 lg:w-11 lg:h-11 object-contain transition-transform duration-300 group-hover:scale-105"
+                  className="w-9 h-9 sm:w-10 sm:h-10 lg:w-11 lg:h-11 object-contain transition-transform duration-300 group-hover:scale-105"
                 />
 
                 <div className="flex flex-col justify-center">
-                  <h2 className="font-bold text-[#103F7C] text-base lg:text-[18px] leading-tight whitespace-nowrap">
+                  <h2 className="font-bold text-[#103F7C] text-[13px] sm:text-base lg:text-[18px] leading-tight whitespace-nowrap">
                     DR. VINISH KUMAR SINGH
                   </h2>
 
-                  <p className="text-[9px] lg:text-[10px] tracking-[3px] uppercase font-bold text-orange-500 whitespace-nowrap mt-0.5">
+                  <p className="text-[8.5px] sm:text-[9px] lg:text-[10px] tracking-[2px] sm:tracking-[3px] uppercase font-bold text-orange-500 whitespace-nowrap mt-0.5">
                     Urologist
                   </p>
                 </div>
@@ -457,7 +457,7 @@ export default function Navbar() {
                         <div
                           className={`transition-all duration-300 ease-in-out overflow-hidden ${
                             activeMobileDropdown === item.label
-                              ? "max-h-[500px] border-t border-slate-100 bg-slate-50/50 p-2"
+                              ? "max-h-[1000px] border-t border-slate-100 bg-slate-50/50 p-2"
                               : "max-h-0 p-0"
                           }`}
                         >
