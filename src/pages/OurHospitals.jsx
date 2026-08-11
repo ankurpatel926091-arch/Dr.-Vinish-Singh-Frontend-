@@ -42,6 +42,7 @@ import opdRoomImg from "../assets/images/img4.jpeg";
 import receptionImg from "../assets/images/img7.jpeg";
 import laserTechImg from "../assets/images/img9.jpg";
 import otSuiteImg from "../assets/images/img11.jpg";
+import vinishImg from "../assets/images/img12.png";
 
 const hospitalData = [
   {
@@ -132,6 +133,13 @@ const facilityGallery = [
     image: laserTechImg,
     category: "Laser Tech",
   },
+  {
+    id: "fac-6",
+    title: "Dr. Vinish Kumar Singh",
+    subtitle: "Lead Urologist & Founder",
+    image: vinishImg,
+    category: "Doctor",
+  }
 ];
 
 const hospitalHighlights = [

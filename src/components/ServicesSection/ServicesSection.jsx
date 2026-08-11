@@ -122,56 +122,59 @@ export default function ServicesSection() {
                 delay={index * 120}
                 className="h-full"
               >
-                <div className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-2xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group relative overflow-hidden h-full">
-                  {/* Top Accent Line */}
-                  <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${service.accentColor}`} />
+                <NavLink
+                  to={service.path}
+                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                  className="block group h-full focus:outline-none"
+                >
+                  <div className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-2xs hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between group relative overflow-hidden h-full cursor-pointer">
+                    {/* Top Accent Line */}
+                    <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${service.accentColor}`} />
 
-                  <div>
-                    {/* Icon & Badge */}
-                    <div className="flex items-center justify-between mb-5">
-                      <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center justify-center text-[#103F7C] group-hover:bg-[#103F7C] group-hover:text-white transition-all duration-300 shadow-2xs">
-                        <IconComp size={22} />
+                    <div>
+                      {/* Icon & Badge */}
+                      <div className="flex items-center justify-between mb-5">
+                        <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center justify-center text-[#103F7C] group-hover:bg-[#103F7C] group-hover:text-white transition-all duration-300 shadow-2xs">
+                          <IconComp size={22} />
+                        </div>
+
+                        <span className={`text-[10px] font-extrabold px-2.5 py-1 rounded-full border ${service.badgeBg}`}>
+                          Specialty
+                        </span>
                       </div>
 
-                      <span className={`text-[10px] font-extrabold px-2.5 py-1 rounded-full border ${service.badgeBg}`}>
-                        Specialty
-                      </span>
+                      {/* Title & Subtitle */}
+                      <h3 className="font-extrabold text-slate-900 text-lg sm:text-xl leading-snug group-hover:text-[#103F7C] transition-colors mb-1">
+                        {service.title}
+                      </h3>
+
+                      <p className="text-[11px] font-bold text-orange-600 mb-3 uppercase tracking-wider">
+                        {service.subtitle}
+                      </p>
+
+                      {/* Description */}
+                      <p className="text-xs text-slate-500 leading-relaxed font-normal mb-5 line-clamp-3">
+                        {service.description}
+                      </p>
+
+                      {/* Key Highlights Checklist */}
+                      <div className="space-y-2 border-t border-slate-100 pt-4 mb-6">
+                        {service.highlights.map((highlight, idx) => (
+                          <div key={idx} className="flex items-start gap-2 text-xs font-semibold text-slate-700">
+                            <CheckCircle2 size={13} className="text-emerald-600 shrink-0 mt-0.5" />
+                            <span className="leading-tight text-[11px]">{highlight}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
 
-                    {/* Title & Subtitle */}
-                    <h3 className="font-extrabold text-slate-900 text-lg sm:text-xl leading-snug group-hover:text-[#103F7C] transition-colors mb-1">
-                      {service.title}
-                    </h3>
-
-                    <p className="text-[11px] font-bold text-orange-600 mb-3 uppercase tracking-wider">
-                      {service.subtitle}
-                    </p>
-
-                    {/* Description */}
-                    <p className="text-xs text-slate-500 leading-relaxed font-normal mb-5 line-clamp-3">
-                      {service.description}
-                    </p>
-
-                    {/* Key Highlights Checklist */}
-                    <div className="space-y-2 border-t border-slate-100 pt-4 mb-6">
-                      {service.highlights.map((highlight, idx) => (
-                        <div key={idx} className="flex items-start gap-2 text-xs font-semibold text-slate-700">
-                          <CheckCircle2 size={13} className="text-emerald-600 shrink-0 mt-0.5" />
-                          <span className="leading-tight text-[11px]">{highlight}</span>
-                        </div>
-                      ))}
+                    {/* Card Action Link */}
+                    <div className="w-full py-2.5 px-4 rounded-xl bg-slate-50 group-hover:bg-[#103F7C] text-[#103F7C] group-hover:text-white border border-slate-200/80 font-bold text-xs flex items-center justify-between transition-all duration-300 shadow-2xs group-hover:shadow-md">
+                      <span>Explore Specialty</span>
+                      <ArrowRight size={14} className="group-hover:translate-x-1.5 transition-transform" />
                     </div>
                   </div>
-
-                  {/* Card Action Link */}
-                  <NavLink
-                    to={service.path}
-                    className="w-full py-2.5 px-4 rounded-xl bg-slate-50 hover:bg-[#103F7C] text-[#103F7C] hover:text-white border border-slate-200/80 font-bold text-xs flex items-center justify-between transition-all duration-300 group-hover:shadow-md cursor-pointer"
-                  >
-                    <span>Explore Specialty</span>
-                    <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
-                  </NavLink>
-                </div>
+                </NavLink>
               </ScrollReveal>
             );
           })}

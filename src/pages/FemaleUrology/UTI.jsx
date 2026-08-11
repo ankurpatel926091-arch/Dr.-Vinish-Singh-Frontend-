@@ -6,128 +6,116 @@ import {
   Calendar,
   ArrowRight,
   Stethoscope,
-  ChevronRight,
-  ShieldAlert,
-  Thermometer
+  ShieldCheck,
+  Activity,
 } from "lucide-react";
 import PageHero from "../../components/PageHero";
-
-const conditionDetails = {
-  title: "Recurrent UTI Care for Women",
-  subTitle: "Specialized Female Urinary Tract Infection Management",
-  description: "Comprehensive diagnostic evaluation, preventive antimicrobial protocols, and advanced bladder instillation therapy for recurrent female UTIs by Senior Urologist Dr. Vinish Kumar Singh.",
-  treatments: [
-    {
-      title: "Urodynamic & Diagnostic Evaluation",
-      subtitle: "Pinpointing Root Cause",
-      desc: "Urine culture profiling, ultrasound evaluation for post-void residual urine, and cystoscopy to rule out anatomical anomalies.",
-      highlights: ["Precise Pathogen Identification", "Ultrasound PVR Residual Scan", "Bladder Anatomic Assessment"],
-      tag: "Advanced Diagnostics",
-      bgIcon: "bg-blue-50 text-[#103F7C]",
-      borderAccent: "border-t-4 border-t-[#103F7C]",
-    },
-    {
-      title: "Targeted Prophylaxis & Bladder Care",
-      subtitle: "Preventive & Regenerative Therapy",
-      desc: "Low-dose targeted suppressive therapy, intravesical glycosaminoglycan (GAG) layer replenishment, and non-antibiotic prophylaxis.",
-      highlights: ["Bladder Wall Protection", "Prevents Infection Recurrence", "Long-term Symptom Relief"],
-      tag: "Preventive Care",
-      bgIcon: "bg-orange-50 text-orange-600",
-      borderAccent: "border-t-4 border-t-orange-500",
-    },
-  ],
-  symptoms: [
-    { title: "Frequent Burning Urination", desc: "Painful or burning sensation (dysuria) during urination." },
-    { title: "Persistent Lower Abdominal Pain", desc: "Pelvic pressure and discomfort above the pubic bone." },
-    { title: "Urgent Need to Urinate", desc: "Sudden, strong urge to pass urine frequently with low volume." },
-    { title: "Cloudy or Malodorous Urine", desc: "Urine appearing cloudy, dark, or having a strong odor." },
-  ]
-};
+import conditionImg from "../../assets/FemaleUrology/uti.jpg";
 
 export default function UTI() {
   return (
     <section className="bg-slate-50/70 min-h-screen font-sans">
       <PageHero
-        title={conditionDetails.title}
-        subTitle={conditionDetails.subTitle}
-        description={conditionDetails.description}
+        title="Recurrent UTI Care for Women"
+        subTitle="Specialized Female Urinary Tract Infection Management"
+        description="Comprehensive diagnostic evaluation, preventive antimicrobial protocols, and advanced bladder instillation therapy by Senior Urologist Dr. Vinish Kumar Singh."
       />
 
+      {/* Main Content Grid: Image + Minimal Explanation */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-16">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-100/70 text-[#103F7C] text-xs font-extrabold uppercase tracking-wider mb-3">
-            <Sparkles size={13} className="text-orange-500" />
-            <span>FEMALE UROLOGY CARE</span>
-          </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Freedom from Recurrent UTIs
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-600 mt-2 font-normal leading-relaxed">
-            Evidence-based treatment protocols to break the cycle of frequent bladder infections in women.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-4xl mx-auto">
-          {conditionDetails.treatments.map((item, idx) => (
-            <div
-              key={idx}
-              className={`bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 ${item.borderAccent} shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group`}
-            >
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`w-12 h-12 rounded-2xl flex items-center justify-center border ${item.bgIcon}`}>
-                    <Thermometer size={22} />
-                  </div>
-                  <span className="text-[10px] font-extrabold text-orange-600 bg-orange-50 px-3 py-1 rounded-full border border-orange-200 uppercase tracking-wider">
-                    {item.tag}
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          
+          {/* Left Column: Condition Image */}
+          <div className="lg:col-span-5 relative">
+            <div className="relative rounded-3xl p-2 bg-gradient-to-b from-[#103F7C]/15 via-blue-500/10 to-orange-500/15 shadow-xl">
+              <div className="bg-[#0b1b36] rounded-[22px] overflow-hidden h-72 sm:h-96 relative group border border-slate-200/80">
+                <img
+                  src={conditionImg}
+                  alt="Recurrent UTI Care for Women"
+                  className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#103F7C]/90 via-[#103F7C]/20 to-transparent pointer-events-none" />
+                
+                <div className="absolute top-4 left-4 z-10">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#103F7C] text-white text-[11px] font-bold shadow-md border border-white/20">
+                    <Stethoscope size={13} />
+                    <span>Female Urology</span>
                   </span>
                 </div>
 
-                <h3 className="font-extrabold text-slate-900 text-lg leading-snug group-hover:text-[#103F7C] transition-colors mb-1">
-                  {item.title}
-                </h3>
-                <p className="text-xs font-bold text-[#103F7C] mb-3">{item.subtitle}</p>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal mb-5">{item.desc}</p>
-
-                <div className="space-y-2 mb-6 pt-3 border-t border-slate-100">
-                  {item.highlights.map((h, i) => (
-                    <div key={i} className="flex items-center gap-2 text-xs font-semibold text-slate-700">
-                      <CheckCircle2 size={14} className="text-orange-500 shrink-0" />
-                      <span>{h}</span>
-                    </div>
-                  ))}
+                <div className="absolute bottom-4 left-4 right-4 text-white z-10">
+                  <h3 className="font-extrabold text-base sm:text-xl leading-snug drop-shadow-md">
+                    Recurrent UTI Treatment
+                  </h3>
                 </div>
               </div>
+            </div>
+          </div>
 
-              <div className="pt-4 border-t border-slate-100">
-                <NavLink
-                  to="/contact"
-                  className="inline-flex items-center justify-center gap-2 w-full py-2.5 rounded-full bg-slate-50 hover:bg-[#103F7C] text-[#103F7C] hover:text-white border border-slate-200 text-xs font-bold transition-all duration-300"
-                >
-                  <span>Book Consultation</span>
-                  <ChevronRight size={14} />
-                </NavLink>
+          {/* Right Column: Minimal Concise Explanation */}
+          <div className="lg:col-span-7 flex flex-col items-start">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-100/70 text-[#103F7C] text-xs font-extrabold uppercase tracking-wider mb-3">
+              <Sparkles size={13} className="text-orange-500" />
+              <span>OVERVIEW &amp; TREATMENT</span>
+            </div>
+
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+              Evidence-Based Relief From <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#103F7C] to-orange-500">Frequent UTIs</span>
+            </h2>
+
+            <p className="mt-3 text-slate-600 text-xs sm:text-sm leading-relaxed font-normal">
+              Recurrent urinary tract infections (UTIs) in women require targeted evaluation beyond standard antibiotics. Dr. Vinish Kumar Singh conducts specialized urine culture profiling, ultrasound post-void residual scans, and intravesical bladder GAG-layer protective therapies to break the cycle of infection permanently.
+            </p>
+
+            {/* Key Minimal Treatment Cards */}
+            <div className="grid sm:grid-cols-2 gap-4 mt-6 w-full">
+              <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-2xs">
+                <div className="w-9 h-9 rounded-xl bg-blue-50 text-[#103F7C] flex items-center justify-center font-bold mb-2">
+                  <Activity size={18} />
+                </div>
+                <h4 className="font-bold text-slate-900 text-sm">Diagnostic Profiling</h4>
+                <p className="text-xs text-slate-500 mt-1 leading-snug">Urine culture, PVR ultrasound scan &amp; anatomical evaluation.</p>
+              </div>
+
+              <div className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-2xs">
+                <div className="w-9 h-9 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center font-bold mb-2">
+                  <ShieldCheck size={18} />
+                </div>
+                <h4 className="font-bold text-slate-900 text-sm">Preventive Prophylaxis</h4>
+                <p className="text-xs text-slate-500 mt-1 leading-snug">Intravesical bladder layer protection &amp; non-antibiotic care.</p>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
-        <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
-          <h3 className="text-xl font-bold text-slate-900 mb-4">Recognizing Recurrent UTI Symptoms</h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {conditionDetails.symptoms.map((s, i) => (
-              <div key={i} className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                <h4 className="font-bold text-slate-800 text-sm mb-1">{s.title}</h4>
-                <p className="text-xs text-slate-500">{s.desc}</p>
+            {/* Quick Highlights list */}
+            <div className="mt-6 space-y-2 w-full">
+              <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
+                <CheckCircle2 size={15} className="text-orange-500 shrink-0" />
+                <span>Prevents frequent infection relapses with targeted therapy</span>
               </div>
-            ))}
+              <div className="flex items-center gap-2 text-xs font-semibold text-slate-700">
+                <CheckCircle2 size={15} className="text-orange-500 shrink-0" />
+                <span>Protects bladder mucosal lining &amp; restores urinary health</span>
+              </div>
+            </div>
+
+            <div className="mt-6">
+              <NavLink
+                to="/contact"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#103F7C] hover:bg-blue-900 text-white font-semibold text-xs sm:text-sm shadow-md transition-all hover:scale-102"
+              >
+                <Calendar size={15} />
+                <span>Book Doctor Consultation</span>
+                <ArrowRight size={15} />
+              </NavLink>
+            </div>
+
           </div>
+
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-16 pt-6">
+      {/* CTA Banner */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-16 pt-4">
         <div className="rounded-3xl bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#103F7C] text-white p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
           <div>
             <h3 className="text-xl sm:text-2xl font-extrabold">Troubled by Frequent Urine Infections?</h3>

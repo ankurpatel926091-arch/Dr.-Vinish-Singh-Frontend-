@@ -298,81 +298,68 @@ export default function Gallery() {
           ))}
         </ScrollReveal>
 
-        {/* Media Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Media Grid (4-Column Layout Matching Reference Image 1) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
           {filteredItems.map((item, idx) => (
             <ScrollReveal
               key={item.id}
               variant="scale-up"
-              delay={idx * 80}
+              delay={idx * 60}
               className="h-full"
             >
               <div
                 onClick={() => openLightbox(idx)}
                 onMouseEnter={(e) => handleCardMouseEnter(e, item.type)}
                 onMouseLeave={(e) => handleCardMouseLeave(e, item.type)}
-                className="group cursor-pointer bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col h-full"
+                className="group relative cursor-pointer bg-slate-900 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl border border-slate-200/90 hover:border-orange-400/50 transition-all duration-500 hover:-translate-y-1.5 h-80 sm:h-96 flex flex-col justify-end"
               >
-                {/* Media Display Box */}
-                <div className="relative h-72 sm:h-80 overflow-hidden bg-slate-900">
-                  {item.type === "photo" ? (
-                    <img
+                {/* Media Display (Full Card Image / Video) */}
+                {item.type === "photo" ? (
+                  <img
+                    src={item.media}
+                    alt={item.title}
+                    className="absolute inset-0 w-full h-full object-cover object-[center_28%] transition-transform duration-700 ease-out group-hover:scale-108"
+                  />
+                ) : (
+                  <div className="absolute inset-0 w-full h-full">
+                    <video
                       src={item.media}
-                      alt={item.title}
-                      className="w-full h-full object-cover object-[center_28%] transition-transform duration-700 group-hover:scale-105"
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      className="w-full h-full object-cover object-[center_28%] opacity-90 group-hover:opacity-100 transition-all duration-300"
                     />
+                  </div>
+                )}
+
+                {/* Center Glassmorphism Floating Icon Button (Matching Reference Image) */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                  {item.type === "photo" ? (
+                    <div className="w-12 h-12 rounded-full bg-white/95 text-[#103F7C] shadow-lg flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 border border-white/60">
+                      <Maximize2 size={20} className="text-[#103F7C]" />
+                    </div>
                   ) : (
-                    <div className="relative w-full h-full">
-                      <video
-                        src={item.media}
-                        muted
-                        loop
-                        playsInline
-                        preload="metadata"
-                        className="w-full h-full object-cover object-[center_28%] opacity-85 group-hover:opacity-100 transition-all duration-300"
-                      />
-                      
-                      {/* Hover Play Indicator Overlay */}
-                      <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 group-hover:opacity-40">
-                        <div className="w-14 h-14 rounded-full bg-orange-500/90 text-white flex items-center justify-center shadow-lg border-2 border-white/40">
-                          <Play size={24} className="ml-1 fill-white" />
-                        </div>
-                      </div>
+                    <div className="w-14 h-14 rounded-full bg-orange-500/95 text-white flex items-center justify-center shadow-xl border-2 border-white/60 group-hover:scale-110 transition-all duration-300">
+                      <Play size={24} className="ml-1 fill-white" />
                     </div>
                   )}
-
-                  {/* Overlay gradient & tags - Hidden by default (no bottom shadow), visible on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-4 pointer-events-none">
-                    <span className="text-white text-xs font-bold flex items-center gap-1.5">
-                      {item.type === "photo" ? (
-                        <>
-                          <Maximize2 size={14} className="text-orange-400" />
-                          <span>Expand Photo</span>
-                        </>
-                      ) : (
-                        <>
-                          <Video size={14} className="text-orange-400" />
-                          <span>Hovering Plays Video</span>
-                        </>
-                      )}
-                    </span>
-                    <span className="text-[10px] font-bold text-orange-300 uppercase tracking-wider bg-black/60 backdrop-blur-xs px-2.5 py-1 rounded-full border border-white/20">
-                      {item.tag}
-                    </span>
-                  </div>
                 </div>
 
-                {/* Caption */}
-                <div className="p-4 flex items-center justify-between gap-3 bg-white">
-                  <div>
-                    <h3 className="font-bold text-slate-900 text-sm leading-snug group-hover:text-[#103F7C] transition-colors">
+                {/* Subtle Integrated Gradient Overlay on Hover (No White Box Below Image) */}
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10 flex items-end justify-between gap-3">
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-white font-bold text-xs sm:text-sm leading-snug truncate drop-shadow-sm">
                       {item.title}
                     </h3>
-                    <p className="text-[11px] text-slate-400 font-medium mt-0.5 flex items-center gap-1">
-                      {item.type === "video" ? <Video size={12} className="text-orange-500" /> : <ImageIcon size={12} className="text-blue-500" />}
+                    <p className="text-[10px] text-orange-300 font-semibold uppercase tracking-wider mt-0.5 flex items-center gap-1">
+                      {item.type === "video" ? <Video size={11} className="text-orange-400" /> : <ImageIcon size={11} className="text-blue-300" />}
                       <span>{item.category}</span>
                     </p>
                   </div>
+                  <span className="text-[9.5px] font-bold text-white bg-black/60 backdrop-blur-xs px-2.5 py-1 rounded-full border border-white/20 shrink-0 uppercase tracking-wider">
+                    {item.tag || item.category}
+                  </span>
                 </div>
               </div>
             </ScrollReveal>
