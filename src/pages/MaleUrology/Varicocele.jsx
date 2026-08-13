@@ -9,6 +9,7 @@ import {
   ChevronRight
 } from "lucide-react";
 import PageHero from "../../components/PageHero";
+import maleInfertilityBanner from "../../assets/Male Urology/Male Infertility.png";
 
 const conditionDetails = {
   title: "Varicocele Surgery & Treatment",
@@ -49,6 +50,7 @@ export default function Varicocele() {
         title={conditionDetails.title}
         subTitle={conditionDetails.subTitle}
         description={conditionDetails.description}
+        bgImage={maleInfertilityBanner}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-16">

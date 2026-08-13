@@ -17,6 +17,7 @@ import {
   Lock,
 } from "lucide-react";
 import PageHero from "../../components/PageHero";
+import edBanner from "../../assets/Male Urology/Erectile Dysfunction.png";
 
 const edTreatments = [
   {
@@ -98,6 +99,7 @@ export default function ErectileDysfunction() {
         title="Erectile Dysfunction & Male Sexual Health"
         subTitle="Shockwave Therapy & Comprehensive Medical Care"
         description="Non-invasive low-intensity shockwave therapy (Li-ESWT), penile vascular Doppler, testosterone replacement, and penile implant surgery by Senior Andrologist Dr. Vinish Kumar Singh."
+        bgImage={edBanner}
       />
 
       {/* ================= 1. CORE TREATMENTS OFFERED ================= */}

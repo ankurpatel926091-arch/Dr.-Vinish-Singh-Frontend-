@@ -254,27 +254,18 @@ export default function Navbar() {
         {/* Main Navbar */}
         <header className="bg-white/98 backdrop-blur-md border-b border-slate-200/90 w-full py-1.5 sm:py-2">
           <div className="w-full max-w-[1440px] mx-auto px-2 sm:px-3 lg:px-4">
-            <div className="h-14 lg:h-16 flex items-center justify-between gap-3">
-              {/* Logo & Brand Name */}
+            <div className="h-16 lg:h-18 flex items-center justify-between gap-3">
+              {/* Logo Icon Only */}
               <NavLink
                 to="/"
-                className="flex items-center gap-2.5 flex-shrink-0 group"
+                className="flex items-center flex-shrink-0 group py-1"
+                aria-label="Dr. Vinish Kumar Singh Home"
               >
                 <img
                   src={logo}
                   alt="Dr. Vinish Kumar Singh Logo"
-                  className="w-9 h-9 sm:w-10 sm:h-10 lg:w-11 lg:h-11 object-contain transition-transform duration-300 group-hover:scale-105"
+                  className="h-11 sm:h-13 lg:h-[54px] w-auto object-contain transition-transform duration-300 group-hover:scale-[1.03]"
                 />
-
-                <div className="flex flex-col justify-center">
-                  <h2 className="font-bold text-[#103F7C] text-[13px] sm:text-base lg:text-[18px] leading-tight whitespace-nowrap">
-                    DR. VINISH KUMAR SINGH
-                  </h2>
-
-                  <p className="text-[8.5px] sm:text-[9px] lg:text-[10px] tracking-[2px] sm:tracking-[3px] uppercase font-bold text-orange-500 whitespace-nowrap mt-0.5">
-                    Urologist
-                  </p>
-                </div>
               </NavLink>
 
               {/* ================= Desktop Navigation ================= */}
@@ -520,7 +511,7 @@ export default function Navbar() {
       </div>
 
       {/* Page Content Layout Spacer (matching fixed navbar height) */}
-      <div className="h-[68px] sm:h-[72px] lg:h-[76px] w-full shrink-0" />
+      <div className="h-[72px] sm:h-[80px] lg:h-[84px] w-full shrink-0" />
     </>
   );
 }

@@ -18,6 +18,7 @@ import {
   Microscope,
 } from "lucide-react";
 import PageHero from "../../components/PageHero";
+import maleInfertilityBanner from "../../assets/Male Urology/Male Infertility.png";
 
 const fertilityTreatments = [
   {
@@ -99,6 +100,7 @@ export default function MaleInfertility() {
         title="Male Infertility & Andrology Care"
         subTitle="Micro-TESE & Comprehensive Fertility Evaluation"
         description="State-of-the-art microsurgical sperm retrieval, varicocele repair, semen diagnostics, and personalized medical treatments by Senior Andrologist Dr. Vinish Kumar Singh."
+        bgImage={maleInfertilityBanner}
       />
 
       {/* ================= 1. CORE TREATMENTS OFFERED ================= */}

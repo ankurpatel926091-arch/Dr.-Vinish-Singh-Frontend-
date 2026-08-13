@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import PageHero from "../../components/PageHero";
 import conditionImg from "../../assets/FemaleUrology/overactive_bladder.jpg";
+import oabBanner from "../../assets/FemaleUrology/OveractiveBladder.png";
 
 export default function OveractiveBladder() {
   return (
@@ -19,6 +20,7 @@ export default function OveractiveBladder() {
         title="Overactive Bladder (OAB) Treatment"
         subTitle="Specialized Urgency &amp; Bladder Neuromodulation Care"
         description="Advanced anticholinergic therapy, intravesical Botox injections, and sacral nerve neuromodulation for female overactive bladder by Senior Urologist Dr. Vinish Kumar Singh."
+        bgImage={oabBanner}
       />
 
       {/* Main Content Grid: Image + Minimal Explanation */}

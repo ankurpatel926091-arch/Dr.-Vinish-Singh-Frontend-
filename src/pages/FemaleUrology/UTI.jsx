@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import PageHero from "../../components/PageHero";
 import conditionImg from "../../assets/FemaleUrology/uti.jpg";
+import utiBanner from "../../assets/FemaleUrology/RecurrentUTI.png";
 
 export default function UTI() {
   return (
@@ -19,6 +20,7 @@ export default function UTI() {
         title="Recurrent UTI Care for Women"
         subTitle="Specialized Female Urinary Tract Infection Management"
         description="Comprehensive diagnostic evaluation, preventive antimicrobial protocols, and advanced bladder instillation therapy by Senior Urologist Dr. Vinish Kumar Singh."
+        bgImage={utiBanner}
       />
 
       {/* Main Content Grid: Image + Minimal Explanation */}

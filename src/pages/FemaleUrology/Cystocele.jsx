@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import PageHero from "../../components/PageHero";
 import conditionImg from "../../assets/FemaleUrology/cystocele.jpg";
+import cystoceleBanner from "../../assets/FemaleUrology/CystoceleProlapse.png";
 
 export default function Cystocele() {
   return (
@@ -19,6 +20,7 @@ export default function Cystocele() {
         title="Bladder Prolapse &amp; Cystocele Repair"
         subTitle="Reconstructive Pelvic Organ Repair Surgery"
         description="Minimally invasive anterior colporrhaphy, mesh repair, and pelvic floor restoration for bladder prolapse (cystocele) by Senior Urologist Dr. Vinish Kumar Singh."
+        bgImage={cystoceleBanner}
       />
 
       {/* Main Content Grid: Image + Minimal Explanation */}

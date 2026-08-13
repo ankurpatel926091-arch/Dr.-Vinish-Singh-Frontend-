@@ -9,6 +9,7 @@ import {
   Moon
 } from "lucide-react";
 import PageHero from "../../components/PageHero";
+import oabBanner from "../../assets/FemaleUrology/OveractiveBladder.png";
 
 const conditionDetails = {
   title: "Nocturia & Nighttime Urination Therapy",
@@ -49,6 +50,7 @@ export default function Nocturia() {
         title={conditionDetails.title}
         subTitle={conditionDetails.subTitle}
         description={conditionDetails.description}
+        bgImage={oabBanner}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-16">

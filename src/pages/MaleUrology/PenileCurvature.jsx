@@ -9,6 +9,7 @@ import {
   ChevronRight
 } from "lucide-react";
 import PageHero from "../../components/PageHero";
+import penileCurvatureBanner from "../../assets/Male Urology/Penile Curvature.png";
 
 const conditionDetails = {
   title: "Penile Curvature Correction",
@@ -49,6 +50,7 @@ export default function PenileCurvature() {
         title={conditionDetails.title}
         subTitle={conditionDetails.subTitle}
         description={conditionDetails.description}
+        bgImage={penileCurvatureBanner}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-16">

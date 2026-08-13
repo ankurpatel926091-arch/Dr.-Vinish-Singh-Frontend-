@@ -11,14 +11,16 @@ import {
 } from "lucide-react";
 import PageHero from "../../components/PageHero";
 import conditionImg from "../../assets/FemaleUrology/incontinence.jpg";
+import incontinenceBanner from "../../assets/FemaleUrology/UrinaryIncontinence.png";
 
 export default function UrinaryIncontinence() {
   return (
     <section className="bg-slate-50/70 min-h-screen font-sans">
       <PageHero
         title="Female Urinary Incontinence Care"
-        subTitle="TVT / TOT Sling Procedures &amp; Pelvic Floor Recovery"
-        description="Advanced minimally invasive TVT/TOT mesh sling procedures and non-surgical pelvic floor therapy for stress &amp; urge urinary incontinence by Senior Urologist Dr. Vinish Kumar Singh."
+        subTitle="Advanced TOT / TVT Sling &amp; Laser Care"
+        description="Comprehensive urodynamic evaluation, pelvic floor rehabilitation, and minimally invasive sling surgery (TOT/TVT) for female urine leakage by Senior Urologist Dr. Vinish Kumar Singh."
+        bgImage={incontinenceBanner}
       />
 
       {/* Main Content Grid: Image + Minimal Explanation */}

@@ -46,7 +46,7 @@ export default function HeroSlider() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="relative h-[220px] sm:h-[380px] lg:h-[520px]">
+      <div className="relative w-full aspect-[1920/810] min-h-[220px] sm:min-h-[350px] lg:min-h-[480px] bg-[#0b3367] overflow-hidden">
         {slides.map((slide, i) => (
           <div
             key={i}
@@ -54,8 +54,7 @@ export default function HeroSlider() {
             style={{ opacity: i === active ? 1 : 0, pointerEvents: i === active ? "auto" : "none" }}
             aria-hidden={i !== active}
           >
-            {/* Full-bleed image — fills the entire slider box edge-to-edge,
-                no black bars on the sides. */}
+            {/* Full-bleed image — fits 100% edge-to-edge without cropping top or bottom */}
             <img
               src={slide.image}
               alt={slide.title || `Slide ${i + 1}`}

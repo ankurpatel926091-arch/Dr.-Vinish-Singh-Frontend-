@@ -147,6 +147,7 @@ export default function KidneyStone() {
         title="Advanced Kidney Stone Treatment"
         subTitle="Painless Laser RIRS, URSL & PCNL"
         description="State-of-the-art endoscopic laser stone dusting with zero skin cuts, minimal hospital stay, and 15+ years of surgical expertise by Dr. Vinish Kumar Singh."
+        bgImage={kidneyStoneImg}
       />
 
       {/* ================= 0. VISUAL CLINICAL FEATURE SHOWCASE ================= */}

@@ -36,6 +36,7 @@ import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
 // Image Imports
 import hospitalBuildingImg from "../assets/OurHospital/1.jpg";
 import shilpiBuildingImg from "../assets/OurHospital/2.jpg";
+import ourHospitalsBanner from "../assets/About/OurHospitals.png";
 
 // Facility Showcase Images
 import opdRoomImg from "../assets/images/img4.jpeg";
@@ -229,6 +230,7 @@ export default function OurHospitals() {
         title="Consultation Centres & Infrastructure"
         subTitle="Our Hospital Locations"
         description="Visit Dr. Vinish Kumar Singh at our specialized urology centres in Lucknow for expert consultations, advanced laser treatments & transplant care."
+        bgImage={ourHospitalsBanner}
       />
 
       {/* Main Content Container */}

@@ -147,6 +147,7 @@ export default function Prostate() {
         title="Prostate Care & Laser Surgery"
         subTitle="Gold Standard HolEP & TURP Procedures"
         description="Painless Holmium laser enucleation (HolEP) and endoscopic treatments for BPH & enlarged prostate by Senior Urologist Dr. Vinish Kumar Singh."
+        bgImage={prostateImg}
       />
 
       {/* ================= 0. VISUAL CLINICAL FEATURE SHOWCASE ================= */}

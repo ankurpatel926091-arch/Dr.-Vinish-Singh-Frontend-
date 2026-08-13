@@ -9,6 +9,7 @@ import {
   ChevronRight
 } from "lucide-react";
 import PageHero from "../../components/PageHero";
+import hypogonadismBanner from "../../assets/Male Urology/Hypogonadism.png";
 
 const conditionDetails = {
   title: "Loss of Libido Treatment",
@@ -49,6 +50,7 @@ export default function LossOfLibido() {
         title={conditionDetails.title}
         subTitle={conditionDetails.subTitle}
         description={conditionDetails.description}
+        bgImage={hypogonadismBanner}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-16">

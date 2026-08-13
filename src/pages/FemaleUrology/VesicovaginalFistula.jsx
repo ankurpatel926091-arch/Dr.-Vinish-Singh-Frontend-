@@ -11,14 +11,16 @@ import {
 } from "lucide-react";
 import PageHero from "../../components/PageHero";
 import conditionImg from "../../assets/FemaleUrology/vvf_repair.jpg";
+import vvfBanner from "../../assets/FemaleUrology/VVFFistulaRepair.png";
 
 export default function VesicovaginalFistula() {
   return (
     <section className="bg-slate-50/70 min-h-screen font-sans">
       <PageHero
         title="Vesicovaginal Fistula (VVF) Repair"
-        subTitle="Advanced Reconstructive Urology &amp; Tissue Flap Surgery"
-        description="Expert transvaginal &amp; laparoscopic VVF repair surgery for continuous involuntary urinary leakage following pelvic procedures by Senior Urologist Dr. Vinish Kumar Singh."
+        subTitle="Advanced Reconstructive Urology &amp; Fistula Closure"
+        description="Laparoscopic and transvaginal fistulectomy with vascularized tissue interposition for continuous urinary leakage post-obstetric or gynecological surgery by Senior Urologist Dr. Vinish Kumar Singh."
+        bgImage={vvfBanner}
       />
 
       {/* Main Content Grid: Image + Minimal Explanation */}

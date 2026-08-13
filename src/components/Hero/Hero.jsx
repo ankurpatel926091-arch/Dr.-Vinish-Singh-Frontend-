@@ -80,25 +80,6 @@ export default function Hero() {
                     </p>
                   </div>
                 </ScrollReveal>
-
-                {/* Floating Badge 2 (Bottom Right): 15+ Yrs Experience */}
-                <ScrollReveal
-                  variant="fade-up"
-                  delay={450}
-                  className="absolute bottom-4 right-2 sm:bottom-6 sm:-right-5 bg-white/95 backdrop-blur-md shadow-md border border-slate-200/80 rounded-2xl p-2.5 sm:p-3 flex items-center gap-2.5 sm:gap-3 z-20 hover:scale-105 transition-transform duration-300"
-                >
-                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">
-                    <Award size={18} />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-[11px] sm:text-sm text-slate-900 leading-tight">
-                      15+ Yrs Experience
-                    </h4>
-                    <p className="text-[9.5px] sm:text-[10px] text-slate-500 font-medium">
-                      5000+ Laser Surgeries
-                    </p>
-                  </div>
-                </ScrollReveal>
               </div>
             </ScrollReveal>
           </div>
@@ -122,6 +103,13 @@ export default function Hero() {
                   Transplant Surgeon
                 </span>
               </h1>
+            </ScrollReveal>
+
+            {/* Doctor Bio Theory Paragraph */}
+            <ScrollReveal variant="fade-up" delay={200} className="mt-3.5">
+              <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-normal bg-blue-50/40 p-3.5 sm:p-4 rounded-2xl border border-blue-100/70">
+                Dr. Vinish Kumar Singh is a leading Urologist, Andrologist, and Renal Transplant Surgeon in Lucknow. An alumnus of <strong>KGMU Lucknow (MBBS)</strong>, <strong>GMC Amritsar (MS Surgery)</strong>, and <strong>INU Bangalore (M.Ch Urology)</strong>, he currently serves as <strong>Associate Professor at TSM Medical College</strong> and Senior Consultant Urologist at <strong>SKD Kanpur Road &amp; Ajanta Hospital, Alambagh, Lucknow</strong>.
+              </p>
             </ScrollReveal>
 
             {/* Qualifications & Degrees Section */}

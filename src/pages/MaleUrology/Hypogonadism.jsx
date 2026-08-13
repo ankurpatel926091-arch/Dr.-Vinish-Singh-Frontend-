@@ -102,6 +102,7 @@ export default function Hypogonadism() {
         title={conditionDetails.title}
         subTitle={conditionDetails.subTitle}
         description={conditionDetails.description}
+        bgImage={hypogonadismImg}
       />
 
       {/* ================= 0. VISUAL FEATURE SHOWCASE ================= */}

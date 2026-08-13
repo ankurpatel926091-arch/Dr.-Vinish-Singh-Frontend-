@@ -14,74 +14,76 @@ import {
   Building2,
   GraduationCap,
   Microscope,
+  Check,
 } from "lucide-react";
 import PageHero from "../components/PageHero";
 import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
+import awardsBanner from "../assets/About/AwardsRecognition.png";
 
 const awardsData = [
   {
     icon: Trophy,
-    title: "Excellence in Endourology & Laser Care",
-    organization: "Regional Healthcare Excellence Forum",
-    year: "2023",
-    category: "Laser Surgery Milestone",
+    title: "Prize Paper Award - KUACON 2016",
+    organization: "Karnataka Urology Association (Goa)",
+    year: "2016",
+    category: "Prize Paper Honor",
     description:
-      "Awarded for exceptional clinical outcomes and pioneering painless laser RIRS kidney stone and HolEP prostate procedures.",
+      "Awarded prize paper honor for research presentation on 'Clinicopathological Outcome of Carcinoma Penis' at KUACON 2016.",
     bgIcon: "bg-orange-50 text-orange-600 border-orange-200",
     accentBorder: "border-t-4 border-t-orange-500",
   },
   {
     icon: Medal,
-    title: "Best Research Paper Presentation",
-    organization: "Indian Urological Association Conference",
-    year: "2021",
-    category: "Clinical Research",
+    title: "First Prize - International Conference KGMC",
+    organization: "King George's Medical University, Lucknow",
+    year: "2003",
+    category: "International Symposium",
     description:
-      "Honored for groundbreaking research in minimally invasive reconstructive urology and advanced endoscopic surgical techniques.",
+      "Won 1st Prize for paper presentation at International Conference on 'Role of Free Radicals And Antioxidants in Health & Disease'.",
     bgIcon: "bg-blue-50 text-[#103F7C] border-blue-200",
     accentBorder: "border-t-4 border-t-[#103F7C]",
   },
   {
     icon: Star,
-    title: "Academic Distinction in Surgical Urology",
-    organization: "Super Speciality Medical Board",
-    year: "2018",
-    category: "Academic Gold Standard",
+    title: "American Urology Association (AUA) Resident Trainee Selection",
+    organization: "Urology Society of India (USI) & AUA (USA)",
+    year: "2017",
+    category: "International Trainee Selection",
     description:
-      "Recognized for top academic standing and clinical surgical performance during specialized M.Ch residency at INU Bangalore.",
+      "Selected by USI to represent resident trainees at the American Urology Association (AUA) Annual Meeting 2017.",
     bgIcon: "bg-orange-50 text-orange-600 border-orange-200",
     accentBorder: "border-t-4 border-t-orange-500",
   },
   {
     icon: Award,
-    title: "Pioneer in Minimally Invasive Surgery",
-    organization: "State Urological Society",
-    year: "2016",
-    category: "Surgical Innovation",
+    title: "USICON National Paper Presentations",
+    organization: "Urology Society of India (Hyderabad & Mumbai)",
+    year: "2016-2017",
+    category: "National Research Presentation",
     description:
-      "Commended for introducing modern endoscopic & laparoscopic treatment protocols for faster patient recovery.",
+      "Presented papers on Functional Outcome of Partial Penectomy (USICON 2016) and Hyaluronic Acid in Urethral Stricture prevention (USICON 2017).",
     bgIcon: "bg-blue-50 text-[#103F7C] border-blue-200",
     accentBorder: "border-t-4 border-t-[#103F7C]",
   },
   {
     icon: Microscope,
-    title: "Advanced Fellowship Training Distinction",
-    organization: "FIAGES & International Urology Forum (USA)",
-    year: "2015",
-    category: "Super Speciality Fellowship",
+    title: "FIAGES & USA Fellowships Distinction",
+    organization: "FIAGES (New Delhi) & International Forum (USA)",
+    year: "Fellowship",
+    category: "Surgical Fellowships",
     description:
-      "Completed fellowship in Gastrointestinal Endo Surgery (New Delhi) and specialized training in Andrology & male health.",
+      "Fellowship in Gastrointestinal Endo Surgery (New Delhi) and specialized advanced training in Andrology and male reproductive health.",
     bgIcon: "bg-orange-50 text-orange-600 border-orange-200",
     accentBorder: "border-t-4 border-t-orange-500",
   },
   {
     icon: GraduationCap,
-    title: "Merit Distinction in General Surgery",
-    organization: "Government Medical College (GMC), Amritsar",
-    year: "2012",
-    category: "Residency Honor",
+    title: "M.Ch Urology Super Speciality Distinction",
+    organization: "Institute Of Nephro-Urology (INU), Bangalore",
+    year: "2017",
+    category: "Super Speciality Honor",
     description:
-      "Awarded for outstanding clinical decision-making, emergency surgical trauma care, and academic distinction during MS residency.",
+      "Completed 3-year super speciality residency at INU Bangalore with high clinical and surgical merit across complex reconstructive procedures.",
     bgIcon: "bg-blue-50 text-[#103F7C] border-blue-200",
     accentBorder: "border-t-4 border-t-[#103F7C]",
   },
@@ -89,19 +91,34 @@ const awardsData = [
 
 const memberships = [
   {
-    name: "Indian Urological Association (IUA)",
-    role: "Lifetime Member",
-    desc: "Active contributor to national urology workshops, clinical research & annual symposiums.",
+    name: "Society of Endoscopic & Laparoscopic Surgeons of India (SELSI)",
+    role: "Life Member",
+    desc: "Active life member contributing case publications & minimally invasive surgical techniques.",
   },
   {
-    name: "Fellow of FIAGES (New Delhi)",
-    role: "Certified Fellow",
-    desc: "Recognized specialist in advanced laparoscopic and endoscopic gastrointestinal surgery.",
+    name: "Urology Society of India (USI)",
+    role: "Life Member",
+    desc: "Continuous involvement in national BOE symposiums, clinical research & annual congresses.",
   },
   {
-    name: "Urological Society of India (USI)",
+    name: "South Zone Urology Society of India (SZUSI)",
+    role: "Life Member",
+    desc: "Active member in regional urologic meetings and paper presentations.",
+  },
+  {
+    name: "Karnataka Urology Association",
     role: "Active Member",
-    desc: "Engaged in continuous medical education, evidence-based care & surgical guidelines.",
+    desc: "Participant in state urology symposiums, KUACON conference & surgical updates.",
+  },
+  {
+    name: "Bangalore Urological Society",
+    role: "Active Member",
+    desc: "Presented paper on Management Option for Orthotopic Neobladder Lithiasis.",
+  },
+  {
+    name: "American Urology Association (AUA)",
+    role: "International Member",
+    desc: "Selected as AUA Resident Trainee 2017 representing USI.",
   },
 ];
 
@@ -112,7 +129,8 @@ export default function AwardsRecognition() {
       <PageHero
         title="Awards & Accreditations"
         subTitle="Honors & Achievements"
-        description="Recognizing dedicated clinical service, surgical innovation, academic distinction, and 15+ years of evidence-based urologic care."
+        description="Recognizing dedicated clinical service, surgical innovation, academic research presentations, and 15+ years of evidence-based urologic care."
+        bgImage={awardsBanner}
       />
 
       {/* Main Container */}
@@ -227,7 +245,7 @@ export default function AwardsRecognition() {
                 <span>Professional Associations</span>
               </div>
               <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900">
-                Medical Memberships &amp; Affiliations
+                Medical Memberships &amp; Affiliations (All 6 Societies)
               </h3>
             </div>
           </div>

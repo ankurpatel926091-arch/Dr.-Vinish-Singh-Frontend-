@@ -11,14 +11,16 @@ import {
 } from "lucide-react";
 import PageHero from "../../components/PageHero";
 import conditionImg from "../../assets/FemaleUrology/voiding_difficulties.jpg";
+import voidingBanner from "../../assets/FemaleUrology/VoidingDifficulties.png";
 
 export default function VoidingDifficulties() {
   return (
     <section className="bg-slate-50/70 min-h-screen font-sans">
       <PageHero
-        title="Female Voiding Difficulties &amp; Hesitancy"
-        subTitle="Comprehensive Urodynamic Evaluation &amp; Flow Recovery"
-        description="Specialized assessment for weak urinary stream, hesitancy, incomplete bladder emptying, and detrusor underactivity in women by Senior Urologist Dr. Vinish Kumar Singh."
+        title="Female Voiding Dysfunction Care"
+        subTitle="Specialized Urodynamics &amp; Bladder Outlet Relief"
+        description="Detailed video urodynamics, pelvic floor biofeedback, and urethral dilation for female urinary straining, slow stream, and retention by Senior Urologist Dr. Vinish Kumar Singh."
+        bgImage={voidingBanner}
       />
 
       {/* Main Content Grid: Image + Minimal Explanation */}
