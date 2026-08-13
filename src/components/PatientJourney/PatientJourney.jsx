@@ -56,19 +56,19 @@ const steps = [
         
         {/* Minimal Header */}
         <ScrollReveal variant="fade-up" className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-[#103F7C] text-xs font-semibold uppercase tracking-wider mb-2.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse" />
+          <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-blue-100/70 text-[#103F7C] text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-3">
+            <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
             <span>PATIENT JOURNEY</span>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
             Your Path to{" "}
             <span className="bg-gradient-to-r from-[#103F7C] to-blue-600 bg-clip-text text-transparent">
               Better Health
             </span>
           </h2>
 
-          <p className="mt-1.5 text-xs sm:text-sm text-slate-500 font-normal">
+          <p className="mt-2.5 text-sm sm:text-base text-slate-600 font-medium leading-relaxed">
             A seamless, transparent consultation and treatment experience from first visit to recovery.
           </p>
         </ScrollReveal>
@@ -123,7 +123,7 @@ const steps = [
                     )}
 
                     {/* Description */}
-                    <p className="text-xs text-slate-500 leading-relaxed max-w-[220px]">
+                    <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed max-w-[220px]">
                       {step.desc}
                     </p>
                   </div>

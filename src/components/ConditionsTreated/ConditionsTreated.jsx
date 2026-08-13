@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 
 // 1. Kidney / Renal Transplant Icon
@@ -236,24 +237,38 @@ export default function ConditionsTreated() {
               msOverflowStyle: "none",
             }}
           >
-            {conditionsList.map((item) => {
+            {conditionsList.map((item, index) => {
               const IconComponent = item.icon;
               return (
-                <NavLink
+                <motion.div
                   key={item.id}
-                  to={item.href || "#"}
-                  className="group/card flex-shrink-0 w-44 sm:w-52 bg-white rounded-2xl p-5 shadow-xs hover:shadow-xl border border-slate-100 hover:border-blue-200 transition-all duration-300 hover:-translate-y-1.5 flex flex-col items-center justify-between text-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    duration: 0.3,
+                    delay: index * 0.05,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  whileHover={{ scale: 1.05, y: -6 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="flex-shrink-0"
                 >
-                  {/* Clean Minimal Icon Container */}
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-blue-50/70 group-hover/card:bg-blue-100/80 flex items-center justify-center mb-4 transition-all duration-300 group-hover/card:scale-105">
-                    <IconComponent className="w-10 h-10 sm:w-12 sm:h-12 text-[#103F7C] group-hover/card:text-orange-500 transition-colors duration-300" />
-                  </div>
+                  <NavLink
+                    to={item.href || "#"}
+                    className="group/card flex flex-col items-center justify-between text-center w-44 sm:w-52 h-full bg-white rounded-2xl p-5 shadow-xs hover:shadow-xl border border-slate-100 hover:border-blue-200 transition-colors duration-300"
+                  >
+                    {/* Clean Minimal Icon Container */}
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-blue-50/70 group-hover/card:bg-blue-100/80 flex items-center justify-center mb-4 transition-all duration-300 group-hover/card:scale-105">
+                      <IconComponent className="w-10 h-10 sm:w-12 sm:h-12 text-[#103F7C] group-hover/card:text-orange-500 transition-colors duration-300" />
+                    </div>
 
-                  {/* Condition Title */}
-                  <h3 className="font-semibold text-slate-800 group-hover/card:text-[#103F7C] text-xs sm:text-sm leading-snug transition-colors duration-200">
-                    {item.title}
-                  </h3>
-                </NavLink>
+                    {/* Condition Title */}
+                    <h3 className="font-semibold text-slate-800 group-hover/card:text-[#103F7C] text-xs sm:text-sm leading-snug transition-colors duration-200">
+                      {item.title}
+                    </h3>
+                  </NavLink>
+                </motion.div>
               );
             })}
           </div>

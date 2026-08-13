@@ -1,10 +1,41 @@
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
+import { motion } from "framer-motion";
 
 /**
- * ScrollReveal Component
- * Provides smooth, subtle scroll animations (fade-in, slide-up, scale-up, slide-left, slide-right).
- * Optimized for performance using GPU-accelerated CSS properties (opacity & transform).
+ * Framer Motion Powered ScrollReveal Component
+ * Provides fluid, spring-assisted viewport entrance animations (fade-up, fade-down, fade-in, scale-up, slide-left, slide-right).
  */
+const variantsMap = {
+  "fade-up": {
+    hidden: { opacity: 0, y: 35 },
+    visible: { opacity: 1, y: 0 },
+  },
+  "fade-down": {
+    hidden: { opacity: 0, y: -35 },
+    visible: { opacity: 1, y: 0 },
+  },
+  "fade-in": {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+  },
+  "scale-up": {
+    hidden: { opacity: 0, scale: 0.92 },
+    visible: { opacity: 1, scale: 1 },
+  },
+  "zoom-in": {
+    hidden: { opacity: 0, scale: 0.92 },
+    visible: { opacity: 1, scale: 1 },
+  },
+  "slide-left": {
+    hidden: { opacity: 0, x: 40 },
+    visible: { opacity: 1, x: 0 },
+  },
+  "slide-right": {
+    hidden: { opacity: 0, x: -40 },
+    visible: { opacity: 1, x: 0 },
+  },
+};
+
 export default function ScrollReveal({
   children,
   variant = "fade-up", // 'fade-up' | 'fade-down' | 'fade-in' | 'scale-up' | 'slide-left' | 'slide-right'
@@ -17,92 +48,32 @@ export default function ScrollReveal({
   style = {},
   ...props
 }) {
-  const ref = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-
-    // Fallback for environments where IntersectionObserver is absent
-    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
-      setIsVisible(true);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          if (once) {
-            observer.unobserve(node);
-          }
-        } else if (!once) {
-          setIsVisible(false);
-        }
-      },
-      {
-        threshold,
-        rootMargin: "0px 0px -40px 0px", // Trigger slightly before scrolling into view
-      }
-    );
-
-    observer.observe(node);
-
-    return () => {
-      if (node) observer.unobserve(node);
-    };
-  }, [threshold, once]);
-
-  // Hidden state variant classes
-  const getHiddenStyles = () => {
-    switch (variant) {
-      case "fade-up":
-        return "translate-y-8 opacity-0";
-      case "fade-down":
-        return "-translate-y-8 opacity-0";
-      case "fade-in":
-        return "opacity-0";
-      case "scale-up":
-      case "zoom-in":
-        return "scale-[0.94] opacity-0";
-      case "slide-left":
-        return "translate-x-8 opacity-0";
-      case "slide-right":
-        return "-translate-x-8 opacity-0";
-      default:
-        return "translate-y-8 opacity-0";
-    }
-  };
-
-  const animationStyles = {
-    transitionProperty: "opacity, transform",
-    transitionDuration: `${duration}ms`,
-    transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)", // Smooth spring ease
-    transitionDelay: `${delay}ms`,
-    willChange: "opacity, transform",
-    ...style,
-  };
+  const selectedVariant = variantsMap[variant] || variantsMap["fade-up"];
+  const MotionComponent = motion[Component] || motion.div;
 
   return (
-    <Component
-      ref={ref}
-      className={`transition-all ${
-        isVisible
-          ? "opacity-100 translate-y-0 translate-x-0 scale-100"
-          : getHiddenStyles()
-      } ${className}`}
-      style={animationStyles}
+    <MotionComponent
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once, amount: threshold, margin: "0px 0px -40px 0px" }}
+      variants={selectedVariant}
+      transition={{
+        duration: duration / 1000,
+        delay: delay / 1000,
+        ease: [0.16, 1, 0.3, 1], // Fluid spring curve
+      }}
+      className={className}
+      style={style}
       {...props}
     >
       {children}
-    </Component>
+    </MotionComponent>
   );
 }
 
 /**
- * ScrollRevealStagger Helper Component
- * Renders list of children with incremental delay
+ * ScrollRevealContainer Helper Component
+ * Renders list of children with incremental Framer Motion stagger delay
  */
 export function ScrollRevealContainer({
   children,

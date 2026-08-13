@@ -136,16 +136,16 @@ export default function HomeGallery() {
         
         {/* Section Header */}
         <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
-          <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-blue-100/70 text-[#103F7C] text-xs font-semibold uppercase tracking-wider mb-2.5">
-            <Sparkles size={12} className="text-orange-500" />
+          <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-blue-100/70 text-[#103F7C] text-xs sm:text-sm font-bold uppercase tracking-wider mb-3">
+            <Sparkles size={14} className="text-orange-500" />
             <span>OUR GALLERY</span>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-[#103F7C] tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#103F7C] tracking-tight leading-tight">
             Visual Tour Of Our Center
           </h2>
 
-          <p className="mt-1.5 text-xs sm:text-sm text-slate-500 font-normal leading-relaxed">
+          <p className="mt-2.5 text-sm sm:text-base text-slate-600 font-medium leading-relaxed max-w-2xl mx-auto">
             Take a look at our modern facility, active campaigns, medical operations, and happy recovery milestones.
           </p>
         </ScrollReveal>

@@ -59,16 +59,16 @@ export default function Testimonials() {
         
         {/* Section Header (Centered Layout) */}
         <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-100/80 text-[#103F7C] text-xs font-semibold uppercase tracking-wider mb-3">
-            <Sparkles size={13} className="text-orange-500" />
-            <span>Patient Feedback</span>
+          <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-blue-100/80 text-[#103F7C] text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-3">
+            <Sparkles size={14} className="text-orange-500" />
+            <span>PATIENT FEEDBACK</span>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
             Trusted Google Reviews &amp; Stories
           </h2>
 
-          <p className="mt-2 text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-2.5 text-sm sm:text-base text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed">
             Real experiences shared by our patients after successful laser surgeries &amp; urology treatments
           </p>
 

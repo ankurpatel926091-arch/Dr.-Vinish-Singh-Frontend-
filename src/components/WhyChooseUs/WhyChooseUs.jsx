@@ -114,16 +114,16 @@ export default function WhyChooseUs() {
         
         {/* Section Header */}
         <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100/80 text-[#103F7C] text-xs font-bold uppercase tracking-wider mb-3 border border-blue-200/60 shadow-xs">
-            <Sparkles size={14} className="text-orange-500" />
-            <span>Pillars of Clinical Excellence</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100/80 text-[#103F7C] text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-3 border border-blue-200/60 shadow-xs">
+            <Sparkles size={15} className="text-orange-500" />
+            <span>PILLARS OF CLINICAL EXCELLENCE</span>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
             Why Choose Dr. Vinish Kumar Singh?
           </h2>
 
-          <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+          <p className="mt-2.5 text-sm sm:text-base text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed">
             Combining 15+ years of surgical mastery, M.Ch (INU Bangalore) credentials, advanced Holmium laser technology, and patient-first compassionate care in Lucknow.
           </p>
 
@@ -132,7 +132,7 @@ export default function WhyChooseUs() {
             <button
               type="button"
               onClick={() => setActiveTab("features")}
-              className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all duration-300 ${
+              className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-extrabold transition-all duration-300 ${
                 activeTab === "features"
                   ? "bg-[#103F7C] text-white shadow-md shadow-blue-900/20 scale-105"
                   : "bg-white text-slate-600 hover:text-[#103F7C] border border-slate-200"
@@ -144,7 +144,7 @@ export default function WhyChooseUs() {
             <button
               type="button"
               onClick={() => setActiveTab("comparison")}
-              className={`px-5 py-2.5 rounded-full text-xs font-bold transition-all duration-300 ${
+              className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-extrabold transition-all duration-300 ${
                 activeTab === "comparison"
                   ? "bg-[#103F7C] text-white shadow-md shadow-blue-900/20 scale-105"
                   : "bg-white text-slate-600 hover:text-[#103F7C] border border-slate-200"
@@ -179,24 +179,24 @@ export default function WhyChooseUs() {
                           <IconComp size={22} />
                         </div>
 
-                        <span className="text-[10px] font-extrabold text-orange-600 bg-orange-50 px-3 py-1 rounded-full border border-orange-200 uppercase tracking-wider">
+                        <span className="text-[11px] font-extrabold text-orange-600 bg-orange-50 px-3 py-1 rounded-full border border-orange-200 uppercase tracking-wider">
                           {item.badge}
                         </span>
                       </div>
 
                       {/* Title & Description */}
-                      <h3 className="font-extrabold text-slate-900 text-lg leading-snug group-hover:text-[#103F7C] transition-colors mb-2">
+                      <h3 className="font-extrabold text-slate-900 text-lg sm:text-xl leading-snug group-hover:text-[#103F7C] transition-colors mb-2">
                         {item.title}
                       </h3>
 
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
                         {item.desc}
                       </p>
                     </div>
 
-                    <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-[#103F7C] group-hover:text-orange-600 transition-colors">
+                    <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm font-extrabold text-[#103F7C] group-hover:text-orange-600 transition-colors">
                       <span>Evidence-Based Treatment</span>
-                      <ChevronRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                      <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
                 </ScrollReveal>

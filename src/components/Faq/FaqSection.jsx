@@ -36,15 +36,15 @@ export default function FaqSection() {
         
         {/* Section Header (Centered Alignment above Grid for Perfect Balance) */}
         <ScrollReveal variant="fade-up" className="text-center max-w-2xl mx-auto mb-6 sm:mb-8">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-[#103F7C] text-xs font-semibold uppercase tracking-wider mb-2.5">
-            <Sparkles size={12} className="text-orange-500" />
-            <span>Common Doubts</span>
+          <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-blue-100/70 text-[#103F7C] text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-3">
+            <Sparkles size={14} className="text-orange-500" />
+            <span>COMMON DOUBTS</span>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
             Frequently Asked Questions
           </h2>
-          <p className="mt-1.5 text-xs sm:text-sm text-slate-500 font-normal">
+          <p className="mt-2.5 text-sm sm:text-base text-slate-600 font-medium leading-relaxed max-w-2xl mx-auto">
             Quick answers to common patient questions regarding urology consultations and laser procedures.
           </p>
         </ScrollReveal>

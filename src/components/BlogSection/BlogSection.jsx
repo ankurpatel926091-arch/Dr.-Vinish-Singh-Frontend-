@@ -125,16 +125,16 @@ export default function BlogSection() {
         {/* ================= CENTERED SECTION HEADER ================= */}
         <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
           {/* Top Pill Badge */}
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-orange-50 border border-orange-200/80 text-orange-600 text-[11px] font-extrabold uppercase tracking-wider mb-3 shadow-2xs">
-            <BookOpen size={13} className="text-orange-500" />
+          <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-orange-50 border border-orange-200/80 text-orange-600 text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-3 shadow-2xs">
+            <BookOpen size={14} className="text-orange-500" />
             <span>HEALTH INSIGHTS &amp; BLOGS</span>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
             Latest Articles &amp; Patient Advice
           </h2>
 
-          <p className="mt-2 text-xs sm:text-sm text-slate-500 font-normal leading-relaxed max-w-2xl mx-auto">
+          <p className="mt-2.5 text-sm sm:text-base text-slate-600 font-medium leading-relaxed max-w-2xl mx-auto">
             Stay updated with expert medical insights, kidney stone prevention guidance, and urological wellness tips from Dr. Vinish Kumar Singh.
           </p>
 

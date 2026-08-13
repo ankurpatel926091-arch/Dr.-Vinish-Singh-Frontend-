@@ -14,7 +14,9 @@ const App = () => {
       <Navbar />
       <main className="relative">
         <AppRoutes />
-      </main>
+        {/* lazy loading */}
+        {/* react memo */}
+      </main> 
       <FloatingActions />
       <Footer />
     </div>

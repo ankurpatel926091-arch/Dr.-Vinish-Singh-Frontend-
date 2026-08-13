@@ -124,19 +124,19 @@ export default function Contact({ isHomePage = false }) {
       {/* Header Choice: Section Header for Home Page vs PageHero for Standalone Page */}
       {isHomePage ? (
         <ScrollReveal variant="fade-up" className="pt-8 sm:pt-10 max-w-2xl mx-auto text-center px-4">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-50 text-[#103F7C] text-xs font-bold uppercase tracking-wider mb-2.5">
-            <Sparkles size={13} className="text-orange-500" />
+          <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-blue-100/70 text-[#103F7C] text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-3">
+            <Sparkles size={14} className="text-orange-500" />
             <span>GET IN TOUCH</span>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
             Schedule Your{" "}
             <span className="bg-gradient-to-r from-[#103F7C] to-orange-500 bg-clip-text text-transparent">
               Consultation
             </span>
           </h2>
 
-          <p className="mt-1.5 text-xs sm:text-sm text-slate-500 font-normal">
+          <p className="mt-2.5 text-sm sm:text-base text-slate-600 font-medium leading-relaxed">
             Select a hospital location below to view OPD timings, directions, and direct helpline numbers.
           </p>
         </ScrollReveal>
@@ -352,8 +352,8 @@ export default function Contact({ isHomePage = false }) {
 
           {/* Right Column: Appointment Form (7 Cols) */}
           <ScrollReveal variant="slide-left" delay={250} className="lg:col-span-7 bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
-            <h2 className="text-xl font-extrabold text-slate-900 mb-1">Book Appointment</h2>
-            <p className="text-xs text-slate-500 mb-5 font-normal">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-1.5">Book Appointment</h2>
+            <p className="text-sm sm:text-base text-slate-600 mb-6 font-medium leading-relaxed">
               Select your preferred hospital centre and submit your request for direct OPD confirmation.
             </p>
 

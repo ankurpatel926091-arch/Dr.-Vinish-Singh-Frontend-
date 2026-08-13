@@ -15,19 +15,19 @@ export default function InstagramFeed() {
         {/* ================= SECTION HEADER ================= */}
         <ScrollReveal variant="fade-up" className="flex flex-col md:flex-row items-center justify-between gap-6 mb-10 sm:mb-12">
           <div className="text-center md:text-left max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-orange-100/80 text-orange-600 border border-orange-200/60 text-xs font-extrabold uppercase tracking-wider mb-3">
-              <FaInstagram size={14} className="text-orange-500" />
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-100/80 text-orange-600 border border-orange-200/60 text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-3">
+              <FaInstagram size={15} className="text-orange-500" />
               <span>INSTAGRAM REELS &amp; UPDATES</span>
             </div>
 
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-[#103F7C] tracking-tight leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#103F7C] tracking-tight leading-tight">
               Follow Dr. Vinish Kumar Singh{" "}
               <span className="text-[#103F7C]">
                 @drvinishurosurgeon
               </span>
             </h2>
 
-            <p className="mt-2 text-xs sm:text-sm text-[#103F7C] leading-relaxed font-normal">
+            <p className="mt-2.5 text-sm sm:text-base text-[#103F7C] leading-relaxed font-semibold">
               Watch patient awareness reels, laser surgery visual guides, and health tips directly from Dr. Vinish&apos;s clinic.
             </p>
           </div>

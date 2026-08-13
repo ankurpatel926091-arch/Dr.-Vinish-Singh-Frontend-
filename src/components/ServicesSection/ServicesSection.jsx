@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { motion } from "framer-motion";
 import {
   Stethoscope,
   Activity,
@@ -106,7 +107,7 @@ export default function ServicesSection() {
             </span>
           </h2>
 
-          <p className="mt-2.5 text-xs sm:text-sm text-slate-500 leading-relaxed font-normal max-w-2xl mx-auto">
+          <p className="mt-2.5 text-sm sm:text-lg text-slate-500 leading-relaxed font-normal max-w-2xl mx-auto">
             Delivering world-class laser surgical precision, evidence-based andrological treatments, and dedicated kidney care in Lucknow.
           </p>
         </ScrollReveal>
@@ -127,7 +128,12 @@ export default function ServicesSection() {
                   onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                   className="block group h-full focus:outline-none"
                 >
-                  <div className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-2xs hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between group relative overflow-hidden h-full cursor-pointer">
+                  <motion.div
+                    whileHover={{ y: -8, scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-2xs hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group relative overflow-hidden h-full cursor-pointer"
+                  >
                     {/* Top Accent Line */}
                     <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${service.accentColor}`} />
 
@@ -138,42 +144,42 @@ export default function ServicesSection() {
                           <IconComp size={22} />
                         </div>
 
-                        <span className={`text-[10px] font-extrabold px-2.5 py-1 rounded-full border ${service.badgeBg}`}>
+                        <span className={`text-[11px] font-extrabold px-3 py-1 rounded-full border ${service.badgeBg}`}>
                           Specialty
                         </span>
                       </div>
 
                       {/* Title & Subtitle */}
-                      <h3 className="font-extrabold text-slate-900 text-lg sm:text-xl leading-snug group-hover:text-[#103F7C] transition-colors mb-1">
+                      <h3 className="font-extrabold text-slate-900 text-xl sm:text-2xl leading-snug group-hover:text-[#103F7C] transition-colors mb-1.5">
                         {service.title}
                       </h3>
 
-                      <p className="text-[11px] font-bold text-orange-600 mb-3 uppercase tracking-wider">
+                      <p className="text-xs sm:text-[12.5px] font-extrabold text-orange-600 mb-3.5 uppercase tracking-wider">
                         {service.subtitle}
                       </p>
 
                       {/* Description */}
-                      <p className="text-xs text-slate-500 leading-relaxed font-normal mb-5 line-clamp-3">
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal mb-5">
                         {service.description}
                       </p>
 
                       {/* Key Highlights Checklist */}
-                      <div className="space-y-2 border-t border-slate-100 pt-4 mb-6">
+                      <div className="space-y-2.5 border-t border-slate-100 pt-4 mb-6">
                         {service.highlights.map((highlight, idx) => (
-                          <div key={idx} className="flex items-start gap-2 text-xs font-semibold text-slate-700">
-                            <CheckCircle2 size={13} className="text-emerald-600 shrink-0 mt-0.5" />
-                            <span className="leading-tight text-[11px]">{highlight}</span>
+                          <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-[13px] font-medium text-slate-800">
+                            <CheckCircle2 size={15} className="text-emerald-600 shrink-0 mt-0.5" />
+                            <span className="leading-snug text-xs sm:text-[12.5px]">{highlight}</span>
                           </div>
                         ))}
                       </div>
                     </div>
 
                     {/* Card Action Link */}
-                    <div className="w-full py-2.5 px-4 rounded-xl bg-slate-50 group-hover:bg-[#103F7C] text-[#103F7C] group-hover:text-white border border-slate-200/80 font-bold text-xs flex items-center justify-between transition-all duration-300 shadow-2xs group-hover:shadow-md">
+                    <div className="w-full py-3 px-4 rounded-xl bg-slate-50 group-hover:bg-[#103F7C] text-[#103F7C] group-hover:text-white border border-slate-200/80 font-bold text-xs sm:text-sm flex items-center justify-between transition-all duration-300 shadow-2xs group-hover:shadow-md">
                       <span>Explore Specialty</span>
-                      <ArrowRight size={14} className="group-hover:translate-x-1.5 transition-transform" />
+                      <ArrowRight size={15} className="group-hover:translate-x-1.5 transition-transform" />
                     </div>
-                  </div>
+                  </motion.div>
                 </NavLink>
               </ScrollReveal>
             );
@@ -182,16 +188,16 @@ export default function ServicesSection() {
 
         {/* ================= BOTTOM QUALITY ASSURANCE BANNER ================= */}
         <ScrollReveal variant="fade-up" delay={300} className="mt-12">
-          <div className="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-2xs flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-                <ShieldCheck size={20} />
+          <div className="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-5 text-center sm:text-left">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center shrink-0 shadow-2xs">
+                <ShieldCheck size={24} />
               </div>
               <div>
-                <h4 className="text-xs sm:text-sm font-bold text-slate-900">
+                <h4 className="text-base sm:text-lg font-extrabold text-slate-900 leading-snug">
                   15+ Years Clinical Surgical Mastery &amp; 5,000+ Laser Surgeries
                 </h4>
-                <p className="text-[11px] text-slate-500 font-normal">
+                <p className="text-xs sm:text-sm text-slate-600 font-medium mt-0.5">
                   Practicing at Rudraksh IVF &amp; Urology Centre &amp; Dr. Shilpi Maternity &amp; Urology Centre in Lucknow.
                 </p>
               </div>
@@ -199,7 +205,7 @@ export default function ServicesSection() {
 
             <NavLink
               to="/contact"
-              className="px-5 py-2.5 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold shrink-0 transition-all hover:scale-105 shadow-2xs"
+              className="px-6 py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-extrabold shrink-0 transition-all hover:scale-105 shadow-md"
             >
               Book Appointment
             </NavLink>

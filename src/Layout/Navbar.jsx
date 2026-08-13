@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { motion } from "framer-motion";
 import {
   Menu,
   X,
@@ -324,45 +325,57 @@ export default function Navbar() {
                                 : "flex flex-col gap-1"
                             }`}
                           >
-                            {item.children.map((child) => {
+                            {item.children.map((child, childIndex) => {
                               const IconComponent = child.icon;
                               return (
-                                <NavLink
+                                <motion.div
                                   key={child.label}
-                                  to={child.href}
-                                  className={({ isActive }) =>
-                                    `group/item flex items-center gap-2.5 p-2 rounded-xl transition-all duration-200 border ${
-                                      isActive
-                                        ? "bg-blue-50 text-[#103F7C] font-semibold border-blue-200/80 shadow-sm"
-                                        : "bg-white hover:bg-blue-50/70 border-transparent hover:border-blue-100 text-slate-800 hover:text-[#103F7C]"
-                                    }`
-                                  }
+                                  initial={{ opacity: 0, y: 10, scale: 0.96 }}
+                                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                                  transition={{
+                                    duration: 0.2,
+                                    delay: childIndex * 0.03,
+                                    ease: [0.16, 1, 0.3, 1],
+                                  }}
+                                  whileHover={{ scale: 1.02, x: 2 }}
+                                  whileTap={{ scale: 0.98 }}
                                 >
-                                  {/* Icon Box */}
-                                  <div
-                                    className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover/item:scale-105 ${child.iconBg}`}
+                                  <NavLink
+                                    to={child.href}
+                                    className={({ isActive }) =>
+                                      `group/item flex items-center gap-2.5 p-2 rounded-xl transition-all duration-200 border ${
+                                        isActive
+                                          ? "bg-blue-50 text-[#103F7C] font-semibold border-blue-200/80 shadow-sm"
+                                          : "bg-white hover:bg-blue-50/70 border-transparent hover:border-blue-100 text-slate-800 hover:text-[#103F7C]"
+                                      }`
+                                    }
                                   >
-                                    <IconComponent size={17} />
-                                  </div>
-
-                                  {/* Content */}
-                                  <div className="flex-1 min-w-0">
-                                    <div className="text-[13.5px] font-bold text-slate-900 group-hover/item:text-[#103F7C] leading-snug truncate">
-                                      {child.label}
+                                    {/* Icon Box */}
+                                    <div
+                                      className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover/item:scale-105 ${child.iconBg}`}
+                                    >
+                                      <IconComponent size={17} />
                                     </div>
-                                    {child.desc && (
-                                      <div className="text-[10.5px] font-medium text-slate-500 group-hover/item:text-slate-600 leading-tight mt-0.5 truncate">
-                                        {child.desc}
-                                      </div>
-                                    )}
-                                  </div>
 
-                                  {/* Hover Arrow */}
-                                  <ChevronRight
-                                    size={14}
-                                    className="text-slate-400 group-hover/item:text-orange-500 group-hover/item:translate-x-0.5 transition-all duration-200 flex-shrink-0"
-                                  />
-                                </NavLink>
+                                    {/* Content */}
+                                    <div className="flex-1 min-w-0">
+                                      <div className="text-[13.5px] font-bold text-slate-900 group-hover/item:text-[#103F7C] leading-snug truncate">
+                                        {child.label}
+                                      </div>
+                                      {child.desc && (
+                                        <div className="text-[10.5px] font-medium text-slate-500 group-hover/item:text-slate-600 leading-tight mt-0.5 truncate">
+                                          {child.desc}
+                                        </div>
+                                      )}
+                                    </div>
+
+                                    {/* Hover Arrow */}
+                                    <ChevronRight
+                                      size={14}
+                                      className="text-slate-400 group-hover/item:text-orange-500 group-hover/item:translate-x-0.5 transition-all duration-200 flex-shrink-0"
+                                    />
+                                  </NavLink>
+                                </motion.div>
                               );
                             })}
                           </div>
