@@ -25,7 +25,7 @@ import {
 import PageHero from "../../components/PageHero";
 
 // Image Import
-import prostateImg from "../../assets/Male Urology/Prostate Surgery.png";
+import prostateImg from "../../assets/Condition Treated/Prostate.png";
 
 const prostateTreatments = [
   {

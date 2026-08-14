@@ -11,82 +11,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import ScrollReveal from "../ScrollReveal/ScrollReveal";
-
-import img1 from "../../assets/images/Img1.jpeg";
-import img2 from "../../assets/images/img2.jpeg";
-import img3 from "../../assets/images/img3.jpeg";
-import img4 from "../../assets/images/img4.jpeg";
-import img5 from "../../assets/images/img5.jpeg";
-import img7 from "../../assets/images/img7.jpeg";
-
-const blogsData = [
-  {
-    id: "b1",
-    category: "KIDNEY STONES & RIRS",
-    title: "Laser RIRS vs. Traditional Surgery: Myths vs. Clinical Facts Explained",
-    date: "28 May 2025",
-    readTime: "6 min read",
-    excerpt:
-      "Demystifying painless laser stone dusting, flexible ureteroscopy (RIRS), stitchless procedures, and faster recovery timelines for complex kidney stones.",
-    image: img2,
-    author: "Dr. Vinish Kumar Singh",
-  },
-  {
-    id: "b2",
-    category: "PROSTATE CARE (BPH)",
-    title: "Enlarged Prostate (BPH): Key Symptoms & Laser HolEP Treatment",
-    date: "14 Apr 2025",
-    readTime: "5 min read",
-    excerpt:
-      "Understanding urinary stream difficulties in men above 50, routine diagnostics, and gold-standard Holmium laser prostate enucleation.",
-    image: img5,
-    author: "Dr. Vinish Kumar Singh",
-  },
-  {
-    id: "b3",
-    category: "ANDROLOGY & WELLNESS",
-    title: "Male Infertility & Sexual Health: Clinical Facts & Precaution Tips",
-    date: "02 Mar 2025",
-    readTime: "4 min read",
-    excerpt:
-      "Crucial clinical guidance on hormonal evaluation, micro-TESE, varicoceles checks, and modern evidence-based treatments for couples planning parenthood.",
-    image: img4,
-    author: "Dr. Vinish Kumar Singh",
-  },
-  {
-    id: "b4",
-    category: "UTI & BLADDER CARE",
-    title: "Preventing Recurrent Urinary Infections (UTI) in Adults",
-    date: "18 Feb 2025",
-    readTime: "5 min read",
-    excerpt:
-      "Essential hydration habits, dietary modifications, early diagnostic indicators, and antibiotic stewardship for long-term bladder health.",
-    image: img3,
-    author: "Dr. Vinish Kumar Singh",
-  },
-  {
-    id: "b5",
-    category: "LASER SURGERY",
-    title: "Stitchless Laser Urology: Why Minimally Invasive Means Fast Recovery",
-    date: "05 Jan 2025",
-    readTime: "7 min read",
-    excerpt:
-      "How precision laser fibers eliminate external cuts, reduce hospital stay to 24 hours, and minimize post-operative pain for patients.",
-    image: img1,
-    author: "Dr. Vinish Kumar Singh",
-  },
-  {
-    id: "b6",
-    category: "CLINIC & RECOVERY",
-    title: "Post-Operative Care & Diet Guidelines After Laser Kidney Surgery",
-    date: "20 Dec 2024",
-    readTime: "4 min read",
-    excerpt:
-      "Actionable post-surgery dietary advice, fluid intake goals, stent management tips, and routine follow-up schedules for smooth healing.",
-    image: img7,
-    author: "Dr. Vinish Kumar Singh",
-  },
-];
+import { blogsData } from "../../data/blogsData";
 
 export default function BlogSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -172,25 +97,26 @@ export default function BlogSection() {
                 className="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-2xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group h-full"
               >
                 <div>
-                  {/* Blog Image Container with Overlay Category Tag */}
-                  <div className="relative h-56 sm:h-60 overflow-hidden bg-slate-900">
+                  {/* Blog Image Container */}
+                  <NavLink to={`/blog/${blog.slug}`} className="block relative h-64 sm:h-72 overflow-hidden bg-slate-900">
                     <img
                       src={blog.image}
                       alt={blog.title}
-                      className="w-full h-full object-cover object-[center_28%] transition-transform duration-700 group-hover:scale-105"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      style={{ objectPosition: blog.objectPosition || "center 20%" }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent opacity-80" />
-
-                    {/* Floating Category Pill Badge */}
-                    <div className="absolute top-4 left-4 z-10">
-                      <span className="bg-white/95 backdrop-blur-md px-3 py-1 rounded-md text-[10px] font-extrabold uppercase tracking-wider text-orange-600 border border-orange-100 shadow-2xs">
-                        {blog.category}
-                      </span>
-                    </div>
-                  </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent opacity-60" />
+                  </NavLink>
 
                   {/* Article Content */}
                   <div className="p-6">
+                    {/* Category Pill Tag */}
+                    <div className="mb-2">
+                      <span className="text-[10px] sm:text-xs font-extrabold uppercase tracking-wider text-orange-600 bg-orange-50 px-2.5 py-0.5 rounded-md border border-orange-100">
+                        {blog.category}
+                      </span>
+                    </div>
+
                     {/* Meta info: Date & Read time */}
                     <div className="flex items-center gap-2.5 text-xs font-semibold text-slate-400 mb-3">
                       <span className="flex items-center gap-1.5 text-orange-600 font-bold">
@@ -206,7 +132,9 @@ export default function BlogSection() {
 
                     {/* Title */}
                     <h3 className="font-extrabold text-slate-900 text-base sm:text-lg leading-snug group-hover:text-[#103F7C] transition-colors mb-2.5 line-clamp-2">
-                      {blog.title}
+                      <NavLink to={`/blog/${blog.slug}`}>
+                        {blog.title}
+                      </NavLink>
                     </h3>
 
                     {/* Excerpt */}
@@ -228,7 +156,7 @@ export default function BlogSection() {
                   </div>
 
                   <NavLink
-                    to="/contact"
+                    to={`/blog/${blog.slug}`}
                     className="text-xs font-extrabold text-orange-500 hover:text-orange-600 transition-colors flex items-center gap-1 shrink-0 group-hover:translate-x-0.5"
                   >
                     <span>Read Article</span>

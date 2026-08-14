@@ -27,6 +27,9 @@ import {
 } from "lucide-react";
 
 import logo from "../assets/logo.png";
+import kidneyStoneNavImg from "../assets/Condition Treated/Kidney Stone.png";
+import prostateNavImg from "../assets/Condition Treated/Prostate.png";
+import bladderStoneNavImg from "../assets/Condition Treated/Bladder Stone.png";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -87,6 +90,7 @@ export default function Navbar() {
           label: "Kidney Stone",
           desc: "Advanced RIRS & Painless Laser PCNL",
           href: "/conditions/kidney-stone",
+          image: kidneyStoneNavImg,
           icon: Activity,
           iconBg: "bg-blue-50 text-[#103F7C]",
         },
@@ -94,6 +98,7 @@ export default function Navbar() {
           label: "Prostate",
           desc: "Laser HolEP & BPH Treatment",
           href: "/conditions/prostate",
+          image: prostateNavImg,
           icon: HeartPulse,
           iconBg: "bg-orange-50 text-orange-600",
         },
@@ -101,6 +106,7 @@ export default function Navbar() {
           label: "Bladder Stone",
           desc: "Endoscopic & Laser Removal",
           href: "/conditions/bladder-stone",
+          image: bladderStoneNavImg,
           icon: ShieldAlert,
           iconBg: "bg-blue-50 text-[#103F7C]",
         },
@@ -270,7 +276,7 @@ export default function Navbar() {
               </NavLink>
 
               {/* ================= Desktop Navigation ================= */}
-              <nav className="hidden xl:flex items-center gap-1 2xl:gap-2.5">
+              <nav className="nav-desktop-container items-center gap-0.5 lg:gap-1 xl:gap-1.5 2xl:gap-2.5">
                 {navLinks.map((item) => (
                   <div key={item.label} className="relative group/menu flex items-center py-2">
                     {/* Normal Link */}
@@ -278,7 +284,7 @@ export default function Navbar() {
                       <NavLink
                         to={item.href}
                         className={({ isActive }) =>
-                          `inline-flex items-center justify-center px-2.5 2xl:px-3.5 py-1.5 text-[13px] 2xl:text-[14px] font-semibold whitespace-nowrap transition-all duration-200 rounded-lg ${
+                          `inline-flex items-center justify-center px-1.5 lg:px-2 xl:px-3 2xl:px-3.5 py-1.5 text-[12.5px] lg:text-[13px] 2xl:text-[14px] font-semibold whitespace-nowrap transition-all duration-200 rounded-lg ${
                             isActive
                               ? "text-[#103F7C] bg-blue-50/80"
                               : "text-slate-700 hover:text-[#103F7C] hover:bg-slate-50"
@@ -291,7 +297,7 @@ export default function Navbar() {
                       /* Dropdown Button */
                       <button
                         type="button"
-                        className="inline-flex items-center justify-center gap-1 px-2.5 2xl:px-3.5 py-1.5 text-[13px] 2xl:text-[14px] font-semibold text-slate-700 hover:text-[#103F7C] hover:bg-slate-50 rounded-lg whitespace-nowrap transition-all duration-200"
+                        className="inline-flex items-center justify-center gap-0.5 lg:gap-1 px-1.5 lg:px-2 xl:px-3 2xl:px-3.5 py-1.5 text-[12.5px] lg:text-[13px] 2xl:text-[14px] font-semibold text-slate-700 hover:text-[#103F7C] hover:bg-slate-50 rounded-lg whitespace-nowrap transition-all duration-200"
                       >
                         <span>{item.label}</span>
                         <ChevronDown
@@ -350,12 +356,18 @@ export default function Navbar() {
                                       }`
                                     }
                                   >
-                                    {/* Icon Box */}
-                                    <div
-                                      className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover/item:scale-105 ${child.iconBg}`}
-                                    >
-                                      <IconComponent size={17} />
-                                    </div>
+                                    {/* Icon / Image Box */}
+                                    {child.image ? (
+                                      <div className="w-9 h-9 rounded-xl overflow-hidden shrink-0 border border-slate-200 shadow-2xs group-hover/item:border-orange-400 group-hover/item:scale-105 transition-all duration-300">
+                                        <img src={child.image} alt={child.label} className="w-full h-full object-cover" />
+                                      </div>
+                                    ) : (
+                                      <div
+                                        className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover/item:scale-105 ${child.iconBg}`}
+                                      >
+                                        <IconComponent size={17} />
+                                      </div>
+                                    )}
 
                                     {/* Content */}
                                     <div className="flex-1 min-w-0">
@@ -387,10 +399,10 @@ export default function Navbar() {
               </nav>
 
               {/* ================= CTA Button ================= */}
-              <div className="hidden xl:block flex-shrink-0">
+              <div className="nav-desktop-container flex-shrink-0">
                 <NavLink
                   to="/contact"
-                  className="flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-xs 2xl:text-sm font-semibold shadow-md hover:shadow-lg shadow-orange-500/20 transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] whitespace-nowrap"
+                  className="flex items-center gap-1.5 px-3 lg:px-3.5 xl:px-4 py-2 lg:py-2.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-xs 2xl:text-sm font-semibold shadow-md hover:shadow-lg shadow-orange-500/20 transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] whitespace-nowrap"
                 >
                   <Calendar size={15} />
                   <span>Book Appointment</span>
@@ -400,7 +412,7 @@ export default function Navbar() {
               {/* ================= Mobile Toggle Button ================= */}
               <button
                 type="button"
-                className="xl:hidden p-2 rounded-xl text-slate-700 hover:text-[#103F7C] hover:bg-slate-100 transition-colors"
+                className="nav-mobile-toggle p-2 rounded-xl text-slate-700 hover:text-[#103F7C] hover:bg-slate-100 transition-colors"
                 onClick={() => setMenuOpen(!menuOpen)}
                 aria-label="Toggle navigation menu"
               >
@@ -411,7 +423,7 @@ export default function Navbar() {
 
           {/* ================= Mobile Menu Drawer ================= */}
           <div
-            className={`xl:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+            className={`nav-mobile-drawer overflow-hidden transition-all duration-300 ease-in-out ${
               menuOpen ? "max-h-[85vh] opacity-100" : "max-h-0 opacity-0"
             }`}
           >
@@ -481,11 +493,17 @@ export default function Navbar() {
                                     }`
                                   }
                                 >
-                                  <div
-                                    className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${child.iconBg}`}
-                                  >
-                                    <IconComponent size={17} />
-                                  </div>
+                                  {child.image ? (
+                                    <div className="w-9 h-9 rounded-lg overflow-hidden shrink-0 border border-slate-200 shadow-2xs">
+                                      <img src={child.image} alt={child.label} className="w-full h-full object-cover" />
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${child.iconBg}`}
+                                    >
+                                      <IconComponent size={17} />
+                                    </div>
+                                  )}
                                   <div className="flex-1 min-w-0">
                                     <div className="text-[13.5px] font-semibold text-slate-800 leading-snug">
                                       {child.label}

@@ -11,6 +11,7 @@ import {
   Sun,
   Moon,
   ExternalLink,
+  Zap,
 } from "lucide-react";
 import {
   FaFacebookF,
@@ -208,10 +209,10 @@ export default function Contact({ isHomePage = false }) {
         </div>
 
         {/* ================= 2-Column Grid: Hospital Switcher Map & Form ================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
           {/* Left Column: Hospital Switcher Tabs & Live Map (5 Cols) */}
-          <ScrollReveal variant="slide-right" delay={150} className="lg:col-span-5 space-y-4">
+          <ScrollReveal variant="slide-right" delay={150} className="lg:col-span-5 space-y-4 flex flex-col justify-between h-full">
             
             {/* Interactive Hospital Selector Tabs */}
             <div className="bg-white p-1.5 rounded-2xl border border-slate-200 shadow-2xs flex items-center gap-2">
@@ -289,7 +290,7 @@ export default function Contact({ isHomePage = false }) {
             </div>
 
             {/* Map Container */}
-            <div className="bg-white rounded-2xl p-2 shadow-sm border border-slate-200/80 overflow-hidden h-[260px] relative">
+            <div className="bg-white rounded-2xl p-2 shadow-sm border border-slate-200/80 overflow-hidden flex-1 min-h-[240px] relative flex flex-col">
               <iframe
                 title={currentLocation.title}
                 src={currentLocation.embedUrl}
@@ -298,7 +299,7 @@ export default function Contact({ isHomePage = false }) {
                 style={{ border: 0 }}
                 allowFullScreen=""
                 loading="lazy"
-                className="rounded-xl w-full h-full"
+                className="rounded-xl w-full h-full flex-1"
               />
             </div>
 
@@ -350,9 +351,54 @@ export default function Contact({ isHomePage = false }) {
 
           </ScrollReveal>
 
-          {/* Right Column: Appointment Form (7 Cols) */}
-          <ScrollReveal variant="slide-left" delay={250} className="lg:col-span-7 bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-1.5">Book Appointment</h2>
+          {/* Right Column: Appointment Form & Quick Card (7 Cols) */}
+          <ScrollReveal variant="slide-left" delay={250} className="lg:col-span-7 space-y-4 flex flex-col justify-between h-full">
+            {/* Quick OPD Assistance Card Above Book Appointment */}
+            <div className="bg-gradient-to-br from-[#103F7C] via-blue-900 to-slate-900 rounded-2xl p-5 sm:p-6 text-white shadow-md border border-blue-800/60 relative overflow-hidden">
+              <div className="absolute -right-8 -bottom-8 w-36 h-36 bg-orange-500/10 rounded-full blur-2xl pointer-events-none" />
+
+              <div className="flex items-center justify-between gap-3 mb-3 sm:mb-4">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-xl bg-orange-500/20 text-orange-400 border border-orange-500/30 flex items-center justify-center shrink-0">
+                    <Zap size={18} />
+                  </div>
+                  <div>
+                    <h3 className="font-extrabold text-sm sm:text-base text-white leading-tight">
+                      Direct OPD Assistance &amp; Quick Helpline
+                    </h3>
+                    <p className="text-[11px] sm:text-xs text-blue-200 font-medium">
+                      Fast-Track OPD Confirmation &amp; Priority Guidance
+                    </p>
+                  </div>
+                </div>
+                <span className="hidden sm:inline-flex px-3 py-1 rounded-full bg-orange-500/20 text-orange-300 border border-orange-500/40 text-[10px] font-black uppercase tracking-wider">
+                  Priority Care
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div className="flex items-start gap-2.5 p-2.5 rounded-xl bg-white/10 backdrop-blur-xs border border-white/10">
+                  <CheckCircle2 size={16} className="text-orange-400 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-bold text-white block">Fast-Track Callback</span>
+                    <span className="text-[11px] text-blue-200 font-normal">Direct OPD booking confirmation within 30 mins</span>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-2.5 p-2.5 rounded-xl bg-white/10 backdrop-blur-xs border border-white/10">
+                  <Clock size={16} className="text-amber-400 shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-bold text-white block">Dual Location OPD</span>
+                    <span className="text-[11px] text-blue-200 font-normal">Morning (Sharda Nagar) &amp; Evening (Ring Road)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Book Appointment Form Card */}
+            <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80 flex-1 flex flex-col justify-between">
+              <div>
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-1.5">Book Appointment</h2>
             <p className="text-sm sm:text-base text-slate-600 mb-6 font-medium leading-relaxed">
               Select your preferred hospital centre and submit your request for direct OPD confirmation.
             </p>
@@ -445,6 +491,8 @@ export default function Contact({ isHomePage = false }) {
                 </button>
               </form>
             )}
+              </div>
+            </div>
           </ScrollReveal>
 
         </div>

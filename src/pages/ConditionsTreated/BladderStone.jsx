@@ -17,6 +17,9 @@ import {
 } from "lucide-react";
 import PageHero from "../../components/PageHero";
 
+// Image Import
+import bladderStoneImg from "../../assets/Condition Treated/Bladder Stone.png";
+
 const bladderTreatments = [
   {
     title: "Laser Cystolithotripsy",
@@ -97,6 +100,7 @@ export default function BladderStone() {
         title="Bladder Stone Treatment & Laser Care"
         subTitle="Painless Endoscopic Cystolithotripsy"
         description="Stitchless endoscopic laser stone removal and complete bladder health evaluation by Senior Consultant Urologist Dr. Vinish Kumar Singh."
+        bgImage={bladderStoneImg}
       />
 
       {/* ================= 1. CORE TREATMENTS OFFERED ================= */}

@@ -32,6 +32,11 @@ import UrologyService from "../pages/Services/Urology";
 import AndrologyService from "../pages/Services/Andrology";
 import NephrologyService from "../pages/Services/Nephrology";
 import RenalTransplantService from "../pages/Services/RenalTransplant";
+import BlogDetail from "../pages/BlogDetail";
+
+// Legal Pages
+import PrivacyPolicy from "../pages/Legal/PrivacyPolicy";
+import TermsOfService from "../pages/Legal/TermsOfService";
 
 const pageTitles = {
   "/": "Best Urologist in Lucknow | Dr. Vinish Kumar Singh | Laser Urology Specialist",
@@ -42,6 +47,8 @@ const pageTitles = {
   "/about/experience": "15+ Years Clinical & Surgical Experience | Dr. Vinish Kumar Singh",
   "/contact": "Book Appointment & Contact Clinic | Dr. Vinish Kumar Singh",
   "/gallery": "Photo & Video Gallery | Dr. Vinish Kumar Singh Clinic",
+  "/privacy-policy": "Privacy Policy | Dr. Vinish Kumar Singh Urology Clinic Lucknow",
+  "/terms-of-service": "Terms of Service | Dr. Vinish Kumar Singh Urology Clinic Lucknow",
 
   // Core 4 Services Pages SEO Titles
   "/services/urology": "Advanced Laser Urology Services | Dr. Vinish Kumar Singh",
@@ -99,6 +106,9 @@ export default function AppRoutes() {
       <Route path="/about/experience" element={<Experience />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/gallery" element={<Gallery />} />
+      <Route path="/blog/:slug" element={<BlogDetail />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+      <Route path="/terms-of-service" element={<TermsOfService />} />
 
       {/* Core 4 Services Pages */}
       <Route path="/services/urology" element={<UrologyService />} />

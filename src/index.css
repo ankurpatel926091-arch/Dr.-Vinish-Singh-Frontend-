@@ -68,3 +68,28 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* Custom Responsive Navbar Breakpoint (Handles 125% vs 150% Zoom) */
+@media (max-width: 1149px) {
+  .nav-desktop-container {
+    display: none !important;
+  }
+  .nav-mobile-toggle {
+    display: flex !important;
+  }
+  .nav-mobile-drawer {
+    display: block !important;
+  }
+}
+
+@media (min-width: 1150px) {
+  .nav-desktop-container {
+    display: flex !important;
+  }
+  .nav-mobile-toggle {
+    display: none !important;
+  }
+  .nav-mobile-drawer {
+    display: none !important;
+  }
+}

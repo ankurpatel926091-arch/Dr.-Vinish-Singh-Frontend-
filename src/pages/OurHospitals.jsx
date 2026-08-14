@@ -39,10 +39,10 @@ import shilpiBuildingImg from "../assets/OurHospital/2.jpg";
 import ourHospitalsBanner from "../assets/About/OurHospitals.png";
 
 // Facility Showcase Images
-import opdRoomImg from "../assets/images/img4.jpeg";
-import receptionImg from "../assets/images/img7.jpeg";
+import opdRoomImg from "../assets/images/img13.png";
+import receptionImg from "../assets/images/Img1.jpeg";
 import laserTechImg from "../assets/images/img9.jpg";
-import otSuiteImg from "../assets/images/img11.jpg";
+import otSuiteImg from "../assets/images/img10.jpg";
 import vinishImg from "../assets/images/img12.png";
 
 const hospitalData = [

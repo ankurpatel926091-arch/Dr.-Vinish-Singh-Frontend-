@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { motion } from "framer-motion";
 import {
   Stethoscope,
   Activity,
@@ -113,7 +112,7 @@ export default function ServicesSection() {
         </ScrollReveal>
 
         {/* ================= 4 SERVICES CARDS GRID ================= */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-7">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-4.5">
           {servicesData.map((service, index) => {
             const IconComp = service.icon;
             return (
@@ -128,11 +127,8 @@ export default function ServicesSection() {
                   onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                   className="block group h-full focus:outline-none"
                 >
-                  <motion.div
-                    whileHover={{ y: -8, scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-2xs hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group relative overflow-hidden h-full cursor-pointer"
+                  <div
+                    className="bg-white rounded-3xl p-5 sm:p-5.5 border border-slate-200/90 flex flex-col justify-between group relative overflow-hidden h-full cursor-pointer"
                   >
                     {/* Top Accent Line */}
                     <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${service.accentColor}`} />
@@ -140,7 +136,7 @@ export default function ServicesSection() {
                     <div>
                       {/* Icon & Badge */}
                       <div className="flex items-center justify-between mb-5">
-                        <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center justify-center text-[#103F7C] group-hover:bg-[#103F7C] group-hover:text-white transition-all duration-300 shadow-2xs">
+                        <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center justify-center text-[#103F7C]">
                           <IconComp size={22} />
                         </div>
 
@@ -150,7 +146,7 @@ export default function ServicesSection() {
                       </div>
 
                       {/* Title & Subtitle */}
-                      <h3 className="font-extrabold text-slate-900 text-xl sm:text-2xl leading-snug group-hover:text-[#103F7C] transition-colors mb-1.5">
+                      <h3 className="font-extrabold text-slate-900 text-xl sm:text-2xl leading-snug mb-1.5">
                         {service.title}
                       </h3>
 
@@ -175,11 +171,11 @@ export default function ServicesSection() {
                     </div>
 
                     {/* Card Action Link */}
-                    <div className="w-full py-3 px-4 rounded-xl bg-slate-50 group-hover:bg-[#103F7C] text-[#103F7C] group-hover:text-white border border-slate-200/80 font-bold text-xs sm:text-sm flex items-center justify-between transition-all duration-300 shadow-2xs group-hover:shadow-md">
+                    <div className="w-full py-3 px-4 rounded-xl bg-slate-50 text-[#103F7C] border border-slate-200/80 font-bold text-xs sm:text-sm flex items-center justify-between">
                       <span>Explore Specialty</span>
-                      <ArrowRight size={15} className="group-hover:translate-x-1.5 transition-transform" />
+                      <ArrowRight size={15} />
                     </div>
-                  </motion.div>
+                  </div>
                 </NavLink>
               </ScrollReveal>
             );

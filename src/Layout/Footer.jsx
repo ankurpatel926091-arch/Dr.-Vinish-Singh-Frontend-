@@ -267,14 +267,17 @@ export default function Footer() {
       </div>
 
       {/* Bottom Copyright Bar */}
-      <div className="bg-[#03152d] py-4 px-4 text-white text-xs font-medium border-t border-white/10">
-        <div className="max-w-7xl mx-auto flex items-center justify-center flex-wrap gap-2 sm:gap-3 text-center text-blue-100/80">
-          <span>Copyright © {year} Dr. Vinish Kumar Singh Clinic</span>
-          <span className="text-white/40 font-bold px-1">|</span>
-          <span>All Rights Reserved</span>
-          <span className="text-white/40 font-bold px-1">|</span>
-          <span className="inline-flex items-center gap-2">
-            <span>Design &amp; Developed by</span>
+      <div className="bg-[#03152d] py-4 sm:py-5 px-4 sm:px-6 lg:px-8 text-white text-xs font-medium border-t border-white/10">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-blue-100/80">
+          
+          {/* Left: Copyright */}
+          <div className="text-center md:text-left text-xs text-slate-300 font-medium">
+            <span>© {year} Dr. Vinish Kumar Singh Clinic. All rights reserved.</span>
+          </div>
+
+          {/* Center: Design & Developed by CodeCrafter */}
+          <div className="flex items-center justify-center gap-2">
+            <span className="text-slate-300 font-medium text-xs">Design &amp; Developed by</span>
             <a
               href="https://codecrafter.co.in"
               target="_blank"
@@ -287,7 +290,19 @@ export default function Footer() {
                 className="h-6 sm:h-7 w-auto object-contain"
               />
             </a>
-          </span>
+          </div>
+
+          {/* Right: Privacy Policy & Terms of Service */}
+          <div className="flex items-center justify-center md:justify-end gap-3 text-xs font-semibold text-slate-300">
+            <Link to="/privacy-policy" className="hover:text-orange-400 transition-colors">
+              Privacy Policy
+            </Link>
+            <span className="text-white/30 font-bold">|</span>
+            <Link to="/terms-of-service" className="hover:text-orange-400 transition-colors">
+              Terms of Service
+            </Link>
+          </div>
+
         </div>
       </div>
     </footer>

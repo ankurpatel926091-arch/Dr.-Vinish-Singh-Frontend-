@@ -20,10 +20,10 @@ import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
 // Image Imports
 import img1 from "../assets/images/Img1.jpeg";
 import img2 from "../assets/images/img9.jpg";
-import img3 from "../assets/images/img11.jpg";
-import img4 from "../assets/images/img4.jpeg";
+import img3 from "../assets/images/img10.jpg";
+import img4 from "../assets/images/img13.png";
 import img5 from "../assets/images/img5.jpeg";
-import img7 from "../assets/images/img7.jpeg";
+import img7 from "../assets/images/img6.jpeg";
 
 // Video Imports
 import vdo1 from "../assets/Videos/vdo1.mp4";

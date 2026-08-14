@@ -25,7 +25,7 @@ import PageHero from "../../components/PageHero";
 import ScrollReveal from "../../components/ScrollReveal/ScrollReveal";
 
 // Image Import
-import kidneyStoneImg from "../../assets/Male Urology/Kidney Stone Surgery.png";
+import kidneyStoneImg from "../../assets/Condition Treated/Kidney Stone.png";
 
 const treatments = [
   {
