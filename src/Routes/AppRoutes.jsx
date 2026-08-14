@@ -27,6 +27,33 @@ import FemaleVoidingDifficulties from "../pages/FemaleUrology/VoidingDifficultie
 import FemaleNocturia from "../pages/FemaleUrology/Nocturia";
 import FemaleVesicovaginalFistula from "../pages/FemaleUrology/VesicovaginalFistula";
 
+// Additional Condition Pages
+import UrethralStricture from "../pages/ConditionsTreated/UrethralStricture";
+import Hematuria from "../pages/ConditionsTreated/Hematuria";
+import Hydrocele from "../pages/ConditionsTreated/Hydrocele";
+import TesticularDisorders from "../pages/ConditionsTreated/TesticularDisorders";
+import ChronicTesticularPain from "../pages/ConditionsTreated/ChronicTesticularPain";
+import KidneyTransplantEval from "../pages/ConditionsTreated/KidneyTransplantEval";
+import LivingDonorTransplant from "../pages/ConditionsTreated/LivingDonorTransplant";
+import DeceasedDonorTransplant from "../pages/ConditionsTreated/DeceasedDonorTransplant";
+import PostTransplantCare from "../pages/ConditionsTreated/PostTransplantCare";
+
+// Andrology Pages
+import PrematureEjaculation from "../pages/Andrology/PrematureEjaculation";
+
+// Paediatric Urology Pages
+import UndescendedTestis from "../pages/PaediatricUrology/UndescendedTestis";
+import Phimosis from "../pages/PaediatricUrology/Phimosis";
+import Hypospadias from "../pages/PaediatricUrology/Hypospadias";
+import PaediatricHydrocele from "../pages/PaediatricUrology/PaediatricHydrocele";
+import PaediatricUrinaryProblems from "../pages/PaediatricUrology/PaediatricUrinaryProblems";
+
+// Urological Cancer Pages
+import ProstateCancer from "../pages/Cancers/ProstateCancer";
+import KidneyCancer from "../pages/Cancers/KidneyCancer";
+import BladderCancer from "../pages/Cancers/BladderCancer";
+import TesticularCancer from "../pages/Cancers/TesticularCancer";
+
 // Core 4 Services Pages
 import UrologyService from "../pages/Services/Urology";
 import AndrologyService from "../pages/Services/Andrology";
@@ -76,20 +103,14 @@ const pageTitles = {
   "/male/penile-curvature": "Penile Curvature Correction | Dr. Vinish Kumar Singh",
 
   // Female Urology
-  "/female/uti": "Recurrent Female UTI & Bladder Care | Dr. Vinish Kumar Singh",
-  "/female/incontinence": "Female Urinary Incontinence Therapy | Dr. Vinish Kumar Singh",
-  "/female/overactive-bladder": "Overactive Bladder (OAB) Treatment | Dr. Vinish Kumar Singh",
-  "/female/cystocele": "Bladder Prolapse (Cystocele) Surgery | Dr. Vinish Kumar Singh",
-  "/female/voiding-difficulties": "Female Voiding Dysfunction Care | Dr. Vinish Kumar Singh",
-  "/female/nocturia": "Nocturia & Frequent Night Urination Care | Dr. Vinish Kumar Singh",
-  "/female/vvf-repair": "Vesicovaginal Fistula (VVF) Repair | Dr. Vinish Kumar Singh",
 };
 
 export default function AppRoutes() {
   const location = useLocation();
 
-  // Dynamic Browser Tab SEO Titles on route change
+  // Dynamic Browser Tab SEO Titles & Scroll To Top on route change
   useEffect(() => {
+    window.scrollTo(0, 0);
     const currentTitle =
       pageTitles[location.pathname] ||
       "Dr. Vinish Kumar Singh | Senior Urologist & Transplant Surgeon Lucknow";
@@ -116,11 +137,24 @@ export default function AppRoutes() {
       <Route path="/services/nephrology" element={<NephrologyService />} />
       <Route path="/services/renal-transplant" element={<RenalTransplantService />} />
 
+      {/* Conditions Treated Routes */}
       <Route path="/conditions/kidney-stone" element={<KidneyStone />} />
       <Route path="/conditions/prostate" element={<Prostate />} />
       <Route path="/conditions/bladder-stone" element={<BladderStone />} />
+      <Route path="/conditions/urethral-stricture" element={<UrethralStricture />} />
+      <Route path="/conditions/hematuria" element={<Hematuria />} />
+      <Route path="/conditions/hydrocele" element={<Hydrocele />} />
+      <Route path="/conditions/testicular-disorders" element={<TesticularDisorders />} />
+      <Route path="/conditions/chronic-testicular-pain" element={<ChronicTesticularPain />} />
+      <Route path="/conditions/kidney-transplant-eval" element={<KidneyTransplantEval />} />
+      <Route path="/conditions/living-donor-transplant" element={<LivingDonorTransplant />} />
+      <Route path="/conditions/deceased-donor-transplant" element={<DeceasedDonorTransplant />} />
+      <Route path="/conditions/post-transplant-care" element={<PostTransplantCare />} />
+
+      {/* Andrology Routes */}
       <Route path="/andrology/male-infertility" element={<MaleInfertility />} />
       <Route path="/andrology/erectile-dysfunction" element={<ErectileDysfunction />} />
+      <Route path="/andrology/premature-ejaculation" element={<PrematureEjaculation />} />
 
       {/* Male Urology Routes */}
       <Route path="/male/prostate" element={<Prostate />} />
@@ -142,6 +176,19 @@ export default function AppRoutes() {
       <Route path="/female/voiding-difficulties" element={<FemaleVoidingDifficulties />} />
       <Route path="/female/nocturia" element={<FemaleNocturia />} />
       <Route path="/female/vvf-repair" element={<FemaleVesicovaginalFistula />} />
+
+      {/* Paediatric Urology Routes */}
+      <Route path="/paediatric/undescended-testis" element={<UndescendedTestis />} />
+      <Route path="/paediatric/phimosis" element={<Phimosis />} />
+      <Route path="/paediatric/hypospadias" element={<Hypospadias />} />
+      <Route path="/paediatric/hydrocele" element={<PaediatricHydrocele />} />
+      <Route path="/paediatric/urinary-problems" element={<PaediatricUrinaryProblems />} />
+
+      {/* Urological Cancer Routes */}
+      <Route path="/cancers/prostate-cancer" element={<ProstateCancer />} />
+      <Route path="/cancers/kidney-cancer" element={<KidneyCancer />} />
+      <Route path="/cancers/bladder-cancer" element={<BladderCancer />} />
+      <Route path="/cancers/testicular-cancer" element={<TesticularCancer />} />
     </Routes>
   );
 }

@@ -12,7 +12,7 @@ const App = () => {
       <ScrollProgressBar />
       <ScrollToTop />
       <Navbar />
-      <main className="relative">
+      <main className="relative pt-[90px] sm:pt-[98px] lg:pt-[102px]">
         <AppRoutes />
         {/* lazy loading */}
         {/* react memo */}

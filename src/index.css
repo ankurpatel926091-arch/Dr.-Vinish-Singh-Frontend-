@@ -10,6 +10,16 @@
     font-family: 'Roboto', sans-serif;
   }
 
+  button, a, [role="button"] {
+    -webkit-tap-highlight-color: transparent;
+    outline: none !important;
+  }
+
+  button:focus, button:focus-visible, a:focus, a:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
   html {
     overflow-x: hidden;
     width: 100%;

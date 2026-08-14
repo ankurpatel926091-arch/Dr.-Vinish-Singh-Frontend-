@@ -30,25 +30,18 @@ export default function VesicovaginalFistula() {
           {/* Left Column: Condition Image */}
           <div className="lg:col-span-5 relative">
             <div className="relative rounded-3xl p-2 bg-gradient-to-b from-[#103F7C]/15 via-blue-500/10 to-orange-500/15 shadow-xl">
-              <div className="bg-[#0b1b36] rounded-[22px] overflow-hidden h-72 sm:h-96 relative group border border-slate-200/80">
+              <div className="bg-white rounded-[22px] overflow-hidden h-72 sm:h-96 relative group border border-slate-200/90 flex items-center justify-center p-3">
                 <img
                   src={conditionImg}
                   alt="Vesicovaginal Fistula VVF Repair Surgery"
-                  className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#103F7C]/90 via-[#103F7C]/20 to-transparent pointer-events-none" />
                 
                 <div className="absolute top-4 left-4 z-10">
                   <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#103F7C] text-white text-[11px] font-bold shadow-md border border-white/20">
                     <Stethoscope size={13} />
                     <span>Female Urology</span>
                   </span>
-                </div>
-
-                <div className="absolute bottom-4 left-4 right-4 text-white z-10">
-                  <h3 className="font-extrabold text-base sm:text-xl leading-snug drop-shadow-md">
-                    VVF Fistula Reconstruction
-                  </h3>
                 </div>
               </div>
             </div>

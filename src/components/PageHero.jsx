@@ -6,7 +6,7 @@ import defaultBanner from '../assets/dr_vinish_banner.png'
 const PageHero = ({ title, subTitle, description, bgImage = defaultBanner }) => {
   return (
     <div>
-      <div className="relative text-white py-14 lg:py-20 overflow-hidden bg-[#103F7C]">
+      <div className="relative text-white py-7 lg:py-9 overflow-hidden bg-[#103F7C]">
         {bgImage && (
           <div
             className="absolute inset-0 bg-[size:100%_100%] bg-center bg-no-repeat transition-all duration-700 opacity-45"
@@ -27,16 +27,16 @@ const PageHero = ({ title, subTitle, description, bgImage = defaultBanner }) => 
         <div className="absolute right-0 bottom-0 w-80 h-80 bg-orange-400/10 rounded-full blur-3xl pointer-events-none z-10" />
 
         <ScrollReveal variant="fade-up" className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 text-center sm:text-left">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-slate-950/60 border border-white/20 text-orange-300 text-xs font-bold uppercase tracking-wider mb-4 backdrop-blur-md shadow-md">
+          <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-slate-950/60 border border-white/20 text-orange-300 text-xs font-bold uppercase tracking-wider mb-2 backdrop-blur-md shadow-md">
             <Sparkles size={13} className="text-orange-400" />
             <span>{title}</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.85)]">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.85)] leading-snug">
             {subTitle}
           </h1>
 
-          <p className="mt-3 text-slate-100 text-sm sm:text-base max-w-3xl font-medium leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
+          <p className="mt-2 text-slate-100 text-xs sm:text-sm max-w-3xl font-medium leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
             {description}
           </p>
         </ScrollReveal>
@@ -45,4 +45,4 @@ const PageHero = ({ title, subTitle, description, bgImage = defaultBanner }) => 
   )
 }
 
-export default PageHero
+export default PageHero
