@@ -54,7 +54,7 @@ export default function Footer() {
                 <img
                   src={logo}
                   alt="Dr. Vinish Kumar Singh Logo"
-                  className="h-13 sm:h-16 w-auto object-contain max-w-[220px] sm:max-w-[240px]"
+                  className="h-14 sm:h-18 w-auto object-contain max-w-[240px] sm:max-w-[270px]"
                 />
               </div>
             </Link>

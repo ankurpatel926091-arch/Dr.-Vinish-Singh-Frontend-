@@ -1,69 +1,72 @@
-import React, { useEffect } from "react";
+import React, { useEffect, lazy, Suspense } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import Home from "../pages/Home";
-import DrVinish from "../pages/DrVinish";
-import Qualifications from "../pages/Qualifications";
-import AwardsRecognition from "../pages/AwardsRecognition";
-import Experience from "../pages/Experience";
-import OurHospitals from "../pages/OurHospitals";
-import Contact from "../components/Contact/Contact";
-import Gallery from "../Gallery/Gallery";
-import KidneyStone from "../pages/ConditionsTreated/KidneyStone";
-import Prostate from "../pages/ConditionsTreated/Prostate";
-import BladderStone from "../pages/ConditionsTreated/BladderStone";
-import MaleInfertility from "../pages/Andrology/MaleInfertility";
-import ErectileDysfunction from "../pages/Andrology/ErectileDysfunction";
-import Hypogonadism from "../pages/MaleUrology/Hypogonadism";
-import Varicocele from "../pages/MaleUrology/Varicocele";
-import PeyroniesDisease from "../pages/MaleUrology/PeyroniesDisease";
-import LossOfLibido from "../pages/MaleUrology/LossOfLibido";
-import Impotency from "../pages/MaleUrology/Impotency";
-import PenileCurvature from "../pages/MaleUrology/PenileCurvature";
-import FemaleUTI from "../pages/FemaleUrology/UTI";
-import FemaleIncontinence from "../pages/FemaleUrology/UrinaryIncontinence";
-import FemaleOveractiveBladder from "../pages/FemaleUrology/OveractiveBladder";
-import FemaleCystocele from "../pages/FemaleUrology/Cystocele";
-import FemaleVoidingDifficulties from "../pages/FemaleUrology/VoidingDifficulties";
-import FemaleNocturia from "../pages/FemaleUrology/Nocturia";
-import FemaleVesicovaginalFistula from "../pages/FemaleUrology/VesicovaginalFistula";
+import PageLoader from "../components/LoadingFallback/PageLoader";
+
+// Lazy Loaded Route Components for Performance Optimization
+const Home = lazy(() => import("../pages/Home"));
+const DrVinish = lazy(() => import("../pages/DrVinish"));
+const Qualifications = lazy(() => import("../pages/Qualifications"));
+const AwardsRecognition = lazy(() => import("../pages/AwardsRecognition"));
+const Experience = lazy(() => import("../pages/Experience"));
+const OurHospitals = lazy(() => import("../pages/OurHospitals"));
+const Contact = lazy(() => import("../components/Contact/Contact"));
+const Gallery = lazy(() => import("../Gallery/Gallery"));
+const KidneyStone = lazy(() => import("../pages/ConditionsTreated/KidneyStone"));
+const Prostate = lazy(() => import("../pages/ConditionsTreated/Prostate"));
+const BladderStone = lazy(() => import("../pages/ConditionsTreated/BladderStone"));
+const MaleInfertility = lazy(() => import("../pages/Andrology/MaleInfertility"));
+const ErectileDysfunction = lazy(() => import("../pages/Andrology/ErectileDysfunction"));
+const Hypogonadism = lazy(() => import("../pages/MaleUrology/Hypogonadism"));
+const Varicocele = lazy(() => import("../pages/MaleUrology/Varicocele"));
+const PeyroniesDisease = lazy(() => import("../pages/MaleUrology/PeyroniesDisease"));
+const LossOfLibido = lazy(() => import("../pages/MaleUrology/LossOfLibido"));
+const Impotency = lazy(() => import("../pages/MaleUrology/Impotency"));
+const PenileCurvature = lazy(() => import("../pages/MaleUrology/PenileCurvature"));
+const FemaleUTI = lazy(() => import("../pages/FemaleUrology/UTI"));
+const FemaleIncontinence = lazy(() => import("../pages/FemaleUrology/UrinaryIncontinence"));
+const FemaleOveractiveBladder = lazy(() => import("../pages/FemaleUrology/OveractiveBladder"));
+const FemaleCystocele = lazy(() => import("../pages/FemaleUrology/Cystocele"));
+const FemaleVoidingDifficulties = lazy(() => import("../pages/FemaleUrology/VoidingDifficulties"));
+const FemaleNocturia = lazy(() => import("../pages/FemaleUrology/Nocturia"));
+const FemaleVesicovaginalFistula = lazy(() => import("../pages/FemaleUrology/VesicovaginalFistula"));
 
 // Additional Condition Pages
-import UrethralStricture from "../pages/ConditionsTreated/UrethralStricture";
-import Hematuria from "../pages/ConditionsTreated/Hematuria";
-import Hydrocele from "../pages/ConditionsTreated/Hydrocele";
-import TesticularDisorders from "../pages/ConditionsTreated/TesticularDisorders";
-import ChronicTesticularPain from "../pages/ConditionsTreated/ChronicTesticularPain";
-import KidneyTransplantEval from "../pages/ConditionsTreated/KidneyTransplantEval";
-import LivingDonorTransplant from "../pages/ConditionsTreated/LivingDonorTransplant";
-import DeceasedDonorTransplant from "../pages/ConditionsTreated/DeceasedDonorTransplant";
-import PostTransplantCare from "../pages/ConditionsTreated/PostTransplantCare";
+const UrethralStricture = lazy(() => import("../pages/ConditionsTreated/UrethralStricture"));
+const Hematuria = lazy(() => import("../pages/ConditionsTreated/Hematuria"));
+const Hydrocele = lazy(() => import("../pages/ConditionsTreated/Hydrocele"));
+const TesticularDisorders = lazy(() => import("../pages/ConditionsTreated/TesticularDisorders"));
+const ChronicTesticularPain = lazy(() => import("../pages/ConditionsTreated/ChronicTesticularPain"));
+const KidneyTransplantEval = lazy(() => import("../pages/ConditionsTreated/KidneyTransplantEval"));
+const LivingDonorTransplant = lazy(() => import("../pages/ConditionsTreated/LivingDonorTransplant"));
+const DeceasedDonorTransplant = lazy(() => import("../pages/ConditionsTreated/DeceasedDonorTransplant"));
+const PostTransplantCare = lazy(() => import("../pages/ConditionsTreated/PostTransplantCare"));
 
 // Andrology Pages
-import PrematureEjaculation from "../pages/Andrology/PrematureEjaculation";
+const PrematureEjaculation = lazy(() => import("../pages/Andrology/PrematureEjaculation"));
 
 // Paediatric Urology Pages
-import UndescendedTestis from "../pages/PaediatricUrology/UndescendedTestis";
-import Phimosis from "../pages/PaediatricUrology/Phimosis";
-import Hypospadias from "../pages/PaediatricUrology/Hypospadias";
-import PaediatricHydrocele from "../pages/PaediatricUrology/PaediatricHydrocele";
-import PaediatricUrinaryProblems from "../pages/PaediatricUrology/PaediatricUrinaryProblems";
+const UndescendedTestis = lazy(() => import("../pages/PaediatricUrology/UndescendedTestis"));
+const Phimosis = lazy(() => import("../pages/PaediatricUrology/Phimosis"));
+const Hypospadias = lazy(() => import("../pages/PaediatricUrology/Hypospadias"));
+const PaediatricHydrocele = lazy(() => import("../pages/PaediatricUrology/PaediatricHydrocele"));
+const PaediatricUrinaryProblems = lazy(() => import("../pages/PaediatricUrology/PaediatricUrinaryProblems"));
 
 // Urological Cancer Pages
-import ProstateCancer from "../pages/Cancers/ProstateCancer";
-import KidneyCancer from "../pages/Cancers/KidneyCancer";
-import BladderCancer from "../pages/Cancers/BladderCancer";
-import TesticularCancer from "../pages/Cancers/TesticularCancer";
+const ProstateCancer = lazy(() => import("../pages/Cancers/ProstateCancer"));
+const KidneyCancer = lazy(() => import("../pages/Cancers/KidneyCancer"));
+const BladderCancer = lazy(() => import("../pages/Cancers/BladderCancer"));
+const TesticularCancer = lazy(() => import("../pages/Cancers/TesticularCancer"));
 
 // Core 4 Services Pages
-import UrologyService from "../pages/Services/Urology";
-import AndrologyService from "../pages/Services/Andrology";
-import NephrologyService from "../pages/Services/Nephrology";
-import RenalTransplantService from "../pages/Services/RenalTransplant";
-import BlogDetail from "../pages/BlogDetail";
+const UrologyService = lazy(() => import("../pages/Services/Urology"));
+const AndrologyService = lazy(() => import("../pages/Services/Andrology"));
+const NephrologyService = lazy(() => import("../pages/Services/Nephrology"));
+const RenalTransplantService = lazy(() => import("../pages/Services/RenalTransplant"));
+const BlogDetail = lazy(() => import("../pages/BlogDetail"));
 
 // Legal Pages
-import PrivacyPolicy from "../pages/Legal/PrivacyPolicy";
-import TermsOfService from "../pages/Legal/TermsOfService";
+const PrivacyPolicy = lazy(() => import("../pages/Legal/PrivacyPolicy"));
+const TermsOfService = lazy(() => import("../pages/Legal/TermsOfService"));
 
 const pageTitles = {
   "/": "Best Urologist in Lucknow | Dr. Vinish Kumar Singh | Laser Urology Specialist",
@@ -101,8 +104,6 @@ const pageTitles = {
   "/male/impotency": "Impotency & Male Sexual Wellness | Dr. Vinish Kumar Singh",
   "/male/male-infertility": "Male Infertility & Micro-TESE Care | Dr. Vinish Kumar Singh",
   "/male/penile-curvature": "Penile Curvature Correction | Dr. Vinish Kumar Singh",
-
-  // Female Urology
 };
 
 export default function AppRoutes() {
@@ -118,77 +119,79 @@ export default function AppRoutes() {
   }, [location.pathname]);
 
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/about/dr-vinish-kumar-singh" element={<DrVinish />} />
-      <Route path="/about/our-hospitals" element={<OurHospitals />} />
-      <Route path="/about/qualifications" element={<Qualifications />} />
-      <Route path="/about/awards-recognition" element={<AwardsRecognition />} />
-      <Route path="/about/experience" element={<Experience />} />
-      <Route path="/contact" element={<Contact />} />
-      <Route path="/gallery" element={<Gallery />} />
-      <Route path="/blog/:slug" element={<BlogDetail />} />
-      <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-      <Route path="/terms-of-service" element={<TermsOfService />} />
+    <Suspense fallback={<PageLoader />}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about/dr-vinish-kumar-singh" element={<DrVinish />} />
+        <Route path="/about/our-hospitals" element={<OurHospitals />} />
+        <Route path="/about/qualifications" element={<Qualifications />} />
+        <Route path="/about/awards-recognition" element={<AwardsRecognition />} />
+        <Route path="/about/experience" element={<Experience />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/blog/:slug" element={<BlogDetail />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
 
-      {/* Core 4 Services Pages */}
-      <Route path="/services/urology" element={<UrologyService />} />
-      <Route path="/services/andrology" element={<AndrologyService />} />
-      <Route path="/services/nephrology" element={<NephrologyService />} />
-      <Route path="/services/renal-transplant" element={<RenalTransplantService />} />
+        {/* Core 4 Services Pages */}
+        <Route path="/services/urology" element={<UrologyService />} />
+        <Route path="/services/andrology" element={<AndrologyService />} />
+        <Route path="/services/nephrology" element={<NephrologyService />} />
+        <Route path="/services/renal-transplant" element={<RenalTransplantService />} />
 
-      {/* Conditions Treated Routes */}
-      <Route path="/conditions/kidney-stone" element={<KidneyStone />} />
-      <Route path="/conditions/prostate" element={<Prostate />} />
-      <Route path="/conditions/bladder-stone" element={<BladderStone />} />
-      <Route path="/conditions/urethral-stricture" element={<UrethralStricture />} />
-      <Route path="/conditions/hematuria" element={<Hematuria />} />
-      <Route path="/conditions/hydrocele" element={<Hydrocele />} />
-      <Route path="/conditions/testicular-disorders" element={<TesticularDisorders />} />
-      <Route path="/conditions/chronic-testicular-pain" element={<ChronicTesticularPain />} />
-      <Route path="/conditions/kidney-transplant-eval" element={<KidneyTransplantEval />} />
-      <Route path="/conditions/living-donor-transplant" element={<LivingDonorTransplant />} />
-      <Route path="/conditions/deceased-donor-transplant" element={<DeceasedDonorTransplant />} />
-      <Route path="/conditions/post-transplant-care" element={<PostTransplantCare />} />
+        {/* Conditions Treated Routes */}
+        <Route path="/conditions/kidney-stone" element={<KidneyStone />} />
+        <Route path="/conditions/prostate" element={<Prostate />} />
+        <Route path="/conditions/bladder-stone" element={<BladderStone />} />
+        <Route path="/conditions/urethral-stricture" element={<UrethralStricture />} />
+        <Route path="/conditions/hematuria" element={<Hematuria />} />
+        <Route path="/conditions/hydrocele" element={<Hydrocele />} />
+        <Route path="/conditions/testicular-disorders" element={<TesticularDisorders />} />
+        <Route path="/conditions/chronic-testicular-pain" element={<ChronicTesticularPain />} />
+        <Route path="/conditions/kidney-transplant-eval" element={<KidneyTransplantEval />} />
+        <Route path="/conditions/living-donor-transplant" element={<LivingDonorTransplant />} />
+        <Route path="/conditions/deceased-donor-transplant" element={<DeceasedDonorTransplant />} />
+        <Route path="/conditions/post-transplant-care" element={<PostTransplantCare />} />
 
-      {/* Andrology Routes */}
-      <Route path="/andrology/male-infertility" element={<MaleInfertility />} />
-      <Route path="/andrology/erectile-dysfunction" element={<ErectileDysfunction />} />
-      <Route path="/andrology/premature-ejaculation" element={<PrematureEjaculation />} />
+        {/* Andrology Routes */}
+        <Route path="/andrology/male-infertility" element={<MaleInfertility />} />
+        <Route path="/andrology/erectile-dysfunction" element={<ErectileDysfunction />} />
+        <Route path="/andrology/premature-ejaculation" element={<PrematureEjaculation />} />
 
-      {/* Male Urology Routes */}
-      <Route path="/male/prostate" element={<Prostate />} />
-      <Route path="/male/kidney" element={<KidneyStone />} />
-      <Route path="/male/hypogonadism" element={<Hypogonadism />} />
-      <Route path="/male/varicocele" element={<Varicocele />} />
-      <Route path="/male/erectile-dysfunction" element={<ErectileDysfunction />} />
-      <Route path="/male/peyronies-disease" element={<PeyroniesDisease />} />
-      <Route path="/male/loss-of-libido" element={<LossOfLibido />} />
-      <Route path="/male/impotency" element={<Impotency />} />
-      <Route path="/male/male-infertility" element={<MaleInfertility />} />
-      <Route path="/male/penile-curvature" element={<PenileCurvature />} />
+        {/* Male Urology Routes */}
+        <Route path="/male/prostate" element={<Prostate />} />
+        <Route path="/male/kidney" element={<KidneyStone />} />
+        <Route path="/male/hypogonadism" element={<Hypogonadism />} />
+        <Route path="/male/varicocele" element={<Varicocele />} />
+        <Route path="/male/erectile-dysfunction" element={<ErectileDysfunction />} />
+        <Route path="/male/peyronies-disease" element={<PeyroniesDisease />} />
+        <Route path="/male/loss-of-libido" element={<LossOfLibido />} />
+        <Route path="/male/impotency" element={<Impotency />} />
+        <Route path="/male/male-infertility" element={<MaleInfertility />} />
+        <Route path="/male/penile-curvature" element={<PenileCurvature />} />
 
-      {/* Female Urology Routes */}
-      <Route path="/female/uti" element={<FemaleUTI />} />
-      <Route path="/female/incontinence" element={<FemaleIncontinence />} />
-      <Route path="/female/overactive-bladder" element={<FemaleOveractiveBladder />} />
-      <Route path="/female/cystocele" element={<FemaleCystocele />} />
-      <Route path="/female/voiding-difficulties" element={<FemaleVoidingDifficulties />} />
-      <Route path="/female/nocturia" element={<FemaleNocturia />} />
-      <Route path="/female/vvf-repair" element={<FemaleVesicovaginalFistula />} />
+        {/* Female Urology Routes */}
+        <Route path="/female/uti" element={<FemaleUTI />} />
+        <Route path="/female/incontinence" element={<FemaleIncontinence />} />
+        <Route path="/female/overactive-bladder" element={<FemaleOveractiveBladder />} />
+        <Route path="/female/cystocele" element={<FemaleCystocele />} />
+        <Route path="/female/voiding-difficulties" element={<FemaleVoidingDifficulties />} />
+        <Route path="/female/nocturia" element={<FemaleNocturia />} />
+        <Route path="/female/vvf-repair" element={<FemaleVesicovaginalFistula />} />
 
-      {/* Paediatric Urology Routes */}
-      <Route path="/paediatric/undescended-testis" element={<UndescendedTestis />} />
-      <Route path="/paediatric/phimosis" element={<Phimosis />} />
-      <Route path="/paediatric/hypospadias" element={<Hypospadias />} />
-      <Route path="/paediatric/hydrocele" element={<PaediatricHydrocele />} />
-      <Route path="/paediatric/urinary-problems" element={<PaediatricUrinaryProblems />} />
+        {/* Paediatric Urology Routes */}
+        <Route path="/paediatric/undescended-testis" element={<UndescendedTestis />} />
+        <Route path="/paediatric/phimosis" element={<Phimosis />} />
+        <Route path="/paediatric/hypospadias" element={<Hypospadias />} />
+        <Route path="/paediatric/hydrocele" element={<PaediatricHydrocele />} />
+        <Route path="/paediatric/urinary-problems" element={<PaediatricUrinaryProblems />} />
 
-      {/* Urological Cancer Routes */}
-      <Route path="/cancers/prostate-cancer" element={<ProstateCancer />} />
-      <Route path="/cancers/kidney-cancer" element={<KidneyCancer />} />
-      <Route path="/cancers/bladder-cancer" element={<BladderCancer />} />
-      <Route path="/cancers/testicular-cancer" element={<TesticularCancer />} />
-    </Routes>
+        {/* Urological Cancer Routes */}
+        <Route path="/cancers/prostate-cancer" element={<ProstateCancer />} />
+        <Route path="/cancers/kidney-cancer" element={<KidneyCancer />} />
+        <Route path="/cancers/bladder-cancer" element={<BladderCancer />} />
+        <Route path="/cancers/testicular-cancer" element={<TesticularCancer />} />
+      </Routes>
+    </Suspense>
   );
 }

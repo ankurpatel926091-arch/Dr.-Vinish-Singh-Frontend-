@@ -14,6 +14,8 @@ import {
   UserCheck,
 } from "lucide-react";
 import PageHero from "../../components/PageHero";
+import CategoryMenuCard from "../../components/CategoryMenuCard";
+import { conditionsMenuCategories } from "../../data/conditionsMenuData";
 
 const transplantPhases = [
   {
@@ -127,8 +129,17 @@ export default function RenalTransplantService() {
 
           </div>
 
-          {/* Sidebar CTA & OPD Schedule (4 Cols) */}
+          {/* Sidebar CTA & Category Navigation (4 Cols) */}
           <div className="lg:col-span-4 space-y-6">
+            
+            {/* Category Navigation Menu Card */}
+            <CategoryMenuCard
+              title={conditionsMenuCategories[2].title}
+              icon={conditionsMenuCategories[2].icon}
+              iconBg={conditionsMenuCategories[2].iconBg}
+              items={conditionsMenuCategories[2].items}
+              activeLabel="Kidney Failure Requiring Transplant"
+            />
             
             {/* OPD Timings Card */}
             <div className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-2xs space-y-4">

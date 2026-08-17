@@ -318,6 +318,7 @@ export default function Gallery() {
                   <img
                     src={item.media}
                     alt={item.title}
+                    loading="lazy"
                     className="absolute inset-0 w-full h-full object-cover object-[center_28%] transition-transform duration-700 ease-out group-hover:scale-108"
                   />
                 ) : (

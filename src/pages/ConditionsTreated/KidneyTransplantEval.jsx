@@ -1,6 +1,7 @@
 import React from "react";
 import ConditionPage from "../../components/ConditionPage";
 import heroImg from "../../assets/Condition Treated/Kidney Stone.png";
+import transplantImg from "../../assets/images/kidney_transplant.jpg";
 
 export default function KidneyTransplantEval() {
   return (
@@ -10,6 +11,7 @@ export default function KidneyTransplantEval() {
       description="Comprehensive pre-transplant evaluation for patients with End-Stage Renal Disease (ESRD) by Senior Urologist & Transplant Surgeon Dr. Vinish Kumar Singh."
       category="Renal Transplant"
       heroBg={heroImg}
+      image={transplantImg}
       overviewTitle="Thorough Preparation for Successful Renal Transplant"
       overviewText="Kidney transplant evaluation is a comprehensive diagnostic process to determine a patient's readiness for renal transplantation. Dr. Vinish Kumar Singh evaluates cardiac status, vascular anatomy, HLA tissue crossmatching, and lower urinary tract health to ensure optimal surgical success and long-term graft survival."
       treatmentCards={[

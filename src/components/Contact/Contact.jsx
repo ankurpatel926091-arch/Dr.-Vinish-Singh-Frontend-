@@ -12,7 +12,10 @@ import {
   Moon,
   ExternalLink,
   Zap,
+  Loader2,
+  AlertCircle,
 } from "lucide-react";
+import { WEB3FORMS_ACCESS_KEY, WEB3FORMS_ENDPOINT } from "../../config/web3forms";
 import {
   FaFacebookF,
   FaInstagram,
@@ -95,6 +98,9 @@ const hospitalLocations = {
 export default function Contact({ isHomePage = false }) {
   const [activeHospital, setActiveHospital] = useState("morning");
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [lastSubmittedPhone, setLastSubmittedPhone] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -105,19 +111,59 @@ export default function Contact({ isHomePage = false }) {
 
   const currentLocation = hospitalLocations[activeHospital];
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({
-        name: "",
-        phone: "",
-        service: "Kidney Stones",
-        hospital: "Rudraksh IVF & Urology Centre (Sharda Nagar)",
-        message: "",
+    if (!formData.name.trim() || !formData.phone.trim()) {
+      setErrorMessage("Please fill in all required fields (*).");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setErrorMessage("");
+
+    try {
+      const response = await fetch(WEB3FORMS_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: `New Appointment Request - ${formData.name}`,
+          from_name: "Dr. Vinish Singh Website",
+          name: formData.name,
+          phone: formData.phone,
+          hospital: formData.hospital,
+          service: formData.service,
+          message: formData.message || "N/A",
+        }),
       });
-    }, 4000);
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubmitted(true);
+        setLastSubmittedPhone(formData.phone);
+        setFormData({
+          name: "",
+          phone: "",
+          service: "Kidney Stones",
+          hospital: "Rudraksh IVF & Urology Centre (Sharda Nagar)",
+          message: "",
+        });
+      } else {
+        setErrorMessage(
+          data.message || "Failed to submit appointment request. Please try again."
+        );
+      }
+    } catch (err) {
+      setErrorMessage(
+        "Network error occurred. Please check your connection and try again."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -183,7 +229,7 @@ export default function Contact({ isHomePage = false }) {
                   href="tel:8604891955"
                   className="text-sm font-extrabold text-slate-900 hover:text-[#103F7C] transition-colors truncate block"
                 >
-                  +91 86048 91955
+                  +91 86048 91955 
                 </a>
               </div>
             </div>
@@ -407,12 +453,26 @@ export default function Contact({ isHomePage = false }) {
               <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl p-6 text-center">
                 <CheckCircle2 size={32} className="text-emerald-600 mx-auto mb-2" />
                 <h3 className="font-bold text-base">Appointment Request Submitted!</h3>
-                <p className="text-xs text-emerald-700 mt-1">
-                  Thank you! We will call you back shortly on <strong>{formData.phone}</strong> for OPD confirmation.
+                <p className="text-xs text-emerald-700 mt-1 mb-4">
+                  Thank you! We have received your request and will call you back shortly on{" "}
+                  <strong>{lastSubmittedPhone || "your phone number"}</strong> for OPD confirmation.
                 </p>
+                <button
+                  onClick={() => setSubmitted(false)}
+                  className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition-all cursor-pointer"
+                >
+                  Submit Another Request
+                </button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
+                {errorMessage && (
+                  <div className="flex items-start gap-2.5 p-3 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-medium">
+                    <AlertCircle size={16} className="text-red-500 shrink-0 mt-0.5" />
+                    <span>{errorMessage}</span>
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-xs font-bold text-slate-600 mb-1">Your Name *</label>
@@ -484,10 +544,20 @@ export default function Contact({ isHomePage = false }) {
 
                 <button
                   type="submit"
-                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-sm shadow-md active:scale-98 transition-all cursor-pointer"
+                  disabled={isSubmitting}
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-sm shadow-md active:scale-98 transition-all cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  <Send size={16} />
-                  <span>Submit Appointment Request</span>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 size={16} className="animate-spin" />
+                      <span>Sending Request...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send size={16} />
+                      <span>Submit Appointment Request</span>
+                    </>
+                  )}
                 </button>
               </form>
             )}

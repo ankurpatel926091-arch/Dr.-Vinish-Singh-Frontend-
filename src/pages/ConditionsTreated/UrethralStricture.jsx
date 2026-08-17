@@ -1,6 +1,7 @@
 import React from "react";
 import ConditionPage from "../../components/ConditionPage";
 import heroImg from "../../assets/Condition Treated/Kidney Stone.png";
+import urethralImg from "../../assets/images/urethral_stricture.jpg";
 
 export default function UrethralStricture() {
   return (
@@ -10,6 +11,7 @@ export default function UrethralStricture() {
       description="Minimally invasive VIU (Visual Internal Urethrotomy) and buccal mucosa graft urethroplasty for urethral narrowing and slow urine stream by Dr. Vinish Kumar Singh."
       category="Urological Conditions"
       heroBg={heroImg}
+      image={urethralImg}
       overviewTitle="Restoring Normal Urinary Flow & Comfort"
       overviewText="Urethral stricture is a narrowing of the urinary passage caused by scar tissue from prior trauma, infection, or catheterization. Patients experience painful straining, weak stream, and urinary retention. Dr. Vinish Kumar Singh performs precise endoscopic laser urethrotomy and reconstructive urethroplasty to permanently restore normal urine passage."
       treatmentCards={[

@@ -103,3 +103,12 @@
     display: none !important;
   }
 }
+
+/* Hide scrollbar utility for smooth horizontal touch rows */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

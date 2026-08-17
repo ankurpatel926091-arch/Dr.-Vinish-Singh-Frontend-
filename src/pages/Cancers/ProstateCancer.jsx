@@ -1,6 +1,7 @@
 import React from "react";
 import ConditionPage from "../../components/ConditionPage";
 import heroImg from "../../assets/Condition Treated/Prostate.png";
+import cancerImg from "../../assets/images/urology_cancer.jpg";
 
 export default function ProstateCancer() {
   return (
@@ -10,6 +11,7 @@ export default function ProstateCancer() {
       description="Advanced PSA screening, MRI-fusion prostate biopsy, nerve-sparing radical prostatectomy, and androgen deprivation therapy by Uro-Oncologist Dr. Vinish Kumar Singh."
       category="Urological Cancers"
       heroBg={heroImg}
+      image={cancerImg}
       overviewTitle="Advanced Diagnosis & Surgical Oncology for Prostate Cancer"
       overviewText="Prostate cancer is one of the most common cancers in men, often developing silently without early symptoms. Elevated PSA levels or abnormal digital rectal exam require prompt specialist evaluation. Dr. Vinish Kumar Singh performs precision MRI-fusion transperineal biopsies and nerve-sparing radical prostatectomy to remove cancerous tissue while preserving urinary control and erectile function."
       treatmentCards={[

@@ -1,6 +1,7 @@
 import React from "react";
 import ConditionPage from "../../components/ConditionPage";
 import heroImg from "../../assets/Condition Treated/Kidney Stone.png";
+import transplantImg from "../../assets/images/kidney_transplant.jpg";
 
 export default function LivingDonorTransplant() {
   return (
@@ -10,6 +11,7 @@ export default function LivingDonorTransplant() {
       description="Gold-standard living donor kidney transplantation utilizing keyhole laparoscopic donor nephrectomy for faster donor recovery by Dr. Vinish Kumar Singh."
       category="Renal Transplant"
       heroBg={heroImg}
+      image={transplantImg}
       overviewTitle="Gold-Standard Living Related Renal Transplant"
       overviewText="Living donor kidney transplantation provides the best long-term outcomes and graft survival for patients with kidney failure. Dr. Vinish Kumar Singh performs laparoscopic keyhole donor nephrectomy—ensuring minimal pain and rapid 3-day recovery for the living donor—followed by precise vascular and ureteric reconstruction in the recipient."
       treatmentCards={[

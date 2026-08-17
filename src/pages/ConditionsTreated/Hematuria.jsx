@@ -1,6 +1,7 @@
 import React from "react";
 import ConditionPage from "../../components/ConditionPage";
 import heroImg from "../../assets/Condition Treated/Kidney Stone.png";
+import urethralImg from "../../assets/images/urethral_stricture.jpg";
 
 export default function Hematuria() {
   return (
@@ -10,6 +11,7 @@ export default function Hematuria() {
       description="Expert evaluation of visible (gross) or microscopic blood in urine using painless cystoscopy, CT urography, and lab diagnostics by Dr. Vinish Kumar Singh."
       category="Urological Conditions"
       heroBg={heroImg}
+      image={urethralImg}
       overviewTitle="Prompt Investigation for Urinary Bleeding"
       overviewText="Hematuria is the presence of red blood cells in urine. It can range from bright red or cola-colored urine (gross hematuria) to invisible blood detected only during routine urine tests (microscopic hematuria). Early clinical evaluation by Dr. Vinish Kumar Singh pinpoints the exact cause—whether kidney stones, urinary tract infections, enlarged prostate, or bladder lesions."
       treatmentCards={[

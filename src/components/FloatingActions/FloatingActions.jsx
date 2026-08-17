@@ -20,7 +20,6 @@ export default function FloatingActions() {
     };
   }, []);
 
-  // Custom slow, smooth, subtle and professional scroll-to-top transition
   const scrollToTop = () => {
     const startPosition = window.scrollY || window.pageYOffset;
     if (startPosition === 0) return;
@@ -29,11 +28,9 @@ export default function FloatingActions() {
       cancelAnimationFrame(animFrameIdRef.current);
     }
 
-    // Dynamic slow duration scaled for an ultra-slow, smooth & subtle scroll experience (2200ms - 3200ms)
     const duration = Math.min(3200, Math.max(2200, startPosition * 0.8));
     let startTime = null;
 
-    // Smooth cubic ease-in-out curve for soft acceleration & soft landing at top
     const easeInOutCubic = (t) => {
       return t < 0.5
         ? 4 * t * t * t
@@ -74,61 +71,74 @@ export default function FloatingActions() {
   };
 
   const whatsappUrl = `https://wa.me/917275981480?text=${encodeURIComponent(
-    "Hello Dr. Vinish Kumar Singh, I would like to inquire about an appointment."
+    "Hello Dr. Vinish Kumar Singh, I would like to inquire about an OPD appointment."
   )}`;
 
   return (
-    <div className="fixed bottom-4 right-3 sm:bottom-6 sm:right-6 z-50 flex flex-col items-center gap-2.5 sm:gap-3">
+    <div className="fixed bottom-3 right-2 sm:bottom-6 sm:right-6 z-50 flex flex-col items-center gap-2 sm:gap-3 font-sans">
       
       {/* 1. Phone Call Button (Pink/Magenta Circle) */}
-      <a
-        href="tel:+917275981480"
-        aria-label="Call Doctor"
-        title="Call Doctor"
-        className="w-10 h-10 sm:w-13 sm:h-13 rounded-full bg-[#FF2D75] hover:bg-[#e01b63] text-white flex items-center justify-center shadow-lg shadow-pink-500/30 transition-all duration-300 hover:scale-110 active:scale-95"
-      >
-        <FaPhoneAlt className="text-base sm:text-lg" />
-      </a>
+      <div className="relative group/phone">
+        <span className="absolute right-full top-1/2 -translate-y-1/2 mr-2.5 px-2.5 py-1 rounded-lg bg-slate-900 text-white text-[11px] font-bold whitespace-nowrap opacity-0 pointer-events-none group-hover/phone:opacity-100 transition-opacity shadow-md">
+          Call +91 72759 81480
+        </span>
+        <a
+          href="tel:+917275981480"
+          aria-label="Call Doctor"
+          title="Call Doctor"
+          className="w-8.5 h-8.5 sm:w-12 sm:h-12 rounded-full bg-[#FF2D75] hover:bg-[#e01b63] text-white flex items-center justify-center shadow-md shadow-pink-500/20 transition-all duration-300 hover:scale-110 active:scale-95"
+        >
+          <FaPhoneAlt className="text-xs sm:text-base" />
+        </a>
+      </div>
 
-      {/* 2. WhatsApp Button (Vibrant Green Circle) */}
-      <a
-        href={whatsappUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Chat on WhatsApp"
-        title="Chat on WhatsApp"
-        className="w-10 h-10 sm:w-13 sm:h-13 rounded-full bg-[#25D366] hover:bg-[#1ebd59] text-white flex items-center justify-center shadow-lg shadow-emerald-500/30 transition-all duration-300 hover:scale-110 active:scale-95"
-      >
-        <FaWhatsapp className="text-xl sm:text-2xl" />
-      </a>
+      {/* 2. WhatsApp Button (Vibrant Glowing Green Circle with Radar Pulse & Tooltip) */}
+      <div className="relative group/wa">
+        <span className="absolute right-full top-1/2 -translate-y-1/2 mr-2.5 px-2.5 py-1 rounded-lg bg-emerald-950 text-emerald-300 text-[11px] font-bold whitespace-nowrap opacity-0 pointer-events-none group-hover/wa:opacity-100 transition-opacity shadow-md border border-emerald-500/30">
+          Chat on WhatsApp
+        </span>
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Chat on WhatsApp"
+          title="Chat on WhatsApp"
+          className="relative w-8.5 h-8.5 sm:w-12 sm:h-12 rounded-full bg-gradient-to-tr from-[#128C7E] via-[#25D366] to-[#20bd5a] text-white flex items-center justify-center shadow-lg shadow-emerald-500/30 transition-all duration-300 hover:scale-110 active:scale-95 border border-white/20"
+        >
+          <span className="absolute -inset-1 rounded-full bg-[#25D366]/35 animate-ping pointer-events-none" style={{ animationDuration: "2.5s" }} />
+          <FaWhatsapp className="relative z-10 text-base sm:text-2xl drop-shadow-xs" />
+        </a>
+      </div>
 
       {/* 3. Book Appointment Button (Cyan / Sky Blue Circle) */}
-      <NavLink
-        to="/contact"
-        aria-label="Book Appointment"
-        title="Book Appointment"
-        className="w-10 h-10 sm:w-13 sm:h-13 rounded-full bg-[#00A8E8] hover:bg-[#0092c9] text-white flex items-center justify-center shadow-lg shadow-sky-500/30 transition-all duration-300 hover:scale-110 active:scale-95"
-      >
-        <FaCalendarAlt className="text-base sm:text-lg" />
-      </NavLink>
+      <div className="relative group/book">
+        <span className="absolute right-full top-1/2 -translate-y-1/2 mr-2.5 px-2.5 py-1 rounded-lg bg-slate-900 text-white text-[11px] font-bold whitespace-nowrap opacity-0 pointer-events-none group-hover/book:opacity-100 transition-opacity shadow-md">
+          Book Appointment
+        </span>
+        <NavLink
+          to="/contact"
+          aria-label="Book Appointment"
+          title="Book Appointment"
+          className="w-8.5 h-8.5 sm:w-12 sm:h-12 rounded-full bg-[#00A8E8] hover:bg-[#0092c9] text-white flex items-center justify-center shadow-md shadow-sky-500/20 transition-all duration-300 hover:scale-110 active:scale-95"
+        >
+          <FaCalendarAlt className="text-xs sm:text-base" />
+        </NavLink>
+      </div>
 
-      {/* 4. Scroll-to-Top Button (White Circle with Rotating Pink Dashed Outer Ring) */}
+      {/* 4. Scroll-to-Top Button */}
       {showScrollTop && (
         <button
           type="button"
           onClick={scrollToTop}
           aria-label="Scroll to top"
           title="Scroll to Top"
-          className="relative w-10 h-10 sm:w-13 sm:h-13 rounded-full bg-white text-[#FF2D75] shadow-lg flex items-center justify-center transition-transform duration-300 hover:scale-110 active:scale-95 group"
+          className="relative w-8.5 h-8.5 sm:w-12 sm:h-12 rounded-full bg-white text-[#FF2D75] shadow-md flex items-center justify-center transition-transform duration-300 hover:scale-110 active:scale-95 group"
         >
-          {/* Very Slow Rotating Outer Dashed/Dotted Ring (10s duration for ultra slow spin) */}
           <span
-            className="absolute -inset-0.5 rounded-full border-2 border-dashed border-[#FF2D75] animate-spin pointer-events-none"
+            className="absolute -inset-0.5 rounded-full border border-dashed border-[#FF2D75] animate-spin pointer-events-none"
             style={{ animationDuration: "10s" }}
           />
-
-          {/* Static Upward Chevron Icon */}
-          <FaChevronUp className="relative z-10 text-sm sm:text-base transition-transform group-hover:-translate-y-0.5" />
+          <FaChevronUp className="relative z-10 text-xs sm:text-sm transition-transform group-hover:-translate-y-0.5" />
         </button>
       )}
 

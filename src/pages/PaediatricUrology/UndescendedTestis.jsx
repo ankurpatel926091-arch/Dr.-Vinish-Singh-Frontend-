@@ -1,6 +1,7 @@
 import React from "react";
 import ConditionPage from "../../components/ConditionPage";
 import heroImg from "../../assets/FemaleUrology/CystoceleProlapse.png";
+import paediatricImg from "../../assets/images/paediatric_urology.jpg";
 
 export default function UndescendedTestis() {
   return (
@@ -10,6 +11,7 @@ export default function UndescendedTestis() {
       description="Minimally invasive open or laparoscopic orchidopexy to bring undescended testicle into the scrotum by Paediatric Urologist Dr. Vinish Kumar Singh."
       category="Paediatric Urological Conditions"
       heroBg={heroImg}
+      image={paediatricImg}
       overviewTitle="Early Surgical Correction for Paediatric Testicular Health"
       overviewText="Cryptorchidism (undescended testis) occurs when one or both testicles fail to descend into the scrotum before birth. Left untreated, high body temperature inside the abdomen damages sperm-producing cells and increases cancer risk. Dr. Vinish Kumar Singh performs delicate, child-friendly orchidopexy (at age 6-12 months) to move and secure the testicle safely."
       treatmentCards={[

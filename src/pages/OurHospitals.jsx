@@ -41,7 +41,7 @@ import ourHospitalsBanner from "../assets/About/OurHospitals.png";
 // Facility Showcase Images
 import opdRoomImg from "../assets/images/img13.png";
 import receptionImg from "../assets/images/Img1.jpeg";
-import laserTechImg from "../assets/images/img9.jpg";
+import laserTechImg from "../assets/images/img5.jpeg";
 import otSuiteImg from "../assets/images/img10.jpg";
 import vinishImg from "../assets/images/img12.png";
 
@@ -105,6 +105,7 @@ const facilityGallery = [
     subtitle: "Rudraksh IVF & Urology Centre Facade",
     image: hospitalBuildingImg,
     category: "Building",
+    objectPos: "object-top",
   },
   {
     id: "fac-2",
@@ -112,6 +113,7 @@ const facilityGallery = [
     subtitle: "Modular Laser & Endourology OT",
     image: otSuiteImg,
     category: "Operation Theatre",
+    objectPos: "object-top",
   },
   {
     id: "fac-3",
@@ -119,6 +121,7 @@ const facilityGallery = [
     subtitle: "Comfortable waiting area with digital support",
     image: receptionImg,
     category: "Lounge",
+    objectPos: "object-[center_15%]",
   },
   {
     id: "fac-4",
@@ -126,6 +129,7 @@ const facilityGallery = [
     subtitle: "Hygienic private consultation chamber",
     image: opdRoomImg,
     category: "OPD Room",
+    objectPos: "object-top",
   },
   {
     id: "fac-5",
@@ -133,6 +137,7 @@ const facilityGallery = [
     subtitle: "Precision HolEP & RIRS kidney stone equipment",
     image: laserTechImg,
     category: "Laser Tech",
+    objectPos: "object-top",
   },
   {
     id: "fac-6",
@@ -140,7 +145,8 @@ const facilityGallery = [
     subtitle: "Lead Urologist & Founder",
     image: vinishImg,
     category: "Doctor",
-  }
+    objectPos: "object-top",
+  },
 ];
 
 const hospitalHighlights = [
@@ -284,15 +290,14 @@ export default function OurHospitals() {
                 className="bg-white rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden group h-full"
               >
                 <div>
-                  {/* Hospital Photo Header Box with Lightbox Trigger */}
-                  <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-slate-900 group">
+                  {/* Hospital Photo Box - 100% Shadow-Free & Bright */}
+                  <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-slate-100 group">
                     <img
                       src={hosp.image}
                       alt={hosp.name}
-                      className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                      className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                     />
-                    {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
 
                     {/* Top Floating Badges */}
                     <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2 z-10">
@@ -303,28 +308,10 @@ export default function OurHospitals() {
                         <span>{hosp.tagline}</span>
                       </span>
 
-                      <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-800 bg-emerald-50/95 backdrop-blur-md px-3 py-1 rounded-full border border-emerald-300 shadow-xs">
-                        <ShieldCheck size={13} className="text-emerald-600" />
-                        <span>Active OPD</span>
-                      </span>
-                    </div>
-
-                    {/* Bottom Photo Overlay Info */}
-                    <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between z-10 text-white">
-                      <div>
-                        <span className="text-[11px] font-bold uppercase tracking-widest text-orange-300 bg-black/50 backdrop-blur-xs px-2.5 py-0.5 rounded-full border border-white/20">
-                          {hosp.badgeText}
-                        </span>
-                        <h4 className="text-sm font-bold mt-1 text-white/90 drop-shadow-sm flex items-center gap-1.5">
-                          <MapPin size={14} className="text-orange-400" />
-                          {hosp.locality}
-                        </h4>
-                      </div>
-
                       <button
                         type="button"
                         onClick={() => openLightbox(hosp.image, hosp.name)}
-                        className="px-3 py-1.5 rounded-xl bg-black/60 hover:bg-orange-500 text-white text-xs font-bold backdrop-blur-md border border-white/30 flex items-center gap-1.5 transition-all duration-300 shadow-lg hover:scale-105"
+                        className="px-3 py-1.5 rounded-xl bg-white/90 hover:bg-[#103F7C] hover:text-white text-slate-800 text-xs font-bold backdrop-blur-md border border-slate-200 flex items-center gap-1.5 transition-all duration-300 shadow-md hover:scale-105 cursor-pointer"
                       >
                         <Maximize2 size={13} />
                         <span>Full Photo</span>
@@ -396,7 +383,7 @@ export default function OurHospitals() {
                             <button
                               type="button"
                               onClick={() => handleCopyAddress(hosp.id, hosp.address)}
-                              className="text-[11px] font-bold text-[#103F7C] hover:text-orange-600 flex items-center gap-1 transition-colors"
+                              className="text-[11px] font-bold text-[#103F7C] hover:text-orange-600 flex items-center gap-1 transition-colors cursor-pointer"
                             >
                               {copiedId === hosp.id ? (
                                 <>
@@ -477,7 +464,7 @@ export default function OurHospitals() {
           ))}
         </div>
 
-        {/* Hospital Facilities & Infrastructure Showcase Gallery */}
+        {/* Hospital Facilities & Infrastructure Showcase Gallery (100% Shadow-Free & Bright) */}
         <ScrollReveal variant="fade-up" className="mt-16 bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/90 shadow-sm">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-xs font-bold uppercase tracking-wider mb-2">
@@ -497,31 +484,38 @@ export default function OurHospitals() {
               <ScrollReveal key={fac.id} variant="scale-up" delay={idx * 100}>
                 <div
                   onClick={() => openLightbox(fac.image, fac.title)}
-                  className="group cursor-pointer rounded-2xl overflow-hidden border border-slate-200/80 bg-slate-900 relative h-64 shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                  className="group cursor-pointer rounded-2xl overflow-hidden border border-slate-200/90 bg-white shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between h-full"
                 >
-                  <img
-                    src={fac.image}
-                    alt={fac.title}
-                    className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/20 to-transparent" />
-
-                  <div className="absolute top-3 right-3 z-10">
-                    <span className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-bold text-orange-300 uppercase tracking-wider border border-white/20">
-                      {fac.category}
-                    </span>
+                  {/* Pure Bright Photo Box - NO BLACK GRADIENT OR SHADOW OVERLAY */}
+                  <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-slate-100">
+                    <img
+                      src={fac.image}
+                      alt={fac.title}
+                      loading="lazy"
+                      className={`w-full h-full object-cover ${fac.objectPos || "object-top"} transition-transform duration-700 group-hover:scale-105`}
+                    />
+                    
+                    {/* Floating Category Badge */}
+                    <div className="absolute top-3 right-3 z-10">
+                      <span className="px-3 py-1 rounded-full bg-white/95 backdrop-blur-md text-[10px] font-extrabold text-[#103F7C] uppercase tracking-wider border border-slate-200 shadow-sm">
+                        {fac.category}
+                      </span>
+                    </div>
                   </div>
 
-                  <div className="absolute bottom-4 left-4 right-4 z-10 text-white">
-                    <h4 className="font-extrabold text-sm sm:text-base leading-snug group-hover:text-orange-300 transition-colors">
-                      {fac.title}
-                    </h4>
-                    <p className="text-xs text-slate-300 mt-1 font-normal line-clamp-1">
-                      {fac.subtitle}
-                    </p>
-                    <div className="mt-2 text-[11px] font-bold text-orange-400 flex items-center gap-1">
-                      <Maximize2 size={12} />
-                      <span>Click to Expand Photo</span>
+                  {/* Clean White Card Footer with Dark Legible Text */}
+                  <div className="p-4 sm:p-5 bg-white border-t border-slate-100 flex items-center justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <h4 className="font-extrabold text-sm sm:text-base text-slate-900 group-hover:text-[#103F7C] transition-colors leading-snug truncate">
+                        {fac.title}
+                      </h4>
+                      <p className="text-xs text-slate-500 mt-1 font-medium truncate">
+                        {fac.subtitle}
+                      </p>
+                    </div>
+
+                    <div className="shrink-0 w-8 h-8 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center group-hover:bg-orange-500 group-hover:text-white transition-all shadow-2xs">
+                      <Maximize2 size={14} />
                     </div>
                   </div>
                 </div>
@@ -594,7 +588,7 @@ export default function OurHospitals() {
               type="button"
               onClick={handleZoomIn}
               title="Zoom In"
-              className="w-9 h-9 rounded-xl hover:bg-white/20 flex items-center justify-center transition-colors text-white"
+              className="w-9 h-9 rounded-xl hover:bg-white/20 flex items-center justify-center transition-colors text-white cursor-pointer"
             >
               <ZoomIn size={18} />
             </button>
@@ -602,7 +596,7 @@ export default function OurHospitals() {
               type="button"
               onClick={handleZoomOut}
               title="Zoom Out"
-              className="w-9 h-9 rounded-xl hover:bg-white/20 flex items-center justify-center transition-colors text-white"
+              className="w-9 h-9 rounded-xl hover:bg-white/20 flex items-center justify-center transition-colors text-white cursor-pointer"
             >
               <ZoomOut size={18} />
             </button>
@@ -610,7 +604,7 @@ export default function OurHospitals() {
               type="button"
               onClick={handleRotate}
               title="Rotate"
-              className="w-9 h-9 rounded-xl hover:bg-white/20 flex items-center justify-center transition-colors text-white"
+              className="w-9 h-9 rounded-xl hover:bg-white/20 flex items-center justify-center transition-colors text-white cursor-pointer"
             >
               <RotateCw size={17} />
             </button>
@@ -619,7 +613,7 @@ export default function OurHospitals() {
               type="button"
               onClick={closeLightbox}
               title="Close (Esc)"
-              className="w-9 h-9 rounded-xl bg-red-600/80 hover:bg-red-600 flex items-center justify-center transition-colors text-white"
+              className="w-9 h-9 rounded-xl bg-red-600/80 hover:bg-red-600 flex items-center justify-center transition-colors text-white cursor-pointer"
             >
               <X size={20} />
             </button>
