@@ -259,7 +259,7 @@ export default function Navbar() {
           scrolled ? "shadow-md py-2" : "py-3 border-b border-slate-200/80"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
           <div className="flex items-center justify-between">
             {/* ================= Logo ================= */}
             <NavLink
@@ -286,7 +286,7 @@ export default function Navbar() {
                 return (
                   <div
                     key={item.label}
-                    className="relative flex items-center py-2"
+                    className={`${item.isMegaMenu ? "" : "relative"} flex items-center py-2`}
                     onMouseEnter={() => setHoveredNav(item.label)}
                     onMouseLeave={() => setHoveredNav(null)}
                   >
@@ -337,17 +337,17 @@ export default function Navbar() {
                             : "opacity-0 invisible translate-y-3 pointer-events-none"
                         } ${
                           item.isMegaMenu
-                            ? "-left-[240px] lg:-left-[310px] xl:-left-[370px]"
+                            ? "left-1/2 -translate-x-1/2 w-full max-w-7xl px-2 sm:px-4"
                             : item.isUrologyGuide
                             ? "left-1/2 -translate-x-1/2"
                             : item.alignRight
                             ? "right-0 left-auto"
-                            : "left-0"
+                            : "left-1/2 -translate-x-1/2"
                         }`}
                       >
                         {item.isMegaMenu ? (
                           /* ================= 5-COLUMN MEGA MENU (Conditions Treated) ================= */
-                          <div className="w-[980px] lg:w-[1120px] xl:w-[1220px] rounded-3xl bg-white p-4 lg:p-5 shadow-[0_25px_60px_-15px_rgba(16,63,124,0.2)] border border-slate-200 ring-1 ring-slate-900/5">
+                          <div className="w-full rounded-3xl bg-white p-4 lg:p-5 shadow-[0_25px_60px_-15px_rgba(16,63,124,0.2)] border border-slate-200 ring-1 ring-slate-900/5">
                             {/* Top Accent Gradient Line */}
                             <div className="h-1.5 w-20 bg-gradient-to-r from-[#103F7C] via-blue-600 to-orange-500 rounded-full mb-3 ml-1" />
 
