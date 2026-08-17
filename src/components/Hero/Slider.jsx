@@ -46,7 +46,7 @@ export default function HeroSlider() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="relative w-full aspect-[1920/750] sm:aspect-[1920/700] lg:aspect-[1920/660] max-h-[calc(100vh-104px)] bg-[#0b3367] overflow-hidden">
+      <div className="relative w-full aspect-[1920/860] sm:aspect-[1920/800] lg:aspect-[1920/740] xl:aspect-[1920/710] min-h-[360px] sm:min-h-[460px] lg:min-h-[540px] max-h-[calc(100vh-90px)] bg-[#0b3367] overflow-hidden">
         {slides.map((slide, i) => (
           <div
             key={i}
