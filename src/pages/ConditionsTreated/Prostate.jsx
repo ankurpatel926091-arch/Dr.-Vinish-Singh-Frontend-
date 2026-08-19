@@ -29,7 +29,7 @@ import prostateImg from "../../assets/Condition Treated/Prostate.png";
 
 const prostateTreatments = [
   {
-    title: "Laser HolEP Surgery",
+    title: "Laser HoLEP Surgery",
     subtitle: "Gold Standard BPH Treatment",
     desc: "Advanced Holmium Laser Enucleation of the Prostate providing complete tissue vaporisation with minimal bleeding & fast urine flow recovery.",
     highlights: ["Minimal Bleeding", "Complete Gland Enucleation", "Short Catheter Time"],
@@ -145,8 +145,8 @@ export default function Prostate() {
       {/* Hero Header Banner */}
       <PageHero
         title="Prostate Care & Laser Surgery"
-        subTitle="Gold Standard HolEP & TURP Procedures"
-        description="Painless Holmium laser enucleation (HolEP) and endoscopic treatments for BPH & enlarged prostate by Senior Urologist Dr. Vinish Kumar Singh."
+        subTitle="Gold Standard HoLEP & TURP Procedures"
+        description="Painless Holmium laser enucleation (HoLEP) and endoscopic treatments for BPH & enlarged prostate by Senior Urologist Dr. Vinish Kumar Singh."
         bgImage={prostateImg}
       />
 
@@ -161,11 +161,11 @@ export default function Prostate() {
             </div>
 
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 leading-snug">
-              Minimally Invasive Laser Prostate Surgery (HolEP)
+              Minimally Invasive Laser Prostate Surgery (HoLEP)
             </h2>
 
             <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed">
-              Holmium Laser Enucleation of the Prostate (HolEP) is the gold-standard procedure recommended for benign prostatic hyperplasia (BPH). It provides complete relief from urinary blockage with minimal hospital stay and zero recurrence.
+              Holmium Laser Enucleation of the Prostate (HoLEP) is the gold-standard procedure recommended for benign prostatic hyperplasia (BPH). It provides complete relief from urinary blockage with minimal hospital stay and zero recurrence.
             </p>
 
             <div className="grid sm:grid-cols-2 gap-3 mt-5">
@@ -284,7 +284,7 @@ export default function Prostate() {
         </div>
       </div>
 
-      {/* ================= 2. WHY CHOOSE HolEP LASER ================= */}
+      {/* ================= 2. WHY CHOOSE HoLEP LASER ================= */}
       <div className="bg-white py-14 lg:py-16 border-y border-slate-200/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center max-w-3xl mx-auto mb-12">
@@ -293,7 +293,7 @@ export default function Prostate() {
               <span>LASER ADVANTAGES</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-              Why HolEP Laser is the Gold Standard for BPH
+              Why HoLEP Laser is the Gold Standard for BPH
             </h2>
             <p className="mt-1.5 text-xs sm:text-sm text-slate-600">
               Key clinical benefits of Holmium Laser Enucleation over conventional prostate surgery.

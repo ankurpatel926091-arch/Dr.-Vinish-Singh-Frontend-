@@ -25,7 +25,7 @@ export const servicesData = [
       "Comprehensive diagnostic & surgical management of urinary tract disorders, kidney stones, enlarged prostate (BPH), and reconstructive urology.",
     highlights: [
       "Stitchless Laser RIRS & PCNL for Kidney Stones",
-      "HolEP Laser Prostatectomy for BPH",
+      "HoLEP Laser Prostatectomy for BPH",
       "Bladder Stone & Ureteroscopic Laser Surgery",
       "Recurrent Urinary Tract Infection (UTI) Care",
     ],
@@ -155,7 +155,7 @@ export default function ServicesSection() {
                       </p>
 
                       {/* Description */}
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal mb-5">
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal mb-5 text-justify">
                         {service.description}
                       </p>
 

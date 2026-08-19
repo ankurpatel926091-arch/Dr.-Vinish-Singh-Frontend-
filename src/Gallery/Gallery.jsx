@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { NavLink } from "react-router-dom";
 import {
   Sparkles,
@@ -14,6 +14,7 @@ import {
   ZoomIn,
   ZoomOut,
   RotateCw,
+  Loader2,
 } from "lucide-react";
 import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
 
@@ -42,7 +43,7 @@ const categories = [
   "Clinic Facilities",
 ];
 
-const galleryItems = [
+const fallbackGalleryItems = [
   // --- 6 FEATURED PHOTOS ---
   {
     id: "p1",
@@ -113,10 +114,10 @@ const galleryItems = [
   {
     id: "v3",
     type: "video",
-    title: "Advanced HolEP Prostate Surgery Insights",
+    title: "Advanced HoLEP Prostate Surgery Insights",
     category: "Surgical Setup",
     media: vdo3,
-    tag: "HolEP Surgery",
+    tag: "HoLEP Surgery",
   },
   {
     id: "v4",
@@ -146,16 +147,56 @@ const galleryItems = [
 
 export default function Gallery() {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [galleryList, setGalleryList] = useState(fallbackGalleryItems);
+  const [loading, setLoading] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [rotation, setRotation] = useState(0);
 
-  const filteredItems = galleryItems.filter((item) => {
-    if (activeCategory === "All") return true;
-    if (activeCategory === "Photos") return item.type === "photo";
-    if (activeCategory === "Videos") return item.type === "video";
-    return item.category === activeCategory;
-  });
+  // Fetch active gallery items from backend API
+  useEffect(() => {
+    const fetchPublicGallery = async () => {
+      try {
+        setLoading(true);
+        const baseUrl = import.meta.env.VITE_API_BASE_URL || "https://dr-vinish-backend.onrender.com/api";
+        const res = await fetch(`${baseUrl}/gallery/public`);
+        const json = await res.json();
+        if (json && json.success && Array.isArray(json.data) && json.data.length > 0) {
+          const apiItems = json.data.map((item) => ({
+            id: item._id || item.id,
+            type: item.type || "photo",
+            title: item.title,
+            category: item.category || "Photos",
+            media: item.url,
+            tag: item.tag || item.category,
+          }));
+          setGalleryList(apiItems);
+        }
+      } catch (err) {
+        console.warn("Public Gallery API connection offline, displaying fallback items:", err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPublicGallery();
+  }, []);
+
+  const filteredItems = useMemo(() => {
+    return galleryList.filter((item) => {
+      if (activeCategory === "All") return true;
+      if (activeCategory === "Photos") return item.type === "photo" || item.category === "Photos";
+      if (activeCategory === "Videos") return item.type === "video" || item.category === "Videos";
+      return item.category === activeCategory;
+    });
+  }, [galleryList, activeCategory]);
+
+  const getCategoryCount = useCallback((catName) => {
+    if (catName === "All") return galleryList.length;
+    if (catName === "Photos") return galleryList.filter((item) => item.type === "photo" || item.category === "Photos").length;
+    if (catName === "Videos") return galleryList.filter((item) => item.type === "video" || item.category === "Videos").length;
+    return galleryList.filter((item) => item.category === catName).length;
+  }, [galleryList]);
 
   const openLightbox = (index) => {
     setSelectedIndex(index);
@@ -275,30 +316,38 @@ export default function Gallery() {
       {/* ================= MAIN GALLERY SECTION ================= */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 lg:py-14">
         
-        {/* Category Filter Tabs */}
+        {/* Category Filter Tabs with Dynamic Badges */}
         <ScrollReveal variant="fade-up" delay={100} className="flex items-center justify-center sm:justify-start flex-wrap gap-2 mb-10">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              type="button"
-              onClick={() => {
-                setActiveCategory(cat);
-                setSelectedIndex(null);
-              }}
-              className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 ${
-                activeCategory === cat
-                  ? "bg-[#103F7C] text-white shadow-md shadow-blue-900/20"
-                  : "bg-white text-slate-600 hover:text-[#103F7C] hover:bg-slate-100 border border-slate-200/80"
-              }`}
-            >
-              {cat === "Photos" && <ImageIcon size={13} className="inline mr-1.5 -mt-0.5" />}
-              {cat === "Videos" && <Video size={13} className="inline mr-1.5 -mt-0.5" />}
-              {cat}
-            </button>
-          ))}
+          {categories.map((cat) => {
+            const count = getCategoryCount(cat);
+            return (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => {
+                  setActiveCategory(cat);
+                  setSelectedIndex(null);
+                }}
+                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center gap-1.5 cursor-pointer ${
+                  activeCategory === cat
+                    ? "bg-[#103F7C] text-white shadow-md shadow-blue-900/20"
+                    : "bg-white text-slate-600 hover:text-[#103F7C] hover:bg-slate-100 border border-slate-200/80"
+                }`}
+              >
+                {cat === "Photos" && <ImageIcon size={13} />}
+                {cat === "Videos" && <Video size={13} />}
+                <span>{cat}</span>
+                <span className={`px-1.5 py-0.5 text-[10px] rounded-full font-bold ${
+                  activeCategory === cat ? "bg-white/20 text-white" : "bg-slate-100 text-slate-500"
+                }`}>
+                  {count}
+                </span>
+              </button>
+            );
+          })}
         </ScrollReveal>
 
-        {/* Media Grid (4-Column Layout Matching Reference Image 1) */}
+        {/* Media Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
           {filteredItems.map((item, idx) => (
             <ScrollReveal
@@ -313,13 +362,13 @@ export default function Gallery() {
                 onMouseLeave={(e) => handleCardMouseLeave(e, item.type)}
                 className="group relative cursor-pointer bg-slate-900 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl border border-slate-200/90 hover:border-orange-400/50 transition-all duration-500 hover:-translate-y-1.5 h-80 sm:h-96 flex flex-col justify-end"
               >
-                {/* Media Display (Full Card Image / Video) */}
+                {/* Media Display */}
                 {item.type === "photo" ? (
                   <img
                     src={item.media}
                     alt={item.title}
                     loading="lazy"
-                    className="absolute inset-0 w-full h-full object-cover object-[center_28%] transition-transform duration-700 ease-out group-hover:scale-108"
+                    className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-108"
                   />
                 ) : (
                   <div className="absolute inset-0 w-full h-full">
@@ -334,7 +383,7 @@ export default function Gallery() {
                   </div>
                 )}
 
-                {/* Center Glassmorphism Floating Icon Button (Matching Reference Image) */}
+                {/* Floating Action Badge */}
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
                   {item.type === "photo" ? (
                     <div className="w-12 h-12 rounded-full bg-white/95 text-[#103F7C] shadow-lg flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 border border-white/60">
@@ -347,7 +396,7 @@ export default function Gallery() {
                   )}
                 </div>
 
-                {/* Subtle Integrated Gradient Overlay on Hover (No White Box Below Image) */}
+                {/* Overlay Text */}
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10 flex items-end justify-between gap-3">
                   <div className="min-w-0 flex-1">
                     <h3 className="text-white font-bold text-xs sm:text-sm leading-snug truncate drop-shadow-sm">
@@ -375,7 +424,7 @@ export default function Gallery() {
           className="fixed inset-0 z-50 bg-[#12131e]/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 animate-fadeIn"
           onClick={closeLightbox}
         >
-          {/* Top Floating Control Toolbar (Zoom In, Zoom Out, Rotate, Close) */}
+          {/* Top Floating Control Toolbar */}
           <div
             className="absolute top-4 right-4 sm:top-6 sm:right-6 z-50 flex items-center gap-2 bg-slate-900/80 backdrop-blur-md p-1.5 rounded-2xl border border-white/15 text-white shadow-xl"
             onClick={(e) => e.stopPropagation()}
@@ -386,7 +435,7 @@ export default function Gallery() {
                   type="button"
                   onClick={handleZoomIn}
                   title="Zoom In"
-                  className="w-8 h-8 rounded-xl hover:bg-white/20 flex items-center justify-center transition-colors"
+                  className="w-8 h-8 rounded-xl hover:bg-white/20 flex items-center justify-center transition-colors cursor-pointer"
                 >
                   <ZoomIn size={16} />
                 </button>
@@ -394,7 +443,7 @@ export default function Gallery() {
                   type="button"
                   onClick={handleZoomOut}
                   title="Zoom Out"
-                  className="w-8 h-8 rounded-xl hover:bg-white/20 flex items-center justify-center transition-colors"
+                  className="w-8 h-8 rounded-xl hover:bg-white/20 flex items-center justify-center transition-colors cursor-pointer"
                 >
                   <ZoomOut size={16} />
                 </button>
@@ -402,7 +451,7 @@ export default function Gallery() {
                   type="button"
                   onClick={handleRotate}
                   title="Rotate"
-                  className="w-8 h-8 rounded-xl hover:bg-white/20 flex items-center justify-center transition-colors"
+                  className="w-8 h-8 rounded-xl hover:bg-white/20 flex items-center justify-center transition-colors cursor-pointer"
                 >
                   <RotateCw size={15} />
                 </button>
@@ -414,30 +463,29 @@ export default function Gallery() {
               type="button"
               onClick={closeLightbox}
               title="Close (Esc)"
-              className="w-8 h-8 rounded-xl hover:bg-red-500/80 flex items-center justify-center transition-colors"
+              className="w-8 h-8 rounded-xl hover:bg-red-500/80 flex items-center justify-center transition-colors cursor-pointer"
             >
               <X size={18} />
             </button>
           </div>
 
-          {/* Left Navigation Arrow (Keyboard ArrowLeft) */}
+          {/* Navigation Arrows */}
           <button
             type="button"
             onClick={prevMedia}
             aria-label="Previous (Left Arrow)"
             title="Previous (Left Arrow Key)"
-            className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-slate-900/80 hover:bg-orange-500 text-white flex items-center justify-center transition-all duration-300 border border-white/15 z-50 shadow-lg hover:scale-110 active:scale-95"
+            className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-slate-900/80 hover:bg-orange-500 text-white flex items-center justify-center transition-all duration-300 border border-white/15 z-50 shadow-lg hover:scale-110 active:scale-95 cursor-pointer"
           >
             <ChevronLeft size={20} />
           </button>
 
-          {/* Right Navigation Arrow (Keyboard ArrowRight) */}
           <button
             type="button"
             onClick={nextMedia}
             aria-label="Next (Right Arrow)"
             title="Next (Right Arrow Key)"
-            className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-slate-900/80 hover:bg-orange-500 text-white flex items-center justify-center transition-all duration-300 border border-white/15 z-50 shadow-lg hover:scale-110 active:scale-95"
+            className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-slate-900/80 hover:bg-orange-500 text-white flex items-center justify-center transition-all duration-300 border border-white/15 z-50 shadow-lg hover:scale-110 active:scale-95 cursor-pointer"
           >
             <ChevronRight size={20} />
           </button>
@@ -489,4 +537,3 @@ export default function Gallery() {
     </section>
   );
 }
-

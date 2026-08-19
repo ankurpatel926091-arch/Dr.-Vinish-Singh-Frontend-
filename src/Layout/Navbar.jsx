@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { FaWhatsapp } from "react-icons/fa";
 import CategoryMenuCard from "../components/CategoryMenuCard";
 import {
@@ -537,12 +537,16 @@ export default function Navbar() {
         </div>
 
         {/* ================= Mobile Menu Drawer ================= */}
-        <div
-          className={`nav-mobile-drawer overflow-hidden transition-all duration-300 ease-in-out ${
-            menuOpen ? "max-h-[85vh] opacity-100" : "max-h-0 opacity-0"
-          }`}
-        >
-          <div className="bg-slate-50/95 backdrop-blur-md border-t border-slate-200/80 px-4 py-4 max-h-[80vh] overflow-y-auto">
+        <AnimatePresence>
+          {menuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+              className="nav-mobile-drawer overflow-hidden"
+            >
+              <div className="bg-slate-50/95 backdrop-blur-md border-t border-slate-200/80 px-4 py-4 max-h-[80vh] overflow-y-auto">
             <div className="flex flex-col gap-2">
               {navLinks.map((item) => (
                 <div
@@ -585,109 +589,114 @@ export default function Navbar() {
                       </button>
 
                       {/* Dropdown Items Card Container in Mobile */}
-                      <div
-                        className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                          activeMobileDropdown === item.label
-                            ? "max-h-[1600px] border-t border-slate-100 bg-slate-50/50 p-2"
-                            : "max-h-0 p-0"
-                        }`}
-                      >
-                        {item.isMegaMenu ? (
-                          <div className="flex flex-col gap-3 p-1">
-                            {item.megaMenuColumns.map((col, cIdx) => (
-                              <CategoryMenuCard
-                                key={cIdx}
-                                title={col.title}
-                                icon={col.icon}
-                                iconBg={col.iconBg}
-                                items={col.items}
-                                onItemClick={closeAllMenus}
-                              />
-                            ))}
-                          </div>
-                        ) : item.isUrologyGuide ? (
-                          <div className="flex flex-col gap-3 p-1">
-                            {item.guideColumns.map((col, cIdx) => {
-                              const ColIcon = col.icon;
-                              return (
-                                <div key={cIdx} className="bg-white rounded-xl p-3 border border-slate-200/80 shadow-2xs space-y-2">
-                                  <div className="flex items-center justify-between pb-1.5 border-b border-slate-100">
-                                    <h5 className="font-extrabold text-[#103F7C] text-[13px]">
-                                      {col.title}
-                                    </h5>
-                                    <div className={`w-6 h-6 rounded-lg flex items-center justify-center ${col.iconBg}`}>
-                                      <ColIcon size={13} />
-                                    </div>
-                                  </div>
-                                  <div className="space-y-1.5">
-                                    {col.items.map((sub, sIdx) => {
-                                      const SubIcon = sub.icon;
-                                      return (
-                                        <NavLink
-                                          key={sIdx}
-                                          to={sub.href}
-                                          onClick={closeAllMenus}
-                                          className={({ isActive }) =>
-                                            `flex items-center gap-2.5 p-2 rounded-lg transition ${
-                                              isActive
-                                                ? "bg-blue-100/70 text-[#103F7C] font-semibold"
-                                                : "bg-white hover:bg-slate-50 text-slate-700"
-                                            }`
-                                          }
-                                        >
-                                          <div className={`w-7 h-7 rounded-md flex items-center justify-center shrink-0 ${sub.iconBg}`}>
-                                            <SubIcon size={14} />
-                                          </div>
-                                          <div className="flex-1 min-w-0">
-                                            <div className="text-xs font-bold text-slate-800 truncate">{sub.label}</div>
-                                          </div>
-                                        </NavLink>
-                                      );
-                                    })}
-                                  </div>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        ) : (
-                          <div className="flex flex-col gap-1.5">
-                            {item.children &&
-                              item.children.map((child) => {
-                                const IconComponent = child.icon;
-                                return (
-                                  <NavLink
-                                    key={child.label}
-                                    to={child.href}
-                                    onClick={closeAllMenus}
-                                    className={({ isActive }) =>
-                                      `flex items-center gap-3 p-2.5 rounded-xl transition ${
-                                        isActive
-                                          ? "bg-blue-100/70 text-[#103F7C] font-semibold"
-                                          : "bg-white hover:bg-blue-50/60 text-slate-700"
-                                      }`
-                                    }
-                                  >
-                                    <div
-                                      className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${child.iconBg}`}
-                                    >
-                                      <IconComponent size={17} />
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                      <div className="text-[13.5px] font-semibold text-slate-800 leading-snug">
-                                        {child.label}
-                                      </div>
-                                      {child.desc && (
-                                        <div className="text-[10.5px] text-slate-500 truncate">
-                                          {child.desc}
+                      <AnimatePresence initial={false}>
+                        {activeMobileDropdown === item.label && (
+                          <motion.div
+                            key="dropdown-content"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+                            className="overflow-hidden border-t border-slate-100 bg-slate-50/50 p-2"
+                          >
+                            {item.isMegaMenu ? (
+                              <div className="flex flex-col gap-3 p-1">
+                                {item.megaMenuColumns.map((col, cIdx) => (
+                                  <CategoryMenuCard
+                                    key={cIdx}
+                                    title={col.title}
+                                    icon={col.icon}
+                                    iconBg={col.iconBg}
+                                    items={col.items}
+                                    onItemClick={closeAllMenus}
+                                  />
+                                ))}
+                              </div>
+                            ) : item.isUrologyGuide ? (
+                              <div className="flex flex-col gap-3 p-1">
+                                {item.guideColumns.map((col, cIdx) => {
+                                  const ColIcon = col.icon;
+                                  return (
+                                    <div key={cIdx} className="bg-white rounded-xl p-3 border border-slate-200/80 shadow-2xs space-y-2">
+                                      <div className="flex items-center justify-between pb-1.5 border-b border-slate-100">
+                                        <h5 className="font-extrabold text-[#103F7C] text-[13px]">
+                                          {col.title}
+                                        </h5>
+                                        <div className={`w-6 h-6 rounded-lg flex items-center justify-center ${col.iconBg}`}>
+                                          <ColIcon size={13} />
                                         </div>
-                                      )}
+                                      </div>
+                                      <div className="space-y-1.5">
+                                        {col.items.map((sub, sIdx) => {
+                                          const SubIcon = sub.icon;
+                                          return (
+                                            <NavLink
+                                              key={sIdx}
+                                              to={sub.href}
+                                              onClick={closeAllMenus}
+                                              className={({ isActive }) =>
+                                                `flex items-center gap-2.5 p-2 rounded-lg transition ${
+                                                  isActive
+                                                    ? "bg-blue-100/70 text-[#103F7C] font-semibold"
+                                                    : "bg-white hover:bg-slate-50 text-slate-700"
+                                                }`
+                                              }
+                                            >
+                                              <div className={`w-7 h-7 rounded-md flex items-center justify-center shrink-0 ${sub.iconBg}`}>
+                                                <SubIcon size={14} />
+                                              </div>
+                                              <div className="flex-1 min-w-0">
+                                                <div className="text-xs font-bold text-slate-800 truncate">{sub.label}</div>
+                                              </div>
+                                            </NavLink>
+                                          );
+                                        })}
+                                      </div>
                                     </div>
-                                  </NavLink>
-                                );
-                              })}
-                          </div>
+                                  );
+                                })}
+                              </div>
+                            ) : (
+                              <div className="flex flex-col gap-1.5">
+                                {item.children &&
+                                  item.children.map((child) => {
+                                    const IconComponent = child.icon;
+                                    return (
+                                      <NavLink
+                                        key={child.label}
+                                        to={child.href}
+                                        onClick={closeAllMenus}
+                                        className={({ isActive }) =>
+                                          `flex items-center gap-3 p-2.5 rounded-xl transition ${
+                                            isActive
+                                              ? "bg-blue-100/70 text-[#103F7C] font-semibold"
+                                              : "bg-[#fff] hover:bg-blue-50/60 text-slate-700"
+                                          }`
+                                        }
+                                      >
+                                        <div
+                                          className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${child.iconBg}`}
+                                        >
+                                          <IconComponent size={17} />
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                          <div className="text-[13.5px] font-semibold text-slate-800 leading-snug">
+                                            {child.label}
+                                          </div>
+                                          {child.desc && (
+                                            <div className="text-[10.5px] text-slate-500 truncate">
+                                              {child.desc}
+                                            </div>
+                                          )}
+                                        </div>
+                                      </NavLink>
+                                    );
+                                  })}
+                              </div>
+                            )}
+                          </motion.div>
                         )}
-                      </div>
+                      </AnimatePresence>
                     </div>
                   )}
                 </div>
@@ -706,7 +715,9 @@ export default function Navbar() {
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
       </div>
     </header>
   );

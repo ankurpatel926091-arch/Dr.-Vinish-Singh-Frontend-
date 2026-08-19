@@ -26,7 +26,7 @@ const whyUsFeatures = [
   {
     icon: Zap,
     title: "Advanced Laser Technology",
-    desc: "State-of-the-art Holmium laser equipment for RIRS stone dusting, HolEP prostate enucleation & PCNL with zero skin cuts.",
+    desc: "State-of-the-art Holmium laser equipment for RIRS stone dusting, HoLEP prostate enucleation & PCNL with zero skin cuts.",
     badge: "Painless & Scarless",
     iconBg: "bg-blue-50 text-[#103F7C] border-blue-200",
     hoverBorder: "hover:border-[#103F7C]",
@@ -123,7 +123,7 @@ export default function WhyChooseUs() {
             Why Choose Dr. Vinish Kumar Singh?
           </h2>
 
-          <p className="mt-2.5 text-sm sm:text-base text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed">
+          <p className="mt-2.5 text-sm sm:text-base text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed text-justify">
             Combining 15+ years of surgical mastery, M.Ch (INU Bangalore) credentials, advanced Holmium laser technology, and patient-first compassionate care in Lucknow.
           </p>
 
@@ -189,7 +189,7 @@ export default function WhyChooseUs() {
                         {item.title}
                       </h3>
 
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium text-justify">
                         {item.desc}
                       </p>
                     </div>
@@ -214,7 +214,7 @@ export default function WhyChooseUs() {
                   Painless Laser Surgery vs Conventional Surgery
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-600 mt-1">
-                  See why patients prefer advanced Holmium Laser RIRS, HolEP, and PCNL procedures.
+                  See why patients prefer advanced Holmium Laser RIRS, HoLEP, and PCNL procedures.
                 </p>
               </div>
 
@@ -267,7 +267,7 @@ export default function WhyChooseUs() {
               <div className="p-3 border-l border-white/15">
                 <h4 className="text-3xl sm:text-4xl font-extrabold text-orange-400">5000+</h4>
                 <p className="text-xs sm:text-sm text-blue-100 mt-1 font-semibold">Laser Procedures</p>
-                <p className="text-[11px] text-blue-200/80 mt-0.5">RIRS, HolEP &amp; PCNL</p>
+                <p className="text-[11px] text-blue-200/80 mt-0.5">RIRS, HoLEP &amp; PCNL</p>
               </div>
 
               <div className="p-3 border-l border-white/15">

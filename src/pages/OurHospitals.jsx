@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { NavLink } from "react-router-dom";
 import {
   Building2,
@@ -224,10 +224,12 @@ export default function OurHospitals() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [lightboxImage, closeLightbox]);
 
-  const filteredHospitals = hospitalData.filter((hosp) => {
-    if (activeTab === "All") return true;
-    return hosp.type === activeTab;
-  });
+  const filteredHospitals = useMemo(() => {
+    return hospitalData.filter((hosp) => {
+      if (activeTab === "All") return true;
+      return hosp.type === activeTab;
+    });
+  }, [activeTab]);
 
   return (
     <section className="bg-slate-50/70 min-h-screen font-sans pb-16">
@@ -543,7 +545,7 @@ export default function OurHospitals() {
                     <IconComp size={20} />
                   </div>
                   <h4 className="font-bold text-sm text-white">{item.title}</h4>
-                  <p className="text-xs text-blue-100 mt-1.5 leading-relaxed">{item.desc}</p>
+                  <p className="text-xs text-blue-100 mt-1.5 leading-relaxed text-justify">{item.desc}</p>
                 </div>
               );
             })}

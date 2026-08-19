@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { NavLink } from "react-router-dom";
 import {
   BookOpen,
@@ -17,7 +17,7 @@ export default function BlogSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
-  const totalPages = Math.ceil(blogsData.length / 3);
+  const totalPages = useMemo(() => Math.ceil(blogsData.length / 3), []);
 
   const nextSlide = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % totalPages);
@@ -37,7 +37,10 @@ export default function BlogSection() {
   }, [isPaused, nextSlide]);
 
   // Get current 3 visible blogs based on index
-  const visibleBlogs = blogsData.slice(currentIndex * 3, currentIndex * 3 + 3);
+  const visibleBlogs = useMemo(
+    () => blogsData.slice(currentIndex * 3, currentIndex * 3 + 3),
+    [currentIndex]
+  );
 
   return (
     <section
@@ -102,6 +105,7 @@ export default function BlogSection() {
                     <img
                       src={blog.image}
                       alt={blog.title}
+                      loading="lazy"
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                       style={{ objectPosition: blog.objectPosition || "center 20%" }}
                     />
@@ -138,7 +142,7 @@ export default function BlogSection() {
                     </h3>
 
                     {/* Excerpt */}
-                    <p className="text-xs sm:text-sm text-slate-500 font-normal leading-relaxed line-clamp-3">
+                    <p className="text-xs sm:text-sm text-slate-500 font-normal leading-relaxed line-clamp-3 text-justify">
                       {blog.excerpt}
                     </p>
                   </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import {
   Calendar,
@@ -28,7 +28,10 @@ export default function BlogDetail() {
   const [copied, setCopied] = useState(false);
 
   // Find article by slug or fallback by id
-  const article = blogsData.find((b) => b.slug === slug || b.id === slug);
+  const article = useMemo(
+    () => blogsData.find((b) => b.slug === slug || b.id === slug),
+    [slug]
+  );
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -74,9 +77,10 @@ export default function BlogDetail() {
   }
 
   // Filter 3 related articles excluding current
-  const relatedArticles = blogsData
-    .filter((b) => b.id !== article.id)
-    .slice(0, 3);
+  const relatedArticles = useMemo(
+    () => blogsData.filter((b) => b.id !== article?.id).slice(0, 3),
+    [article?.id]
+  );
 
   return (
     <div className="bg-slate-50/70 min-h-screen py-6 sm:py-10 font-sans text-slate-800">

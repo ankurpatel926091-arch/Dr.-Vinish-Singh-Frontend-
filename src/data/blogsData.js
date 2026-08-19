@@ -183,7 +183,7 @@ export const blogsData = [
     faqs: [
       {
         q: "How long is the typical hospital stay for daycare laser procedures?",
-        a: "Most minimally invasive laser procedures like RIRS or HolEP allow for discharge within 24 hours.",
+        a: "Most minimally invasive laser procedures like RIRS or HoLEP allow for discharge within 24 hours.",
       },
     ],
   },
@@ -195,7 +195,7 @@ export const blogsData = [
     date: "05 Jan 2025",
     readTime: "7 min read",
     excerpt:
-      "Discover how modern laser operation theatre suites, flexible RIRS fibers, and HolEP technology enable painless, stitchless surgeries with 24-hour discharge.",
+      "Discover how modern laser operation theatre suites, flexible RIRS fibers, and HoLEP technology enable painless, stitchless surgeries with 24-hour discharge.",
     image: img11,
     objectPosition: "center 2%",
     author: "Dr. Vinish Kumar Singh",

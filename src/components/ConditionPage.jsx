@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import {
   Sparkles,
@@ -302,7 +303,7 @@ export default function ConditionPage({
                   <span>Core Treatment Approaches</span>
                 </h3>
 
-                <div className="grid sm:grid-cols-2 gap-5 w-full">
+                <div className="grid sm:grid-cols-2 gap-4 w-full">
                   {treatmentCards.map((card, idx) => (
                     <ScrollReveal key={idx} variant="scale-up" delay={idx * 70}>
                       <div className="bg-white p-5 rounded-2xl border border-slate-200/90 shadow-xs hover:border-[#103F7C] transition-all hover:shadow-md h-full group">
@@ -310,7 +311,51 @@ export default function ConditionPage({
                           {idx % 2 === 0 ? <Activity size={20} /> : <ShieldCheck size={20} />}
                         </div>
                         <h4 className="font-extrabold text-slate-900 text-base sm:text-lg group-hover:text-[#103F7C] transition-colors">{card.title}</h4>
-                        <p className="text-sm text-slate-600 mt-1.5 leading-relaxed font-normal">{card.desc}</p>
+                        <p className="text-sm text-slate-600 mt-1.5 leading-relaxed font-normal text-justify">{card.desc}</p>
+                      </div>
+                    </ScrollReveal>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Detailed Surgical & Medical Protocols */}
+            {detailedTreatments.length > 0 && (
+              <div className="w-full space-y-3 pt-2">
+                <h3 className="font-extrabold text-slate-900 text-xl flex items-center gap-2">
+                  <Zap size={20} className="text-orange-500" />
+                  <span>Advanced Treatment Protocols</span>
+                </h3>
+
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4.5 w-full">
+                  {detailedTreatments.map((item, idx) => (
+                    <ScrollReveal key={idx} variant="fade-up" delay={idx * 60}>
+                      <div className="relative bg-gradient-to-b from-white to-slate-50/70 p-5 rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-lg hover:border-blue-300 transition-all duration-300 h-full flex flex-col justify-between group overflow-hidden">
+                        {/* Top Accent Gradient Pill Line */}
+                        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-400 via-orange-500 to-[#103F7C] opacity-80 group-hover:opacity-100 transition-opacity" />
+
+                        <div>
+                          <div className="w-10 h-10 rounded-xl bg-orange-100/70 text-orange-600 flex items-center justify-center font-bold mb-3.5 transition-transform duration-300 group-hover:scale-110 group-hover:bg-orange-500 group-hover:text-white shadow-xs">
+                            <Zap size={20} />
+                          </div>
+                          <h4 className="font-extrabold text-slate-900 text-base sm:text-[15px] leading-snug group-hover:text-[#103F7C] transition-colors">
+                            {item.title}
+                          </h4>
+                          <p className="text-xs sm:text-[13px] text-slate-600 mt-2 leading-relaxed font-normal text-justify">
+                            {item.desc}
+                          </p>
+                        </div>
+
+                        {item.tag && (
+                          <div className="mt-5 pt-3 border-t border-slate-200/70 flex items-center justify-between">
+                            <span className="text-[11px] sm:text-xs font-bold text-[#103F7C] bg-blue-100/60 px-3 py-1 rounded-full border border-blue-200/70">
+                              {item.tag}
+                            </span>
+                            <div className="w-6 h-6 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center">
+                              <CheckCircle2 size={15} />
+                            </div>
+                          </div>
+                        )}
                       </div>
                     </ScrollReveal>
                   ))}
@@ -339,66 +384,29 @@ export default function ConditionPage({
               </div>
             )}
 
-            <div className="pt-2 flex flex-wrap items-center gap-4">
-              <NavLink
-                to="/contact"
-                className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-gradient-to-r from-[#103F7C] to-blue-900 hover:from-blue-900 hover:to-[#0a274c] text-white font-extrabold text-sm sm:text-base shadow-lg transition-all hover:scale-[1.02]"
-              >
-                <Calendar size={18} />
-                <span>Book Doctor Consultation</span>
-                <ArrowRight size={18} />
-              </NavLink>
+            {/* Right Column Bottom OPD Consultation Banner */}
+            <div className="w-full pt-3">
+              <div className="bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#0c2e5c] text-white rounded-3xl p-6 shadow-xl border border-blue-800/40 flex flex-col sm:flex-row items-center justify-between gap-5 relative overflow-hidden">
+                <div className="absolute -right-6 -bottom-6 w-36 h-36 bg-orange-500/15 rounded-full blur-2xl pointer-events-none" />
+                <div className="space-y-1 relative z-10">
+                  <h4 className="font-extrabold text-lg text-white">Ready for Expert Medical Consultation?</h4>
+                  <p className="text-xs text-blue-100 font-medium">Direct OPD confirmation with Senior Urologist Dr. Vinish Kumar Singh.</p>
+                </div>
+                <NavLink
+                  to="/contact"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xs sm:text-sm shadow-md transition-all shrink-0 hover:scale-105 active:scale-95 relative z-10"
+                >
+                  <Calendar size={16} />
+                  <span>Book Consultation</span>
+                  <ArrowRight size={16} />
+                </NavLink>
+              </div>
             </div>
 
           </div>
 
         </div>
       </div>
-
-      {/* Detailed Surgical & Medical Protocols Section */}
-      {detailedTreatments.length > 0 && (
-        <div className="bg-white py-14 lg:py-18 border-t border-slate-200/80">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6">
-            <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-12">
-              <span className="text-xs sm:text-sm font-black text-orange-600 uppercase tracking-widest bg-orange-50 px-4 py-1.5 rounded-full border border-orange-100">
-                ADVANCED TREATMENT PROTOCOLS
-              </span>
-              <h3 className="text-3xl sm:text-4xl font-black text-slate-900 mt-4 leading-tight">
-                Tailored Medical &amp; Laser Surgical Options
-              </h3>
-              <p className="text-slate-600 text-base sm:text-lg mt-3 leading-relaxed">
-                Proven clinical procedures conducted by Senior Urologist &amp; Transplant Surgeon Dr. Vinish Kumar Singh.
-              </p>
-            </ScrollReveal>
-
-            <div className="grid md:grid-cols-3 gap-7">
-              {detailedTreatments.map((item, idx) => (
-                <ScrollReveal key={idx} variant="fade-up" delay={idx * 90}>
-                  <div
-                    className="bg-slate-50/80 rounded-3xl p-7 border border-slate-200 shadow-2xs hover:shadow-xl hover:bg-white transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between h-full group"
-                  >
-                    <div>
-                      <div className="w-12 h-12 rounded-2xl bg-[#103F7C]/10 text-[#103F7C] flex items-center justify-center font-bold mb-5 transition-transform group-hover:scale-110">
-                        <Zap size={24} className="text-orange-500" />
-                      </div>
-                      <h4 className="font-extrabold text-slate-900 text-lg sm:text-xl mb-2.5 group-hover:text-[#103F7C] transition-colors">{item.title}</h4>
-                      <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal">{item.desc}</p>
-                    </div>
-                    {item.tag && (
-                      <div className="mt-6 pt-4 border-t border-slate-200/70 flex items-center justify-between">
-                        <span className="text-xs sm:text-sm font-extrabold text-[#103F7C] bg-blue-50 px-3 py-1.5 rounded-xl border border-blue-100">
-                          {item.tag}
-                        </span>
-                        <CheckCircle2 size={18} className="text-orange-500" />
-                      </div>
-                    )}
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Symptoms & Clinical Indicators Section */}
       {symptoms.length > 0 && (
@@ -441,7 +449,7 @@ export default function ConditionPage({
                         </div>
                         <span className="leading-snug">{sym.title}</span>
                       </div>
-                      <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal mt-2">{sym.desc}</p>
+                      <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal mt-2 text-justify">{sym.desc}</p>
                     </div>
                   </ScrollReveal>
                 ))}
@@ -496,11 +504,22 @@ export default function ConditionPage({
                     />
                   </button>
 
-                  {isOpen && (
-                    <div className="px-5 pb-5 pt-1 text-slate-700 text-xs sm:text-sm leading-relaxed border-t border-blue-200/60 font-normal">
-                      {faq.a}
-                    </div>
-                  )}
+                  <AnimatePresence initial={false}>
+                    {isOpen && (
+                      <motion.div
+                        key="content"
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-5 pb-5 pt-1 text-slate-700 text-xs sm:text-sm leading-relaxed border-t border-blue-200/60 font-normal">
+                          {faq.a}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </div>
               );
             })}
