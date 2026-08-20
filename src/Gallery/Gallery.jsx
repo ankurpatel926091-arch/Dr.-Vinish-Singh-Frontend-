@@ -158,19 +158,52 @@ export default function Gallery() {
     const fetchPublicGallery = async () => {
       try {
         setLoading(true);
-        const baseUrl = import.meta.env.VITE_API_BASE_URL || "https://dr-vinish-backend.onrender.com/api";
-        const res = await fetch(`${baseUrl}/gallery/public`);
-        const json = await res.json();
-        if (json && json.success && Array.isArray(json.data) && json.data.length > 0) {
-          const apiItems = json.data.map((item) => ({
-            id: item._id || item.id,
-            type: item.type || "photo",
-            title: item.title,
-            category: item.category || "Photos",
-            media: item.url,
-            tag: item.tag || item.category,
-          }));
-          setGalleryList(apiItems);
+        const getApiUrls = () => {
+          const urls = [];
+          if (import.meta.env.VITE_API_BASE_URL) {
+            urls.push(import.meta.env.VITE_API_BASE_URL);
+          }
+          if (typeof window !== "undefined" && (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")) {
+            urls.push("http://localhost:5000/api");
+          }
+          urls.push("https://dr-vinish-backend.onrender.com/api");
+          return urls;
+        };
+
+        const apiUrls = getApiUrls();
+        const isOnlineProd = typeof window !== "undefined" && window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1";
+
+        for (const baseUrl of apiUrls) {
+          try {
+            const res = await fetch(`${baseUrl}/gallery/public`);
+            if (res.ok) {
+              const json = await res.json();
+              if (json && json.success && Array.isArray(json.data) && json.data.length > 0) {
+                const apiItems = json.data
+                  .filter((item) => {
+                    if (isOnlineProd && typeof item.url === "string" && item.url.includes("localhost:5000")) {
+                      return false; // Exclude local dev-only localhost URLs on production Vercel
+                    }
+                    return true;
+                  })
+                  .map((item) => ({
+                    id: item._id || item.id,
+                    type: item.type || "photo",
+                    title: item.title,
+                    category: item.category || "Photos",
+                    media: item.url,
+                    tag: item.tag || item.category,
+                  }));
+
+                if (apiItems.length > 0) {
+                  setGalleryList(apiItems);
+                  break;
+                }
+              }
+            }
+          } catch (err) {
+            // Try next URL
+          }
         }
       } catch (err) {
         console.warn("Public Gallery API connection offline, displaying fallback items:", err.message);
@@ -369,6 +402,9 @@ export default function Gallery() {
                     alt={item.title}
                     loading="lazy"
                     className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-108"
+                    onError={(e) => {
+                      e.target.src = img1;
+                    }}
                   />
                 ) : (
                   <div className="absolute inset-0 w-full h-full">
