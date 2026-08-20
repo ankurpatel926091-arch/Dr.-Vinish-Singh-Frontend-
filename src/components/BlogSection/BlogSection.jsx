@@ -11,13 +11,26 @@ import {
   Sparkles,
 } from "lucide-react";
 import ScrollReveal from "../ScrollReveal/ScrollReveal";
-import { blogsData } from "../../data/blogsData";
+import { fetchPublicBlogs } from "../../api/blogApi";
 
 export default function BlogSection() {
+  const [blogsList, setBlogsList] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
-  const totalPages = useMemo(() => Math.ceil(blogsData.length / 3), []);
+  useEffect(() => {
+    let isMounted = true;
+    fetchPublicBlogs().then((data) => {
+      if (isMounted) {
+        setBlogsList(data || []);
+        setLoading(false);
+      }
+    });
+    return () => { isMounted = false; };
+  }, []);
+
+  const totalPages = useMemo(() => Math.max(1, Math.ceil(blogsList.length / 3)), [blogsList.length]);
 
   const nextSlide = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % totalPages);
@@ -29,17 +42,17 @@ export default function BlogSection() {
 
   // Automatic slide interval every 2 seconds (pauses on hover)
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || totalPages <= 1) return;
     const interval = setInterval(() => {
       nextSlide();
-    }, 2000);
+    }, 3000);
     return () => clearInterval(interval);
-  }, [isPaused, nextSlide]);
+  }, [isPaused, nextSlide, totalPages]);
 
   // Get current 3 visible blogs based on index
   const visibleBlogs = useMemo(
-    () => blogsData.slice(currentIndex * 3, currentIndex * 3 + 3),
-    [currentIndex]
+    () => blogsList.slice(currentIndex * 3, currentIndex * 3 + 3),
+    [blogsList, currentIndex]
   );
 
   return (
@@ -101,15 +114,14 @@ export default function BlogSection() {
               >
                 <div>
                   {/* Blog Image Container */}
-                  <NavLink to={`/blog/${blog.slug}`} className="block relative h-64 sm:h-72 overflow-hidden bg-slate-900">
+                  <NavLink to={`/blog/${blog.slug}`} className="block relative h-64 sm:h-72 overflow-hidden bg-slate-100">
                     <img
                       src={blog.image}
                       alt={blog.title}
                       loading="lazy"
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      style={{ objectPosition: blog.objectPosition || "center 20%" }}
+                      className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent opacity-60" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent opacity-60 pointer-events-none" />
                   </NavLink>
 
                   {/* Article Content */}

@@ -13,7 +13,7 @@ export default function Testimonials() {
     if (!script) {
       script = document.createElement("script");
       script.id = scriptId;
-      script.src = "https://apps.elfsightcdn.com/p/platform.js";
+      script.src = "https://static.elfsight.com/platform/platform.js";
       script.async = true;
       document.body.appendChild(script);
     }

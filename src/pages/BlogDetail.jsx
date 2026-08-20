@@ -18,7 +18,7 @@ import {
   Zap,
   Check,
 } from "lucide-react";
-import { blogsData } from "../data/blogsData";
+import { fetchBlogBySlug, fetchPublicBlogs } from "../api/blogApi";
 import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
 import doctorThumb from "../assets/images/img12.png";
 
@@ -26,19 +26,30 @@ export default function BlogDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
-
-  // Find article by slug or fallback by id
-  const article = useMemo(
-    () => blogsData.find((b) => b.slug === slug || b.id === slug),
-    [slug]
-  );
+  const [article, setArticle] = useState(null);
+  const [allBlogs, setAllBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-    if (article) {
-      document.title = `${article.title} | Dr. Vinish Kumar Singh`;
-    }
-  }, [slug, article]);
+    let isMounted = true;
+
+    setLoading(true);
+
+    Promise.all([fetchBlogBySlug(slug), fetchPublicBlogs()]).then(([blogData, publicBlogs]) => {
+      if (isMounted) {
+        setArticle(blogData);
+        setAllBlogs(publicBlogs || []);
+        setLoading(false);
+
+        if (blogData?.title) {
+          document.title = `${blogData.title} | Dr. Vinish Kumar Singh`;
+        }
+      }
+    });
+
+    return () => { isMounted = false; };
+  }, [slug]);
 
   const handleShare = () => {
     if (navigator.share) {
@@ -54,6 +65,21 @@ export default function BlogDetail() {
       setTimeout(() => setCopied(false), 2500);
     }
   };
+
+  // Filter 3 related articles excluding current
+  const relatedArticles = useMemo(
+    () => allBlogs.filter((b) => (b.slug !== article?.slug && b.id !== article?.id)).slice(0, 3),
+    [allBlogs, article]
+  );
+
+  if (loading) {
+    return (
+      <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4 py-20 bg-slate-50 font-sans text-slate-500">
+        <div className="w-10 h-10 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mb-3" />
+        <p className="text-sm font-bold tracking-wider uppercase text-slate-600">Loading Medical Article...</p>
+      </div>
+    );
+  }
 
   if (!article) {
     return (
@@ -75,12 +101,6 @@ export default function BlogDetail() {
       </div>
     );
   }
-
-  // Filter 3 related articles excluding current
-  const relatedArticles = useMemo(
-    () => blogsData.filter((b) => b.id !== article?.id).slice(0, 3),
-    [article?.id]
-  );
 
   return (
     <div className="bg-slate-50/70 min-h-screen py-6 sm:py-10 font-sans text-slate-800">
@@ -205,7 +225,13 @@ export default function BlogDetail() {
             )}
 
             {/* Dynamic Content Sections */}
-            {article.content &&
+            {article.rawContent && (article.rawContent.includes('<p>') || article.rawContent.includes('<h') || article.rawContent.includes('<table>') || article.rawContent.includes('<ul>')) ? (
+              <div
+                className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-2xs space-y-4 text-slate-700 text-sm sm:text-base leading-relaxed [&_h2]:text-xl [&_h2]:sm:text-2xl [&_h2]:font-extrabold [&_h2]:text-slate-900 [&_h2]:mt-4 [&_h3]:text-lg [&_h3]:font-bold [&_h3]:text-slate-800 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_blockquote]:border-l-4 [&_blockquote]:border-orange-500 [&_blockquote]:pl-4 [&_blockquote]:italic [&_table]:w-full [&_table]:border-collapse [&_table]:my-4 [&_th]:border [&_th]:border-slate-300 [&_th]:p-2 [&_th]:bg-slate-100 [&_td]:border [&_td]:border-slate-300 [&_td]:p-2"
+                dangerouslySetInnerHTML={{ __html: article.rawContent }}
+              />
+            ) : (
+              article.content &&
               article.content.map((sec, idx) => (
                 <div key={idx} className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-2xs space-y-4">
                   <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5">
@@ -230,7 +256,8 @@ export default function BlogDetail() {
                     </ul>
                   )}
                 </div>
-              ))}
+              ))
+            )}
 
             {/* FAQs Section */}
             {article.faqs && article.faqs.length > 0 && (
