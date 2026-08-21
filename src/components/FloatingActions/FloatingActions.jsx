@@ -116,7 +116,7 @@ export default function FloatingActions() {
           Book Appointment
         </span>
         <NavLink
-          to="/contact"
+          to="/#book-appointment"
           aria-label="Book Appointment"
           title="Book Appointment"
           className="w-8.5 h-8.5 sm:w-12 sm:h-12 rounded-full bg-[#00A8E8] hover:bg-[#0092c9] text-white flex items-center justify-center shadow-md shadow-sky-500/20 transition-all duration-300 hover:scale-110 active:scale-95"

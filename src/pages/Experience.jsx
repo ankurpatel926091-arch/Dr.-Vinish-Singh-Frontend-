@@ -161,7 +161,7 @@ export default function Experience() {
             <p className="text-xs sm:text-sm text-blue-100 mt-1 font-normal">Schedule your consultation for advanced laser urology treatment.</p>
           </div>
           <NavLink
-            to="/contact"
+            to="/#book-appointment"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-semibold shadow-md transition-transform hover:scale-105 active:scale-95 shrink-0"
           >
             <Calendar size={16} />

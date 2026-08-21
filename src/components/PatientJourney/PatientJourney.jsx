@@ -136,7 +136,7 @@ const steps = [
         {/* Minimal CTA Button */}
         <ScrollReveal variant="fade-up" delay={250} className="flex flex-col items-center justify-center text-center">
           <NavLink
-            to="/contact"
+            to="/#book-appointment"
             className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[#103F7C] hover:bg-blue-900 text-white font-semibold text-sm shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] group"
           >
             <Calendar size={16} className="text-orange-400" />

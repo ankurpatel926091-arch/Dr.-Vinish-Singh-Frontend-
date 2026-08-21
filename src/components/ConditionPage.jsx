@@ -242,7 +242,7 @@ export default function ConditionPage({
 
                 <div className="pt-2 flex items-center gap-2.5 relative z-10">
                   <NavLink
-                    to="/contact"
+                    to="/#book-appointment"
                     className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-xs font-black shadow-md transition-all hover:scale-[1.02] active:scale-[0.98]"
                   >
                     <Calendar size={14} />
@@ -429,7 +429,7 @@ export default function ConditionPage({
                 </p>
                 <div className="mt-8">
                   <NavLink
-                    to="/contact"
+                    to="/#book-appointment"
                     className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-[#103F7C] hover:bg-blue-900 text-white font-extrabold text-sm sm:text-base shadow-lg transition-all hover:scale-102"
                   >
                     <Calendar size={18} />
@@ -536,7 +536,7 @@ export default function ConditionPage({
             <p className="text-base sm:text-lg text-blue-100 mt-2 font-normal">Consult Senior Urologist &amp; Kidney Transplant Surgeon Dr. Vinish Kumar Singh in Lucknow.</p>
           </div>
           <NavLink
-            to="/contact"
+            to="/#book-appointment"
             className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-base shadow-lg transition-all shrink-0 hover:scale-105 relative z-10"
           >
             <Calendar size={18} />

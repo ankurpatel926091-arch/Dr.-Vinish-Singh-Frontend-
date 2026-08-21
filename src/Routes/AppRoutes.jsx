@@ -9,7 +9,9 @@ const Qualifications = lazy(() => import("../pages/Qualifications"));
 const AwardsRecognition = lazy(() => import("../pages/AwardsRecognition"));
 const Experience = lazy(() => import("../pages/Experience"));
 const OurHospitals = lazy(() => import("../pages/OurHospitals"));
-const Contact = lazy(() => import("../components/Contact/Contact"));
+const Contact = lazy(() => import("../pages/Contact"));
+const BookAppointment = lazy(() => import("../components/Contact/BookAppointment"));
+const BookAppointmentPage = lazy(() => import("../pages/BookAppointmentPage"));
 const Gallery = lazy(() => import("../Gallery/Gallery"));
 const KidneyStone = lazy(() => import("../pages/ConditionsTreated/KidneyStone"));
 const Prostate = lazy(() => import("../pages/ConditionsTreated/Prostate"));
@@ -75,7 +77,8 @@ const pageTitles = {
   "/about/qualifications": "Academic Qualifications & Degrees | Dr. Vinish Kumar Singh",
   "/about/awards-recognition": "Awards & Professional Recognition | Dr. Vinish Kumar Singh",
   "/about/experience": "15+ Years Clinical & Surgical Experience | Dr. Vinish Kumar Singh",
-  "/contact": "Book Appointment & Contact Clinic | Dr. Vinish Kumar Singh",
+  "/contact": "Contact Us & Clinic Locations | Dr. Vinish Kumar Singh",
+  "/book-appointment": "Book Appointment | Dr. Vinish Kumar Singh",
   "/gallery": "Photo & Video Gallery | Dr. Vinish Kumar Singh Clinic",
   "/privacy-policy": "Privacy Policy | Dr. Vinish Kumar Singh Urology Clinic Lucknow",
   "/terms-of-service": "Terms of Service | Dr. Vinish Kumar Singh Urology Clinic Lucknow",
@@ -109,14 +112,25 @@ const pageTitles = {
 export default function AppRoutes() {
   const location = useLocation();
 
-  // Dynamic Browser Tab SEO Titles & Scroll To Top on route change
+  // Dynamic Browser Tab SEO Titles & Scroll To Top or #book-appointment on route change
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (location.hash === "#book-appointment" || location.hash === "#select-hospital") {
+      setTimeout(() => {
+        const el = document.getElementById("book-appointment");
+        if (el) {
+          const yOffset = -90;
+          const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
+      }, 350);
+    } else {
+      window.scrollTo(0, 0);
+    }
     const currentTitle =
       pageTitles[location.pathname] ||
       "Dr. Vinish Kumar Singh | Senior Urologist & Transplant Surgeon Lucknow";
     document.title = currentTitle;
-  }, [location.pathname]);
+  }, [location.pathname, location.hash]);
 
   return (
     <Suspense fallback={<PageLoader />}>
@@ -128,6 +142,8 @@ export default function AppRoutes() {
         <Route path="/about/awards-recognition" element={<AwardsRecognition />} />
         <Route path="/about/experience" element={<Experience />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/select-hospital" element={<BookAppointment />} />
+        <Route path="/book-appointment" element={<BookAppointmentPage />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />

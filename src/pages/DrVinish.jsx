@@ -369,7 +369,7 @@ export default function DrVinishKumarSingh() {
                 {/* Action Buttons */}
                 <div className="flex flex-col gap-2.5">
                   <NavLink
-                    to="/contact"
+                    to="/#book-appointment"
                     className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-xs sm:text-sm shadow-md shadow-orange-500/20 transition-all duration-300 hover:scale-[1.02] active:scale-98"
                   >
                     <Calendar size={17} />
@@ -912,7 +912,7 @@ export default function DrVinishKumarSingh() {
           </div>
           
           <NavLink
-            to="/contact"
+            to="/#book-appointment"
             className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-bold shadow-md transition-all hover:scale-105 active:scale-95 shrink-0"
           >
             <Calendar size={16} />

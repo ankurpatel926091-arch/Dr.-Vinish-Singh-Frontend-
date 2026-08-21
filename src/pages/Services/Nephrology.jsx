@@ -165,7 +165,7 @@ export default function NephrologyService() {
                 Early kidney function screening, serum creatinine check, or CKD consultation with Dr. Vinish Kumar Singh.
               </p>
               <NavLink
-                to="/contact"
+                to="/#book-appointment"
                 className="w-full py-3 px-4 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all hover:scale-102"
               >
                 <span>Schedule Appointment</span>

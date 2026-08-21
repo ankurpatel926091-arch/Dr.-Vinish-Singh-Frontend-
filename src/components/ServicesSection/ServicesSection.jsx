@@ -99,7 +99,7 @@ export default function ServicesSection() {
             <span>CORE MEDICAL SPECIALTIES</span>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
             Comprehensive Urology &amp;{" "}
             <span className="bg-gradient-to-r from-[#103F7C] to-orange-500 bg-clip-text text-transparent">
               Renal Care Services
@@ -200,7 +200,7 @@ export default function ServicesSection() {
             </div>
 
             <NavLink
-              to="/contact"
+              to="/#book-appointment"
               className="px-6 py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-extrabold shrink-0 transition-all hover:scale-105 shadow-md"
             >
               Book Appointment

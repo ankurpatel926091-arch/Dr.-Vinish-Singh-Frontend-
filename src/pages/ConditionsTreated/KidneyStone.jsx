@@ -412,7 +412,7 @@ export default function KidneyStone() {
             <p className="text-xs sm:text-sm text-blue-100 mt-1 font-normal">Get expert guidance &amp; painless laser treatment from Dr. Vinish Kumar Singh in Lucknow.</p>
           </div>
           <NavLink
-            to="/contact"
+            to="/#book-appointment"
             className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-bold shadow-md transition-all hover:scale-105 active:scale-95 shrink-0"
           >
             <Calendar size={16} />

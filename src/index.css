@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -7,7 +7,7 @@
 @layer base {
   *, ::before, ::after {
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
   }
 
   button, a, [role="button"] {
@@ -24,7 +24,7 @@
     overflow-x: hidden;
     width: 100%;
     scroll-behavior: smooth;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
   }
 
   body {
@@ -32,7 +32,7 @@
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     /* Soft light medical background gradient matching doctor branding */
     background: linear-gradient(135deg, #f8fafc 0%, #edf5ff 30%, #e0f2fe 65%, #f0fdfa 100%);
     background-attachment: fixed;

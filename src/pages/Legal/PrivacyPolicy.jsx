@@ -248,7 +248,7 @@ export default function PrivacyPolicy() {
 
               <div className="pt-2 border-t border-slate-100">
                 <Link
-                  to="/contact"
+                  to="/#book-appointment"
                   className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-xs shadow-md transition-all cursor-pointer"
                 >
                   <Hospital size={15} />

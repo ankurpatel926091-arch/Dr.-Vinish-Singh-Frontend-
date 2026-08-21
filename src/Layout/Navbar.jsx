@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaWhatsapp } from "react-icons/fa";
 import CategoryMenuCard from "../components/CategoryMenuCard";
@@ -43,12 +43,30 @@ export default function Navbar() {
   const [activeMobileDropdown, setActiveMobileDropdown] = useState(null);
   const [hoveredNav, setHoveredNav] = useState(null);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const closeAllMenus = () => {
     setMenuOpen(false);
     setActiveMobileDropdown(null);
     setHoveredNav(null);
   };
+
+  const handleBookAppointmentClick = (e) => {
+    e.preventDefault();
+    closeAllMenus();
+    if (location.pathname === "/") {
+      const el = document.getElementById("book-appointment");
+      if (el) {
+        const yOffset = -90;
+        const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      }
+    } else {
+      navigate("/#book-appointment");
+    }
+  };
+
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -102,7 +120,7 @@ export default function Navbar() {
       ],
     },
     {
-      label: "Conditions Treated",
+      label: "Treatements",
       dropdown: true,
       isMegaMenu: true,
       megaMenuColumns: [
@@ -514,14 +532,14 @@ export default function Navbar() {
 
             {/* ================= CTA Button ================= */}
             <div className="nav-desktop-container flex-shrink-0">
-              <NavLink
-                to="/contact"
-                onClick={closeAllMenus}
-                className="flex items-center gap-2 px-3.5 lg:px-4 xl:px-5 py-2 lg:py-2.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-sm lg:text-[14.5px] 2xl:text-base font-extrabold shadow-md hover:shadow-lg shadow-orange-500/20 transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] whitespace-nowrap"
+              <a
+                href="/#book-appointment"
+                onClick={handleBookAppointmentClick}
+                className="flex items-center gap-2 px-3.5 lg:px-4 xl:px-5 py-2 lg:py-2.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-sm lg:text-[14.5px] 2xl:text-base font-extrabold shadow-md hover:shadow-lg shadow-orange-500/20 transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] whitespace-nowrap cursor-pointer"
               >
                 <Calendar size={16} />
                 <span>Book Appointment</span>
-              </NavLink>
+              </a>
             </div>
 
             {/* ================= Mobile Toggle Button ================= */}
@@ -704,14 +722,14 @@ export default function Navbar() {
 
               {/* Mobile CTA */}
               <div className="pt-3 pb-2">
-                <NavLink
-                  to="/contact"
-                  onClick={closeAllMenus}
-                  className="w-full flex items-center justify-center gap-2 h-12 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold shadow-md shadow-orange-500/20 active:scale-98 transition-all"
+                <a
+                  href="/#book-appointment"
+                  onClick={handleBookAppointmentClick}
+                  className="w-full flex items-center justify-center gap-2 h-12 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold shadow-md shadow-orange-500/20 active:scale-98 transition-all cursor-pointer"
                 >
                   <Calendar size={18} />
                   <span>Book Appointment</span>
-                </NavLink>
+                </a>
               </div>
             </div>
           </div>

@@ -84,7 +84,7 @@ export default function Hero() {
                 {/* Action Buttons Under Doctor Photo */}
                 <div className="mt-4 flex flex-col sm:flex-row items-center gap-3 w-full">
                   <NavLink
-                    to="/contact"
+                    to="/#book-appointment"
                     className="flex-1 w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-xs sm:text-sm shadow-md shadow-orange-500/20 transition-all duration-300 hover:scale-102 active:scale-98"
                   >
                     <Calendar size={16} />
@@ -107,17 +107,11 @@ export default function Hero() {
           {/* ================= RIGHT COLUMN: ABOUT DOCTOR BIO, QUALIFICATIONS & EXPERIENCE ================= */}
           <div className="lg:col-span-7 flex flex-col items-start order-1 lg:order-2">
             
-            {/* Top Pill Badge */}
-            <ScrollReveal variant="fade-up" delay={100}>
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-50 text-[#103F7C] border border-blue-200/60 text-xs font-semibold uppercase tracking-wider mb-3">
-                <Sparkles size={13} className="text-orange-500" />
-                <span>About Dr. Vinish Kumar Singh</span>
-              </div>
-            </ScrollReveal>
+           
 
             {/* Headline */}
             <ScrollReveal variant="fade-up" delay={150}>
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
+              <h1 className="text-2xl sm:text-3xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
                 Leading Consultant Urologist &amp;{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#103F7C] via-blue-700 to-orange-500">
                   Transplant Surgeon

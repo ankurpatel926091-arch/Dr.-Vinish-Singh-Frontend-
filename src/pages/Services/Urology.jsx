@@ -178,7 +178,7 @@ export default function UrologyService() {
                 Direct consultation for kidney stone, prostate, or urinary issues with Dr. Vinish Kumar Singh.
               </p>
               <NavLink
-                to="/contact"
+                to="/#book-appointment"
                 className="w-full py-3 px-4 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all hover:scale-102"
               >
                 <span>Schedule Appointment</span>

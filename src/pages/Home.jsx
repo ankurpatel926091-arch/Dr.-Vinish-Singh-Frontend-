@@ -6,7 +6,7 @@ import PatientJourney from "../components/PatientJourney/PatientJourney";
 import Testimonials from "../components/Testimonials/Testimonials";
 import HomeGallery from "../components/HomeGallery/HomeGallery";
 import FaqSection from "../components/Faq/FaqSection";
-import Contact from "../components/Contact/Contact";
+import BookAppointment from "../components/Contact/BookAppointment";
 import InstagramFeed from "../components/Instagram/InstagramFeed";
 import BlogSection from "../components/BlogSection/BlogSection";
 
@@ -22,8 +22,9 @@ export default function Home() {
       <HomeGallery />
       <InstagramFeed />
       <FaqSection />
+      <BookAppointment isHomePage={true} />
       <BlogSection />
-      <Contact isHomePage={true} />
+      
     </>
   );
 }

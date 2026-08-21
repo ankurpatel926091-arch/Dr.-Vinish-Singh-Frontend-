@@ -297,7 +297,7 @@ export default function WhyChooseUs() {
 
               <div className="flex items-center gap-3 shrink-0">
                 <NavLink
-                  to="/contact"
+                  to="/#book-appointment"
                   className="px-6 py-2.5 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs sm:text-sm shadow-md transition-all hover:scale-105 flex items-center gap-1.5"
                 >
                   <Calendar size={15} />
