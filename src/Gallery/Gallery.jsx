@@ -191,7 +191,7 @@ export default function Gallery() {
                     type: item.type || "photo",
                     title: item.title,
                     category: item.category || "Photos",
-                    media: item.url,
+                    media: typeof item.url === "string" && item.url.startsWith("http://") ? item.url.replace("http://", "https://") : item.url,
                     tag: item.tag || item.category,
                   }));
 
