@@ -17,6 +17,7 @@ import {
   ShieldCheck,
   Zap,
   Check,
+  MapPin,
 } from "lucide-react";
 import { fetchBlogBySlug, fetchPublicBlogs } from "../api/blogApi";
 import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
@@ -315,7 +316,26 @@ export default function BlogDetail() {
                   <span>Dual OPD Consultations</span>
                 </div>
                 <p className="text-[11px] text-slate-600 font-medium leading-relaxed">
-                  Morning OPD at Rudraksh IVF (Sharda Nagar) &amp; Evening OPD at Dr. Shilpi Centre (Ring Road).
+                  Morning OPD at{" "}
+                  <a
+                    href="https://maps.app.goo.gl/jbynbpoL5PcKca4Z9"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-bold text-orange-600 hover:underline inline-flex items-center gap-0.5"
+                  >
+                    Rudraksh IVF (Sharda Nagar)
+                    <MapPin size={10} className="text-orange-500 shrink-0 inline" />
+                  </a>{" "}
+                  &amp; Evening OPD at{" "}
+                  <a
+                    href="https://maps.app.goo.gl/w9mqio5fe4Hj8KLm9"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-bold text-[#103F7C] hover:underline inline-flex items-center gap-0.5"
+                  >
+                    <span>Dr. Shilpi Centre (Ring Road)</span>
+                    <MapPin size={10} className="text-[#103F7C] shrink-0 inline" />
+                  </a>.
                 </p>
               </div>
 

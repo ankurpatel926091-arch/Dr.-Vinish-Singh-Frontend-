@@ -1,13 +1,14 @@
 import React, { useEffect, lazy, Suspense } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import PageLoader from "../components/LoadingFallback/PageLoader";
+import BlogSection from "../components/BlogSection/BlogSection";
 
 // Lazy Loaded Route Components for Performance Optimization
 const Home = lazy(() => import("../pages/Home"));
 const DrVinish = lazy(() => import("../pages/DrVinish"));
 const Qualifications = lazy(() => import("../pages/Qualifications"));
 const AwardsRecognition = lazy(() => import("../pages/AwardsRecognition"));
-const Experience = lazy(() => import("../pages/Experience"));
+const Blogs = lazy(() => import("../components/BlogSection/BlogSection"));
 const OurHospitals = lazy(() => import("../pages/OurHospitals"));
 const Contact = lazy(() => import("../pages/Contact"));
 const BookAppointment = lazy(() => import("../components/Contact/BookAppointment"));
@@ -140,7 +141,8 @@ export default function AppRoutes() {
         <Route path="/about/our-hospitals" element={<OurHospitals />} />
         <Route path="/about/qualifications" element={<Qualifications />} />
         <Route path="/about/awards-recognition" element={<AwardsRecognition />} />
-        <Route path="/about/experience" element={<Experience />} />
+        <Route path="/Blogs" element={<BlogSection />} />
+        <Route path="/BookAppointment" element={<BookAppointmentPage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/select-hospital" element={<BookAppointment />} />
         <Route path="/book-appointment" element={<BookAppointmentPage />} />

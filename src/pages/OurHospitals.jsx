@@ -61,7 +61,7 @@ const hospitalData = [
     locality: "Sharda Nagar, Lucknow",
     mapUrl: "https://maps.app.goo.gl/jbynbpoL5PcKca4Z9",
     mapIframe:
-      "https://maps.google.com/maps?q=1/795,%20Ratan%20Khand,%20Ruchi%20Khand%201,%20Sharda%20Nagar,%20Lucknow&t=&z=15&ie=UTF8&iwloc=&output=embed",
+      "https://maps.google.com/maps?q=26.792132,80.916962(Rudraksh+IVF+%26+Urology+Centre)&t=&z=16&ie=UTF8&iwloc=B&output=embed",
     image: hospitalBuildingImg,
     badgeText: "Main Building & IVF Desk",
     facilities: [
@@ -86,7 +86,7 @@ const hospitalData = [
     locality: "Pakkabag, Ring Road, Lucknow",
     mapUrl: "https://maps.app.goo.gl/w9mqio5fe4Hj8KLm9",
     mapIframe:
-      "https://maps.google.com/maps?q=596Pb/1114/03,%20Ring%20Rd,%20Pakkabag,%20Lalabagh,%20Lucknow&t=&z=15&ie=UTF8&iwloc=&output=embed",
+      "https://maps.google.com/maps?q=26.878567,80.893877(Dr.+Shilpi+Maternity+%26+Urology+Centre)&t=&z=16&ie=UTF8&iwloc=B&output=embed",
     image: shilpiBuildingImg || hospitalBuildingImg,
     badgeText: "Evening OPD Centre",
     facilities: [
@@ -325,7 +325,15 @@ export default function OurHospitals() {
                   <div className="p-6 sm:p-8">
                     {/* Title */}
                     <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 group-hover:text-[#103F7C] transition-colors leading-snug mb-4">
-                      {hosp.name}
+                      <a
+                        href={hosp.mapUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:underline hover:text-orange-600 inline-flex items-center gap-2 transition-colors"
+                      >
+                        <span>{hosp.name}</span>
+                        <MapPin size={20} className="text-orange-500 shrink-0 inline" />
+                      </a>
                     </h3>
 
                     {/* Info Cards: Timing, Phone, Address */}

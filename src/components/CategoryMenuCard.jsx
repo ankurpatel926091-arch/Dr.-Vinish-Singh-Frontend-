@@ -41,6 +41,12 @@ export default function CategoryMenuCard({
       {/* Menu Items List */}
       <div className="space-y-1 flex-1">
         {items.map((sub, sIdx) => {
+          if (sub.isDivider) {
+            return (
+              <div key={`div-${sIdx}`} className="border-t border-slate-200/80 my-2" />
+            );
+          }
+
           const SubIcon = sub.icon;
           const isExplicitActive =
             activeLabel && activeLabel.toLowerCase() === sub.label.toLowerCase();

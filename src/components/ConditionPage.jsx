@@ -20,6 +20,7 @@ import {
   ChevronDown,
   UserCheck,
   Building2,
+  MapPin,
 } from "lucide-react";
 import PageHero from "./PageHero";
 import CategoryMenuCard from "./CategoryMenuCard";
@@ -216,7 +217,15 @@ export default function ConditionPage({
                   <div className="flex items-start gap-2.5">
                     <Building2 size={15} className="text-orange-400 shrink-0 mt-0.5" />
                     <div>
-                      <span className="font-bold text-white block">Rudraksh IVF &amp; Shilpi Maternity</span>
+                      <a
+                        href="https://maps.app.goo.gl/jbynbpoL5PcKca4Z9"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-bold text-white hover:text-orange-400 hover:underline inline-flex items-center gap-1 transition-colors"
+                      >
+                        <span>Rudraksh IVF &amp; Shilpi Maternity</span>
+                        <MapPin size={12} className="text-orange-400 shrink-0 inline" />
+                      </a>
                       <span className="text-[11px] text-blue-200">OPD Consultation Clinics in Lucknow</span>
                     </div>
                   </div>

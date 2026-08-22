@@ -9,6 +9,7 @@ import {
   Sparkles,
   CheckCircle2,
   ShieldCheck,
+  MapPin,
 } from "lucide-react";
 import ScrollReveal from "../ScrollReveal/ScrollReveal";
 
@@ -194,7 +195,27 @@ export default function ServicesSection() {
                   15+ Years Clinical Surgical Mastery &amp; 5,000+ Laser Surgeries
                 </h4>
                 <p className="text-xs sm:text-sm text-slate-600 font-medium mt-0.5">
-                  Practicing at Rudraksh IVF &amp; Urology Centre &amp; Dr. Shilpi Maternity &amp; Urology Centre in Lucknow.
+                  Practicing at{" "}
+                  <a
+                    href="https://maps.app.goo.gl/jbynbpoL5PcKca4Z9"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-bold text-orange-600 hover:underline inline-flex items-center gap-1"
+                  >
+                    Rudraksh IVF &amp; Urology Centre
+                    <MapPin size={13} className="text-orange-500 shrink-0 inline" />
+                  </a>{" "}
+                  &amp;{" "}
+                  <a
+                    href="https://maps.app.goo.gl/w9mqio5fe4Hj8KLm9"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-bold text-[#103F7C] hover:underline inline-flex items-center gap-1"
+                  >
+                    Dr. Shilpi Maternity &amp; Urology Centre
+                    <MapPin size={13} className="text-[#103F7C] shrink-0 inline" />
+                  </a>{" "}
+                  in Lucknow.
                 </p>
               </div>
             </div>

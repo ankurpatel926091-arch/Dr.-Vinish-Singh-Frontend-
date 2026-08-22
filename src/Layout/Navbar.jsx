@@ -181,13 +181,7 @@ export default function Navbar() {
             { label: "Hypospadias", href: "/paediatric/hypospadias", icon: Stethoscope, iconBg: "bg-blue-50 text-blue-600" },
             { label: "Hydrocele", href: "/paediatric/hydrocele", icon: Droplets, iconBg: "bg-sky-50 text-sky-600" },
             { label: "Paediatric Urinary Problems", href: "/paediatric/urinary-problems", icon: Activity, iconBg: "bg-emerald-50 text-emerald-600" },
-          ],
-        },
-        {
-          title: "Urological Cancers",
-          icon: ShieldAlert,
-          iconBg: "bg-rose-50 text-rose-600 border border-rose-100",
-          items: [
+            { isDivider: true },
             { label: "Prostate Cancer", href: "/cancers/prostate-cancer", icon: ShieldAlert, iconBg: "bg-rose-50 text-rose-600" },
             { label: "Kidney Cancer", href: "/cancers/kidney-cancer", icon: Target, iconBg: "bg-red-50 text-red-600" },
             { label: "Bladder Cancer", href: "/cancers/bladder-cancer", icon: Activity, iconBg: "bg-pink-50 text-pink-600" },
@@ -364,13 +358,13 @@ export default function Navbar() {
                         }`}
                       >
                         {item.isMegaMenu ? (
-                          /* ================= 5-COLUMN MEGA MENU (Conditions Treated) ================= */
+                          /* ================= 4-COLUMN MEGA MENU (Conditions Treated) ================= */
                           <div className="w-full rounded-3xl bg-white p-4 lg:p-5 shadow-[0_25px_60px_-15px_rgba(16,63,124,0.2)] border border-slate-200 ring-1 ring-slate-900/5">
                             {/* Top Accent Gradient Line */}
                             <div className="h-1.5 w-20 bg-gradient-to-r from-[#103F7C] via-blue-600 to-orange-500 rounded-full mb-3 ml-1" />
 
-                            {/* 5-Column Grid Layout with Column Card Containers */}
-                            <div className="grid grid-cols-5 gap-2.5 lg:gap-3">
+                            {/* 4-Column Grid Layout with Column Card Containers */}
+                            <div className="grid grid-cols-4 gap-3 lg:gap-4">
                               {item.megaMenuColumns.map((col, cIdx) => (
                                 <CategoryMenuCard
                                   key={cIdx}

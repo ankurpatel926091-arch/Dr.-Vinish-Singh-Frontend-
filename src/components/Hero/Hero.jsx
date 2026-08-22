@@ -84,7 +84,7 @@ export default function Hero() {
                 {/* Action Buttons Under Doctor Photo */}
                 <div className="mt-4 flex flex-col sm:flex-row items-center gap-3 w-full">
                   <NavLink
-                    to="/#book-appointment"
+                    to="/book-appointment"
                     className="flex-1 w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-xs sm:text-sm shadow-md shadow-orange-500/20 transition-all duration-300 hover:scale-102 active:scale-98"
                   >
                     <Calendar size={16} />

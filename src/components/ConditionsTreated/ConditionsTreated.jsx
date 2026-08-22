@@ -195,7 +195,7 @@ export default function ConditionsTreated() {
           </div>
 
           <h2 className="text-3xl sm:text-4xl font-extrabold text-[#103F7C] tracking-tight">
-            Conditions Treated
+            Treatements
           </h2>
           <p className="mt-2 text-sm sm:text-base text-slate-500 max-w-xl mx-auto font-normal">
             Advanced medical & laser surgical solutions tailored for optimal patient health.

@@ -70,7 +70,7 @@ const hospitalLocations = [
     address: "596Pb/1114/03, Ring Rd, Pakkabag, Lalabagh, Lucknow",
     mapUrl: "https://maps.app.goo.gl/w9mqio5fe4Hj8KLm9",
     embedUrl:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.784407335606!2d80.89387667627263!3d26.878567176667954!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bfd003e617d91%3A0xb5b736eb9fbb51a5!2sRing%20Rd%2C%20Pakkabag%2C%20Lalabagh%2C%20Lucknow!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin",
+      "https://maps.google.com/maps?q=26.878567,80.893877(Dr.+Shilpi+Maternity+%26+Urology+Centre)&t=&z=16&ie=UTF8&iwloc=B&output=embed",
     badgeBg: "bg-[#103F7C] text-white",
   },
   {
@@ -84,7 +84,7 @@ const hospitalLocations = [
     address: "1/795, Ratan Khand, Ruchi Khand 1, Sharda Nagar, Lucknow",
     mapUrl: "https://maps.app.goo.gl/jbynbpoL5PcKca4Z9",
     embedUrl:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3561.503460831121!2d80.91696237626966!3d26.79213197672023!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bf954316719cd%3A0x6b81d77b8f99ab71!2sRudraksh%20IVF%20%26%20Urology%20Centre!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin",
+      "https://maps.google.com/maps?q=26.792132,80.916962(Rudraksh+IVF+%26+Urology+Centre)&t=&z=16&ie=UTF8&iwloc=B&output=embed",
     badgeBg: "bg-orange-500 text-white",
   },
 ];
@@ -260,7 +260,15 @@ export default function Contact() {
                         </span>
                       </div>
                       <h3 className="font-extrabold text-slate-900 text-sm sm:text-base leading-snug truncate">
-                        {hospital.title}
+                        <a
+                          href={hospital.mapUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:underline hover:text-orange-600 inline-flex items-center gap-1.5 transition-colors"
+                        >
+                          <span>{hospital.title}</span>
+                          <MapPin size={14} className="text-orange-500 shrink-0 inline" />
+                        </a>
                       </h3>
                       <p className="text-xs text-slate-500 font-medium truncate mt-0.5">
                         {hospital.subtitle}

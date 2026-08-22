@@ -101,7 +101,7 @@ export default function PrivacyPolicy() {
               <ul className="space-y-3 pt-1">
                 {[
                   "Personal Identifiers: Full name, phone number, and optional email address.",
-                  "OPD Booking Preferences: Preferred hospital centre (Rudraksh IVF & Urology Centre or Dr. Shilpi Maternity & Urology Centre), preferred date, and clinical specialty/condition.",
+                  <span key="hosp">OPD Booking Preferences: Preferred hospital centre (<a href="https://maps.app.goo.gl/jbynbpoL5PcKca4Z9" target="_blank" rel="noopener noreferrer" className="font-bold text-orange-600 hover:underline">Rudraksh IVF &amp; Urology Centre</a> or <a href="https://maps.app.goo.gl/w9mqio5fe4Hj8KLm9" target="_blank" rel="noopener noreferrer" className="font-bold text-[#103F7C] hover:underline">Dr. Shilpi Maternity &amp; Urology Centre</a>), preferred date, and clinical specialty/condition.</span>,
                   "Health & Symptom Queries: Optional brief messages or symptoms provided in appointment forms to help our medical staff prepare for your consultation.",
                   "Technical Logs: Standard browser details, device type, and IP address collected automatically for website optimization and security monitoring.",
                 ].map((item, idx) => (

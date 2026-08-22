@@ -26,13 +26,13 @@ import img4 from "../assets/images/img13.png";
 import img5 from "../assets/images/img5.jpeg";
 import img7 from "../assets/images/img6.jpeg";
 
-// Video Imports
-import vdo1 from "../assets/Videos/vdo1.mp4";
-import vdo2 from "../assets/Videos/vdo2.mp4";
-import vdo3 from "../assets/Videos/vdo3.mp4";
-import vdo4 from "../assets/Videos/vdo4.mp4";
-import vdo6 from "../assets/Videos/vdo6.mp4";
-import vdo9 from "../assets/Videos/vdo9.mp4";
+// Video Paths
+const vdo1 = "/videos/vdo1.mp4";
+const vdo2 = "/videos/vdo2.mp4";
+const vdo3 = "/videos/vdo4.mp4";
+const vdo4 = "/videos/vdo4.mp4";
+const vdo6 = "/videos/vdo6.mp4";
+const vdo9 = "/videos/vdo9.mp4";
 
 const categories = [
   "All",

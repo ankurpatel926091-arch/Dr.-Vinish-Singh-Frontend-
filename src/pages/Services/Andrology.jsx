@@ -12,6 +12,7 @@ import {
   Heart,
   Clock,
   UserCheck,
+  MapPin,
 } from "lucide-react";
 import PageHero from "../../components/PageHero";
 import CategoryMenuCard from "../../components/CategoryMenuCard";
@@ -140,7 +141,17 @@ export default function AndrologyService() {
               {/* Morning Centre */}
               <div className="bg-orange-50/70 p-3.5 rounded-2xl border border-orange-200/80">
                 <span className="text-[10px] font-extrabold uppercase tracking-wider text-orange-600">Morning OPD</span>
-                <h4 className="font-bold text-slate-900 text-xs mt-0.5">Rudraksh IVF &amp; Urology Centre</h4>
+                <h4 className="font-bold text-slate-900 text-xs mt-0.5">
+                  <a
+                    href="https://maps.app.goo.gl/jbynbpoL5PcKca4Z9"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:underline hover:text-orange-600 inline-flex items-center gap-1 transition-colors"
+                  >
+                    <span>Rudraksh IVF &amp; Urology Centre</span>
+                    <MapPin size={12} className="text-orange-500 shrink-0 inline" />
+                  </a>
+                </h4>
                 <p className="text-[11px] text-slate-500 font-normal mt-0.5">10:00 AM – 01:00 PM (Sharda Nagar)</p>
                 <a href="tel:8960068307" className="font-extrabold text-xs text-orange-600 hover:underline block mt-2">
                   Call: +91 89600 68307
@@ -150,7 +161,17 @@ export default function AndrologyService() {
               {/* Evening Centre */}
               <div className="bg-blue-50/70 p-3.5 rounded-2xl border border-blue-200/80">
                 <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#103F7C]">Evening OPD</span>
-                <h4 className="font-bold text-slate-900 text-xs mt-0.5">Dr. Shilpi Maternity &amp; Urology</h4>
+                <h4 className="font-bold text-slate-900 text-xs mt-0.5">
+                  <a
+                    href="https://maps.app.goo.gl/w9mqio5fe4Hj8KLm9"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:underline hover:text-[#103F7C] inline-flex items-center gap-1 transition-colors"
+                  >
+                    <span>Dr. Shilpi Maternity &amp; Urology</span>
+                    <MapPin size={12} className="text-[#103F7C] shrink-0 inline" />
+                  </a>
+                </h4>
                 <p className="text-[11px] text-slate-500 font-normal mt-0.5">03:00 PM – 06:00 PM (Ring Road)</p>
                 <a href="tel:8604891955" className="font-extrabold text-xs text-[#103F7C] hover:underline block mt-2">
                   Call: +91 86048 91955
