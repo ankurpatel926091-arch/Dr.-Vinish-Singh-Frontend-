@@ -14,25 +14,10 @@ import {
   ZoomIn,
   ZoomOut,
   RotateCw,
-  Loader2,
+  RefreshCw,
+  AlertCircle,
 } from "lucide-react";
 import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
-
-// Image Imports
-import img1 from "../assets/images/Img1.jpeg";
-import img2 from "../assets/images/img9.jpg";
-import img3 from "../assets/images/img10.jpg";
-import img4 from "../assets/images/img13.png";
-import img5 from "../assets/images/img5.jpeg";
-import img7 from "../assets/images/img6.jpeg";
-
-// Video Paths
-const vdo1 = "/videos/vdo1.mp4";
-const vdo2 = "/videos/vdo2.mp4";
-const vdo3 = "/videos/vdo4.mp4";
-const vdo4 = "/videos/vdo4.mp4";
-const vdo6 = "/videos/vdo6.mp4";
-const vdo9 = "/videos/vdo9.mp4";
 
 const categories = [
   "All",
@@ -43,190 +28,124 @@ const categories = [
   "Clinic Facilities",
 ];
 
-const fallbackGalleryItems = [
-  // --- 6 FEATURED PHOTOS ---
-  {
-    id: "p1",
-    type: "photo",
-    title: "Dr. Vinish Kumar Singh - Senior Urologist",
-    category: "Doctor & Care",
-    media: img1,
-    tag: "Doctor Profile",
-  },
-  {
-    id: "p2",
-    type: "photo",
-    title: "Advanced Endourology OT Setup",
-    category: "Surgical Setup",
-    media: img2,
-    tag: "Laser Tech",
-  },
-  {
-    id: "p3",
-    type: "photo",
-    title: "State-of-the-Art Operation Theatre",
-    category: "Surgical Setup",
-    media: img3,
-    tag: "OT Suite",
-  },
-  {
-    id: "p4",
-    type: "photo",
-    title: "Patient OPD Consultation Room",
-    category: "Clinic Facilities",
-    media: img4,
-    tag: "Clinic OPD",
-  },
-  {
-    id: "p5",
-    type: "photo",
-    title: "Minimally Invasive Surgical Equipment",
-    category: "Surgical Setup",
-    media: img5,
-    tag: "Laser Surgery",
-  },
-  {
-    id: "p7",
-    type: "photo",
-    title: "Modern Reception & Patient Lounge",
-    category: "Clinic Facilities",
-    media: img7,
-    tag: "Patient Lounge",
-  },
-
-  // --- 6 FEATURED VIDEOS ---
-  {
-    id: "v1",
-    type: "video",
-    title: "Laser RIRS Kidney Stone Procedure Demo",
-    category: "Surgical Setup",
-    media: vdo1,
-    tag: "Laser RIRS Video",
-  },
-  {
-    id: "v2",
-    type: "video",
-    title: "Dr. Vinish Patient Consultation Overview",
-    category: "Doctor & Care",
-    media: vdo2,
-    tag: "OPD Insights",
-  },
-  {
-    id: "v3",
-    type: "video",
-    title: "Advanced HoLEP Prostate Surgery Insights",
-    category: "Surgical Setup",
-    media: vdo3,
-    tag: "HoLEP Surgery",
-  },
-  {
-    id: "v4",
-    type: "video",
-    title: "Endoscopic Stone Dusting Technique",
-    category: "Surgical Setup",
-    media: vdo4,
-    tag: "Endourology",
-  },
-  {
-    id: "v6",
-    type: "video",
-    title: "Clinic Tour & OPD Facilities Alambagh",
-    category: "Clinic Facilities",
-    media: vdo6,
-    tag: "Clinic Tour",
-  },
-  {
-    id: "v9",
-    type: "video",
-    title: "Kidney Stone Prevention & Diet Advice",
-    category: "Doctor & Care",
-    media: vdo9,
-    tag: "Health Advice",
-  },
-];
+const SkeletonCard = () => (
+  <div className="bg-slate-800/80 rounded-3xl overflow-hidden shadow-sm border border-slate-700/50 h-80 sm:h-96 flex flex-col justify-end relative animate-pulse">
+    <div className="absolute inset-0 bg-slate-700/50" />
+    <div className="absolute top-4 left-4 w-28 h-6 rounded-full bg-slate-600/70" />
+    <div className="relative z-10 p-4 space-y-2 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent">
+      <div className="w-4/5 h-4 rounded bg-slate-600/80" />
+      <div className="w-1/2 h-3 rounded bg-slate-600/60" />
+    </div>
+  </div>
+);
 
 export default function Gallery() {
   const [activeCategory, setActiveCategory] = useState("All");
-  const [galleryList, setGalleryList] = useState(fallbackGalleryItems);
+  const [galleryList, setGalleryList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [brokenMedia, setBrokenMedia] = useState({});
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [rotation, setRotation] = useState(0);
 
   // Fetch active gallery items from backend API
-  useEffect(() => {
-    const fetchPublicGallery = async () => {
-      try {
-        setLoading(true);
-        const getApiUrls = () => {
-          const urls = [];
-          if (import.meta.env.VITE_API_BASE_URL) {
-            urls.push(import.meta.env.VITE_API_BASE_URL);
-          }
-          if (typeof window !== "undefined" && (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")) {
-            urls.push("http://localhost:5000/api");
-          }
-          urls.push("https://dr-vinish-backend.onrender.com/api");
-          return urls;
-        };
+  const fetchPublicGallery = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
 
-        const apiUrls = getApiUrls();
-        const isOnlineProd = typeof window !== "undefined" && window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1";
-
-        for (const baseUrl of apiUrls) {
-          try {
-            const res = await fetch(`${baseUrl}/gallery/public`);
-            if (res.ok) {
-              const json = await res.json();
-              if (json && json.success && Array.isArray(json.data) && json.data.length > 0) {
-                const apiItems = json.data
-                  .map((item) => {
-                    let mediaUrl = item.url;
-                    if (typeof mediaUrl === 'string') {
-                      if (mediaUrl.includes('localhost:5000') || mediaUrl.includes('127.0.0.1:5000')) {
-                        if (isOnlineProd) {
-                          const cleanPath = mediaUrl.replace(/^https?:\/\/(localhost|127\.0\.0\.1):5000/, '');
-                          const pathWithSlash = cleanPath.startsWith('/') ? cleanPath : `/${cleanPath}`;
-                          mediaUrl = `https://dr-vinish-backend.onrender.com${pathWithSlash}`;
-                        }
-                      } else if (mediaUrl.startsWith('/uploads/') || mediaUrl.startsWith('uploads/')) {
-                        const cleanPath = mediaUrl.startsWith('/') ? mediaUrl : `/${mediaUrl}`;
-                        mediaUrl = `${baseUrl.replace(/\/api$/, '')}${cleanPath}`;
-                      } else if (mediaUrl.startsWith('http://')) {
-                        if (isOnlineProd) {
-                          mediaUrl = mediaUrl.replace('http://', 'https://');
-                        }
-                      }
-                    }
-                    return {
-                      id: item._id || item.id,
-                      type: item.type || "photo",
-                      title: item.title,
-                      category: item.category || "Photos",
-                      media: mediaUrl,
-                      tag: item.tag || item.category,
-                    };
-                  });
-
-                if (apiItems.length > 0) {
-                  setGalleryList(apiItems);
-                  break;
-                }
-              }
-            }
-          } catch (err) {
-            // Try next URL
-          }
+      const getApiUrls = () => {
+        const urls = [];
+        if (import.meta.env.VITE_API_BASE_URL) {
+          urls.push(import.meta.env.VITE_API_BASE_URL);
         }
-      } catch (err) {
-        console.warn("Public Gallery API connection offline, displaying fallback items:", err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+        if (
+          typeof window !== "undefined" &&
+          (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")
+        ) {
+          urls.push("http://localhost:5000/api");
+        }
+        urls.push("https://dr-vinish-backend.onrender.com/api");
+        return urls;
+      };
 
-    fetchPublicGallery();
+      const apiUrls = getApiUrls();
+      const isOnlineProd =
+        typeof window !== "undefined" &&
+        window.location.hostname !== "localhost" &&
+        window.location.hostname !== "127.0.0.1";
+
+      let fetchedData = null;
+
+      for (const baseUrl of apiUrls) {
+        try {
+          const res = await fetch(`${baseUrl}/gallery/public`);
+          if (res.ok) {
+            const json = await res.json();
+            if (json && json.success && Array.isArray(json.data)) {
+              fetchedData = json.data.map((item) => {
+                let mediaUrl = item.url;
+                if (typeof mediaUrl === "string") {
+                  if (
+                    mediaUrl.includes("localhost:5000") ||
+                    mediaUrl.includes("127.0.0.1:5000")
+                  ) {
+                    if (isOnlineProd) {
+                      const cleanPath = mediaUrl.replace(
+                        /^https?:\/\/(localhost|127\.0\.0\.1):5000/,
+                        ""
+                      );
+                      const pathWithSlash = cleanPath.startsWith("/")
+                        ? cleanPath
+                        : `/${cleanPath}`;
+                      mediaUrl = `https://dr-vinish-backend.onrender.com${pathWithSlash}`;
+                    }
+                  } else if (
+                    mediaUrl.startsWith("/uploads/") ||
+                    mediaUrl.startsWith("uploads/")
+                  ) {
+                    const cleanPath = mediaUrl.startsWith("/") ? mediaUrl : `/${mediaUrl}`;
+                    mediaUrl = `${baseUrl.replace(/\/api$/, "")}${cleanPath}`;
+                  } else if (mediaUrl.startsWith("http://")) {
+                    if (isOnlineProd) {
+                      mediaUrl = mediaUrl.replace("http://", "https://");
+                    }
+                  }
+                }
+                return {
+                  id: item._id || item.id,
+                  type: item.type || "photo",
+                  title: item.title,
+                  category: item.category || "Photos",
+                  media: mediaUrl,
+                  tag: item.tag || item.category,
+                };
+              });
+              break;
+            }
+          }
+        } catch (err) {
+          // Try next URL fallback
+        }
+      }
+
+      if (fetchedData !== null) {
+        setGalleryList(fetchedData);
+      } else {
+        setError("Unable to load gallery. Please try again.");
+      }
+    } catch (err) {
+      console.error("Public Gallery API Error:", err.message);
+      setError("Unable to load gallery. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    fetchPublicGallery();
+  }, [fetchPublicGallery]);
 
   const filteredItems = useMemo(() => {
     return galleryList.filter((item) => {
@@ -237,12 +156,25 @@ export default function Gallery() {
     });
   }, [galleryList, activeCategory]);
 
-  const getCategoryCount = useCallback((catName) => {
-    if (catName === "All") return galleryList.length;
-    if (catName === "Photos") return galleryList.filter((item) => item.type === "photo" || item.category === "Photos").length;
-    if (catName === "Videos") return galleryList.filter((item) => item.type === "video" || item.category === "Videos").length;
-    return galleryList.filter((item) => item.category === catName).length;
-  }, [galleryList]);
+  const getCategoryCount = useCallback(
+    (catName) => {
+      if (catName === "All") return galleryList.length;
+      if (catName === "Photos")
+        return galleryList.filter(
+          (item) => item.type === "photo" || item.category === "Photos"
+        ).length;
+      if (catName === "Videos")
+        return galleryList.filter(
+          (item) => item.type === "video" || item.category === "Videos"
+        ).length;
+      return galleryList.filter((item) => item.category === catName).length;
+    },
+    [galleryList]
+  );
+
+  const handleMediaError = (id) => {
+    setBrokenMedia((prev) => ({ ...prev, [id]: true }));
+  };
 
   const openLightbox = (index) => {
     setSelectedIndex(index);
@@ -337,7 +269,6 @@ export default function Gallery() {
 
   return (
     <section className="bg-slate-50/60 min-h-screen font-sans">
-      
       {/* ================= HERO HEADER ================= */}
       <div className="relative bg-gradient-to-b from-[#103F7C] to-[#0d3364] text-white py-12 lg:py-16 overflow-hidden">
         <div className="absolute -left-20 -top-20 w-80 h-80 bg-blue-400/10 rounded-full blur-3xl pointer-events-none" />
@@ -361,8 +292,7 @@ export default function Gallery() {
 
       {/* ================= MAIN GALLERY SECTION ================= */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 lg:py-14">
-        
-        {/* Category Filter Tabs with Dynamic Badges */}
+        {/* Category Filter Tabs */}
         <ScrollReveal variant="fade-up" delay={100} className="flex items-center justify-center sm:justify-start flex-wrap gap-2 mb-10">
           {categories.map((cat) => {
             const count = getCategoryCount(cat);
@@ -383,9 +313,11 @@ export default function Gallery() {
                 {cat === "Photos" && <ImageIcon size={13} />}
                 {cat === "Videos" && <Video size={13} />}
                 <span>{cat}</span>
-                <span className={`px-1.5 py-0.5 text-[10px] rounded-full font-bold ${
-                  activeCategory === cat ? "bg-white/20 text-white" : "bg-slate-100 text-slate-500"
-                }`}>
+                <span
+                  className={`px-1.5 py-0.5 text-[10px] rounded-full font-bold ${
+                    activeCategory === cat ? "bg-white/20 text-white" : "bg-slate-100 text-slate-500"
+                  }`}
+                >
                   {count}
                 </span>
               </button>
@@ -393,78 +325,123 @@ export default function Gallery() {
           })}
         </ScrollReveal>
 
-        {/* Media Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
-          {filteredItems.map((item, idx) => (
-            <ScrollReveal
-              key={item.id}
-              variant="scale-up"
-              delay={idx * 60}
-              className="h-full"
-            >
-              <div
-                onClick={() => openLightbox(idx)}
-                onMouseEnter={(e) => handleCardMouseEnter(e, item.type)}
-                onMouseLeave={(e) => handleCardMouseLeave(e, item.type)}
-                className="group relative cursor-pointer bg-slate-900 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl border border-slate-200/90 hover:border-orange-400/50 transition-all duration-500 hover:-translate-y-1.5 h-80 sm:h-96 flex flex-col justify-end"
-              >
-                {/* Media Display */}
-                {item.type === "photo" ? (
-                  <img
-                    src={item.media}
-                    alt={item.title}
-                    loading="lazy"
-                    className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-108"
-                    onError={(e) => {
-                      e.target.src = img1;
-                    }}
-                  />
-                ) : (
-                  <div className="absolute inset-0 w-full h-full">
-                    <video
-                      src={item.media}
-                      muted
-                      loop
-                      playsInline
-                      preload="metadata"
-                      className="w-full h-full object-cover object-[center_28%] opacity-90 group-hover:opacity-100 transition-all duration-300"
-                    />
-                  </div>
-                )}
+        {/* Loading State: Skeleton Grid */}
+        {loading && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <SkeletonCard key={i} />
+            ))}
+          </div>
+        )}
 
-                {/* Floating Action Badge */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+        {/* Error State */}
+        {!loading && error && (
+          <div className="py-16 text-center bg-white rounded-3xl border border-rose-200/80 shadow-xs max-w-md mx-auto my-8 p-6">
+            <div className="w-12 h-12 rounded-full bg-rose-50 text-rose-500 flex items-center justify-center mx-auto mb-3">
+              <AlertCircle size={24} />
+            </div>
+            <h3 className="text-base font-bold text-slate-800">Unable to load gallery</h3>
+            <p className="text-xs text-slate-500 mt-1 mb-4">{error}</p>
+            <button
+              type="button"
+              onClick={fetchPublicGallery}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#103F7C] hover:bg-blue-900 text-white text-xs font-bold transition-all shadow-md cursor-pointer"
+            >
+              <RefreshCw size={14} />
+              <span>Retry Again</span>
+            </button>
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!loading && !error && filteredItems.length === 0 && (
+          <div className="py-16 text-center bg-white rounded-3xl border border-slate-200 shadow-xs max-w-md mx-auto my-8 p-6">
+            <div className="w-12 h-12 rounded-full bg-blue-50 text-[#103F7C] flex items-center justify-center mx-auto mb-3">
+              <ImageIcon size={24} />
+            </div>
+            <h3 className="text-base font-bold text-slate-800">No gallery items available</h3>
+            <p className="text-xs text-slate-500 mt-1">There are no photos or videos in this category right now.</p>
+          </div>
+        )}
+
+        {/* Actual Gallery Media Grid */}
+        {!loading && !error && filteredItems.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
+            {filteredItems.map((item, idx) => (
+              <ScrollReveal key={item.id} variant="scale-up" delay={idx * 60} className="h-full">
+                <div
+                  onClick={() => openLightbox(idx)}
+                  onMouseEnter={(e) => handleCardMouseEnter(e, item.type)}
+                  onMouseLeave={(e) => handleCardMouseLeave(e, item.type)}
+                  className="group relative cursor-pointer bg-slate-900 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl border border-slate-200/90 hover:border-orange-400/50 transition-all duration-500 hover:-translate-y-1.5 h-80 sm:h-96 flex flex-col justify-end"
+                >
+                  {/* Media Display */}
                   {item.type === "photo" ? (
-                    <div className="w-12 h-12 rounded-full bg-white/95 text-[#103F7C] shadow-lg flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 border border-white/60">
-                      <Maximize2 size={20} className="text-[#103F7C]" />
-                    </div>
+                    brokenMedia[item.id] ? (
+                      <div className="absolute inset-0 bg-slate-800 flex flex-col items-center justify-center text-slate-400 p-4 text-center">
+                        <ImageIcon size={32} className="mb-2 opacity-50 text-slate-500" />
+                        <span className="text-xs font-semibold text-slate-400">Media unavailable</span>
+                      </div>
+                    ) : (
+                      <img
+                        src={item.media}
+                        alt={item.title}
+                        loading="lazy"
+                        className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-108"
+                        onError={() => handleMediaError(item.id)}
+                      />
+                    )
                   ) : (
-                    <div className="w-14 h-14 rounded-full bg-orange-500/95 text-white flex items-center justify-center shadow-xl border-2 border-white/60 group-hover:scale-110 transition-all duration-300">
-                      <Play size={24} className="ml-1 fill-white" />
+                    <div className="absolute inset-0 w-full h-full">
+                      <video
+                        src={item.media}
+                        muted
+                        loop
+                        playsInline
+                        preload="metadata"
+                        className="w-full h-full object-cover object-[center_28%] opacity-90 group-hover:opacity-100 transition-all duration-300"
+                        onError={() => handleMediaError(item.id)}
+                      />
                     </div>
                   )}
-                </div>
 
-                {/* Overlay Text */}
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10 flex items-end justify-between gap-3">
-                  <div className="min-w-0 flex-1">
-                    <h3 className="text-white font-bold text-xs sm:text-sm leading-snug truncate drop-shadow-sm">
-                      {item.title}
-                    </h3>
-                    <p className="text-[10px] text-orange-300 font-semibold uppercase tracking-wider mt-0.5 flex items-center gap-1">
-                      {item.type === "video" ? <Video size={11} className="text-orange-400" /> : <ImageIcon size={11} className="text-blue-300" />}
-                      <span>{item.category}</span>
-                    </p>
+                  {/* Floating Action Badge */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                    {item.type === "photo" ? (
+                      <div className="w-12 h-12 rounded-full bg-white/95 text-[#103F7C] shadow-lg flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 border border-white/60">
+                        <Maximize2 size={20} className="text-[#103F7C]" />
+                      </div>
+                    ) : (
+                      <div className="w-14 h-14 rounded-full bg-orange-500/95 text-white flex items-center justify-center shadow-xl border-2 border-white/60 group-hover:scale-110 transition-all duration-300">
+                        <Play size={24} className="ml-1 fill-white" />
+                      </div>
+                    )}
                   </div>
-                  <span className="text-[9.5px] font-bold text-white bg-black/60 backdrop-blur-xs px-2.5 py-1 rounded-full border border-white/20 shrink-0 uppercase tracking-wider">
-                    {item.tag || item.category}
-                  </span>
-                </div>
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
 
+                  {/* Overlay Text */}
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10 flex items-end justify-between gap-3">
+                    <div className="min-w-0 flex-1">
+                      <h3 className="text-white font-bold text-xs sm:text-sm leading-snug truncate drop-shadow-sm">
+                        {item.title}
+                      </h3>
+                      <p className="text-[10px] text-orange-300 font-semibold uppercase tracking-wider mt-0.5 flex items-center gap-1">
+                        {item.type === "video" ? (
+                          <Video size={11} className="text-orange-400" />
+                        ) : (
+                          <ImageIcon size={11} className="text-blue-300" />
+                        )}
+                        <span>{item.category}</span>
+                      </p>
+                    </div>
+                    <span className="text-[9.5px] font-bold text-white bg-black/60 backdrop-blur-xs px-2.5 py-1 rounded-full border border-white/20 shrink-0 uppercase tracking-wider">
+                      {item.tag || item.category}
+                    </span>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* ================= LIGHTBOX OVERLAY MODAL ================= */}
@@ -570,7 +547,9 @@ export default function Gallery() {
         <div className="rounded-3xl bg-gradient-to-r from-[#103F7C] to-blue-900 text-white p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md">
           <div>
             <h3 className="text-xl sm:text-2xl font-extrabold">Visit Our Clinic in Alambagh</h3>
-            <p className="text-xs sm:text-sm text-blue-100 mt-1 font-normal">Equipped with modern laser technology &amp; patient-focused medical care.</p>
+            <p className="text-xs sm:text-sm text-blue-100 mt-1 font-normal">
+              Equipped with modern laser technology &amp; patient-focused medical care.
+            </p>
           </div>
           <NavLink
             to="/#book-appointment"
@@ -582,7 +561,6 @@ export default function Gallery() {
           </NavLink>
         </div>
       </ScrollReveal>
-
     </section>
   );
 }

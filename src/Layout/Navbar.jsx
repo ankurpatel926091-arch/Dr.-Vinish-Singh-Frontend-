@@ -297,12 +297,12 @@ function Navbar() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between gap-4 lg:gap-6 xl:gap-8">
             {/* ================= Logo ================= */}
             <NavLink
               to="/"
               onClick={closeAllMenus}
-              className="flex items-center gap-3 group outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
+              className="flex items-center gap-3 group outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 shrink-0"
             >
               <div className={`w-auto flex items-center transition-all duration-300 ${
                 scrolled ? "h-11 sm:h-13 lg:h-14" : "h-12 sm:h-14 lg:h-16"
@@ -316,7 +316,7 @@ function Navbar() {
             </NavLink>
 
             {/* ================= Desktop Navigation ================= */}
-            <nav className="nav-desktop-container items-center gap-0.5 lg:gap-1 xl:gap-1.5 2xl:gap-2.5">
+            <nav className="nav-desktop-container items-center gap-1.5 lg:gap-2.5 xl:gap-3.5 2xl:gap-4">
               {navLinks.map((item) => {
                 const isHovered = hoveredNav === item.label;
 
@@ -333,7 +333,7 @@ function Navbar() {
                         to={item.href}
                         onClick={closeAllMenus}
                         className={({ isActive }) =>
-                          `inline-flex items-center justify-center px-1.5 lg:px-2.5 xl:px-3.5 2xl:px-4 py-2 text-[14px] lg:text-[15px] 2xl:text-[16px] font-bold whitespace-nowrap transition-all duration-200 rounded-lg outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 ${
+                          `inline-flex items-center justify-center px-2 py-1.5 text-[14.5px] lg:text-[15px] xl:text-[15.5px] font-semibold whitespace-nowrap transition-all duration-200 rounded-lg outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 ${
                             isActive
                               ? "text-[#103F7C] bg-blue-50/80"
                               : "text-slate-700 hover:text-[#103F7C] hover:bg-slate-50"
@@ -349,7 +349,7 @@ function Navbar() {
                         onClick={() =>
                           setHoveredNav((prev) => (prev === item.label ? null : item.label))
                         }
-                        className={`inline-flex items-center justify-center gap-1 px-1.5 lg:px-2.5 xl:px-3.5 2xl:px-4 py-2 text-[14px] lg:text-[15px] 2xl:text-[16px] font-bold rounded-lg whitespace-nowrap transition-all duration-200 outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 cursor-pointer ${
+                        className={`inline-flex items-center justify-center gap-1.5 px-2 py-1.5 text-[14.5px] lg:text-[15px] xl:text-[15.5px] font-semibold rounded-lg whitespace-nowrap transition-all duration-200 outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 cursor-pointer ${
                           isHovered
                             ? "text-[#103F7C] bg-slate-50"
                             : "text-slate-700 hover:text-[#103F7C] hover:bg-slate-50"

@@ -112,7 +112,48 @@ export default function Contact() {
     setErrorMessage("");
 
     try {
-      const response = await fetch(WEB3FORMS_ENDPOINT, {
+      const getApiUrls = () => {
+        const urls = [];
+        if (import.meta.env.VITE_API_BASE_URL) {
+          urls.push(import.meta.env.VITE_API_BASE_URL);
+        }
+        if (typeof window !== "undefined" && (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")) {
+          urls.push("http://localhost:5000/api");
+        }
+        urls.push("https://dr-vinish-backend.onrender.com/api");
+        return urls;
+      };
+
+      const apiUrls = getApiUrls();
+      let savedToBackend = false;
+
+      for (const baseUrl of apiUrls) {
+        try {
+          const res = await fetch(`${baseUrl}/enquiries`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: formData.name,
+              phone: formData.phone,
+              service: formData.service || "General Inquiry",
+              subject: formData.service || "General Inquiry",
+              message: formData.message || "",
+            }),
+          });
+
+          if (res.ok) {
+            savedToBackend = true;
+            break;
+          }
+        } catch (err) {
+          // Try next fallback URL
+        }
+      }
+
+      // Also trigger Web3Forms email notification asynchronously
+      fetch(WEB3FORMS_ENDPOINT, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -127,24 +168,16 @@ export default function Contact() {
           service: formData.service || "General Inquiry",
           message: formData.message || "N/A",
         }),
+      }).catch(() => {});
+
+      setSubmitted(true);
+      setLastSubmittedPhone(formData.phone);
+      setFormData({
+        name: "",
+        phone: "",
+        service: "",
+        message: "",
       });
-
-      const data = await response.json();
-
-      if (data.success) {
-        setSubmitted(true);
-        setLastSubmittedPhone(formData.phone);
-        setFormData({
-          name: "",
-          phone: "",
-          service: "",
-          message: "",
-        });
-      } else {
-        setErrorMessage(
-          data.message || "Failed to send message. Please try again."
-        );
-      }
     } catch (err) {
       setErrorMessage(
         "Network error occurred. Please check your connection and try again."
