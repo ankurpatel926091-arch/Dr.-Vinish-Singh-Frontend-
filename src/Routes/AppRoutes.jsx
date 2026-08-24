@@ -1,7 +1,6 @@
 import React, { useEffect, lazy, Suspense } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import PageLoader from "../components/LoadingFallback/PageLoader";
-import BlogSection from "../components/BlogSection/BlogSection";
 
 // Lazy Loaded Route Components for Performance Optimization
 const Home = lazy(() => import("../pages/Home"));
@@ -113,25 +112,13 @@ const pageTitles = {
 export default function AppRoutes() {
   const location = useLocation();
 
-  // Dynamic Browser Tab SEO Titles & Scroll To Top or #book-appointment on route change
+  // Dynamic Browser Tab SEO Titles
   useEffect(() => {
-    if (location.hash === "#book-appointment" || location.hash === "#select-hospital") {
-      setTimeout(() => {
-        const el = document.getElementById("book-appointment");
-        if (el) {
-          const yOffset = -90;
-          const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-          window.scrollTo({ top: y, behavior: "smooth" });
-        }
-      }, 350);
-    } else {
-      window.scrollTo(0, 0);
-    }
     const currentTitle =
       pageTitles[location.pathname] ||
       "Dr. Vinish Kumar Singh | Senior Urologist & Transplant Surgeon Lucknow";
     document.title = currentTitle;
-  }, [location.pathname, location.hash]);
+  }, [location.pathname]);
 
   return (
     <Suspense fallback={<PageLoader />}>
@@ -141,7 +128,7 @@ export default function AppRoutes() {
         <Route path="/about/our-hospitals" element={<OurHospitals />} />
         <Route path="/about/qualifications" element={<Qualifications />} />
         <Route path="/about/awards-recognition" element={<AwardsRecognition />} />
-        <Route path="/Blogs" element={<BlogSection />} />
+        <Route path="/Blogs" element={<Blogs />} />
         <Route path="/BookAppointment" element={<BookAppointmentPage />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/select-hospital" element={<BookAppointment />} />

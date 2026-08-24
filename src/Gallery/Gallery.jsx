@@ -186,14 +186,25 @@ export default function Gallery() {
                     }
                     return true;
                   })
-                  .map((item) => ({
-                    id: item._id || item.id,
-                    type: item.type || "photo",
-                    title: item.title,
-                    category: item.category || "Photos",
-                    media: typeof item.url === "string" && item.url.startsWith("http://") ? item.url.replace("http://", "https://") : item.url,
-                    tag: item.tag || item.category,
-                  }));
+                  .map((item) => {
+                    let mediaUrl = item.url;
+                    if (typeof mediaUrl === 'string') {
+                      if (mediaUrl.startsWith('/uploads/') || mediaUrl.startsWith('uploads/')) {
+                        const cleanPath = mediaUrl.startsWith('/') ? mediaUrl : `/${mediaUrl}`;
+                        mediaUrl = `${baseUrl.replace(/\/api$/, '')}${cleanPath}`;
+                      } else if (mediaUrl.startsWith('http://') && !mediaUrl.includes('localhost') && !mediaUrl.includes('127.0.0.1')) {
+                        mediaUrl = mediaUrl.replace('http://', 'https://');
+                      }
+                    }
+                    return {
+                      id: item._id || item.id,
+                      type: item.type || "photo",
+                      title: item.title,
+                      category: item.category || "Photos",
+                      media: mediaUrl,
+                      tag: item.tag || item.category,
+                    };
+                  });
 
                 if (apiItems.length > 0) {
                   setGalleryList(apiItems);

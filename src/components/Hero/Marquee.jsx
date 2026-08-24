@@ -13,10 +13,9 @@ const marqueeItems = [
   "15+ YEARS EXCELLENCE",
 ];
 
-export default function Marquee() {
-  // Duplicate array for seamless infinite looping
-  const items = [...marqueeItems, ...marqueeItems];
+const items = [...marqueeItems, ...marqueeItems];
 
+function Marquee() {
   return (
     <div className="relative w-full bg-[#EBF4FF] border-y border-blue-200/70 overflow-hidden py-3 sm:py-3.5 shadow-inner">
       {/* Subtle fade effect on left and right edges */}
@@ -24,7 +23,10 @@ export default function Marquee() {
       <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-[#EBF4FF] to-transparent z-10 pointer-events-none" />
 
       {/* Marquee scrolling container */}
-      <div className="flex animate-marquee items-center whitespace-nowrap">
+      <div
+        className="flex animate-marquee items-center whitespace-nowrap will-change-transform"
+        style={{ transform: "translateZ(0)" }}
+      >
         {items.map((item, index) => (
           <div key={index} className="flex items-center">
             {/* Bullet Dot */}
@@ -40,3 +42,6 @@ export default function Marquee() {
     </div>
   );
 }
+
+export default React.memo(Marquee);
+

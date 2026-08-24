@@ -60,7 +60,7 @@ export default function BookAppointment({ isHomePage = false }) {
   };
 
   return (
-    <section id="book-appointment" className="bg-slate-50 font-sans py-8 sm:py-14">
+    <section id="book-appointment" className="bg-slate-50 font-sans py-8 sm:py-14 scroll-mt-28 sm:scroll-mt-36">
       {/* Header Banner / Title */}
       {isHomePage ? (
         <ScrollReveal variant="fade-up" className="max-w-3xl mx-auto text-center px-4 mb-8 sm:mb-12">

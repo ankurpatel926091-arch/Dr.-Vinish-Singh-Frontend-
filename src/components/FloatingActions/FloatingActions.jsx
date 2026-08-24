@@ -2,16 +2,23 @@ import React, { useState, useEffect, useRef } from "react";
 import { FaPhoneAlt, FaWhatsapp, FaCalendarAlt, FaChevronUp } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
-export default function FloatingActions() {
+function FloatingActions() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const animFrameIdRef = useRef(null);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 200);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setShowScrollTop(window.scrollY > 200);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", handleScroll);
       if (animFrameIdRef.current) {
@@ -21,6 +28,11 @@ export default function FloatingActions() {
   }, []);
 
   const scrollToTop = () => {
+    if (window.lenis) {
+      window.lenis.scrollTo(0, { duration: 0.6 });
+      return;
+    }
+
     const startPosition = window.scrollY || window.pageYOffset;
     if (startPosition === 0) return;
 
@@ -117,9 +129,37 @@ export default function FloatingActions() {
         </span>
         <NavLink
           to="/#book-appointment"
+          onClick={(e) => {
+            e.preventDefault();
+            const scrollToAppointment = (immediate = false) => {
+              const el = document.getElementById("book-appointment");
+              if (el) {
+                const header = document.querySelector("header");
+                const headerHeight = header ? header.offsetHeight : 120;
+                const topPos = el.getBoundingClientRect().top + window.pageYOffset;
+                const targetScrollY = Math.max(0, topPos - (headerHeight + 20));
+
+                if (window.lenis) {
+                  window.lenis.scrollTo(targetScrollY, {
+                    immediate: immediate,
+                    duration: immediate ? 0 : 0.5,
+                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                  });
+                } else {
+                  window.scrollTo({ top: targetScrollY, behavior: immediate ? "instant" : "smooth" });
+                }
+              }
+            };
+
+            if (window.location.pathname === "/") {
+              scrollToAppointment(false);
+            } else {
+              window.location.href = "/#book-appointment";
+            }
+          }}
           aria-label="Book Appointment"
           title="Book Appointment"
-          className="w-8.5 h-8.5 sm:w-12 sm:h-12 rounded-full bg-[#00A8E8] hover:bg-[#0092c9] text-white flex items-center justify-center shadow-md shadow-sky-500/20 transition-all duration-300 hover:scale-110 active:scale-95"
+          className="w-8.5 h-8.5 sm:w-12 sm:h-12 rounded-full bg-[#00A8E8] hover:bg-[#0092c9] text-white flex items-center justify-center shadow-md shadow-sky-500/20 transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
         >
           <FaCalendarAlt className="text-xs sm:text-base" />
         </NavLink>
@@ -145,3 +185,6 @@ export default function FloatingActions() {
     </div>
   );
 }
+
+export default React.memo(FloatingActions);
+

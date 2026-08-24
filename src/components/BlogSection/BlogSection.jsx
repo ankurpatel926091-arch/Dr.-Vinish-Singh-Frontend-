@@ -101,7 +101,7 @@ export default function BlogSection() {
         </ScrollReveal>
 
         {/* ================= 3-CARDS CAROUSEL GRID ================= */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-5 mb-8">
           {visibleBlogs.map((blog, index) => (
             <ScrollReveal
               key={blog.id}

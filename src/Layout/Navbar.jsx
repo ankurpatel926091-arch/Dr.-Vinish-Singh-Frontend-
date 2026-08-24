@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaWhatsapp } from "react-icons/fa";
@@ -37,7 +37,157 @@ import {
 
 import logo from "../assets/logo.png";
 
-export default function Navbar() {
+// Navigation Data with Icons & Descriptions (Declared statically outside to avoid re-allocation per render)
+const navLinks = [
+  {
+    label: "Home",
+    href: "/",
+  },
+  {
+    label: "About",
+    dropdown: true,
+    children: [
+      {
+        label: "Dr. Vinish Kumar Singh",
+        desc: "Senior Urologist & Transplant Surgeon",
+        href: "/about/dr-vinish-kumar-singh",
+        icon: UserCheck,
+        iconBg: "bg-blue-50 text-[#103F7C]",
+      },
+      {
+        label: "Our Hospitals",
+        desc: "Clinics & Consultation Locations",
+        href: "/about/our-hospitals",
+        icon: Building2,
+        iconBg: "bg-orange-50 text-orange-600",
+      },
+      {
+        label: "Awards & Recognition",
+        desc: "Honors, Accreditations & Media",
+        href: "/about/awards-recognition",
+        icon: Trophy,
+        iconBg: "bg-blue-50 text-[#103F7C]",
+      },
+    ],
+  },
+  {
+    label: "Treatements",
+    dropdown: true,
+    isMegaMenu: true,
+    megaMenuColumns: [
+      {
+        title: "Urological Conditions",
+        icon: Activity,
+        iconBg: "bg-cyan-50 text-cyan-600 border border-cyan-100",
+        items: [
+          { label: "Kidney Stones", href: "/conditions/kidney-stone", icon: Stethoscope, iconBg: "bg-cyan-50 text-cyan-600" },
+          { label: "Urinary Tract Infections (UTIs)", href: "/female/uti", icon: Thermometer, iconBg: "bg-blue-50 text-blue-600" },
+          { label: "Enlarged Prostate (BPH)", href: "/conditions/prostate", icon: Activity, iconBg: "bg-orange-50 text-orange-600" },
+          { label: "Prostate Disorders", href: "/male/prostate", icon: ShieldAlert, iconBg: "bg-indigo-50 text-indigo-600" },
+          { label: "Urethral Stricture", href: "/conditions/urethral-stricture", icon: Scissors, iconBg: "bg-teal-50 text-teal-600" },
+          { label: "Urinary Incontinence", href: "/female/incontinence", icon: Droplets, iconBg: "bg-sky-50 text-sky-600" },
+          { label: "Overactive Bladder", href: "/female/overactive-bladder", icon: Zap, iconBg: "bg-amber-50 text-amber-600" },
+          { label: "Bladder Disorders", href: "/conditions/bladder-stone", icon: Activity, iconBg: "bg-cyan-50 text-cyan-600" },
+          { label: "Blood in Urine (Hematuria)", href: "/conditions/hematuria", icon: HeartPulse, iconBg: "bg-rose-50 text-rose-600" },
+          { label: "Recurrent UTI", href: "/female/nocturia", icon: RefreshCw, iconBg: "bg-purple-50 text-purple-600" },
+        ],
+      },
+      {
+        title: "Andrological Conditions",
+        icon: Users,
+        iconBg: "bg-blue-50 text-blue-600 border border-blue-100",
+        items: [
+          { label: "Erectile Dysfunction", href: "/andrology/erectile-dysfunction", icon: Sparkles, iconBg: "bg-blue-50 text-blue-600" },
+          { label: "Premature Ejaculation", href: "/andrology/premature-ejaculation", icon: Clock, iconBg: "bg-orange-50 text-orange-600" },
+          { label: "Male Infertility", href: "/andrology/male-infertility", icon: Users, iconBg: "bg-indigo-50 text-indigo-600" },
+          { label: "Varicocele", href: "/male/varicocele", icon: Activity, iconBg: "bg-cyan-50 text-cyan-600" },
+          { label: "Hydrocele", href: "/conditions/hydrocele", icon: Droplets, iconBg: "bg-teal-50 text-teal-600" },
+          { label: "Peyronie's Disease", href: "/male/peyronies-disease", icon: ShieldAlert, iconBg: "bg-rose-50 text-rose-600" },
+          { label: "Low Testosterone", href: "/male/hypogonadism", icon: TrendingDown, iconBg: "bg-amber-50 text-amber-600" },
+          { label: "Male Sexual Disorders", href: "/male/impotency", icon: HeartPulse, iconBg: "bg-blue-50 text-blue-600" },
+          { label: "Testicular Disorders", href: "/conditions/testicular-disorders", icon: Stethoscope, iconBg: "bg-violet-50 text-violet-600" },
+          { label: "Chronic Testicular Pain", href: "/conditions/chronic-testicular-pain", icon: AlertCircle, iconBg: "bg-orange-50 text-orange-600" },
+        ],
+      },
+      {
+        title: "Kidney & Renal Transplant Conditions",
+        icon: HeartPulse,
+        iconBg: "bg-emerald-50 text-emerald-600 border border-emerald-100",
+        items: [
+          { label: "End-Stage Kidney Disease", href: "/services/nephrology", icon: ShieldAlert, iconBg: "bg-emerald-50 text-emerald-600" },
+          { label: "Kidney Failure Requiring Transplant", href: "/services/renal-transplant", icon: Activity, iconBg: "bg-teal-50 text-teal-600" },
+          { label: "Kidney Transplant Evaluation", href: "/conditions/kidney-transplant-eval", icon: ClipboardCheck, iconBg: "bg-blue-50 text-blue-600" },
+          { label: "Living Donor Kidney Transplant", href: "/conditions/living-donor-transplant", icon: HeartPulse, iconBg: "bg-rose-50 text-rose-600" },
+          { label: "Deceased Donor Kidney Transplant", href: "/conditions/deceased-donor-transplant", icon: Building2, iconBg: "bg-indigo-50 text-indigo-600" },
+          { label: "Post-Transplant Urological Complications", href: "/conditions/post-transplant-care", icon: Stethoscope, iconBg: "bg-amber-50 text-amber-600" },
+        ],
+      },
+      {
+        title: "Paediatric Urological Conditions",
+        icon: UserCheck,
+        iconBg: "bg-teal-50 text-teal-600 border border-teal-100",
+        items: [
+          { label: "Undescended Testis", href: "/paediatric/undescended-testis", icon: Baby, iconBg: "bg-teal-50 text-teal-600" },
+          { label: "Phimosis", href: "/paediatric/phimosis", icon: Scissors, iconBg: "bg-cyan-50 text-cyan-600" },
+          { label: "Hypospadias", href: "/paediatric/hypospadias", icon: Stethoscope, iconBg: "bg-blue-50 text-blue-600" },
+          { label: "Hydrocele", href: "/paediatric/hydrocele", icon: Droplets, iconBg: "bg-sky-50 text-sky-600" },
+          { label: "Paediatric Urinary Problems", href: "/paediatric/urinary-problems", icon: Activity, iconBg: "bg-emerald-50 text-emerald-600" },
+          { isDivider: true },
+          { label: "Prostate Cancer", href: "/cancers/prostate-cancer", icon: ShieldAlert, iconBg: "bg-rose-50 text-rose-600" },
+          { label: "Kidney Cancer", href: "/cancers/kidney-cancer", icon: Target, iconBg: "bg-red-50 text-red-600" },
+          { label: "Bladder Cancer", href: "/cancers/bladder-cancer", icon: Activity, iconBg: "bg-pink-50 text-pink-600" },
+          { label: "Testicular Cancer", href: "/cancers/testicular-cancer", icon: Stethoscope, iconBg: "bg-orange-50 text-orange-600" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Urology Guide",
+    dropdown: true,
+    isUrologyGuide: true,
+    alignRight: true,
+    guideColumns: [
+      {
+        title: "Male Urology Guide",
+        icon: Users,
+        iconBg: "bg-blue-50 text-[#103F7C] border border-blue-100",
+        items: [
+          { label: "Prostate Surgery", desc: "Minimally Invasive Holep/TURP", href: "/male/prostate", icon: Scissors, iconBg: "bg-[#103F7C] text-white" },
+          { label: "Kidney Stone Surgery", desc: "URSL, RIRS & PCNL Solutions", href: "/male/kidney", icon: Stethoscope, iconBg: "bg-orange-50 text-orange-600" },
+          { label: "Varicocele Repair Surgery", desc: "Microscopic Varicocelectomy", href: "/male/varicocele", icon: Activity, iconBg: "bg-blue-50 text-[#103F7C]" },
+          { label: "Hypogonadism (Low T)", desc: "Hormonal & TRT Therapy", href: "/male/hypogonadism", icon: HeartPulse, iconBg: "bg-orange-50 text-orange-600" },
+          { label: "Erectile Dysfunction", desc: "Advanced Shockwave & Penile Care", href: "/male/erectile-dysfunction", icon: Sparkles, iconBg: "bg-blue-50 text-[#103F7C]" },
+          { label: "Peyronie's Disease", desc: "Plaque & Curvature Treatment", href: "/male/peyronies-disease", icon: ShieldAlert, iconBg: "bg-orange-50 text-orange-600" },
+          { label: "Male Infertility", desc: "Micro-TESE & Sperm Quality Care", href: "/male/male-infertility", icon: Users, iconBg: "bg-blue-50 text-[#103F7C]" },
+          { label: "Penile Curvature Repair", desc: "Congenital & Reconstructive Repair", href: "/male/penile-curvature", icon: Activity, iconBg: "bg-orange-50 text-orange-600" },
+        ],
+      },
+      {
+        title: "Female Urology Guide",
+        icon: HeartPulse,
+        iconBg: "bg-orange-50 text-orange-600 border border-orange-100",
+        items: [
+          { label: "Recurrent UTI Care", desc: "Recurrent Infection Management", href: "/female/uti", icon: Thermometer, iconBg: "bg-orange-50 text-orange-600" },
+          { label: "Urinary Incontinence", desc: "TVT/TOT Sling & Reconstruction", href: "/female/incontinence", icon: Droplets, iconBg: "bg-blue-50 text-[#103F7C]" },
+          { label: "Overactive Bladder", desc: "OAB Urgency & Bladder Therapy", href: "/female/overactive-bladder", icon: Activity, iconBg: "bg-orange-50 text-orange-600" },
+          { label: "Cystocele & Prolapse", desc: "Pelvic Organ Repair Surgery", href: "/female/cystocele", icon: ShieldAlert, iconBg: "bg-blue-50 text-[#103F7C]" },
+          { label: "Voiding Difficulties", desc: "Hesitancy & Flow Management", href: "/female/voiding-difficulties", icon: Clock, iconBg: "bg-orange-50 text-orange-600" },
+          { label: "VVF Fistula Repair", desc: "Vesicovaginal Reconstruction", href: "/female/vvf-repair", icon: Stethoscope, iconBg: "bg-orange-50 text-orange-600" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "Gallery",
+    href: "/gallery",
+  },
+  {
+    label: "Contact",
+    href: "/contact",
+  },
+];
+
+function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeMobileDropdown, setActiveMobileDropdown] = useState(null);
@@ -54,26 +204,51 @@ export default function Navbar() {
   const handleBookAppointmentClick = (e) => {
     e.preventDefault();
     closeAllMenus();
-    if (location.pathname === "/") {
+
+    const scrollToAppointment = (immediate = false) => {
       const el = document.getElementById("book-appointment");
       if (el) {
-        const yOffset = -90;
-        const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        window.scrollTo({ top: y, behavior: "smooth" });
+        const header = document.querySelector("header");
+        const headerHeight = header ? header.offsetHeight : 120;
+        const topPos = el.getBoundingClientRect().top + window.pageYOffset;
+        const targetScrollY = Math.max(0, topPos - (headerHeight + 20));
+
+        if (window.lenis) {
+          window.lenis.scrollTo(targetScrollY, {
+            immediate: immediate,
+            duration: immediate ? 0 : 0.5,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          });
+        } else {
+          window.scrollTo({ top: targetScrollY, behavior: immediate ? "instant" : "smooth" });
+        }
       }
+    };
+
+    if (location.pathname === "/") {
+      scrollToAppointment(false);
     } else {
       navigate("/#book-appointment");
+      setTimeout(() => scrollToAppointment(true), 80);
+      setTimeout(() => scrollToAppointment(false), 350);
+      setTimeout(() => scrollToAppointment(false), 800);
+      setTimeout(() => scrollToAppointment(false), 1400);
     }
   };
 
-
-
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -85,156 +260,6 @@ export default function Navbar() {
   const toggleMobileDropdown = (label) => {
     setActiveMobileDropdown((prev) => (prev === label ? null : label));
   };
-
-  // Navigation Data with Icons & Descriptions
-  const navLinks = [
-    {
-      label: "Home",
-      href: "/",
-    },
-    {
-      label: "About",
-      dropdown: true,
-      children: [
-        {
-          label: "Dr. Vinish Kumar Singh",
-          desc: "Senior Urologist & Transplant Surgeon",
-          href: "/about/dr-vinish-kumar-singh",
-          icon: UserCheck,
-          iconBg: "bg-blue-50 text-[#103F7C]",
-        },
-        {
-          label: "Our Hospitals",
-          desc: "Clinics & Consultation Locations",
-          href: "/about/our-hospitals",
-          icon: Building2,
-          iconBg: "bg-orange-50 text-orange-600",
-        },
-        {
-          label: "Awards & Recognition",
-          desc: "Honors, Accreditations & Media",
-          href: "/about/awards-recognition",
-          icon: Trophy,
-          iconBg: "bg-blue-50 text-[#103F7C]",
-        },
-      ],
-    },
-    {
-      label: "Treatements",
-      dropdown: true,
-      isMegaMenu: true,
-      megaMenuColumns: [
-        {
-          title: "Urological Conditions",
-          icon: Activity,
-          iconBg: "bg-cyan-50 text-cyan-600 border border-cyan-100",
-          items: [
-            { label: "Kidney Stones", href: "/conditions/kidney-stone", icon: Stethoscope, iconBg: "bg-cyan-50 text-cyan-600" },
-            { label: "Urinary Tract Infections (UTIs)", href: "/female/uti", icon: Thermometer, iconBg: "bg-blue-50 text-blue-600" },
-            { label: "Enlarged Prostate (BPH)", href: "/conditions/prostate", icon: Activity, iconBg: "bg-orange-50 text-orange-600" },
-            { label: "Prostate Disorders", href: "/male/prostate", icon: ShieldAlert, iconBg: "bg-indigo-50 text-indigo-600" },
-            { label: "Urethral Stricture", href: "/conditions/urethral-stricture", icon: Scissors, iconBg: "bg-teal-50 text-teal-600" },
-            { label: "Urinary Incontinence", href: "/female/incontinence", icon: Droplets, iconBg: "bg-sky-50 text-sky-600" },
-            { label: "Overactive Bladder", href: "/female/overactive-bladder", icon: Zap, iconBg: "bg-amber-50 text-amber-600" },
-            { label: "Bladder Disorders", href: "/conditions/bladder-stone", icon: Activity, iconBg: "bg-cyan-50 text-cyan-600" },
-            { label: "Blood in Urine (Hematuria)", href: "/conditions/hematuria", icon: HeartPulse, iconBg: "bg-rose-50 text-rose-600" },
-            { label: "Recurrent UTI", href: "/female/nocturia", icon: RefreshCw, iconBg: "bg-purple-50 text-purple-600" },
-          ],
-        },
-        {
-          title: "Andrological Conditions",
-          icon: Users,
-          iconBg: "bg-blue-50 text-blue-600 border border-blue-100",
-          items: [
-            { label: "Erectile Dysfunction", href: "/andrology/erectile-dysfunction", icon: Sparkles, iconBg: "bg-blue-50 text-blue-600" },
-            { label: "Premature Ejaculation", href: "/andrology/premature-ejaculation", icon: Clock, iconBg: "bg-orange-50 text-orange-600" },
-            { label: "Male Infertility", href: "/andrology/male-infertility", icon: Users, iconBg: "bg-indigo-50 text-indigo-600" },
-            { label: "Varicocele", href: "/male/varicocele", icon: Activity, iconBg: "bg-cyan-50 text-cyan-600" },
-            { label: "Hydrocele", href: "/conditions/hydrocele", icon: Droplets, iconBg: "bg-teal-50 text-teal-600" },
-            { label: "Peyronie's Disease", href: "/male/peyronies-disease", icon: ShieldAlert, iconBg: "bg-rose-50 text-rose-600" },
-            { label: "Low Testosterone", href: "/male/hypogonadism", icon: TrendingDown, iconBg: "bg-amber-50 text-amber-600" },
-            { label: "Male Sexual Disorders", href: "/male/impotency", icon: HeartPulse, iconBg: "bg-blue-50 text-blue-600" },
-            { label: "Testicular Disorders", href: "/conditions/testicular-disorders", icon: Stethoscope, iconBg: "bg-violet-50 text-violet-600" },
-            { label: "Chronic Testicular Pain", href: "/conditions/chronic-testicular-pain", icon: AlertCircle, iconBg: "bg-orange-50 text-orange-600" },
-          ],
-        },
-        {
-          title: "Kidney & Renal Transplant Conditions",
-          icon: HeartPulse,
-          iconBg: "bg-emerald-50 text-emerald-600 border border-emerald-100",
-          items: [
-            { label: "End-Stage Kidney Disease", href: "/services/nephrology", icon: ShieldAlert, iconBg: "bg-emerald-50 text-emerald-600" },
-            { label: "Kidney Failure Requiring Transplant", href: "/services/renal-transplant", icon: Activity, iconBg: "bg-teal-50 text-teal-600" },
-            { label: "Kidney Transplant Evaluation", href: "/conditions/kidney-transplant-eval", icon: ClipboardCheck, iconBg: "bg-blue-50 text-blue-600" },
-            { label: "Living Donor Kidney Transplant", href: "/conditions/living-donor-transplant", icon: HeartPulse, iconBg: "bg-rose-50 text-rose-600" },
-            { label: "Deceased Donor Kidney Transplant", href: "/conditions/deceased-donor-transplant", icon: Building2, iconBg: "bg-indigo-50 text-indigo-600" },
-            { label: "Post-Transplant Urological Complications", href: "/conditions/post-transplant-care", icon: Stethoscope, iconBg: "bg-amber-50 text-amber-600" },
-          ],
-        },
-        {
-          title: "Paediatric Urological Conditions",
-          icon: UserCheck,
-          iconBg: "bg-teal-50 text-teal-600 border border-teal-100",
-          items: [
-            { label: "Undescended Testis", href: "/paediatric/undescended-testis", icon: Baby, iconBg: "bg-teal-50 text-teal-600" },
-            { label: "Phimosis", href: "/paediatric/phimosis", icon: Scissors, iconBg: "bg-cyan-50 text-cyan-600" },
-            { label: "Hypospadias", href: "/paediatric/hypospadias", icon: Stethoscope, iconBg: "bg-blue-50 text-blue-600" },
-            { label: "Hydrocele", href: "/paediatric/hydrocele", icon: Droplets, iconBg: "bg-sky-50 text-sky-600" },
-            { label: "Paediatric Urinary Problems", href: "/paediatric/urinary-problems", icon: Activity, iconBg: "bg-emerald-50 text-emerald-600" },
-            { isDivider: true },
-            { label: "Prostate Cancer", href: "/cancers/prostate-cancer", icon: ShieldAlert, iconBg: "bg-rose-50 text-rose-600" },
-            { label: "Kidney Cancer", href: "/cancers/kidney-cancer", icon: Target, iconBg: "bg-red-50 text-red-600" },
-            { label: "Bladder Cancer", href: "/cancers/bladder-cancer", icon: Activity, iconBg: "bg-pink-50 text-pink-600" },
-            { label: "Testicular Cancer", href: "/cancers/testicular-cancer", icon: Stethoscope, iconBg: "bg-orange-50 text-orange-600" },
-          ],
-        },
-      ],
-    },
-    {
-      label: "Urology Guide",
-      dropdown: true,
-      isUrologyGuide: true,
-      alignRight: true,
-      guideColumns: [
-        {
-          title: "Male Urology Guide",
-          icon: Users,
-          iconBg: "bg-blue-50 text-[#103F7C] border border-blue-100",
-          items: [
-            { label: "Prostate Surgery", desc: "Minimally Invasive Holep/TURP", href: "/male/prostate", icon: Scissors, iconBg: "bg-[#103F7C] text-white" },
-            { label: "Kidney Stone Surgery", desc: "URSL, RIRS & PCNL Solutions", href: "/male/kidney", icon: Stethoscope, iconBg: "bg-orange-50 text-orange-600" },
-            { label: "Varicocele Repair Surgery", desc: "Microscopic Varicocelectomy", href: "/male/varicocele", icon: Activity, iconBg: "bg-blue-50 text-[#103F7C]" },
-            { label: "Hypogonadism (Low T)", desc: "Hormonal & TRT Therapy", href: "/male/hypogonadism", icon: HeartPulse, iconBg: "bg-orange-50 text-orange-600" },
-            { label: "Erectile Dysfunction", desc: "Advanced Shockwave & Penile Care", href: "/male/erectile-dysfunction", icon: Sparkles, iconBg: "bg-blue-50 text-[#103F7C]" },
-            { label: "Peyronie's Disease", desc: "Plaque & Curvature Treatment", href: "/male/peyronies-disease", icon: ShieldAlert, iconBg: "bg-orange-50 text-orange-600" },
-            { label: "Male Infertility", desc: "Micro-TESE & Sperm Quality Care", href: "/male/male-infertility", icon: Users, iconBg: "bg-blue-50 text-[#103F7C]" },
-            { label: "Penile Curvature Repair", desc: "Congenital & Reconstructive Repair", href: "/male/penile-curvature", icon: Activity, iconBg: "bg-orange-50 text-orange-600" },
-          ],
-        },
-        {
-          title: "Female Urology Guide",
-          icon: HeartPulse,
-          iconBg: "bg-orange-50 text-orange-600 border border-orange-100",
-          items: [
-            { label: "Recurrent UTI Care", desc: "Recurrent Infection Management", href: "/female/uti", icon: Thermometer, iconBg: "bg-orange-50 text-orange-600" },
-            { label: "Urinary Incontinence", desc: "TVT/TOT Sling & Reconstruction", href: "/female/incontinence", icon: Droplets, iconBg: "bg-blue-50 text-[#103F7C]" },
-            { label: "Overactive Bladder", desc: "OAB Urgency & Bladder Therapy", href: "/female/overactive-bladder", icon: Activity, iconBg: "bg-orange-50 text-orange-600" },
-            { label: "Cystocele & Prolapse", desc: "Pelvic Organ Repair Surgery", href: "/female/cystocele", icon: ShieldAlert, iconBg: "bg-blue-50 text-[#103F7C]" },
-            { label: "Voiding Difficulties", desc: "Hesitancy & Flow Management", href: "/female/voiding-difficulties", icon: Clock, iconBg: "bg-orange-50 text-orange-600" },
-            { label: "VVF Fistula Repair", desc: "Vesicovaginal Reconstruction", href: "/female/vvf-repair", icon: Stethoscope, iconBg: "bg-orange-50 text-orange-600" },
-          ],
-        },
-      ],
-    },
-    {
-      label: "Gallery",
-      href: "/gallery",
-    },
-    {
-      label: "Contact",
-      href: "/contact",
-    },
-  ];
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-sans">
@@ -734,3 +759,5 @@ export default function Navbar() {
     </header>
   );
 }
+
+export default React.memo(Navbar);

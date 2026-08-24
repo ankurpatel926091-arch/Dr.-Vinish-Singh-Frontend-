@@ -3,7 +3,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 
-export default function CategoryMenuCard({
+function CategoryMenuCard({
   title,
   icon: Icon,
   iconBg = "bg-blue-50 text-blue-600 border border-blue-100",
@@ -101,3 +101,6 @@ export default function CategoryMenuCard({
     </motion.div>
   );
 }
+
+export default React.memo(CategoryMenuCard);
+

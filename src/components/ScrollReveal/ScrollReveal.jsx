@@ -36,20 +36,29 @@ const variantsMap = {
   },
 };
 
-export default function ScrollReveal({
+const motionCompMap = {
+  div: motion.div,
+  section: motion.section,
+  article: motion.article,
+  span: motion.span,
+  li: motion.li,
+  ul: motion.ul,
+};
+
+function ScrollReveal({
   children,
-  variant = "fade-up", // 'fade-up' | 'fade-down' | 'fade-in' | 'scale-up' | 'slide-left' | 'slide-right'
-  delay = 0, // Delay in milliseconds
-  duration = 700, // Duration in milliseconds
-  threshold = 0.1, // Viewport intersection threshold
-  once = true, // Whether animation triggers once or every scroll
+  variant = "fade-up",
+  delay = 0,
+  duration = 700,
+  threshold = 0.1,
+  once = true,
   className = "",
   as: Component = "div",
   style = {},
   ...props
 }) {
   const selectedVariant = variantsMap[variant] || variantsMap["fade-up"];
-  const MotionComponent = motion[Component] || motion.div;
+  const MotionComponent = motionCompMap[Component] || motion.div;
 
   return (
     <MotionComponent
@@ -60,7 +69,7 @@ export default function ScrollReveal({
       transition={{
         duration: duration / 1000,
         delay: delay / 1000,
-        ease: [0.16, 1, 0.3, 1], // Fluid spring curve
+        ease: [0.16, 1, 0.3, 1],
       }}
       className={className}
       style={style}
@@ -70,6 +79,9 @@ export default function ScrollReveal({
     </MotionComponent>
   );
 }
+
+export default React.memo(ScrollReveal);
+
 
 /**
  * ScrollRevealContainer Helper Component

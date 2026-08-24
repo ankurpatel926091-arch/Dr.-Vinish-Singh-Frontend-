@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import banner1 from "../../assets/banner-1.jpg";
 import banner2 from "../../assets/banner-2.jpg";
@@ -11,8 +11,6 @@ const NAVY = "#0B3B7A";
 const ORANGE = "#F5821F";
 
 // Just drop your full banner image path here for each slide.
-// title/subtitle are optional — leave them out if you don't want any
-// text overlay at all, the image will still show full-bleed.
 const slides = [
   { image: banner2, title: "", subtitle: "" },
   { image: banner3, title: "", subtitle: "" },
@@ -22,7 +20,7 @@ const slides = [
 
 const AUTOPLAY_MS = 3000;
 
-export default function HeroSlider() {
+function HeroSlider() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const timerRef = useRef(null);
@@ -58,6 +56,9 @@ export default function HeroSlider() {
             <img
               src={slide.image}
               alt={slide.title || `Slide ${i + 1}`}
+              loading={i === 0 ? "eager" : "lazy"}
+              fetchPriority={i === 0 ? "high" : "low"}
+              decoding="async"
               className="w-full h-full object-fill object-center"
             />
 
@@ -119,3 +120,5 @@ export default function HeroSlider() {
     </section>
   );
 }
+
+export default React.memo(HeroSlider);

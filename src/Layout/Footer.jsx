@@ -1,3 +1,4 @@
+import React from "react";
 import {
   FaPhoneAlt,
   FaMapMarkerAlt,
@@ -36,7 +37,7 @@ const conditions = [
   { name: "Recurrent Female UTI", path: "/female/uti" },
 ];
 
-export default function Footer() {
+function Footer() {
   const year = new Date().getFullYear();
 
   return (
@@ -58,15 +59,12 @@ export default function Footer() {
                 />
               </div>
             </Link>
-
-            <div className="h-0.5 w-8 bg-orange-500 rounded-full mb-2.5" />
-
-            <p className="text-xs sm:text-sm text-blue-100/85 leading-relaxed font-medium mb-4 max-w-[270px]">
-              Providing expert diagnosis and advanced laser surgical care for urology, endourology, and kidney transplant care across 2 specialized hospital centres in Lucknow.
+            
+            <p className="text-xs text-blue-100/90 leading-relaxed font-normal mb-3 text-justify">
+              Dr. Vinish Kumar Singh is a leading Senior Consultant Urologist, Andrologist, and Kidney Transplant Surgeon in Lucknow with over 15+ years of surgical excellence.
             </p>
-
-            {/* Social Links Bar */}
-            <div className="flex items-center gap-2 flex-wrap">
+            {/* Social Media Links */}
+            <div className="flex items-center gap-2">
               {[
                 {
                   icon: FaFacebookF,
@@ -103,9 +101,9 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     aria-label={item.label}
                     title={item.label}
-                    className="w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center bg-white/10 hover:bg-[#F5821F] text-white border border-white/15 transition-all duration-300 hover:scale-110 shadow-sm"
+                    className="w-8 h-8 rounded-lg bg-white/10 hover:bg-[#F5821F] text-white flex items-center justify-center transition-all duration-300 hover:scale-105 shadow-sm"
                   >
-                    <IconComp size={19} />
+                    <IconComp size={15} />
                   </a>
                 );
               })}
@@ -324,3 +322,5 @@ export default function Footer() {
     </footer>
   );
 }
+
+export default React.memo(Footer);
