@@ -180,20 +180,22 @@ export default function Gallery() {
               const json = await res.json();
               if (json && json.success && Array.isArray(json.data) && json.data.length > 0) {
                 const apiItems = json.data
-                  .filter((item) => {
-                    if (isOnlineProd && typeof item.url === "string" && item.url.includes("localhost:5000")) {
-                      return false; // Exclude local dev-only localhost URLs on production Vercel
-                    }
-                    return true;
-                  })
                   .map((item) => {
                     let mediaUrl = item.url;
                     if (typeof mediaUrl === 'string') {
-                      if (mediaUrl.startsWith('/uploads/') || mediaUrl.startsWith('uploads/')) {
+                      if (mediaUrl.includes('localhost:5000') || mediaUrl.includes('127.0.0.1:5000')) {
+                        if (isOnlineProd) {
+                          const cleanPath = mediaUrl.replace(/^https?:\/\/(localhost|127\.0\.0\.1):5000/, '');
+                          const pathWithSlash = cleanPath.startsWith('/') ? cleanPath : `/${cleanPath}`;
+                          mediaUrl = `https://dr-vinish-backend.onrender.com${pathWithSlash}`;
+                        }
+                      } else if (mediaUrl.startsWith('/uploads/') || mediaUrl.startsWith('uploads/')) {
                         const cleanPath = mediaUrl.startsWith('/') ? mediaUrl : `/${mediaUrl}`;
                         mediaUrl = `${baseUrl.replace(/\/api$/, '')}${cleanPath}`;
-                      } else if (mediaUrl.startsWith('http://') && !mediaUrl.includes('localhost') && !mediaUrl.includes('127.0.0.1')) {
-                        mediaUrl = mediaUrl.replace('http://', 'https://');
+                      } else if (mediaUrl.startsWith('http://')) {
+                        if (isOnlineProd) {
+                          mediaUrl = mediaUrl.replace('http://', 'https://');
+                        }
                       }
                     }
                     return {
