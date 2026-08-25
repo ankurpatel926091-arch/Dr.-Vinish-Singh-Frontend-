@@ -264,13 +264,16 @@ function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 font-sans">
       {/* Top Banner / Contact Bar */}
-      <div className="bg-[#103F7C] text-white py-1.5 text-xs font-medium border-b border-blue-900/40">
+      <div className="bg-[#103F7C] text-white py-1 text-xs font-medium border-b border-blue-900/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between">
           <div className="flex items-center gap-4 sm:gap-6 text-[11px] sm:text-xs">
-            <span className="flex items-center gap-1.5 font-semibold">
+            <a
+              href="tel:+917275981480"
+              className="flex items-center gap-1.5 font-semibold hover:text-orange-300 transition-colors"
+            >
               <Phone size={13} className="text-orange-400" />
-              <span>+91 72759 81480</span>
-            </span>
+              <span>Call +91 72759 81480</span>
+            </a>
             <span className="hidden sm:flex items-center gap-1.5">
               <Clock size={13} className="text-orange-400" />
               <span>Mon - Sat: 10:00 AM - 6:00 PM</span>
@@ -281,9 +284,9 @@ function Navbar() {
               href="https://wa.me/917275981480?text=Hello%20Dr.%20Vinish%20Kumar%20Singh%2C%20I%20would%20like%20to%20inquire%20about%20an%20OPD%20appointment."
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 bg-gradient-to-r from-[#25D366] via-[#20bd5a] to-[#128C7E] hover:from-[#20bd5a] hover:to-[#0e776a] text-white px-3 py-1 rounded-full text-[11px] font-extrabold shadow-sm hover:shadow-emerald-500/30 transition-all duration-300 hover:scale-105 active:scale-95 group border border-white/20"
+              className="inline-flex items-center justify-center gap-1.5 px-3.5 sm:px-4 py-1 text-xs font-extrabold bg-gradient-to-r from-[#25D366] via-[#20bd5a] to-[#128C7E] hover:from-[#20bd5a] hover:to-[#0e776a] text-white rounded-full shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] group border border-white/20 whitespace-nowrap cursor-pointer"
             >
-              <FaWhatsapp size={14} className="text-white group-hover:rotate-12 transition-transform duration-300 shrink-0" />
+              <FaWhatsapp size={15} className="text-white group-hover:rotate-12 transition-transform duration-300 shrink-0" />
               <span>WhatsApp Us</span>
             </a>
           </div>
@@ -385,9 +388,6 @@ function Navbar() {
                         {item.isMegaMenu ? (
                           /* ================= 4-COLUMN MEGA MENU (Conditions Treated) ================= */
                           <div className="w-full rounded-3xl bg-white p-4 lg:p-5 shadow-[0_25px_60px_-15px_rgba(16,63,124,0.2)] border border-slate-200 ring-1 ring-slate-900/5">
-                            {/* Top Accent Gradient Line */}
-                            <div className="h-1.5 w-20 bg-gradient-to-r from-[#103F7C] via-blue-600 to-orange-500 rounded-full mb-3 ml-1" />
-
                             {/* 4-Column Grid Layout with Column Card Containers */}
                             <div className="grid grid-cols-4 gap-3 lg:gap-4">
                               {item.megaMenuColumns.map((col, cIdx) => (
@@ -405,64 +405,105 @@ function Navbar() {
                           </div>
                         ) : item.isUrologyGuide ? (
                           /* ================= 2-COLUMN UROLOGY GUIDE MENU ================= */
-                          <div className="w-[700px] lg:w-[780px] rounded-3xl bg-white p-4 lg:p-5 shadow-[0_25px_60px_-15px_rgba(16,63,124,0.2)] border border-slate-200 ring-1 ring-slate-900/5">
-                            {/* Top Accent Line */}
-                            <div className="h-1.5 w-20 bg-gradient-to-r from-[#103F7C] via-blue-600 to-orange-500 rounded-full mb-3 ml-1" />
-
-                            {/* 2-Column Grid: Male Urology Guide & Female Urology Guide */}
-                            <div className="grid grid-cols-2 gap-3.5">
-                              {item.guideColumns.map((col, cIdx) => {
-                                const ColIcon = col.icon;
-                                return (
-                                  <div key={cIdx} className="bg-slate-50/70 rounded-2xl p-3 border border-slate-200/70 flex flex-col space-y-2">
-                                    {/* Column Header Card */}
-                                    <div className="flex items-center justify-between pb-2 border-b border-slate-200/60">
-                                      <h4 className="font-extrabold text-[#103F7C] text-[13.5px] xl:text-[14px]">
-                                        {col.title}
-                                      </h4>
-                                      <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 border border-slate-200/60 ${col.iconBg}`}>
-                                        <ColIcon size={14} />
-                                      </div>
-                                    </div>
-
-                                    {/* Column List Items */}
-                                    <div className="space-y-1">
-                                      {col.items.map((sub, sIdx) => {
-                                        const SubIcon = sub.icon;
-                                        return (
-                                          <NavLink
-                                            key={sIdx}
-                                            to={sub.href}
-                                            onClick={closeAllMenus}
-                                            className={({ isActive }) =>
-                                              `group/item flex items-center gap-2.5 p-2 rounded-xl transition-all duration-200 ${
-                                                isActive
-                                                  ? "bg-white text-[#103F7C] font-semibold shadow-2xs border border-blue-200/80"
-                                                  : "hover:bg-white hover:shadow-2xs border border-transparent hover:border-slate-200/80 text-slate-800 hover:text-[#103F7C]"
-                                              }`
-                                            }
-                                          >
-                                            <div className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-transform group-hover/item:scale-105 ${sub.iconBg}`}>
-                                              <SubIcon size={14} />
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                              <div className="text-[12.5px] xl:text-[13px] font-bold text-slate-900 group-hover/item:text-[#103F7C] leading-tight truncate">
-                                                {sub.label}
-                                              </div>
-                                              {sub.desc && (
-                                                <div className="text-[10px] font-medium text-slate-500 group-hover/item:text-slate-600 leading-none mt-0.5 truncate">
-                                                  {sub.desc}
-                                                </div>
-                                              )}
-                                            </div>
-                                            <ChevronRight size={13} className="text-slate-300 group-hover/item:text-orange-500 transition-colors shrink-0 group-hover/item:translate-x-0.5" />
-                                          </NavLink>
-                                        );
-                                      })}
-                                    </div>
+                          <div className="w-[1060px] xl:w-[1140px] max-w-[95vw] rounded-3xl bg-white p-4 lg:p-5 shadow-[0_25px_60px_-15px_rgba(16,63,124,0.2)] border border-slate-200 ring-1 ring-slate-900/5">
+                            <div className="grid grid-cols-12 gap-4 lg:gap-5">
+                              {/* Left Card: Male Urology Guide (Col Span 7 - 2 Column Subgrid: 4 Left, 4 Right) */}
+                              <div className="col-span-7 bg-slate-50/70 rounded-2xl p-3.5 sm:p-4 border border-slate-200/70 flex flex-col space-y-3">
+                                {/* Card Header */}
+                                <div className="flex items-center justify-between pb-2.5 border-b border-slate-200/60">
+                                  <h4 className="font-extrabold text-[#103F7C] text-[15px] sm:text-[16px] xl:text-[17px] tracking-tight">
+                                    {item.guideColumns[0].title}
+                                  </h4>
+                                  <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 border border-slate-200/60 ${item.guideColumns[0].iconBg}`}>
+                                    <Users size={16} />
                                   </div>
-                                );
-                              })}
+                                </div>
+
+                                {/* 2-Column Subgrid (4 Left Side, 4 Right Side) */}
+                                <div className="grid grid-cols-2 gap-2.5">
+                                  {item.guideColumns[0].items.map((sub, sIdx) => {
+                                    const SubIcon = sub.icon;
+                                    return (
+                                      <NavLink
+                                        key={sIdx}
+                                        to={sub.href}
+                                        onClick={closeAllMenus}
+                                        className={({ isActive }) =>
+                                          `group/item flex items-center gap-2.5 p-2.5 rounded-xl transition-all duration-200 border ${
+                                            isActive
+                                              ? "bg-white text-[#103F7C] font-semibold shadow-xs border-blue-300 ring-1 ring-blue-500/10"
+                                              : "bg-white hover:shadow-xs border border-slate-200/80 hover:border-blue-200 text-slate-800 hover:text-[#103F7C]"
+                                          }`
+                                        }
+                                      >
+                                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-transform duration-200 group-hover/item:scale-105 ${sub.iconBg}`}>
+                                          <SubIcon size={15} />
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                          <div className="text-[12.5px] xl:text-[13px] font-extrabold text-slate-900 group-hover/item:text-[#103F7C] leading-tight truncate">
+                                            {sub.label}
+                                          </div>
+                                          {sub.desc && (
+                                            <div className="text-[10px] font-medium text-slate-500 group-hover/item:text-slate-600 leading-none mt-0.5 truncate">
+                                              {sub.desc}
+                                            </div>
+                                          )}
+                                        </div>
+                                        <ChevronRight size={13} className="text-slate-300 group-hover/item:text-orange-500 transition-colors shrink-0 group-hover/item:translate-x-0.5" />
+                                      </NavLink>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+
+                              {/* Right Card: Female Urology Guide (Col Span 5 - 1 Column Stacked List) */}
+                              <div className="col-span-5 bg-slate-50/70 rounded-2xl p-3.5 sm:p-4 border border-slate-200/70 flex flex-col space-y-3">
+                                {/* Card Header */}
+                                <div className="flex items-center justify-between pb-2.5 border-b border-slate-200/60">
+                                  <h4 className="font-extrabold text-[#103F7C] text-[15px] sm:text-[16px] xl:text-[17px] tracking-tight">
+                                    {item.guideColumns[1].title}
+                                  </h4>
+                                  <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 border border-slate-200/60 ${item.guideColumns[1].iconBg}`}>
+                                    <HeartPulse size={16} />
+                                  </div>
+                                </div>
+
+                                {/* Stacked List of 6 Items */}
+                                <div className="space-y-1.5 flex-1 flex flex-col justify-between">
+                                  {item.guideColumns[1].items.map((sub, sIdx) => {
+                                    const SubIcon = sub.icon;
+                                    return (
+                                      <NavLink
+                                        key={sIdx}
+                                        to={sub.href}
+                                        onClick={closeAllMenus}
+                                        className={({ isActive }) =>
+                                          `group/item flex items-center gap-2.5 p-2.5 rounded-xl transition-all duration-200 border ${
+                                            isActive
+                                              ? "bg-white text-[#103F7C] font-semibold shadow-xs border-blue-300 ring-1 ring-blue-500/10"
+                                              : "bg-white hover:shadow-xs border border-slate-200/80 hover:border-blue-200 text-slate-800 hover:text-[#103F7C]"
+                                          }`
+                                        }
+                                      >
+                                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-transform duration-200 group-hover/item:scale-105 ${sub.iconBg}`}>
+                                          <SubIcon size={15} />
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                          <div className="text-[12.5px] xl:text-[13px] font-extrabold text-slate-900 group-hover/item:text-[#103F7C] leading-tight truncate">
+                                            {sub.label}
+                                          </div>
+                                          {sub.desc && (
+                                            <div className="text-[10px] font-medium text-slate-500 group-hover/item:text-slate-600 leading-none mt-0.5 truncate">
+                                              {sub.desc}
+                                            </div>
+                                          )}
+                                        </div>
+                                        <ChevronRight size={13} className="text-slate-300 group-hover/item:text-orange-500 transition-colors shrink-0 group-hover/item:translate-x-0.5" />
+                                      </NavLink>
+                                    );
+                                  })}
+                                </div>
+                              </div>
                             </div>
                           </div>
                         ) : (
@@ -474,8 +515,6 @@ function Navbar() {
                                 : "w-[310px]"
                             }`}
                           >
-                            {/* Gradient Accent Bar */}
-                            <div className="h-1 w-12 bg-gradient-to-r from-[#103F7C] to-orange-500 rounded-full mb-2.5 ml-1" />
 
                             <div
                               className={`${
@@ -549,14 +588,16 @@ function Navbar() {
               })}
             </nav>
 
-            {/* ================= CTA Button ================= */}
-            <div className="nav-desktop-container flex-shrink-0">
+            {/* ================= CTA Buttons ================= */}
+            <div className="nav-desktop-container items-center gap-3.5 lg:gap-5 flex-shrink-0">
+            
+
               <a
                 href="/#book-appointment"
                 onClick={handleBookAppointmentClick}
-                className="flex items-center gap-2 px-3.5 lg:px-4 xl:px-5 py-2 lg:py-2.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-sm lg:text-[14.5px] 2xl:text-base font-extrabold shadow-md hover:shadow-lg shadow-orange-500/20 transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] whitespace-nowrap cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-5 lg:px-6 h-10 lg:h-11 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-sm lg:text-[14.5px] font-extrabold shadow-md hover:shadow-lg shadow-orange-500/20 transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] whitespace-nowrap cursor-pointer"
               >
-                <Calendar size={16} />
+                <Calendar size={18} />
                 <span>Book Appointment</span>
               </a>
             </div>

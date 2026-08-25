@@ -203,7 +203,7 @@ export default function ServicesSection() {
                     className="font-bold text-orange-600 hover:underline inline-flex items-center gap-1"
                   >
                     Rudraksh IVF &amp; Urology Centre
-                    <MapPin size={13} className="text-orange-500 shrink-0 inline" />
+                    {/* <MapPin size={13} className="text-orange-500 shrink-0 inline" /> */}
                   </a>{" "}
                   &amp;{" "}
                   <a
@@ -213,7 +213,7 @@ export default function ServicesSection() {
                     className="font-bold text-[#103F7C] hover:underline inline-flex items-center gap-1"
                   >
                     Dr. Shilpi Maternity &amp; Urology Centre
-                    <MapPin size={13} className="text-[#103F7C] shrink-0 inline" />
+                    {/* <MapPin size={13} className="text-[#103F7C] shrink-0 inline" /> */}
                   </a>{" "}
                   in Lucknow.
                 </p>

@@ -261,25 +261,25 @@ export default function WhyChooseUs() {
               <div className="p-3">
                 <h4 className="text-3xl sm:text-4xl font-extrabold text-orange-400">15+</h4>
                 <p className="text-xs sm:text-sm text-blue-100 mt-1 font-semibold">Years Clinical Practice</p>
-                <p className="text-[11px] text-blue-200/80 mt-0.5">Senior Urologist Lucknow</p>
+                <p className="text-[12px] text-blue-200/80 mt-0.5">Senior Urologist Lucknow</p>
               </div>
 
               <div className="p-3 border-l border-white/15">
                 <h4 className="text-3xl sm:text-4xl font-extrabold text-orange-400">5000+</h4>
                 <p className="text-xs sm:text-sm text-blue-100 mt-1 font-semibold">Laser Procedures</p>
-                <p className="text-[11px] text-blue-200/80 mt-0.5">RIRS, HoLEP &amp; PCNL</p>
+                <p className="text-[12px] text-blue-200/80 mt-0.5">RIRS, HoLEP &amp; PCNL</p>
               </div>
 
               <div className="p-3 border-l border-white/15">
                 <h4 className="text-3xl sm:text-4xl font-extrabold text-orange-400">2</h4>
                 <p className="text-xs sm:text-sm text-blue-100 mt-1 font-semibold">Lucknow OPD Centres</p>
-                <p className="text-[11px] text-blue-200/80 mt-0.5">Sharda Nagar &amp; Ring Road</p>
+                <p className="text-[12px] text-blue-200/80 mt-0.5">Sharda Nagar &amp; Ring Road</p>
               </div>
 
               <div className="p-3 border-l border-white/15">
                 <h4 className="text-3xl sm:text-4xl font-extrabold text-orange-400">98%</h4>
                 <p className="text-xs sm:text-sm text-blue-100 mt-1 font-semibold">Patient Satisfaction</p>
-                <p className="text-[11px] text-blue-200/80 mt-0.5">Ethical &amp; Transparent</p>
+                <p className="text-[12px] text-blue-200/80 mt-0.5">Ethical &amp; Transparent</p>
               </div>
             </div>
 

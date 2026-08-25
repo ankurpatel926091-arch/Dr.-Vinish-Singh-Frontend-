@@ -98,9 +98,9 @@ function FloatingActions() {
           href="tel:+917275981480"
           aria-label="Call Doctor"
           title="Call Doctor"
-          className="w-8.5 h-8.5 sm:w-12 sm:h-12 rounded-full bg-[#FF2D75] hover:bg-[#e01b63] text-white flex items-center justify-center shadow-md shadow-pink-500/20 transition-all duration-300 hover:scale-110 active:scale-95"
+          className="w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-[#FF2D75] hover:bg-[#e01b63] text-white flex items-center justify-center shadow-md shadow-pink-500/20 transition-all duration-300 hover:scale-110 active:scale-95"
         >
-          <FaPhoneAlt className="text-xs sm:text-base" />
+          <FaPhoneAlt className="text-xl sm:text-2xl" />
         </a>
       </div>
 
@@ -115,10 +115,10 @@ function FloatingActions() {
           rel="noopener noreferrer"
           aria-label="Chat on WhatsApp"
           title="Chat on WhatsApp"
-          className="relative w-8.5 h-8.5 sm:w-12 sm:h-12 rounded-full bg-gradient-to-tr from-[#128C7E] via-[#25D366] to-[#20bd5a] text-white flex items-center justify-center shadow-lg shadow-emerald-500/30 transition-all duration-300 hover:scale-110 active:scale-95 border border-white/20"
+          className="relative w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-gradient-to-tr from-[#128C7E] via-[#25D366] to-[#20bd5a] text-white flex items-center justify-center shadow-lg shadow-emerald-500/30 transition-all duration-300 hover:scale-110 active:scale-95 border border-white/20"
         >
           <span className="absolute -inset-1 rounded-full bg-[#25D366]/35 animate-ping pointer-events-none" style={{ animationDuration: "2.5s" }} />
-          <FaWhatsapp className="relative z-10 text-base sm:text-2xl drop-shadow-xs" />
+          <FaWhatsapp className="relative z-10 text-[28px] sm:text-3xl drop-shadow-xs" />
         </a>
       </div>
 
@@ -159,9 +159,9 @@ function FloatingActions() {
           }}
           aria-label="Book Appointment"
           title="Book Appointment"
-          className="w-8.5 h-8.5 sm:w-12 sm:h-12 rounded-full bg-[#00A8E8] hover:bg-[#0092c9] text-white flex items-center justify-center shadow-md shadow-sky-500/20 transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
+          className="w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-[#00A8E8] hover:bg-[#0092c9] text-white flex items-center justify-center shadow-md shadow-sky-500/20 transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
         >
-          <FaCalendarAlt className="text-xs sm:text-base" />
+          <FaCalendarAlt className="text-xl sm:text-2xl" />
         </NavLink>
       </div>
 
@@ -172,13 +172,13 @@ function FloatingActions() {
           onClick={scrollToTop}
           aria-label="Scroll to top"
           title="Scroll to Top"
-          className="relative w-8.5 h-8.5 sm:w-12 sm:h-12 rounded-full bg-white text-[#FF2D75] shadow-md flex items-center justify-center transition-transform duration-300 hover:scale-110 active:scale-95 group"
+          className="relative w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-white text-[#FF2D75] shadow-md flex items-center justify-center transition-transform duration-300 hover:scale-110 active:scale-95 group"
         >
           <span
             className="absolute -inset-0.5 rounded-full border border-dashed border-[#FF2D75] animate-spin pointer-events-none"
             style={{ animationDuration: "10s" }}
           />
-          <FaChevronUp className="relative z-10 text-xs sm:text-sm transition-transform group-hover:-translate-y-0.5" />
+          <FaChevronUp className="relative z-10 text-lg sm:text-xl transition-transform group-hover:-translate-y-0.5" />
         </button>
       )}
 

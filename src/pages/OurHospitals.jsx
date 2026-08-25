@@ -53,7 +53,7 @@ const hospitalData = [
     type: "Morning OPD",
     badgeColor: "bg-orange-50 text-orange-600 border-orange-200",
     headerGradient: "from-orange-500/10 via-amber-500/5 to-transparent",
-    timing: "10:00 AM - 01:00 PM",
+    timing: "10:00 AM - 03:00 PM",
     phone: "+91 89600 68307",
     phoneRaw: "tel:8960068307",
     address:

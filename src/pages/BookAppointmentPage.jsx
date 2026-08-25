@@ -16,16 +16,15 @@ import {
   Calendar,
   ChevronDown,
 } from "lucide-react";
-import { WEB3FORMS_ACCESS_KEY, WEB3FORMS_ENDPOINT } from "../config/web3forms";
 import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
 
 const hospitalDetails = {
   morning: {
     key: "morning",
     name: "Rudraksh IVF & Urology Centre",
-    fullOption: "Morning OPD: Rudraksh IVF & Urology Centre (Sharda Nagar, 10 AM - 01 PM)",
+    fullOption: "Morning OPD: Rudraksh IVF & Urology Centre (Sharda Nagar, 10 AM - 03 PM)",
     badge: "MORNING CONSULTATION CENTRE",
-    timing: "10:00 AM – 01:00 PM",
+    timing: "10:00 AM – 03:00 PM",
     location: "1/795, Ratan Khand, Sharda Nagar, Lucknow",
     phone: "+91 89600 68307",
     mapUrl: "https://maps.app.goo.gl/jbynbpoL5PcKca4Z9",
@@ -35,7 +34,7 @@ const hospitalDetails = {
     name: "Dr. Shilpi Maternity & Urology Centre",
     fullOption: "Evening OPD: Dr. Shilpi Maternity & Urology Centre (Pakkabag, 03 PM - 06 PM)",
     badge: "EVENING CONSULTATION CENTRE",
-    timing: "03:00 PM – 06:00 PM",
+    timing: "03:00 PM – 07:00 PM",
     location: "596Pb/1114/03, Ring Rd, Pakkabag, Lucknow",
     phone: "+91 86048 91955",
     mapUrl: "https://maps.app.goo.gl/w9mqio5fe4Hj8KLm9",
@@ -79,6 +78,10 @@ const timeSlots = {
     "12:00 PM",
     "12:30 PM",
     "01:00 PM",
+    "01:30 PM",
+    "02:00 PM",
+    "02:30 PM",
+    "03:00 PM",
   ],
   evening: [
     "03:00 PM",
@@ -195,45 +198,58 @@ export default function BookAppointmentPage() {
     setErrorMessage("");
 
     try {
-      const response = await fetch(WEB3FORMS_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_ACCESS_KEY,
-          subject: `New Appointment Request - ${formData.name}`,
-          from_name: "Dr. Vinish Singh Website",
-          name: formData.name,
-          phone: formData.phone,
-          hospital: formData.hospital,
-          service: formData.service,
-          preferred_time: formData.preferredTime,
-          consultation_type: formData.consultationType,
-          message: formData.message || "N/A",
-        }),
-      });
+      const getApiUrls = () => {
+        const urls = [];
+        if (import.meta.env.VITE_API_BASE_URL) {
+          urls.push(import.meta.env.VITE_API_BASE_URL);
+        }
+        if (typeof window !== "undefined" && (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")) {
+          urls.push("http://localhost:5000/api");
+        }
+        urls.push("https://dr-vinish-backend.onrender.com/api");
+        return urls;
+      };
 
-      const data = await response.json();
+      const apiUrls = getApiUrls();
+      let savedToBackend = false;
+      const fullMessage = `Hospital: ${formData.hospital} | Preferred Time: ${formData.preferredTime} | Type: ${formData.consultationType} | Notes: ${formData.message || "N/A"}`;
 
-      if (data.success) {
-        setSubmitted(true);
-        setLastSubmittedPhone(formData.phone);
-        setFormData({
-          name: "",
-          phone: "",
-          service: activeServices[0],
-          hospital: formData.hospital,
-          preferredTime: activeTimeSlots[0],
-          consultationType: "First Visit",
-          message: "",
-        });
-      } else {
-        setErrorMessage(
-          data.message || "Failed to submit appointment request. Please try again."
-        );
+      for (const baseUrl of apiUrls) {
+        try {
+          const res = await fetch(`${baseUrl}/enquiries`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: formData.name,
+              phone: formData.phone,
+              service: formData.service || "Appointment Request",
+              subject: `Appointment: ${formData.service}`,
+              message: fullMessage,
+            }),
+          });
+
+          if (res.ok) {
+            savedToBackend = true;
+            break;
+          }
+        } catch (err) {
+          // Try next fallback URL
+        }
       }
+
+      setSubmitted(true);
+      setLastSubmittedPhone(formData.phone);
+      setFormData({
+        name: "",
+        phone: "",
+        service: activeServices[0],
+        hospital: formData.hospital,
+        preferredTime: activeTimeSlots[0],
+        consultationType: "First Visit",
+        message: "",
+      });
     } catch (err) {
       setErrorMessage(
         "Network error occurred. Please check your connection and try again."

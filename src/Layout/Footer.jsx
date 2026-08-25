@@ -185,7 +185,7 @@ function Footer() {
                     <span>Morning OPD</span>
                   </span>
                   <span className="text-xs bg-orange-500/20 px-2.5 py-0.5 rounded-full border border-orange-400/30 text-orange-300 font-bold">
-                    10 AM - 01 PM
+                    10 AM - 03 PM
                   </span>
                 </div>
 

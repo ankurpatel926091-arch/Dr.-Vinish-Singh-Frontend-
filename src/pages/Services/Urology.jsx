@@ -162,7 +162,7 @@ export default function UrologyService() {
                     <MapPin size={12} className="text-orange-500 shrink-0 inline" />
                   </a>
                 </h4>
-                <p className="text-[11px] text-slate-500 font-normal mt-0.5">10:00 AM – 01:00 PM (Sharda Nagar)</p>
+                <p className="text-[11px] text-slate-500 font-normal mt-0.5">10:00 AM – 03:00 PM (Sharda Nagar)</p>
                 <a href="tel:8960068307" className="font-extrabold text-xs text-orange-600 hover:underline block mt-2">
                   Call: +91 89600 68307
                 </a>
@@ -182,7 +182,7 @@ export default function UrologyService() {
                     <MapPin size={12} className="text-[#103F7C] shrink-0 inline" />
                   </a>
                 </h4>
-                <p className="text-[11px] text-slate-500 font-normal mt-0.5">03:00 PM – 06:00 PM (Ring Road)</p>
+                <p className="text-[11px] text-slate-500 font-normal mt-0.5">03:00 PM – 07:00 PM (Ring Road)</p>
                 <a href="tel:8604891955" className="font-extrabold text-xs text-[#103F7C] hover:underline block mt-2">
                   Call: +91 86048 91955
                 </a>

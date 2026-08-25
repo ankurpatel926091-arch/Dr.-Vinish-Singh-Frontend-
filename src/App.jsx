@@ -14,7 +14,7 @@ const App = () => {
         <ScrollProgressBar />
         <ScrollToTop />
         <Navbar />
-        <main className="relative pt-[90px] sm:pt-[98px] lg:pt-[102px] overflow-x-hidden w-full max-w-full">
+        <main className="relative pt-[102px] sm:pt-[110px] lg:pt-[118px] overflow-x-hidden w-full max-w-full">
           <AppRoutes />
         </main> 
         <FloatingActions />

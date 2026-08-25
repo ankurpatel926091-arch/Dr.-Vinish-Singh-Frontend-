@@ -56,7 +56,7 @@ export default function Hero() {
                       </h3>
                       
                       <p className="text-xs text-blue-100 font-medium mt-1">
-                        M.B.B.S., M.S., FIAGES, M.Ch (Urology)
+                        M.B.B.S. (KGMU), M.S. (General Surgery), FIAGES, M.Ch (Urology - INU Bangalore) | Associate Professor in TSM Medical College 
                       </p>
                     </div>
                   </div>

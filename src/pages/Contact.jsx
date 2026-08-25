@@ -16,7 +16,6 @@ import {
 } from "lucide-react";
 import { FaWhatsapp as FaWhatsappIcon, FaFacebookF, FaInstagram, FaLinkedinIn, FaYoutube } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { WEB3FORMS_ACCESS_KEY, WEB3FORMS_ENDPOINT } from "../config/web3forms";
 import PageHero from "../components/PageHero";
 import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
 
@@ -64,7 +63,7 @@ const hospitalLocations = [
     tag: "Evening OPD",
     title: "Dr. Shilpi Maternity & Urology Centre",
     subtitle: "Pakkabag, Ring Rd",
-    timing: "03:00 PM – 06:00 PM (Mon – Sat)",
+    timing: "03:00 PM – 07:00 PM (Mon – Sat)",
     phone: "+91 86048 91955",
     tel: "8604891955",
     address: "596Pb/1114/03, Ring Rd, Pakkabag, Lalabagh, Lucknow",
@@ -78,7 +77,7 @@ const hospitalLocations = [
     tag: "Morning OPD",
     title: "Rudraksh IVF & Urology Centre",
     subtitle: "Sharda Nagar, Lucknow",
-    timing: "10:00 AM – 01:00 PM (Mon – Sat)",
+    timing: "10:00 AM – 03:00 PM (Mon – Sat)",
     phone: "+91 89600 68307",
     tel: "8960068307",
     address: "1/795, Ratan Khand, Ruchi Khand 1, Sharda Nagar, Lucknow",
@@ -151,24 +150,6 @@ export default function Contact() {
           // Try next fallback URL
         }
       }
-
-      // Also trigger Web3Forms email notification asynchronously
-      fetch(WEB3FORMS_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_ACCESS_KEY,
-          subject: `New Contact Inquiry - ${formData.name}`,
-          from_name: "Dr. Vinish Singh Website",
-          name: formData.name,
-          phone: formData.phone,
-          service: formData.service || "General Inquiry",
-          message: formData.message || "N/A",
-        }),
-      }).catch(() => {});
 
       setSubmitted(true);
       setLastSubmittedPhone(formData.phone);
