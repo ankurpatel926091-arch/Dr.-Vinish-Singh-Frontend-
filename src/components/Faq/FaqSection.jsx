@@ -49,14 +49,14 @@ export default function FaqSection() {
         <ScrollReveal variant="fade-up" className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100/80 text-[#103F7C] text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-4 border border-blue-200/50 shadow-xs">
             <Sparkles size={14} className="text-orange-500 animate-pulse" />
-            <span>COMMON DOUBTS</span>
+            <span>PATIENT INFORMATION</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
             Frequently Asked Questions
           </h2>
           <p className="mt-3 text-sm sm:text-base text-slate-600 font-medium leading-relaxed max-w-2xl mx-auto">
-            Quick answers to common patient questions regarding urology consultations, laser procedures, and appointments.
+            Find clear answers to common questions about urological conditions, consultations, diagnostic procedures, laser treatments, surgery, recovery, and appointment scheduling.
           </p>
         </ScrollReveal>
 

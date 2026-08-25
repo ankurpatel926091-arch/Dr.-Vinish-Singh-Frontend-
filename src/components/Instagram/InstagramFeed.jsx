@@ -17,7 +17,7 @@ export default function InstagramFeed() {
           <div className="text-center md:text-left max-w-2xl">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-100/80 text-orange-600 border border-orange-200/60 text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-3">
               <FaInstagram size={15} className="text-orange-500" />
-              <span>INSTAGRAM REELS &amp; UPDATES</span>
+              <span>IUROLOGY INSIGHTS &amp; UPDATES</span>
             </div>
 
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#103F7C] tracking-tight leading-tight">
@@ -28,7 +28,7 @@ export default function InstagramFeed() {
             </h2>
 
             <p className="mt-2.5 text-sm sm:text-base text-[#103F7C] leading-relaxed font-semibold">
-              Watch patient awareness reels, laser surgery visual guides, and health tips directly from Dr. Vinish&apos;s clinic.
+              Stay informed with expert urology tips, patient-awareness videos, treatment insights, and updates on advanced laser procedures.
             </p>
           </div>
 
@@ -39,7 +39,7 @@ export default function InstagramFeed() {
             className="inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-bold shadow-md transition-all hover:scale-105 shrink-0"
           >
             <FaInstagram size={16} />
-            <span>Follow @drvinishurosurgeon</span>
+            <span>Follow on Instagram</span>
             <ExternalLink size={14} />
           </a>
         </ScrollReveal>
@@ -70,7 +70,7 @@ export default function InstagramFeed() {
               <div>
                 <h3 className="text-lg sm:text-xl font-extrabold">Stay Informed on Urology Health</h3>
                 <p className="text-xs sm:text-sm text-blue-100 mt-0.5 font-normal">
-                  Follow @drvinishurosurgeon for daily patient awareness, surgery visual reels &amp; health tips.
+                  Follow @drvinishurosurgeon for trusted health guidance, patient-awareness videos, advanced treatment insights, and practical urology tips.
                 </p>
               </div>
             </div>

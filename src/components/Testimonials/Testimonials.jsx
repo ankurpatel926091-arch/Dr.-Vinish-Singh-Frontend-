@@ -61,15 +61,15 @@ export default function Testimonials() {
         <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
           <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-blue-100/80 text-[#103F7C] text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-3">
             <Sparkles size={14} className="text-orange-500" />
-            <span>PATIENT FEEDBACK</span>
+            <span>PATIENT EXPERIENCES</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
-            Trusted Google Reviews &amp; Stories
+            Stories of Trust, Care & Recovery
           </h2>
 
           <p className="mt-2.5 text-sm sm:text-base text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed">
-            Real experiences shared by our patients after successful laser surgeries &amp; urology treatments
+            Discover genuine experiences shared by patients about their consultations, treatments, surgical care, and recovery journey with Dr. Vinish Kumar Singh.
           </p>
 
           {/* Centered Overall Rating Badge */}
