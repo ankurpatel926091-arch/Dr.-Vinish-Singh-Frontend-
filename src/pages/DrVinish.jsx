@@ -38,6 +38,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import doctorImage from "../assets/doctor.jpg";
 import headerBannerBg from "../assets/About/DrVinishKumarSingh.png";
 import PageHero from "../components/PageHero";
+import DoctorProfileCard from "../components/DoctorProfileCard/DoctorProfileCard";
 import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
 
 // Academic Qualification Data (Extracted directly from dr-vinish-singh.aspx)
@@ -475,19 +476,9 @@ export default function DrVinishKumarSingh() {
               </span>
             </div>
 
-            {/* Doctor Bio Paragraphs */}
-            <div className="mt-5 space-y-3.5 text-slate-600 text-xs sm:text-sm leading-relaxed font-normal">
-              <p>
-                Dr. Vinish Kumar Singh is a young, dynamic, and leading Urologist, Andrologist, and Renal Transplant Surgeon in Lucknow. He obtained his <strong>M.B.B.S.</strong> degree from the prestigious <strong>King George Medical University, Lucknow (U.P.)</strong> in 2007, his <strong>M.S. (General Surgery)</strong> at <strong>Govt. Medical College, Amritsar (Punjab)</strong> in 2012, and his super-speciality <strong>M.Ch (Urology)</strong> degree from <strong>Institute Of Nephro-Urology, Bangalore</strong> in 2017.
-              </p>
-              
-              <p>
-                He serves as <strong>Associate Professor in TSM Medical College</strong> (since 2017) and Senior Consultant Urologist at <strong>SKD Kanpur Road</strong> and <strong>Ajanta Hospital, Alambagh, Lucknow</strong>.
-              </p>
-
-              <p>
-                Dr. Vinish has participated in numerous national and international medical conferences, workshops, and CME programmes. His surgical specialty lies in dealing with <strong>Complex Reconstructive Procedures</strong> like managing pelvic fracture and urethral distraction defects, Artificial Urethral Sphincter implantation, Bladder Neck Reconstruction, and Buccal Mucosa Graft Urethroplasty. His proficiency in <strong>Paediatric Urology</strong> (especially Neonatal and infant pyeloplasties, ureteric reimplantation, and Hypospadias repair) is highly appreciated by his peers.
-              </p>
+            {/* Doctor Bio Profile Card */}
+            <div className="mt-5 w-full">
+              <DoctorProfileCard />
             </div>
 
             {/* Doctor's Personal Statement Quote Card */}

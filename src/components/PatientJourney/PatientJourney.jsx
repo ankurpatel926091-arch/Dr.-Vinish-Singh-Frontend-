@@ -17,35 +17,35 @@ const steps = [
       number: "01",
       icon: Calendar,
       title: "Book Appointment",
-      desc: "Schedule online or via call at a time convenient for you.",
+      desc: "Schedule your consultation online or by phone at your preferred centre.",
       isKeyStep: false,
     },
     {
       number: "02",
       icon: ClipboardList,
       title: "Initial Assessment",
-      desc: "Comprehensive review of medical history and symptoms.",
+      desc: "A detailed review of your symptoms, medical history, and previous reports.",
       isKeyStep: false,
     },
     {
       number: "03",
       icon: Stethoscope,
       title: "Expert Consultation",
-      desc: "Personalised consultation & care plan discussion with Dr. Vinish.",
+      desc: "Personalised evaluation and treatment planning with Dr. Vinish Kumar Singh.",
       isKeyStep: true,
     },
     {
       number: "04",
       icon: Activity,
       title: "Advanced Diagnostics",
-      desc: "Precise evaluation using modern diagnostic equipment if needed.",
+      desc: "Precise investigations followed by evidence-based medical or surgical care.",
       isKeyStep: false,
     },
     {
       number: "05",
       icon: HeartPulse,
       title: "Ongoing Care",
-      desc: "Targeted treatment with scheduled recovery follow-ups.",
+      desc: "Structured post-treatment guidance and continued support for long-term wellness.",
       isKeyStep: false,
     },
   ];
@@ -58,7 +58,7 @@ const steps = [
         <ScrollReveal variant="fade-up" className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
           <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-blue-100/70 text-[#103F7C] text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-3">
             <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
-            <span>PATIENT JOURNEY</span>
+            <span>PATIENT CARE JOURNEY</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
@@ -69,7 +69,7 @@ const steps = [
           </h2>
 
           <p className="mt-2.5 text-sm sm:text-base text-slate-600 font-medium leading-relaxed">
-            A seamless, transparent consultation and treatment experience from first visit to recovery.
+            A seamless and transparent care experience—from your first consultation and accurate diagnosis to personalised treatment and recovery.
           </p>
         </ScrollReveal>
 
@@ -140,7 +140,7 @@ const steps = [
             className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[#103F7C] hover:bg-blue-900 text-white font-semibold text-sm shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] group"
           >
             <Calendar size={16} className="text-orange-400" />
-            <span>Book Consultation</span>
+            <span>Book a Consultation</span>
             <ArrowRight
               size={16}
               className="group-hover:translate-x-1 transition-transform"

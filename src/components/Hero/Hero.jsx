@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import doctorImg from "../../assets/doctor.jpg";
 import ScrollReveal from "../ScrollReveal/ScrollReveal";
+import DoctorProfileCard from "../DoctorProfileCard/DoctorProfileCard";
 
 export default function Hero() {
   return (
@@ -119,24 +120,9 @@ export default function Hero() {
               </h1>
             </ScrollReveal>
 
-            {/* Rich Doctor Profile Theory Card (7-9 Lines) */}
+            {/* Rich Doctor Profile Card */}
             <ScrollReveal variant="fade-up" delay={200} className="mt-3.5 w-full">
-              <div className="bg-gradient-to-br from-blue-50/80 via-sky-50/50 to-slate-50/90 p-4 sm:p-5 rounded-2xl border border-blue-100/90 shadow-2xs">
-                <div className="text-slate-600 text-xs sm:text-sm leading-relaxed font-normal space-y-2.5 text-justify">
-                  <p>
-                    Dr. Vinish Kumar Singh is a young, dynamic, and leading Consultant Urologist, Andrologist, and Renal Transplant Surgeon in Lucknow. He obtained his <strong>M.B.B.S.</strong> degree from the prestigious <strong>King George Medical University (KGMU), Lucknow</strong> in 2007, his <strong>M.S. (General Surgery)</strong> at <strong>Govt. Medical College (GMC), Amritsar</strong> in 2012, and super-speciality <strong>M.Ch (Urology)</strong> degree from <strong>Institute Of Nephro-Urology (INU), Bangalore</strong> in 2017.
-                  </p>
-                  <p>
-                    He serves as <strong>Associate Professor in TSM Medical College</strong> (since 2017) and Senior Consultant Urologist at <strong>SKD Kanpur Road</strong> and <strong>Ajanta Hospital, Alambagh, Lucknow</strong>. Dr. Vinish has participated in numerous national &amp; international medical conferences, workshops, and CME programmes pertaining to modern endourology and kidney care.
-                  </p>
-                  <p>
-                    His surgical specialty lies in dealing with <strong>Complex Reconstructive Procedures</strong> (pelvic fracture urethral distraction defects, Artificial Urethral Sphincter, Bladder Neck Reconstruction, Buccal Mucosa Graft Urethroplasty), <strong>Laser Stone &amp; Prostate Surgeries (RIRS, HolEP, PCNL)</strong>, and <strong>Paediatric Urology</strong> (neonatal &amp; infant pyeloplasties, ureteric reimplantation, Hypospadias repair).
-                  </p>
-                  <p>
-                    He is committed to delivering compassionate, patient-centered urology care with high clinical integrity and surgical precision.
-                  </p>
-                </div>
-              </div>
+              <DoctorProfileCard />
             </ScrollReveal>
 
 

@@ -16,70 +16,70 @@ import ScrollReveal from "../ScrollReveal/ScrollReveal";
 export const servicesData = [
   {
     id: "urology",
-    title: "Urology Care",
-    subtitle: "Advanced Endourology & Stitchless Laser Surgeries",
+    title: "Advanced Urology Care",
+    subtitle: "MINIMALLY INVASIVE LASER & ENDOUROLOGICAL SURGERIES",
     path: "/services/urology",
     icon: Stethoscope,
     badgeBg: "bg-blue-50 text-[#103F7C] border-blue-200",
     accentColor: "from-[#103F7C] to-blue-600",
     description:
-      "Comprehensive diagnostic & surgical management of urinary tract disorders, kidney stones, enlarged prostate (BPH), and reconstructive urology.",
+      "Comprehensive diagnosis and advanced surgical management of kidney stones, prostate enlargement, urinary tract disorders, and other complex urological conditions.",
     highlights: [
-      "Stitchless Laser RIRS & PCNL for Kidney Stones",
-      "HoLEP Laser Prostatectomy for BPH",
-      "Bladder Stone & Ureteroscopic Laser Surgery",
-      "Recurrent Urinary Tract Infection (UTI) Care",
+      "1. RIRS & PCNL for Kidney Stones",
+      "2. HoLEP Laser Surgery for Enlarged Prostate",
+      "3. URSL & Bladder Stone Surgery",
+      "4. UTI and Urinary Obstruction Management",
     ],
   },
   {
     id: "andrology",
     title: "Andrology & Male Health",
-    subtitle: "Male Infertility & Reproductive Wellness",
+    subtitle: "MALE INFERTILITY & SEXUAL WELLNESS",
     path: "/services/andrology",
     icon: Activity,
     badgeBg: "bg-orange-50 text-orange-600 border-orange-200",
     accentColor: "from-orange-500 to-amber-600",
     description:
-      "Specialized evidence-based treatments for male reproductive disorders, hormonal imbalances, varicocele care, and erectile health.",
+      "Confidential, evidence-based evaluation and treatment for male infertility, sexual health concerns, hormonal disorders, and other male reproductive conditions.",
     highlights: [
-      "Male Infertility Evaluation & Micro-TESE",
-      "Erectile Dysfunction & Vascular Care",
-      "Microscopic Varicocelectomy",
-      "Hormonal Replenishment & Testosterone Care",
+      "Male Infertility Evaluation & Treatment",
+      "Erectile Dysfunction Management",
+      "Microsurgical Varicocelectomy",
+      "Hormonal and Testosterone Assessment",
     ],
   },
   {
     id: "nephrology",
-    title: "Clinical Nephrology",
-    subtitle: "Comprehensive Kidney Health & Preservation",
+    title: "Reconstructive & Paediatric Urology",
+    subtitle: "ADVANCED CARE FOR COMPLEX UROLOGICAL CONDITIONS",
     path: "/services/nephrology",
     icon: HeartPulse,
     badgeBg: "bg-[#103F7C] text-white border-blue-900",
     accentColor: "from-blue-700 to-indigo-800",
     description:
-      "Expert medical management of acute & chronic kidney diseases (CKD), hypertensive kidney damage, glomerulonephritis, and dialysis coordination.",
+      "Specialised surgical care for urethral disorders, congenital urinary abnormalities, and complex urological conditions affecting both adults and children.",
     highlights: [
-      "Chronic Kidney Disease (CKD) Management",
-      "Diabetic & Hypertensive Nephropathy Care",
-      "Proteinuria & Glomerular Health Protocols",
-      "Pre-Dialysis & Renal Failure Management",
+      "Buccal Mucosa Graft Urethroplasty",
+      "Bladder Neck Reconstruction",
+      "Paediatric Pyeloplasty",
+      "Hypospadias Repair & Ureteric Reimplantation",
     ],
   },
   {
     id: "renal-transplant",
-    title: "Renal Transplant",
-    subtitle: "Pre-Transplant Evaluation & Post-Op Care",
+    title: "Renal Transplant Care",
+    subtitle: "COMPREHENSIVE TRANSPLANT EVALUATION & SURGICAL CARE",
     path: "/services/renal-transplant",
     icon: RefreshCw,
     badgeBg: "bg-emerald-50 text-emerald-700 border-emerald-200",
     accentColor: "from-emerald-600 to-teal-700",
     description:
-      "Rigorous donor & recipient clinical evaluation, surgical planning, immunosuppression protocols, and long-term post-transplant graft protection.",
+      "Coordinated care for kidney transplant patients, encompassing clinical assessment, surgical planning, transplant procedures, and structured post-operative follow-up.",
     highlights: [
-      "Donor & Recipient Pre-Transplant Workup",
-      "Immunological Compatibility Assessment",
-      "Post-Transplant Graft Surveillance",
-      "Long-term Immunosuppression Management",
+      "Donor and Recipient Evaluation",
+      "Pre-Transplant Clinical Assessment",
+      "Renal Transplant Surgery",
+      "Post-Transplant Monitoring and Follow-Up",
     ],
   },
 ];
@@ -101,15 +101,14 @@ export default function ServicesSection() {
           </div>
 
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
-            Comprehensive Urology &amp;{" "}
+            Advanced Urology,Andrology &amp;{" "}
             <span className="bg-gradient-to-r from-[#103F7C] to-orange-500 bg-clip-text text-transparent">
-              Renal Care Services
+              Renal Care 
             </span>
           </h2>
 
           <p className="mt-2.5 text-sm sm:text-lg text-slate-500 leading-relaxed font-normal max-w-2xl mx-auto">
-            Delivering world-class laser surgical precision, evidence-based andrological treatments, and dedicated kidney care in Lucknow.
-          </p>
+Delivering comprehensive urological care through advanced laser procedures, minimally invasive surgeries, and evidence-based treatments for kidney, prostate, and male reproductive health conditions.          </p>
         </ScrollReveal>
 
         {/* ================= 4 SERVICES CARDS GRID ================= */}
@@ -192,10 +191,10 @@ export default function ServicesSection() {
               </div>
               <div>
                 <h4 className="text-base sm:text-lg font-extrabold text-slate-900 leading-snug">
-                  15+ Years Clinical Surgical Mastery &amp; 5,000+ Laser Surgeries
+                  15+ Years of Surgical Excellence & 5,000+ Successful Procedures
                 </h4>
                 <p className="text-xs sm:text-sm text-slate-600 font-medium mt-0.5">
-                  Practicing at{" "}
+                  Leading advanced urological care at {" "}
                   <a
                     href="https://maps.app.goo.gl/jbynbpoL5PcKca4Z9"
                     target="_blank"
@@ -215,7 +214,7 @@ export default function ServicesSection() {
                     Dr. Shilpi Maternity &amp; Urology Centre
                     {/* <MapPin size={13} className="text-[#103F7C] shrink-0 inline" /> */}
                   </a>{" "}
-                  in Lucknow.
+                  ,Lucknow.
                 </p>
               </div>
             </div>

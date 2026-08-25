@@ -26,48 +26,48 @@ const whyUsFeatures = [
   {
     icon: Zap,
     title: "Advanced Laser Technology",
-    desc: "State-of-the-art Holmium laser equipment for RIRS stone dusting, HoLEP prostate enucleation & PCNL with zero skin cuts.",
-    badge: "Painless & Scarless",
+    desc: "Advanced Holmium laser technology for RIRS, HoLEP, PCNL and endoscopic stone procedures—designed to minimise incisions, discomfort and recovery time.",
+    badge: "MINIMALLY INVASIVE PRECISION",
     iconBg: "bg-blue-50 text-[#103F7C] border-blue-200",
     hoverBorder: "hover:border-[#103F7C]",
   },
   {
     icon: Award,
-    title: "15+ Years Surgical Mastery",
-    desc: "Senior Consultant Urologist with 5,000+ successful laser surgeries, M.Ch (INU Bangalore) and FIAGES Delhi fellowship.",
-    badge: "Super Specialized",
+    title: "Extensive Surgical Expertise",
+    desc: "M.Ch.-qualified Consultant Urologist with extensive experience in advanced endourology, reconstructive procedures, and complex urological surgeries.",
+    badge: "SUPER-SPECIALISED CARE",
     iconBg: "bg-orange-50 text-orange-600 border-orange-200",
     hoverBorder: "hover:border-orange-500",
   },
   {
     icon: Building2,
-    title: "2 OPD Centres in Lucknow",
-    desc: "Convenient morning consultation at Sharda Nagar and evening OPD at Ring Road, Pakkabag for flexible patient visits.",
-    badge: "Flexible OPD Slots",
+    title: "Two Specialised Care Centres",
+    desc: "Expert consultations and advanced urological treatment available at Rudraksh IVF & Urology Centre and Dr. Shilpi Maternity & Urology Centre, Lucknow.",
+    badge: "ACCESSIBLE UROLOGY CARE",
     iconBg: "bg-blue-50 text-[#103F7C] border-blue-200",
     hoverBorder: "hover:border-[#103F7C]",
   },
   {
     icon: Clock,
-    title: "Rapid 24-Hour Recovery",
-    desc: "Minimally invasive endoscopic procedures allow patients to resume routine daily activities within 24 to 48 hours.",
-    badge: "Fast Hospital Discharge",
+    title: "Faster Post-Surgical Recovery",
+    desc: "Modern endoscopic and laser procedures help minimise surgical trauma, support shorter hospital stays, and enable an earlier return to routine activities.",
+    badge: "MINIMALLY INVASIVE APPROACH",
     iconBg: "bg-orange-50 text-orange-600 border-orange-200",
     hoverBorder: "hover:border-orange-500",
   },
   {
     icon: Stethoscope,
-    title: "Complete Urology & Andrology",
-    desc: "Full-spectrum care for kidney stones, enlarged prostate, male infertility (Micro-TESE), erectile dysfunction & female UTI.",
-    badge: "Full Care Range",
+    title: "Comprehensive Urology & Andrology",
+    desc: "Advanced care for kidney stones, prostate disorders, urinary conditions, male infertility, erectile dysfunction, and complex reconstructive concerns.",
+    badge: "COMPLETE CARE SPECTRUM",
     iconBg: "bg-blue-50 text-[#103F7C] border-blue-200",
     hoverBorder: "hover:border-[#103F7C]",
   },
   {
     icon: ShieldCheck,
     title: "Transparent & Ethical Care",
-    desc: "Clear diagnostic guidance, evidence-based treatment protocols, and compassionate post-operative follow-up support.",
-    badge: "98% Patient Trust",
+    desc: "Clear clinical guidance, evidence-based treatment planning, transparent communication, and compassionate support throughout every stage of care.",
+    badge: "PATIENT-FIRST APPROACH",
     iconBg: "bg-orange-50 text-orange-600 border-orange-200",
     hoverBorder: "hover:border-orange-500",
   },
@@ -124,7 +124,7 @@ export default function WhyChooseUs() {
           </h2>
 
           <p className="mt-2.5 text-sm sm:text-base text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed text-justify">
-            Combining 15+ years of surgical mastery, M.Ch (INU Bangalore) credentials, advanced Holmium laser technology, and patient-first compassionate care in Lucknow.
+            Combining extensive surgical expertise, advanced M.Ch. training, modern laser technology, and a compassionate, patient-first approach to deliver precise and personalised urological care in Lucknow.
           </p>
 
           {/* Sub Navigation Switcher Tabs */}
@@ -150,7 +150,7 @@ export default function WhyChooseUs() {
                   : "bg-white text-slate-600 hover:text-[#103F7C] border border-slate-200"
               }`}
             >
-              ⚡ Laser vs Traditional Surgery
+              ⚡ Laser vs. Conventional Surgery
             </button>
           </div>
         </ScrollReveal>
@@ -260,26 +260,26 @@ export default function WhyChooseUs() {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
               <div className="p-3">
                 <h4 className="text-3xl sm:text-4xl font-extrabold text-orange-400">15+</h4>
-                <p className="text-xs sm:text-sm text-blue-100 mt-1 font-semibold">Years Clinical Practice</p>
-                <p className="text-[12px] text-blue-200/80 mt-0.5">Senior Urologist Lucknow</p>
+                <p className="text-xs sm:text-sm text-blue-100 mt-1 font-semibold">Years of Clinical Excellence</p>
+                <p className="text-[12px] text-blue-200/80 mt-0.5">Advanced Urological Care</p>
               </div>
 
               <div className="p-3 border-l border-white/15">
                 <h4 className="text-3xl sm:text-4xl font-extrabold text-orange-400">5000+</h4>
-                <p className="text-xs sm:text-sm text-blue-100 mt-1 font-semibold">Laser Procedures</p>
-                <p className="text-[12px] text-blue-200/80 mt-0.5">RIRS, HoLEP &amp; PCNL</p>
+                <p className="text-xs sm:text-sm text-blue-100 mt-1 font-semibold">Successful Procedures</p>
+                <p className="text-[12px] text-blue-200/80 mt-0.5">RIRS, HoLEP & PCNL</p>
               </div>
 
               <div className="p-3 border-l border-white/15">
                 <h4 className="text-3xl sm:text-4xl font-extrabold text-orange-400">2</h4>
-                <p className="text-xs sm:text-sm text-blue-100 mt-1 font-semibold">Lucknow OPD Centres</p>
-                <p className="text-[12px] text-blue-200/80 mt-0.5">Sharda Nagar &amp; Ring Road</p>
+                <p className="text-xs sm:text-sm text-blue-100 mt-1 font-semibold">Specialised Care Centres</p>
+                <p className="text-[12px] text-blue-200/80 mt-0.5">Comprehensive Urology Services</p>
               </div>
 
               <div className="p-3 border-l border-white/15">
                 <h4 className="text-3xl sm:text-4xl font-extrabold text-orange-400">98%</h4>
                 <p className="text-xs sm:text-sm text-blue-100 mt-1 font-semibold">Patient Satisfaction</p>
-                <p className="text-[12px] text-blue-200/80 mt-0.5">Ethical &amp; Transparent</p>
+                <p className="text-[12px] text-blue-200/80 mt-0.5">Trusted & Ethical Care</p>
               </div>
             </div>
 
@@ -290,8 +290,8 @@ export default function WhyChooseUs() {
                   <Stethoscope size={20} className="text-orange-300" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-sm sm:text-base">Consult Senior Urologist Dr. Vinish Kumar Singh</h4>
-                  <p className="text-xs text-blue-100">Get expert guidance for kidney stone, prostate &amp; urology care in Lucknow.</p>
+                  <h4 className="font-bold text-sm sm:text-base">Consult Dr. Vinish Kumar Singh</h4>
+                  <p className="text-xs text-blue-100">Receive expert guidance for kidney stones, prostate disorders, male health concerns, and complex urological conditions in Lucknow.</p>
                 </div>
               </div>
 
