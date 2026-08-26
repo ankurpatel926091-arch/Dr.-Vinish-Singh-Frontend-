@@ -68,15 +68,15 @@ export default function BlogSection() {
           {/* Top Pill Badge */}
           <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-orange-50 border border-orange-200/80 text-orange-600 text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-3 shadow-2xs">
             <BookOpen size={14} className="text-orange-500" />
-            <span>HEALTH INSIGHTS &amp; BLOGS</span>
+            <span>UROLOGY INSIGHTS & RESOURCES</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
-            Latest Articles &amp; Patient Advice
+           Expert Articles for Better Urological Health
           </h2>
 
           <p className="mt-2.5 text-sm sm:text-base text-slate-600 font-medium leading-relaxed max-w-2xl mx-auto">
-            Stay updated with expert medical insights, kidney stone prevention guidance, and urological wellness tips from Dr. Vinish Kumar Singh.
+            Explore specialist-led insights on kidney stone prevention, prostate health, urinary conditions, male wellness, advanced treatments, and everyday urological care from Dr. Vinish Kumar Singh.
           </p>
 
           {/* Centered Navigation Buttons */}

@@ -152,23 +152,28 @@ const facilityGallery = [
 const hospitalHighlights = [
   {
     icon: Stethoscope,
-    title: "Expert Urologic Consultations",
-    desc: "Laser stone removal, HolEP prostate care, kidney transplant & reconstructive urology.",
+    title: "Specialist Urology Consultations",
+    desc: "Expert evaluation and treatment for kidney stones, prostate disorders, urinary conditions, male infertility, reconstructive urology, and renal transplant care.",
   },
   {
     icon: Clock,
-    title: "Morning & Evening OPD",
-    desc: "Convenient timing slots in Sharda Nagar (Morning) and Ring Road (Evening).",
+    title: "Convenient OPD Scheduling",
+    desc: "Morning and evening consultation slots available across Rudraksh IVF & Urology Centre and Dr. Shilpi Maternity & Urology Centre.",
   },
   {
     icon: ShieldCheck,
-    title: "High Standard Care & Hygiene",
-    desc: "NABH compliant modular operating theatre and patient recovery lounges.",
+    title: "Modern & Patient-Focused Care",
+    desc: "Evidence-based treatment, advanced surgical techniques, transparent guidance, and strict standards of safety, hygiene, and patient comfort.",
   },
   {
     icon: Phone,
-    title: "24/7 Helpline & Care Support",
-    desc: "Direct clinic contact numbers for appointment booking and emergency guidance.",
+    title: "Appointment Assistance",
+    desc: "Direct support for OPD scheduling, centre information, consultation timings, and pre-visit guidance.",
+  },
+   {
+    icon: Phone,
+    title: "Need an OPD Consultation?",
+    desc: "Contact our team to confirm available timings and book your preferred consultation slot.",
   },
 ];
 
@@ -280,199 +285,230 @@ export default function OurHospitals() {
           </div>
         </ScrollReveal>
 
-        {/* 2 Hospital Cards Grid */}
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 mb-16">
-          {filteredHospitals.map((hosp, idx) => (
-            <ScrollReveal
-              key={hosp.id}
-              variant="scale-up"
-              delay={idx * 150}
-              className="h-full"
-            >
-              <div
-                className="bg-white rounded-3xl border border-slate-200/90 shadow-sm hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden group h-full"
+        {/* Hospital Cards Grid / Single Card Side-by-Side View */}
+        <div
+          className={
+            filteredHospitals.length === 1
+              ? "mb-16 max-w-6xl mx-auto"
+              : "grid lg:grid-cols-2 gap-8 lg:gap-10 mb-16"
+          }
+        >
+          {filteredHospitals.map((hosp, idx) => {
+            const isSingle = filteredHospitals.length === 1;
+
+            return (
+              <ScrollReveal
+                key={hosp.id}
+                variant="scale-up"
+                delay={idx * 150}
+                className={isSingle ? "w-full" : "h-full"}
               >
-                <div>
-                  {/* Hospital Photo Box - 100% Shadow-Free & Bright */}
-                  <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-slate-100 group">
+                <div
+                  className={`bg-white rounded-3xl border border-slate-200/90 shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group ${
+                    isSingle
+                      ? "flex flex-col lg:flex-row items-stretch w-full min-h-[520px]"
+                      : "flex flex-col justify-between h-full"
+                  }`}
+                >
+                  {/* Hospital Photo Box - Left Side on Single View */}
+                  <div
+                    className={
+                      isSingle
+                        ? "relative w-full lg:w-1/2 min-h-[350px] sm:min-h-[440px] lg:min-h-full overflow-hidden bg-slate-100 group shrink-0"
+                        : "relative h-64 sm:h-72 w-full overflow-hidden bg-slate-100 group"
+                    }
+                  >
                     <img
                       src={hosp.image}
                       alt={hosp.name}
                       loading="lazy"
-                      className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                      className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.015]"
                     />
 
-                    {/* Top Floating Badges */}
-                    <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2 z-10">
-                      <span
-                        className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-md border ${hosp.badgeColor}`}
-                      >
-                        <Clock size={13} />
-                        <span>{hosp.tagline}</span>
-                      </span>
+                    {/* Top Floating Badges (Only in Grid View to Keep Single Card Photo Clean like Reference Photo 2) */}
+                    {!isSingle && (
+                      <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2 z-10">
+                        <span
+                          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-md border ${hosp.badgeColor}`}
+                        >
+                          <Clock size={13} />
+                          <span>{hosp.tagline}</span>
+                        </span>
 
-                      <button
-                        type="button"
-                        onClick={() => openLightbox(hosp.image, hosp.name)}
-                        className="px-3 py-1.5 rounded-xl bg-white/90 hover:bg-[#103F7C] hover:text-white text-slate-800 text-xs font-bold backdrop-blur-md border border-slate-200 flex items-center gap-1.5 transition-all duration-300 shadow-md hover:scale-105 cursor-pointer"
-                      >
-                        <Maximize2 size={13} />
-                        <span>Full Photo</span>
-                      </button>
-                    </div>
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            openLightbox(hosp.image, hosp.name);
+                          }}
+                          className="px-3 py-1.5 rounded-xl bg-white/90 hover:bg-[#103F7C] hover:text-white text-slate-800 text-xs font-bold backdrop-blur-md border border-slate-200 flex items-center gap-1.5 transition-all duration-300 shadow-md hover:scale-105 cursor-pointer"
+                        >
+                          <Maximize2 size={13} />
+                          <span>Full Photo</span>
+                        </button>
+                      </div>
+                    )}
                   </div>
 
-                  {/* Card Content Body */}
-                  <div className="p-6 sm:p-8">
-                    {/* Title */}
-                    <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 group-hover:text-[#103F7C] transition-colors leading-snug mb-4">
+                  {/* Card Content Body - Right Side on Single View */}
+                  <div
+                    className={
+                      isSingle
+                        ? "w-full lg:w-1/2 flex flex-col justify-between p-6 sm:p-8 lg:p-9 bg-white"
+                        : "p-6 sm:p-8 flex-1 flex flex-col justify-between"
+                    }
+                  >
+                    <div>
+                      {/* Title */}
+                      <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 group-hover:text-[#103F7C] transition-colors leading-snug mb-4">
+                        <a
+                          href={hosp.mapUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:underline hover:text-orange-600 inline-flex items-center gap-2 transition-colors"
+                        >
+                          <span>{hosp.name}</span>
+                          <MapPin size={20} className="text-orange-500 shrink-0 inline" />
+                        </a>
+                      </h3>
+
+                      {/* Info Cards: Timing, Phone, Address */}
+                      <div className="space-y-3 mb-6 text-xs sm:text-sm text-slate-700">
+                        {/* Timing */}
+                        <div className="flex items-center gap-3 bg-slate-50 p-3.5 sm:p-4 rounded-2xl border border-slate-100 hover:border-slate-200 transition-colors">
+                          <div className="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center shrink-0 shadow-xs">
+                            <Clock size={20} />
+                          </div>
+                          <div>
+                            <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">
+                              OPD Consultation Hours
+                            </span>
+                            <span className="font-extrabold text-slate-900 text-sm sm:text-base">
+                              {hosp.timing}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Phone */}
+                        <div className="flex items-center gap-3 bg-slate-50 p-3.5 sm:p-4 rounded-2xl border border-slate-100 hover:border-slate-200 transition-colors">
+                          <div className="w-10 h-10 rounded-xl bg-blue-100 text-[#103F7C] flex items-center justify-center shrink-0 shadow-xs">
+                            <Phone size={20} />
+                          </div>
+                          <div className="flex-1 flex items-center justify-between gap-2">
+                            <div>
+                              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">
+                                Appointments &amp; Helpline
+                              </span>
+                              <a
+                                href={hosp.phoneRaw}
+                                className="font-extrabold text-[#103F7C] hover:underline text-sm sm:text-base"
+                              >
+                                {hosp.phone}
+                              </a>
+                            </div>
+                            <a
+                              href={hosp.phoneRaw}
+                              className="px-4 py-1.5 rounded-full bg-[#103F7C] hover:bg-blue-900 text-white text-xs sm:text-sm font-bold transition-all shadow-xs shrink-0 flex items-center gap-1.5"
+                            >
+                              <Phone size={13} />
+                              <span>Call</span>
+                            </a>
+                          </div>
+                        </div>
+
+                        {/* Address */}
+                        <div className="flex items-start gap-3 bg-slate-50 p-3.5 sm:p-4 rounded-2xl border border-slate-100 hover:border-slate-200 transition-colors">
+                          <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+                            <MapPin size={20} />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center justify-between gap-2">
+                              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">
+                                Full Hospital Address
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => handleCopyAddress(hosp.id, hosp.address)}
+                                className="text-xs font-bold text-[#103F7C] hover:text-orange-600 flex items-center gap-1 transition-colors cursor-pointer"
+                              >
+                                {copiedId === hosp.id ? (
+                                  <>
+                                    <Check size={13} className="text-emerald-600" />
+                                    <span className="text-emerald-600">Copied!</span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <Copy size={13} />
+                                    <span>Copy</span>
+                                  </>
+                                )}
+                              </button>
+                            </div>
+                            <p className="text-xs sm:text-sm text-slate-700 font-medium leading-relaxed mt-1">
+                              {hosp.address}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Facility Tags */}
+                      <div className="mb-6">
+                        <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-2">
+                          Key Services &amp; Facilities:
+                        </span>
+                        <div className="flex flex-wrap gap-1.5">
+                          {hosp.facilities.map((fac, i) => (
+                            <span
+                              key={i}
+                              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-blue-50/80 text-[#103F7C] text-xs sm:text-[13px] font-semibold border border-blue-100"
+                            >
+                              <CheckCircle2 size={13} className="text-emerald-600" />
+                              <span>{fac}</span>
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Embedded Map Box */}
+                      <div className="w-full h-40 rounded-2xl overflow-hidden border border-slate-200 mb-6 bg-slate-100 relative group/map">
+                        <iframe
+                          title={hosp.name}
+                          src={hosp.mapIframe}
+                          width="100%"
+                          height="100%"
+                          style={{ border: 0 }}
+                          allowFullScreen=""
+                          loading="lazy"
+                          referrerPolicy="no-referrer-when-downgrade"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Action Buttons Footer */}
+                    <div className="pt-4 border-t border-slate-100 flex flex-wrap items-center gap-3">
                       <a
                         href={hosp.mapUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:underline hover:text-orange-600 inline-flex items-center gap-2 transition-colors"
+                        className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-slate-300 hover:border-[#103F7C] text-[#103F7C] hover:bg-[#103F7C] hover:text-white font-bold text-xs transition-all duration-300"
                       >
-                        <span>{hosp.name}</span>
-                        <MapPin size={20} className="text-orange-500 shrink-0 inline" />
+                        <Navigation size={14} />
+                        <span>Get Directions</span>
                       </a>
-                    </h3>
 
-                    {/* Info Cards: Timing, Phone, Address */}
-                    <div className="space-y-3 mb-6 text-xs sm:text-sm text-slate-700">
-                      {/* Timing */}
-                      <div className="flex items-center gap-3 bg-slate-50 p-3.5 sm:p-4 rounded-2xl border border-slate-100 hover:border-slate-200 transition-colors">
-                        <div className="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center shrink-0 shadow-xs">
-                          <Clock size={20} />
-                        </div>
-                        <div>
-                          <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">
-                            OPD Consultation Hours
-                          </span>
-                          <span className="font-extrabold text-slate-900 text-sm sm:text-base">
-                            {hosp.timing}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Phone */}
-                      <div className="flex items-center gap-3 bg-slate-50 p-3.5 sm:p-4 rounded-2xl border border-slate-100 hover:border-slate-200 transition-colors">
-                        <div className="w-10 h-10 rounded-xl bg-blue-100 text-[#103F7C] flex items-center justify-center shrink-0 shadow-xs">
-                          <Phone size={20} />
-                        </div>
-                        <div className="flex-1 flex items-center justify-between gap-2">
-                          <div>
-                            <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">
-                              Appointments &amp; Helpline
-                            </span>
-                            <a
-                              href={hosp.phoneRaw}
-                              className="font-extrabold text-[#103F7C] hover:underline text-sm sm:text-base"
-                            >
-                              {hosp.phone}
-                            </a>
-                          </div>
-                          <a
-                            href={hosp.phoneRaw}
-                            className="px-4 py-1.5 rounded-full bg-[#103F7C] hover:bg-blue-900 text-white text-xs sm:text-sm font-bold transition-all shadow-xs shrink-0 flex items-center gap-1.5"
-                          >
-                            <Phone size={13} />
-                            <span>Call</span>
-                          </a>
-                        </div>
-                      </div>
-
-                      {/* Address */}
-                      <div className="flex items-start gap-3 bg-slate-50 p-3.5 sm:p-4 rounded-2xl border border-slate-100 hover:border-slate-200 transition-colors">
-                        <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
-                          <MapPin size={20} />
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between gap-2">
-                            <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">
-                              Full Hospital Address
-                            </span>
-                            <button
-                              type="button"
-                              onClick={() => handleCopyAddress(hosp.id, hosp.address)}
-                              className="text-xs font-bold text-[#103F7C] hover:text-orange-600 flex items-center gap-1 transition-colors cursor-pointer"
-                            >
-                              {copiedId === hosp.id ? (
-                                <>
-                                  <Check size={13} className="text-emerald-600" />
-                                  <span className="text-emerald-600">Copied!</span>
-                                </>
-                              ) : (
-                                <>
-                                  <Copy size={13} />
-                                  <span>Copy</span>
-                                </>
-                              )}
-                            </button>
-                          </div>
-                          <p className="text-xs sm:text-sm text-slate-700 font-medium leading-relaxed mt-1">
-                            {hosp.address}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Facility Tags */}
-                    <div className="mb-6">
-                      <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-2">
-                        Key Services &amp; Facilities:
-                      </span>
-                      <div className="flex flex-wrap gap-1.5">
-                        {hosp.facilities.map((fac, i) => (
-                          <span
-                            key={i}
-                            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-blue-50/80 text-[#103F7C] text-xs sm:text-[13px] font-semibold border border-blue-100"
-                          >
-                            <CheckCircle2 size={13} className="text-emerald-600" />
-                            <span>{fac}</span>
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Embedded Map Box */}
-                    <div className="w-full h-44 rounded-2xl overflow-hidden border border-slate-200 mb-2 bg-slate-100 relative group/map">
-                      <iframe
-                        title={hosp.name}
-                        src={hosp.mapIframe}
-                        width="100%"
-                        height="100%"
-                        style={{ border: 0 }}
-                        allowFullScreen=""
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                      />
+                      <NavLink
+                        to="/#book-appointment"
+                        className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-xs shadow-xs transition-all duration-300 hover:scale-102"
+                      >
+                        <Calendar size={14} />
+                        <span>Book Appointment</span>
+                      </NavLink>
                     </div>
                   </div>
                 </div>
-
-                {/* Action Buttons Footer */}
-                <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex flex-wrap items-center gap-3">
-                  <a
-                    href={hosp.mapUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-slate-300 hover:border-[#103F7C] text-[#103F7C] hover:bg-[#103F7C] hover:text-white font-bold text-xs transition-all duration-300"
-                  >
-                    <Navigation size={14} />
-                    <span>Get Directions</span>
-                  </a>
-
-                  <NavLink
-                    to="/#book-appointment"
-                    className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-xs shadow-xs transition-all duration-300 hover:scale-102"
-                  >
-                    <Calendar size={14} />
-                    <span>Book Appointment</span>
-                  </NavLink>
-                </div>
-              </div>
-            </ScrollReveal>
-          ))}
+              </ScrollReveal>
+            );
+          })}
         </div>
 
         {/* Hospital Facilities & Infrastructure Showcase Gallery (100% Shadow-Free & Bright) */}
@@ -539,7 +575,7 @@ export default function OurHospitals() {
         <ScrollReveal variant="fade-up" delay={200} className="mt-14 rounded-3xl bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#103F7C] text-white p-8 sm:p-12 shadow-lg">
           <div className="text-center max-w-xl mx-auto mb-8">
             <h3 className="text-2xl font-extrabold">Comprehensive Urologic Care in Lucknow</h3>
-            <p className="text-xs sm:text-sm text-blue-100 mt-1">Dedicated to patient comfort, laser surgery precision, and ethical medical standards.</p>
+            <p className="text-xs sm:text-sm text-blue-100 mt-1">Advanced diagnosis, personalised treatment, and compassionate care delivered across two specialised healthcare centres.</p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -577,7 +613,7 @@ export default function OurHospitals() {
               className="px-6 py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs sm:text-sm shadow-lg transition-transform hover:scale-105 shrink-0 flex items-center gap-2"
             >
               <Phone size={16} />
-              <span>Call Helpline: +91 89600 68307</span>
+              <span>Call for Appointment: +91 89600 68307</span>
             </a>
           </div>
         </ScrollReveal>

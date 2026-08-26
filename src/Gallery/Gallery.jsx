@@ -277,15 +277,15 @@ export default function Gallery() {
         <ScrollReveal variant="fade-up" className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 text-center sm:text-left">
           <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-white/10 border border-white/15 text-orange-300 text-[11px] font-semibold uppercase tracking-wider mb-3">
             <Sparkles size={12} />
-            <span>Infrastructure &amp; Clinical Care</span>
+            <span>INSIDE OUR CARE CENTRES</span>
           </div>
 
           <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight">
-            Clinic Photo &amp; Video Gallery
+            Photo & Video Gallery
           </h1>
 
           <p className="mt-2 text-blue-100 text-xs sm:text-sm max-w-2xl font-normal leading-relaxed">
-            Explore state-of-the-art laser urology equipment, modern surgical setup, patient care facilities, and procedure videos in Lucknow.
+            Explore our clinical environment, modern facilities, advanced urology setup, patient-care initiatives, and educational highlights from both healthcare centres in Lucknow.
           </p>
         </ScrollReveal>
       </div>
@@ -546,9 +546,9 @@ export default function Gallery() {
       <ScrollReveal variant="fade-up" delay={200} className="max-w-7xl mx-auto px-4 sm:px-6 pb-16">
         <div className="rounded-3xl bg-gradient-to-r from-[#103F7C] to-blue-900 text-white p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md">
           <div>
-            <h3 className="text-xl sm:text-2xl font-extrabold">Visit Our Clinic in Alambagh</h3>
+            <h3 className="text-xl sm:text-2xl font-extrabold">Visit Our Specialised Care Centres in Lucknow</h3>
             <p className="text-xs sm:text-sm text-blue-100 mt-1 font-normal">
-              Equipped with modern laser technology &amp; patient-focused medical care.
+              Access expert consultations, modern urological facilities, and compassionate, patient-focused care at your preferred centre.
             </p>
           </div>
           <NavLink
@@ -556,7 +556,7 @@ export default function Gallery() {
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-semibold shadow-md transition-transform hover:scale-105 active:scale-95 shrink-0"
           >
             <Calendar size={16} />
-            <span>Book Appointment</span>
+            <span>Book a Consultation</span>
             <ArrowRight size={16} />
           </NavLink>
         </div>

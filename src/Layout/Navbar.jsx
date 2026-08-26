@@ -272,7 +272,7 @@ function Navbar() {
               className="flex items-center gap-1.5 font-semibold hover:text-orange-300 transition-colors"
             >
               <Phone size={13} className="text-orange-400" />
-              <span>Call +91 72759 81480</span>
+              <span>Call +91 &nbsp;72759 81480</span>
             </a>
             <span className="hidden sm:flex items-center gap-1.5">
               <Clock size={13} className="text-orange-400" />

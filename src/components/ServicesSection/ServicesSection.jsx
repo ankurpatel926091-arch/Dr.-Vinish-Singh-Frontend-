@@ -25,10 +25,10 @@ export const servicesData = [
     description:
       "Comprehensive diagnosis and advanced surgical management of kidney stones, prostate enlargement, urinary tract disorders, and other complex urological conditions.",
     highlights: [
-      "1. RIRS & PCNL for Kidney Stones",
-      "2. HoLEP Laser Surgery for Enlarged Prostate",
-      "3. URSL & Bladder Stone Surgery",
-      "4. UTI and Urinary Obstruction Management",
+      " RIRS & PCNL for Kidney Stones",
+      " HoLEP Laser Surgery for Enlarged Prostate",
+      " URSL & Bladder Stone Surgery",
+      " UTI and Urinary Obstruction Management",
     ],
   },
   {

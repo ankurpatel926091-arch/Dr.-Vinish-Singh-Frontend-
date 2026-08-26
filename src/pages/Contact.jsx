@@ -172,9 +172,9 @@ export default function Contact() {
     <div className="bg-slate-50/60 font-sans min-h-screen">
       {/* Top Banner Hero */}
       <PageHero
-        title="CONTACT US"
-        subTitle="Get In Touch With Us"
-        description="Reach out to schedule appointments, consult regarding clinical concerns, or visit our healthcare centers in Lucknow."
+        title="CONTACT & APPOINTMENTS"
+        subTitle="Connect with Our Care Team"
+        description="Schedule a consultation or find the contact details and directions for our specialised healthcare centres in Lucknow."
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
@@ -183,15 +183,15 @@ export default function Contact() {
         <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#103F7C]/10 text-[#103F7C] border border-blue-200/80 text-xs font-extrabold uppercase tracking-wider mb-3">
             <Sparkles size={13} className="text-orange-500" />
-            <span>CONTACT US</span>
+            <span>WE’RE HERE TO ASSIST YOU</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
-            Get In Touch With Us
+            How Can We Help?
           </h1>
 
           <p className="mt-3 text-sm sm:text-base text-slate-600 font-medium leading-relaxed">
-            Reach out to schedule appointments, consult regarding clinical concerns, or visit our healthcare centers in Lucknow.
+           Contact our team for appointment scheduling, OPD timings, centre information, and consultation-related assistance.
           </p>
         </ScrollReveal>
 
