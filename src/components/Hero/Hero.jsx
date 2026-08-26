@@ -153,7 +153,7 @@ export default function Hero() {
                 <div className="bg-white rounded-2xl p-3 border border-slate-200/80 shadow-2xs h-full">
                   <div className="flex items-center gap-1.5 mb-0.5">
                     <ShieldCheck size={16} className="text-emerald-500 shrink-0" />
-                    <h4 className="text-base sm:text-lg font-extrabold text-[#103F7C]">98%</h4>
+                    <h4 className="text-base sm:text-lg font-extrabold text-[#103F7C]">99%</h4>
                   </div>
                   <p className="text-[10px] font-medium text-slate-500">Success Rate</p>
                 </div>

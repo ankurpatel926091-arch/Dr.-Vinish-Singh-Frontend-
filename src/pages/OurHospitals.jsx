@@ -248,14 +248,15 @@ export default function OurHospitals() {
         <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-10">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100/80 text-[#103F7C] text-xs font-bold uppercase tracking-wider mb-4 border border-blue-200/60 shadow-xs">
             <Building2 size={15} className="text-orange-500 animate-pulse" />
-            <span>2 Convenient Healthcare Centres in Lucknow</span>
+            <span>TWO SPECIALISED CARE CENTRES IN LUCKNOW</span>
           </div>
 
           <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Hospital Centres, Building Photos &amp; Timings
+            Choose Your Preferred Consultation Centre
+
           </h2>
           <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
-            Choose your preferred hospital location below to view center photos, clinic OPD timings, address directions, or book your direct consultation.
+            Explore centre details, facilities, OPD timings, complete addresses, directions, and appointment options to plan your consultation conveniently.
           </p>
 
           {/* Filter Tabs */}
@@ -271,9 +272,9 @@ export default function OurHospitals() {
                     : "bg-white text-slate-600 hover:text-[#103F7C] hover:bg-slate-100 border border-slate-200"
                 }`}
               >
-                {tab === "All" && "🏥 All Hospitals & Clinics"}
-                {tab === "Morning OPD" && "🌅 Morning OPD (Sharda Nagar)"}
-                {tab === "Evening OPD" && "🌆 Evening OPD (Ring Road)"}
+                {tab === "All" && "🏥 All Consultation Centres"}
+                {tab === "Morning OPD" && "🌅 Rudraksh IVF & Urology Centre"}
+                {tab === "Evening OPD" && "🌆 Dr. Shilpi Maternity & Urology Centre"}
               </button>
             ))}
           </div>
@@ -339,76 +340,76 @@ export default function OurHospitals() {
                     {/* Info Cards: Timing, Phone, Address */}
                     <div className="space-y-3 mb-6 text-xs sm:text-sm text-slate-700">
                       {/* Timing */}
-                      <div className="flex items-center gap-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-100 hover:border-slate-200 transition-colors">
-                        <div className="w-9 h-9 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center shrink-0 shadow-xs">
-                          <Clock size={18} />
+                      <div className="flex items-center gap-3 bg-slate-50 p-3.5 sm:p-4 rounded-2xl border border-slate-100 hover:border-slate-200 transition-colors">
+                        <div className="w-10 h-10 rounded-xl bg-orange-100 text-orange-600 flex items-center justify-center shrink-0 shadow-xs">
+                          <Clock size={20} />
                         </div>
                         <div>
-                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                          <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">
                             OPD Consultation Hours
                           </span>
-                          <span className="font-extrabold text-slate-900 text-sm">
+                          <span className="font-extrabold text-slate-900 text-sm sm:text-base">
                             {hosp.timing}
                           </span>
                         </div>
                       </div>
 
                       {/* Phone */}
-                      <div className="flex items-center gap-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-100 hover:border-slate-200 transition-colors">
-                        <div className="w-9 h-9 rounded-xl bg-blue-100 text-[#103F7C] flex items-center justify-center shrink-0 shadow-xs">
-                          <Phone size={18} />
+                      <div className="flex items-center gap-3 bg-slate-50 p-3.5 sm:p-4 rounded-2xl border border-slate-100 hover:border-slate-200 transition-colors">
+                        <div className="w-10 h-10 rounded-xl bg-blue-100 text-[#103F7C] flex items-center justify-center shrink-0 shadow-xs">
+                          <Phone size={20} />
                         </div>
                         <div className="flex-1 flex items-center justify-between gap-2">
                           <div>
-                            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                            <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">
                               Appointments &amp; Helpline
                             </span>
                             <a
                               href={hosp.phoneRaw}
-                              className="font-extrabold text-[#103F7C] hover:underline text-sm"
+                              className="font-extrabold text-[#103F7C] hover:underline text-sm sm:text-base"
                             >
                               {hosp.phone}
                             </a>
                           </div>
                           <a
                             href={hosp.phoneRaw}
-                            className="px-3.5 py-1.5 rounded-full bg-[#103F7C] hover:bg-blue-900 text-white text-xs font-bold transition-all shadow-xs shrink-0 flex items-center gap-1"
+                            className="px-4 py-1.5 rounded-full bg-[#103F7C] hover:bg-blue-900 text-white text-xs sm:text-sm font-bold transition-all shadow-xs shrink-0 flex items-center gap-1.5"
                           >
-                            <Phone size={12} />
+                            <Phone size={13} />
                             <span>Call</span>
                           </a>
                         </div>
                       </div>
 
                       {/* Address */}
-                      <div className="flex items-start gap-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-100 hover:border-slate-200 transition-colors">
-                        <div className="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
-                          <MapPin size={18} />
+                      <div className="flex items-start gap-3 bg-slate-50 p-3.5 sm:p-4 rounded-2xl border border-slate-100 hover:border-slate-200 transition-colors">
+                        <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-0.5 shadow-xs">
+                          <MapPin size={20} />
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center justify-between gap-2">
-                            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                            <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">
                               Full Hospital Address
                             </span>
                             <button
                               type="button"
                               onClick={() => handleCopyAddress(hosp.id, hosp.address)}
-                              className="text-[11px] font-bold text-[#103F7C] hover:text-orange-600 flex items-center gap-1 transition-colors cursor-pointer"
+                              className="text-xs font-bold text-[#103F7C] hover:text-orange-600 flex items-center gap-1 transition-colors cursor-pointer"
                             >
                               {copiedId === hosp.id ? (
                                 <>
-                                  <Check size={12} className="text-emerald-600" />
+                                  <Check size={13} className="text-emerald-600" />
                                   <span className="text-emerald-600">Copied!</span>
                                 </>
                               ) : (
                                 <>
-                                  <Copy size={12} />
+                                  <Copy size={13} />
                                   <span>Copy</span>
                                 </>
                               )}
                             </button>
                           </div>
-                          <p className="text-xs text-slate-700 font-medium leading-relaxed mt-1">
+                          <p className="text-xs sm:text-sm text-slate-700 font-medium leading-relaxed mt-1">
                             {hosp.address}
                           </p>
                         </div>
@@ -417,16 +418,16 @@ export default function OurHospitals() {
 
                     {/* Facility Tags */}
                     <div className="mb-6">
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-2">
+                      <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-2">
                         Key Services &amp; Facilities:
                       </span>
                       <div className="flex flex-wrap gap-1.5">
                         {hosp.facilities.map((fac, i) => (
                           <span
                             key={i}
-                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-blue-50/80 text-[#103F7C] text-[11px] font-semibold border border-blue-100"
+                            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-blue-50/80 text-[#103F7C] text-xs sm:text-[13px] font-semibold border border-blue-100"
                           >
-                            <CheckCircle2 size={11} className="text-emerald-600" />
+                            <CheckCircle2 size={13} className="text-emerald-600" />
                             <span>{fac}</span>
                           </span>
                         ))}
@@ -553,7 +554,7 @@ export default function OurHospitals() {
                     <IconComp size={20} />
                   </div>
                   <h4 className="font-bold text-sm text-white">{item.title}</h4>
-                  <p className="text-xs text-blue-100 mt-1.5 leading-relaxed text-justify">{item.desc}</p>
+                  <p className="text-xs text-blue-100 mt-1.5 leading-relaxed">{item.desc}</p>
                 </div>
               );
             })}

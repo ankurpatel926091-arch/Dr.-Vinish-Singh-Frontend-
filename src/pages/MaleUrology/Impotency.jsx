@@ -40,7 +40,7 @@ export default function Impotency() {
         },
         {
           title: "3-Piece Inflatable Penile Prosthesis",
-          desc: "Surgical implant providing natural feel, rigidity, and flaccidity on demand with 98% satisfaction.",
+          desc: "Surgical implant providing natural feel, rigidity, and flaccidity on demand with 99% satisfaction.",
           tag: "Permanent Solution",
         },
       ]}

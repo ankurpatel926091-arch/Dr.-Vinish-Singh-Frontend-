@@ -20,24 +20,22 @@ const ORANGE = "#F5821F";
 const quickLinks = [
   { name: "Home", path: "/" },
   { name: "About Dr. Vinish", path: "/about/dr-vinish-kumar-singh" },
+  { name: "Specialities", path: "/services/urology" },
   { name: "Our Centres", path: "/about/our-hospitals" },
   { name: "Blogs", path: "/blogs" },
   { name: "Gallery", path: "/gallery" },
-  { name: "Contact Us ", path: "/contact" },
-  { name: "Book Appointment", path: "/#book-appointment" },
-  
-  
-  
+  { name: "Contact Us", path: "/contact" },
+  { name: "Book Appointment", path: "/book-appointment" },
 ];
 
 const conditions = [
   { name: "Kidney Stone Treatment – RIRS, PCNL & URSL", path: "/conditions/kidney-stone" },
   { name: "Laser Prostate Surgery – HoLEP", path: "/conditions/prostate" },
-  { name: "Painless PCNL & URSL", path: "/conditions/kidney-stone" },
   { name: "Bladder Stone Treatment", path: "/conditions/bladder-stone" },
-  { name: "MMale Infertility & Andrology", path: "/andrology/male-infertility" },
-  { name: "Erectile Dysfunction", path: "/andrology/erectile-dysfunction" },
-  { name: "Recurrent Female UTI", path: "/female/uti" },
+  { name: "Reconstructive Urology", path: "/conditions/urethral-stricture" },
+  { name: "Male Infertility & Andrology", path: "/andrology/male-infertility" },
+  { name: "Paediatric Urology", path: "/paediatric/urinary-problems" },
+  { name: "Renal Transplant Care", path: "/services/renal-transplant" },
 ];
 
 function Footer() {
@@ -63,9 +61,8 @@ function Footer() {
               </div>
             </Link>
             
-            <p className="text-sm text-blue-100/90 leading-relaxed font-normal mb-3 text-justify">
+            <p className="text-sm text-blue-100/90 leading-relaxed font-normal mb-3">
               Dr. Vinish Kumar Singh is a Consultant Urologist, Andrologist, and Renal Transplant Surgeon in Lucknow, providing advanced, ethical, and patient-centred care for a wide range of urological conditions.
-
             </p>
             {/* Social Media Links */}
             <div className="flex items-center gap-2">

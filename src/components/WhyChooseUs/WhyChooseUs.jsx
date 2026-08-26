@@ -123,7 +123,7 @@ export default function WhyChooseUs() {
             Why Choose Dr. Vinish Kumar Singh?
           </h2>
 
-          <p className="mt-2.5 text-sm sm:text-base text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed text-justify">
+          <p className="mt-2.5 text-sm sm:text-base text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed">
             Combining extensive surgical expertise, advanced M.Ch. training, modern laser technology, and a compassionate, patient-first approach to deliver precise and personalised urological care in Lucknow.
           </p>
 
@@ -189,7 +189,7 @@ export default function WhyChooseUs() {
                         {item.title}
                       </h3>
 
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium text-justify">
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
                         {item.desc}
                       </p>
                     </div>
@@ -277,7 +277,7 @@ export default function WhyChooseUs() {
               </div>
 
               <div className="p-3 border-l border-white/15">
-                <h4 className="text-3xl sm:text-4xl font-extrabold text-orange-400">98%</h4>
+                <h4 className="text-3xl sm:text-4xl font-extrabold text-orange-400">99%</h4>
                 <p className="text-xs sm:text-sm text-blue-100 mt-1 font-semibold">Patient Satisfaction</p>
                 <p className="text-[12px] text-blue-200/80 mt-0.5">Trusted & Ethical Care</p>
               </div>

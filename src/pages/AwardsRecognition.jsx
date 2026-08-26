@@ -166,7 +166,7 @@ export default function AwardsRecognition() {
             <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#103F7C] flex items-center justify-center mb-3">
               <ShieldCheck size={20} />
             </div>
-            <h4 className="font-extrabold text-xl text-[#103F7C]">98%</h4>
+            <h4 className="font-extrabold text-xl text-[#103F7C]">99%</h4>
             <p className="text-xs font-medium text-slate-500 mt-0.5">Success Rate</p>
           </div>
         </ScrollReveal>

@@ -321,7 +321,7 @@ export default function ConditionPage({
                           {idx % 2 === 0 ? <Activity size={20} /> : <ShieldCheck size={20} />}
                         </div>
                         <h4 className="font-extrabold text-slate-900 text-base sm:text-lg group-hover:text-[#103F7C] transition-colors">{card.title}</h4>
-                        <p className="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed font-normal text-left sm:text-justify">{card.desc}</p>
+                        <p className="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed font-normal text-left">{card.desc}</p>
                       </div>
                     </ScrollReveal>
                   ))}
@@ -351,7 +351,7 @@ export default function ConditionPage({
                           <h4 className="font-extrabold text-slate-900 text-base sm:text-[15px] leading-snug group-hover:text-[#103F7C] transition-colors">
                             {item.title}
                           </h4>
-                          <p className="text-xs sm:text-[13px] text-slate-600 mt-2 leading-relaxed font-normal text-left sm:text-justify">
+                          <p className="text-xs sm:text-[13px] text-slate-600 mt-2 leading-relaxed font-normal text-left">
                             {item.desc}
                           </p>
                         </div>
@@ -459,7 +459,7 @@ export default function ConditionPage({
                         </div>
                         <span className="leading-snug">{sym.title}</span>
                       </div>
-                      <p className="text-xs sm:text-base text-slate-600 leading-relaxed font-normal mt-2 text-left sm:text-justify">{sym.desc}</p>
+                      <p className="text-xs sm:text-base text-slate-600 leading-relaxed font-normal mt-2 text-left">{sym.desc}</p>
                     </div>
                   </ScrollReveal>
                 ))}

@@ -154,7 +154,7 @@ export default function BlogSection() {
                     </h3>
 
                     {/* Excerpt */}
-                    <p className="text-xs sm:text-sm text-slate-500 font-normal leading-relaxed line-clamp-3 text-justify">
+                    <p className="text-xs sm:text-sm text-slate-500 font-normal leading-relaxed line-clamp-3">
                       {blog.excerpt}
                     </p>
                   </div>

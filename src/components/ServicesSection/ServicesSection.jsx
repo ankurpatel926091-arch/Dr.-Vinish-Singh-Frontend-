@@ -155,7 +155,7 @@ Delivering comprehensive urological care through advanced laser procedures, mini
                       </p>
 
                       {/* Description */}
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal mb-5 text-justify">
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal mb-5">
                         {service.description}
                       </p>
 

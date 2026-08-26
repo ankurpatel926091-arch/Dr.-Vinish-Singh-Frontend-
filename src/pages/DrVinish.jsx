@@ -36,7 +36,7 @@ import {
 import { FaXTwitter } from "react-icons/fa6";
 
 import doctorImage from "../assets/doctor.jpg";
-import headerBannerBg from "../assets/About/DrVinishKumarSingh.png";
+import headerBannerBg from "../assets/About/About .png";
 import PageHero from "../components/PageHero";
 import DoctorProfileCard from "../components/DoctorProfileCard/DoctorProfileCard";
 import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
@@ -303,7 +303,7 @@ export default function DrVinishKumarSingh() {
       <PageHero
         title="Consultant Urologist & Transplant Surgeon"
         subTitle="Dr. Vinish Kumar Singh"
-        description="M.B.B.S. (KGMU), M.S. (General Surgery), FIAGES, M.Ch (Urology - INU Bangalore) | Associate Professor in TSM Medical College | 15+ Years Clinical Practice & 5000+ Laser Surgeries"
+        // description="M.B.B.S. (KGMU), M.S. (General Surgery), FIAGES, M.Ch (Urology - INU Bangalore) | Associate Professor in TSM Medical College | 15+ Years Clinical Practice & 5000+ Laser Surgeries"
         bgImage={headerBannerBg}
       />
 
@@ -344,7 +344,7 @@ export default function DrVinishKumarSingh() {
                     </h3>
                     
                     <p className="text-xs sm:text-sm text-blue-100 font-semibold mt-1 drop-shadow-xs">
-                      M.B.B.S. (KGMU), M.S. (Surgery), FIAGES, M.Ch (Urology - INU)
+                      M.B.B.S. (KGMU), M.S. (General Surgery), FIAGES, M.Ch (Urology - INU Bangalore) | Associate Professor in TSM Medical College
                     </p>
                   </div>
                 </div>
@@ -374,7 +374,7 @@ export default function DrVinishKumarSingh() {
                     className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-xs sm:text-sm shadow-md shadow-orange-500/20 transition-all duration-300 hover:scale-[1.02] active:scale-98"
                   >
                     <Calendar size={17} />
-                    <span>Book Appointment</span>
+                    <span>Book a Consultation</span>
                     <ArrowRight size={16} />
                   </NavLink>
 
@@ -450,13 +450,14 @@ export default function DrVinishKumarSingh() {
           <ScrollReveal variant="slide-left" delay={150} className="lg:col-span-7 flex flex-col items-start">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-100/70 text-[#103F7C] border border-blue-200/70 text-xs font-extrabold uppercase tracking-wider mb-3">
               <Sparkles size={13} className="text-orange-500" />
-              <span>Medical Profile &amp; Clinical Leadership</span>
+              <span>EXPERTISE • EXPERIENCE • EXCELLENCE</span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight tracking-tight">
-              Leading Consultant Urologist &amp;{" "}
+              Advanced Urological Care with {" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#103F7C] via-blue-800 to-orange-500">
-                Transplant Surgeon
+                Surgical Precision
+
               </span>
             </h1>
 
@@ -468,11 +469,11 @@ export default function DrVinishKumarSingh() {
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white border border-slate-200 text-slate-700 text-xs font-bold shadow-2xs">
                 <Briefcase size={14} className="text-orange-500" />
-                <span>15+ Years Clinical Practice</span>
+                <span> Specialised Urology Expertise</span>
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white border border-slate-200 text-slate-700 text-xs font-bold shadow-2xs">
                 <Activity size={14} className="text-emerald-600" />
-                <span>5,000+ Laser Procedures</span>
+                <span>Advanced Laser Procedures</span>
               </span>
             </div>
 
@@ -481,21 +482,7 @@ export default function DrVinishKumarSingh() {
               <DoctorProfileCard />
             </div>
 
-            {/* Doctor's Personal Statement Quote Card */}
-            <div className="my-6 p-5 sm:p-6 rounded-2xl bg-gradient-to-r from-blue-50/90 via-sky-50/60 to-orange-50/80 border-l-4 border-[#103F7C] relative shadow-sm w-full">
-              <Quote className="absolute top-4 right-5 text-[#103F7C]/15" size={36} />
-              <p className="text-xs sm:text-sm italic font-medium text-slate-700 leading-relaxed relative z-10">
-                &ldquo;I was brought up in an environment that upheld simplicity and hard work, and always taught me to respect age and experience. I believe in striving hard despite of adversities, and depend on my positive thinking to overcome difficult situations. I have a strong desire to provide the best possible care for my patients through pursuit of academic and surgical excellence. Nonetheless, I keep in mind that the human side of a caregiver is paramount in aiding the healing process.&rdquo;
-              </p>
-              <div className="mt-3 flex items-center justify-between border-t border-slate-200/60 pt-3 relative z-10">
-                <span className="text-xs font-extrabold text-[#103F7C] uppercase tracking-wider">
-                  — Dr. Vinish Kumar Singh
-                </span>
-                <span className="text-[11px] font-bold text-orange-600 bg-orange-100/70 px-2.5 py-0.5 rounded-full">
-                  Lead Consultant Urosurgeon
-                </span>
-              </div>
-            </div>
+          
 
             {/* Key Clinical Appointments Summary */}
             <div className="grid sm:grid-cols-2 gap-3.5 w-full">
@@ -907,7 +894,7 @@ export default function DrVinishKumarSingh() {
             className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-bold shadow-md transition-all hover:scale-105 active:scale-95 shrink-0"
           >
             <Calendar size={16} />
-            <span>Book Appointment</span>
+            <span>Book a Consultation</span>
             <ArrowRight size={16} />
           </NavLink>
         </div>
