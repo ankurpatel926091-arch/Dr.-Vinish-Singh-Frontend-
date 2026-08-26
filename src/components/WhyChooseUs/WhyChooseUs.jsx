@@ -120,11 +120,15 @@ export default function WhyChooseUs() {
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
-            Why Choose Dr. Vinish Kumar Singh?
+            Why Choose{" "}
+            <span className="text-[#103F7C]">Dr. Vinish</span>{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-600">
+              Kumar Singh?
+            </span>
           </h2>
 
-          <p className="mt-2.5 text-sm sm:text-base text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed">
-            Combining extensive surgical expertise, advanced M.Ch. training, modern laser technology, and a compassionate, patient-first approach to deliver precise and personalised urological care in Lucknow.
+          <p className="mt-2.5 text-sm sm:text-lg text-slate-500 leading-relaxed font-normal max-w-2xl mx-auto">
+            Combining extensive surgical expertise, advanced M.Ch. training, modern laser technology, and a compassionate, patient-first approach to deliver <p></p> precise and personalised urological care in Lucknow.
           </p>
 
           {/* Sub Navigation Switcher Tabs */}

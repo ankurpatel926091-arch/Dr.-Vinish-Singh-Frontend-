@@ -146,16 +146,22 @@ Delivering comprehensive urological care through advanced laser procedures, mini
                       </div>
 
                       {/* Title & Subtitle */}
-                      <h3 className="font-extrabold text-slate-900 text-xl sm:text-2xl leading-snug mb-1.5">
-                        {service.title}
+                      <h3 className="font-extrabold text-slate-900 text-xl sm:text-2xl leading-snug mb-1.5 min-h-[3.5rem]">
+                        {service.id === "renal-transplant" ? (
+                          <>
+                            Renal Transplant <br className="hidden sm:block" />Care
+                          </>
+                        ) : (
+                          service.title
+                        )}
                       </h3>
 
-                      <p className="text-xs sm:text-[12.5px] font-extrabold text-orange-600 mb-3.5 uppercase tracking-wider">
+                      <p className="text-xs sm:text-[12.5px] font-extrabold text-orange-600 mb-3.5 uppercase tracking-wider min-h-[2.5rem] flex items-center">
                         {service.subtitle}
                       </p>
 
                       {/* Description */}
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal mb-5">
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal mb-5 min-h-[4.25rem]">
                         {service.description}
                       </p>
 
@@ -184,44 +190,42 @@ Delivering comprehensive urological care through advanced laser procedures, mini
 
         {/* ================= BOTTOM QUALITY ASSURANCE BANNER ================= */}
         <ScrollReveal variant="fade-up" delay={300} className="mt-12">
-          <div className="bg-white rounded-2xl p-6 border border-slate-200/90 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-5 text-center sm:text-left">
-            <div className="flex items-center gap-4">
+          <div className="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/90 shadow-sm flex flex-col lg:flex-row items-center justify-between gap-5 text-center lg:text-left">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 text-center sm:text-left">
               <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center shrink-0 shadow-2xs">
                 <ShieldCheck size={24} />
               </div>
               <div>
                 <h4 className="text-base sm:text-lg font-extrabold text-slate-900 leading-snug">
-                  15+ Years of Surgical Excellence & 5,000+ Successful Procedures
+                  15+ Years of Surgical Excellence &amp; 5,000+ Successful Procedures
                 </h4>
-                <p className="text-xs sm:text-sm text-slate-600 font-medium mt-0.5">
-                  Leading advanced urological care at {" "}
+                <p className="text-xs sm:text-sm text-slate-600 font-medium mt-1 leading-relaxed">
+                  Leading advanced urological care at{" "}
                   <a
                     href="https://maps.app.goo.gl/jbynbpoL5PcKca4Z9"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-bold text-orange-600 hover:underline inline-flex items-center gap-1"
+                    className="font-bold text-orange-600 hover:underline"
                   >
                     Rudraksh IVF &amp; Urology Centre
-                    {/* <MapPin size={13} className="text-orange-500 shrink-0 inline" /> */}
                   </a>{" "}
                   &amp;{" "}
                   <a
                     href="https://maps.app.goo.gl/w9mqio5fe4Hj8KLm9"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-bold text-[#103F7C] hover:underline inline-flex items-center gap-1"
+                    className="font-bold text-[#103F7C] hover:underline"
                   >
                     Dr. Shilpi Maternity &amp; Urology Centre
-                    {/* <MapPin size={13} className="text-[#103F7C] shrink-0 inline" /> */}
-                  </a>{" "}
-                  ,Lucknow.
+                  </a>
+                  , Lucknow.
                 </p>
               </div>
             </div>
 
             <NavLink
               to="/#book-appointment"
-              className="px-6 py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-extrabold shrink-0 transition-all hover:scale-105 shadow-md"
+              className="w-full sm:w-auto px-6 py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-extrabold shrink-0 transition-all hover:scale-105 shadow-md text-center"
             >
               Book Appointment
             </NavLink>

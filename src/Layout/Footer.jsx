@@ -51,17 +51,17 @@ function Footer() {
           
           {/* ================= COL 1: DOCTOR BRANDING & PROFILE ================= */}
           <div className="w-full sm:w-[48%] lg:w-[24%] flex flex-col items-start shrink-0">
-            <Link to="/" className="inline-block mb-3 group">
-              <div className="bg-white px-4 py-2 rounded-2xl border border-white/20 shadow-md transition-transform duration-300 group-hover:scale-105 inline-block">
+            <Link to="/" className="block mb-3 group w-full max-w-[280px]">
+              <div className="bg-white px-4 py-2.5 rounded-2xl border border-white/20 shadow-md transition-transform duration-300 group-hover:scale-[1.02] flex items-center justify-center w-full">
                 <img
                   src={logo}
                   alt="Dr. Vinish Kumar Singh Logo"
-                  className="h-12 sm:h-16 w-auto object-contain max-w-[220px] sm:max-w-[250px]"
+                  className="h-12 sm:h-14 w-auto object-contain max-w-full"
                 />
               </div>
             </Link>
             
-            <p className="text-sm text-blue-100/90 leading-relaxed font-normal mb-3">
+            <p className="text-[15px] sm:text-base text-blue-100/95 leading-relaxed font-medium mb-3.5 max-w-[280px]">
               Dr. Vinish Kumar Singh is a Consultant Urologist, Andrologist, and Renal Transplant Surgeon in Lucknow, providing advanced, ethical, and patient-centred care for a wide range of urological conditions.
             </p>
             {/* Social Media Links */}
