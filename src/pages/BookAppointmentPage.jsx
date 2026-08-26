@@ -117,6 +117,7 @@ export default function BookAppointmentPage() {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [formErrors, setFormErrors] = useState({});
   const [lastSubmittedPhone, setLastSubmittedPhone] = useState("");
   const [currentStep, setCurrentStep] = useState(1);
 
@@ -129,6 +130,51 @@ export default function BookAppointmentPage() {
     consultationType: "First Visit",
     message: "",
   });
+
+  const validateField = (name, value) => {
+    let error = "";
+    if (name === "name") {
+      const trimmed = value.trim();
+      if (!trimmed) {
+        error = "Name is required.";
+      } else if (trimmed.length < 2) {
+        error = "Name must be at least 2 characters long.";
+      } else if (!/^[a-zA-Z\s.'-]+$/.test(trimmed)) {
+        error = "Name should contain only letters and spaces.";
+      }
+    } else if (name === "phone") {
+      const trimmed = value.trim();
+      const cleaned = trimmed.replace(/[\s\-\+\(\)]/g, "");
+      const digitsOnly =
+        cleaned.startsWith("91") && cleaned.length === 12
+          ? cleaned.slice(2)
+          : cleaned.startsWith("0") && cleaned.length === 11
+          ? cleaned.slice(1)
+          : cleaned;
+
+      if (!trimmed) {
+        error = "Phone number is required.";
+      } else if (!/^[6-9]\d{9}$/.test(digitsOnly)) {
+        error = "Please enter a valid 10-digit Indian mobile number (e.g. 9876543210).";
+      }
+    }
+    return error;
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    // Strictly prevent numbers and special characters from being typed in Name field
+    if (name === "name" && value && !/^[a-zA-Z\s.'-]*$/.test(value)) {
+      return;
+    }
+    // Strictly allow only numbers and phone symbols in Phone field
+    if (name === "phone" && value && !/^[0-9\s\-\+\(\)]*$/.test(value)) {
+      return;
+    }
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    const error = validateField(name, value);
+    setFormErrors((prev) => ({ ...prev, [name]: error }));
+  };
 
   // Derived active hospital information for dynamic UI
   const isEveningSelected =
@@ -189,13 +235,19 @@ export default function BookAppointmentPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.name.trim() || !formData.phone.trim()) {
-      setErrorMessage("Please fill in all required fields (*).");
+
+    const nameErr = validateField("name", formData.name);
+    const phoneErr = validateField("phone", formData.phone);
+
+    if (nameErr || phoneErr) {
+      setFormErrors({ name: nameErr, phone: phoneErr });
+      setErrorMessage("Please correct the highlighted errors before submitting.");
       return;
     }
 
     setIsSubmitting(true);
     setErrorMessage("");
+    setFormErrors({});
 
     try {
       const getApiUrls = () => {
@@ -659,14 +711,23 @@ export default function BookAppointmentPage() {
                           </label>
                           <input
                             type="text"
+                            name="name"
                             required
                             placeholder="Enter Your Full Name"
                             value={formData.name}
-                            onChange={(e) =>
-                              setFormData({ ...formData, name: e.target.value })
-                            }
-                            className="w-full px-4 py-3.5 rounded-2xl border border-slate-200 bg-slate-50/50 focus:bg-white text-sm font-semibold text-[#0f2a4a] focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-all"
+                            onChange={handleInputChange}
+                            className={`w-full px-4 py-3.5 rounded-2xl border text-sm font-semibold text-[#0f2a4a] focus:outline-none transition-all ${
+                              formErrors.name
+                                ? "border-red-400 focus:border-red-500 focus:ring-2 focus:ring-red-100 bg-red-50/20"
+                                : "border-slate-200 bg-slate-50/50 focus:bg-white focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500"
+                            }`}
                           />
+                          {formErrors.name && (
+                            <p className="text-[11px] font-bold text-red-500 mt-1.5 flex items-center gap-1">
+                              <AlertCircle size={12} className="shrink-0" />
+                              <span>{formErrors.name}</span>
+                            </p>
+                          )}
                         </div>
 
                         <div>
@@ -675,14 +736,24 @@ export default function BookAppointmentPage() {
                           </label>
                           <input
                             type="tel"
+                            name="phone"
                             required
-                            placeholder="+91 98765 43210"
+                            maxLength={15}
+                            placeholder="Enter 10-Digit Mobile Number"
                             value={formData.phone}
-                            onChange={(e) =>
-                              setFormData({ ...formData, phone: e.target.value })
-                            }
-                            className="w-full px-4 py-3.5 rounded-2xl border border-slate-200 bg-slate-50/50 focus:bg-white text-sm font-semibold text-[#0f2a4a] focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-all"
+                            onChange={handleInputChange}
+                            className={`w-full px-4 py-3.5 rounded-2xl border text-sm font-semibold text-[#0f2a4a] focus:outline-none transition-all ${
+                              formErrors.phone
+                                ? "border-red-400 focus:border-red-500 focus:ring-2 focus:ring-red-100 bg-red-50/20"
+                                : "border-slate-200 bg-slate-50/50 focus:bg-white focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500"
+                            }`}
                           />
+                          {formErrors.phone && (
+                            <p className="text-[11px] font-bold text-red-500 mt-1.5 flex items-center gap-1">
+                              <AlertCircle size={12} className="shrink-0" />
+                              <span>{formErrors.phone}</span>
+                            </p>
+                          )}
                         </div>
                       </div>
 

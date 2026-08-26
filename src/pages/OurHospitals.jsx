@@ -289,7 +289,7 @@ export default function OurHospitals() {
         <div
           className={
             filteredHospitals.length === 1
-              ? "mb-16 max-w-6xl mx-auto"
+              ? "mb-16 w-full"
               : "grid lg:grid-cols-2 gap-8 lg:gap-10 mb-16"
           }
         >

@@ -485,7 +485,7 @@ export default function DrVinishKumarSingh() {
           
 
             {/* Key Clinical Appointments Summary */}
-            <div className="grid sm:grid-cols-2 gap-3.5 w-full">
+            <div className="grid sm:grid-cols-2 gap-3.5 w-full mt-4 sm:mt-5">
               <div className="bg-white p-3.5 rounded-2xl border border-slate-200/90 shadow-2xs flex items-center gap-3.5 hover:border-blue-300 transition-colors">
                 <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#103F7C] flex items-center justify-center shrink-0 font-bold border border-blue-100">
                   <Building2 size={20} />

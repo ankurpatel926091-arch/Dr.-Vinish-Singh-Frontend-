@@ -257,6 +257,18 @@ function Navbar() {
     closeAllMenus();
   }, [location.pathname]);
 
+  // Lock body scroll when mobile menu is open to allow 100% touch scrolling inside drawer
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
   const toggleMobileDropdown = (label) => {
     setActiveMobileDropdown((prev) => (prev === label ? null : label));
   };
@@ -624,7 +636,11 @@ function Navbar() {
               transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
               className="nav-mobile-drawer overflow-hidden"
             >
-              <div className="bg-slate-50/95 backdrop-blur-md border-t border-slate-200/80 px-4 py-4 max-h-[80vh] overflow-y-auto">
+              <div
+                data-lenis-prevent="true"
+                data-lenis-prevent-touch="true"
+                className="bg-slate-50/95 backdrop-blur-md border-t border-slate-200/80 px-4 py-4 max-h-[calc(100vh-100px)] overflow-y-auto overscroll-contain touch-pan-y"
+              >
             <div className="flex flex-col gap-2">
               {navLinks.map((item) => (
                 <div
