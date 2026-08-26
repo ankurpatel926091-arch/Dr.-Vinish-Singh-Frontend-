@@ -407,8 +407,8 @@ function Navbar() {
                           /* ================= 2-COLUMN UROLOGY GUIDE MENU ================= */
                           <div className="w-[1060px] xl:w-[1140px] max-w-[95vw] rounded-3xl bg-white p-4 lg:p-5 shadow-[0_25px_60px_-15px_rgba(16,63,124,0.2)] border border-slate-200 ring-1 ring-slate-900/5">
                             <div className="grid grid-cols-12 gap-4 lg:gap-5">
-                              {/* Left Card: Male Urology Guide (Col Span 7 - 2 Column Subgrid: 4 Left, 4 Right) */}
-                              <div className="col-span-7 bg-slate-50/70 rounded-2xl p-3.5 sm:p-4 border border-slate-200/70 flex flex-col space-y-3">
+                              {/* Left Card: Male Urology Guide (Col Span 6 - 2 Column Subgrid: 4 Left, 4 Right) */}
+                              <div className="col-span-6 bg-slate-50/70 rounded-2xl p-3.5 sm:p-4 border border-slate-200/70 flex flex-col space-y-3">
                                 {/* Card Header */}
                                 <div className="flex items-center justify-between pb-2.5 border-b border-slate-200/60">
                                   <h4 className="font-extrabold text-[#103F7C] text-[15px] sm:text-[16px] xl:text-[17px] tracking-tight">
@@ -456,8 +456,8 @@ function Navbar() {
                                 </div>
                               </div>
 
-                              {/* Right Card: Female Urology Guide (Col Span 5 - 1 Column Stacked List) */}
-                              <div className="col-span-5 bg-slate-50/70 rounded-2xl p-3.5 sm:p-4 border border-slate-200/70 flex flex-col space-y-3">
+                              {/* Right Card: Female Urology Guide (Col Span 6 - 2 Column Subgrid: 3 Left, 3 Right) */}
+                              <div className="col-span-6 bg-slate-50/70 rounded-2xl p-3.5 sm:p-4 border border-slate-200/70 flex flex-col space-y-3">
                                 {/* Card Header */}
                                 <div className="flex items-center justify-between pb-2.5 border-b border-slate-200/60">
                                   <h4 className="font-extrabold text-[#103F7C] text-[15px] sm:text-[16px] xl:text-[17px] tracking-tight">
@@ -468,8 +468,8 @@ function Navbar() {
                                   </div>
                                 </div>
 
-                                {/* Stacked List of 6 Items */}
-                                <div className="space-y-1.5 flex-1 flex flex-col justify-between">
+                                {/* 2-Column Subgrid (3 Left Side, 3 Right Side) */}
+                                <div className="grid grid-cols-2 gap-2.5">
                                   {item.guideColumns[1].items.map((sub, sIdx) => {
                                     const SubIcon = sub.icon;
                                     return (
