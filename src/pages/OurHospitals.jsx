@@ -572,25 +572,27 @@ export default function OurHospitals() {
         </ScrollReveal>
 
         {/* Why Patients Choose Our Hospitals Highlights Grid */}
-        <ScrollReveal variant="fade-up" delay={200} className="mt-14 rounded-3xl bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#103F7C] text-white p-8 sm:p-12 shadow-lg">
+        <ScrollReveal variant="fade-up" delay={200} className="mt-14 rounded-3xl bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#103F7C] text-white p-6 sm:p-10 lg:p-12 shadow-lg">
           <div className="text-center max-w-xl mx-auto mb-8">
             <h3 className="text-2xl font-extrabold">Comprehensive Urologic Care in Lucknow</h3>
             <p className="text-xs sm:text-sm text-blue-100 mt-1">Advanced diagnosis, personalised treatment, and compassionate care delivered across two specialised healthcare centres.</p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5">
             {hospitalHighlights.map((item, idx) => {
               const IconComp = item.icon;
               return (
                 <div
                   key={idx}
-                  className="bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/15 hover:bg-white/15 transition-colors"
+                  className="bg-white/10 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/15 hover:bg-white/15 transition-all duration-300 flex flex-col justify-between h-full"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center mb-3 shadow-md">
-                    <IconComp size={20} />
+                  <div>
+                    <div className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center mb-3 shadow-md">
+                      <IconComp size={20} />
+                    </div>
+                    <h4 className="font-bold text-sm text-white leading-snug">{item.title}</h4>
+                    <p className="text-xs text-blue-100 mt-1.5 leading-relaxed">{item.desc}</p>
                   </div>
-                  <h4 className="font-bold text-sm text-white">{item.title}</h4>
-                  <p className="text-xs text-blue-100 mt-1.5 leading-relaxed">{item.desc}</p>
                 </div>
               );
             })}
