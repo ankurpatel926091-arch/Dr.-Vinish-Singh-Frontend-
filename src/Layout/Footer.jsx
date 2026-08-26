@@ -20,19 +20,22 @@ const ORANGE = "#F5821F";
 const quickLinks = [
   { name: "Home", path: "/" },
   { name: "About Dr. Vinish", path: "/about/dr-vinish-kumar-singh" },
-  { name: "Our Hospitals", path: "/about/our-hospitals" },
-  { name: "Qualifications", path: "/about/qualifications" },
+  { name: "Our Centres", path: "/about/our-hospitals" },
   { name: "Blogs", path: "/blogs" },
-  { name: "Photo Gallery", path: "/gallery" },
-  { name: "Contact ", path: "/contact" },
+  { name: "Gallery", path: "/gallery" },
+  { name: "Contact Us ", path: "/contact" },
+  { name: "Book Appointment", path: "/#book-appointment" },
+  
+  
+  
 ];
 
 const conditions = [
-  { name: "Laser Kidney Stone (RIRS)", path: "/conditions/kidney-stone" },
-  { name: "Prostate Surgery (HolEP)", path: "/conditions/prostate" },
+  { name: "Kidney Stone Treatment – RIRS, PCNL & URSL", path: "/conditions/kidney-stone" },
+  { name: "Laser Prostate Surgery – HoLEP", path: "/conditions/prostate" },
   { name: "Painless PCNL & URSL", path: "/conditions/kidney-stone" },
-  { name: "Bladder Stone Surgery", path: "/conditions/bladder-stone" },
-  { name: "Male Infertility Care", path: "/andrology/male-infertility" },
+  { name: "Bladder Stone Treatment", path: "/conditions/bladder-stone" },
+  { name: "MMale Infertility & Andrology", path: "/andrology/male-infertility" },
   { name: "Erectile Dysfunction", path: "/andrology/erectile-dysfunction" },
   { name: "Recurrent Female UTI", path: "/female/uti" },
 ];
@@ -60,8 +63,9 @@ function Footer() {
               </div>
             </Link>
             
-            <p className="text-xs text-blue-100/90 leading-relaxed font-normal mb-3 text-justify">
-              Dr. Vinish Kumar Singh is a leading Senior Consultant Urologist, Andrologist, and Kidney Transplant Surgeon in Lucknow with over 15+ years of surgical excellence.
+            <p className="text-sm text-blue-100/90 leading-relaxed font-normal mb-3 text-justify">
+              Dr. Vinish Kumar Singh is a Consultant Urologist, Andrologist, and Renal Transplant Surgeon in Lucknow, providing advanced, ethical, and patient-centred care for a wide range of urological conditions.
+
             </p>
             {/* Social Media Links */}
             <div className="flex items-center gap-2">
@@ -138,13 +142,13 @@ function Footer() {
             </ul>
           </div>
 
-          {/* ================= COL 3: TREATMENTS OFFERED ================= */}
+          {/* ================= COL 3: UROLOGY SERVICES ================= */}
           <div className="w-full sm:w-[48%] lg:w-[23%] shrink-0">
             <h3
               className="text-sm sm:text-base font-extrabold uppercase tracking-wider mb-1.5"
               style={{ color: ORANGE }}
             >
-              Treatments Offered
+              UROLOGY SERVICES
             </h3>
             <div className="h-0.5 w-8 bg-orange-500 rounded-full mb-2.5" />
 
@@ -172,7 +176,7 @@ function Footer() {
               className="text-sm sm:text-base font-extrabold uppercase tracking-wider mb-1.5"
               style={{ color: ORANGE }}
             >
-              Hospital Centres
+             OUR CONSULTATION CENTRES
             </h3>
             <div className="h-0.5 w-8 bg-orange-500 rounded-full mb-2.5" />
 
@@ -221,7 +225,7 @@ function Footer() {
                     className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-orange-500 text-blue-100 hover:text-white text-xs font-bold flex items-center gap-1 transition-all"
                   >
                     <FaMapMarkerAlt size={11} />
-                    <span>Directions</span>
+                    <span>Get Directions</span>
                   </a>
                 </div>
               </div>
@@ -270,7 +274,7 @@ function Footer() {
                     className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-orange-500 text-blue-100 hover:text-white text-xs font-bold flex items-center gap-1 transition-all"
                   >
                     <FaMapMarkerAlt size={11} />
-                    <span>Directions</span>
+                    <span>Get Directions</span>
                   </a>
                 </div>
               </div>
@@ -323,4 +327,4 @@ function Footer() {
   );
 }
 
-export default React.memo(Footer);
+export default React.memo(Footer);

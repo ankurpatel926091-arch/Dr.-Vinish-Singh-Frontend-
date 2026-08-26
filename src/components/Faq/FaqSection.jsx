@@ -5,28 +5,36 @@ import ScrollReveal from "../ScrollReveal/ScrollReveal";
 
 const faqs = [
   {
-    q: "Are laser surgeries for kidney stones painless?",
-    a: "Yes, modern laser procedures like RIRS and URSL are endoscopic and minimally invasive with zero external incisions, leading to minimal pain and rapid recovery.",
+    q: "Are laser procedures for kidney stones painful?",
+    a: "Laser procedures such as RIRS and URSL are performed under anaesthesia and usually involve no external incision. Most patients experience minimal post-procedure discomfort and recover faster than with conventional surgery.",
   },
   {
-    q: "What are the OPD clinic timings in Alambagh, Lucknow?",
-    a: "Dr. Vinish Kumar Singh's clinic operates Monday through Saturday from 10:00 AM to 8:00 PM.",
+    q: "What are the consultation timings at the centres?",
+    a: "Dr. Vinish Kumar Singh consults at Rudraksh IVF & Urology Centre and Dr. Shilpi Maternity & Urology Centre, Lucknow. Please call the centre or book online to confirm current OPD timings.",
   },
   {
-    q: "Do I need a prior appointment for consultation?",
-    a: "Prior appointment is recommended to ensure minimal waiting time. Same-day appointments can also be scheduled via call or online booking.",
+    q: "Is a prior appointment required for consultation?",
+    a: "A prior appointment is recommended to minimise waiting time and ensure your preferred consultation slot. Appointments can be scheduled online or by phone.",
   },
   {
-    q: "What urology treatments are provided by Dr. Vinish?",
-    a: "Key specialties include kidney stone laser surgery, HolEP prostate surgery, male infertility care, laparoscopic urology, UTI management, and reconstructive urology.",
+    q: "What urological treatments does Dr. Vinish Kumar Singh provide?",
+    a: "Dr. Singh provides comprehensive care for kidney stones, prostate enlargement, urinary tract disorders, male infertility, erectile dysfunction, reconstructive urology, paediatric urology, and renal transplant-related conditions. Advanced procedures include RIRS, URSL, PCNL, HoLEP, urethroplasty, and other minimally invasive surgeries.",
   },
   {
-    q: "How long is the recovery period after laser kidney stone surgery?",
-    a: "Most patients are discharged within 24 hours and can safely resume normal light activities within 1 to 2 days under Dr. Vinish's guided recovery plan.",
+    q: "How long does recovery take after laser kidney stone surgery?",
+    a: "Recovery varies according to the procedure, stone size, and the patient’s overall health. Many patients can resume light routine activities within a few days, while complete recovery may take longer. Individual recovery guidance is provided after surgery.",
   },
   {
-    q: "Is insurance or cashless treatment facility available?",
-    a: "Yes, cashless treatment facilities and medical insurance assistance are supported for surgical procedures at affiliated hospitals.",
+    q: "Is insurance or cashless treatment available?",
+    a: "Insurance and cashless treatment availability depends on the hospital, insurance provider, policy coverage, and required approvals. Patients are advised to contact the centre with their policy details for confirmation before treatment.",
+  },
+  {
+    q: "What documents should I bring to my consultation?",
+    a: "Please bring previous prescriptions, diagnostic reports, ultrasound or CT scans, current medication details, medical history, and relevant insurance documents.",
+  },
+  {
+    q: "Can kidney stones be treated without surgery?",
+    a: "Small kidney stones may pass naturally with medicines, hydration, and monitoring. Larger, obstructive, or complicated stones may require procedures such as RIRS, URSL, or PCNL.",
   },
 ];
 
@@ -44,7 +52,7 @@ export default function FaqSection() {
       <div className="absolute bottom-10 right-10 w-72 h-72 bg-orange-100/30 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
-        
+
         {/* Section Header */}
         <ScrollReveal variant="fade-up" className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100/80 text-[#103F7C] text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-4 border border-blue-200/50 shadow-xs">
@@ -71,11 +79,10 @@ export default function FaqSection() {
                 delay={index * 60}
               >
                 <div
-                  className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
-                    isOpen
+                  className={`rounded-2xl border transition-all duration-300 overflow-hidden ${isOpen
                       ? "border-blue-400/80 bg-white shadow-lg shadow-blue-900/5 ring-2 ring-blue-500/10 border-l-4 border-l-[#103F7C]"
                       : "border-slate-200/80 bg-white/90 hover:bg-white hover:border-blue-200 hover:shadow-md"
-                  }`}
+                    }`}
                 >
                   <button
                     type="button"
@@ -88,11 +95,10 @@ export default function FaqSection() {
 
                     {/* Smooth Rotating Toggle Button */}
                     <div
-                      className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${
-                        isOpen
+                      className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${isOpen
                           ? "bg-[#103F7C] text-white shadow-md shadow-blue-900/20"
                           : "bg-slate-100 text-slate-600 group-hover:bg-blue-100 group-hover:text-[#103F7C]"
-                      }`}
+                        }`}
                     >
                       {isOpen ? (
                         <Minus size={18} className="transition-transform duration-300" />
@@ -133,10 +139,9 @@ export default function FaqSection() {
                 <HelpCircle size={26} />
               </div>
               <div>
-                <h3 className="text-lg sm:text-xl font-extrabold text-white">Have More Questions?</h3>
+                <h3 className="text-lg sm:text-xl font-extrabold text-white">Still Have Questions?</h3>
                 <p className="text-xs sm:text-sm text-blue-100 mt-1 max-w-md">
-                  Dr. Vinish Kumar Singh's medical team is here to assist you with any urology queries or appointments.
-                </p>
+                  Our medical coordination team is available to assist you with urology-related queries, appointment scheduling, and consultation guidance. </p>
               </div>
             </div>
 
@@ -146,14 +151,14 @@ export default function FaqSection() {
                 className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs sm:text-sm shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] w-full sm:w-auto"
               >
                 <PhoneCall size={16} />
-                <span>Call +91 72759 81480</span>
+                <span>Call +91 &nbsp;72759 81480</span>
               </a>
               <a
                 href="#book-appointment"
                 className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-white/15 hover:bg-white/25 text-white font-semibold text-xs sm:text-sm border border-white/20 backdrop-blur-sm transition-all duration-300 w-full sm:w-auto"
               >
                 <Calendar size={16} />
-                <span>Book Consultation</span>
+                <span> Book an Appointment</span>
               </a>
             </div>
           </div>

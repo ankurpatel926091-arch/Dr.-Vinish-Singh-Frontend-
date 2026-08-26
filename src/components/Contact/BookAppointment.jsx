@@ -66,15 +66,15 @@ export default function BookAppointment({ isHomePage = false }) {
         <ScrollReveal variant="fade-up" className="max-w-3xl mx-auto text-center px-4 mb-8 sm:mb-12">
           <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-blue-100/80 text-[#103F7C] text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-3">
             <Sparkles size={14} className="text-orange-500" />
-            <span>DIRECT OPD CONFIRMATION</span>
+            <span>APPOINTMENT REQUEST</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0f2a4a] tracking-tight leading-tight">
-            Book <span className="bg-gradient-to-r from-[#103F7C] to-orange-500 bg-clip-text text-transparent">Appointment</span>
+           Book Your <span className="bg-gradient-to-r from-[#103F7C] to-orange-500 bg-clip-text text-transparent">Consultation</span>
           </h2>
 
           <p className="mt-2.5 text-sm sm:text-base text-slate-600 font-medium leading-relaxed max-w-xl mx-auto">
-            Select your preferred hospital centre and submit your request for direct OPD confirmation.
+            Choose your preferred healthcare centre and submit your details. Our team will contact you shortly to confirm your OPD appointment with Dr. Vinish Kumar Singh.
           </p>
         </ScrollReveal>
       ) : (
@@ -335,10 +335,10 @@ export default function BookAppointment({ isHomePage = false }) {
               </div>
               <div>
                 <h4 className="text-base sm:text-lg font-extrabold text-[#0f2a4a]">
-                  Before Booking
+                 Before Your Consultation
                 </h4>
                 <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed mt-0.5">
-                  Please carry your previous medical reports, prescriptions and test results during your consultation.
+                  Please bring your previous medical records, prescriptions, diagnostic reports, scan images, and a list of current medications for a detailed clinical evaluation.
                 </p>
               </div>
             </div>
@@ -360,10 +360,10 @@ export default function BookAppointment({ isHomePage = false }) {
               </div>
               <div>
                 <h5 className="text-sm font-extrabold text-[#0f2a4a]">
-                  Trusted Centres
+                  Specialised Care Centres
                 </h5>
                 <p className="text-xs text-slate-500 font-medium leading-normal mt-0.5">
-                  Verified hospitals with experienced specialists
+                  Consult at two dedicated urology and healthcare centres in Lucknow.
                 </p>
               </div>
             </div>
@@ -375,25 +375,25 @@ export default function BookAppointment({ isHomePage = false }) {
               </div>
               <div>
                 <h5 className="text-sm font-extrabold text-[#0f2a4a]">
-                  Flexible Timings
+                  Convenient OPD Scheduling
                 </h5>
                 <p className="text-xs text-slate-500 font-medium leading-normal mt-0.5">
-                  Morning &amp; evening slots to fit your schedule
+                 Choose an available consultation slot according to your convenience.
                 </p>
               </div>
             </div>
 
-            {/* Badge 3: Direct OPD Confirmation */}
+            {/* Badge 3: `Quick Appointment Confirmation` */}
             <div className="flex items-start gap-3.5 pt-3 sm:pt-0 lg:px-3">
               <div className="w-11 h-11 rounded-2xl bg-purple-50 text-purple-600 border border-purple-100/80 flex items-center justify-center shrink-0 shadow-2xs">
                 <Award size={22} />
               </div>
               <div>
                 <h5 className="text-sm font-extrabold text-[#0f2a4a]">
-                  Direct OPD Confirmation
+                  Quick Appointment Confirmation
                 </h5>
                 <p className="text-xs text-slate-500 font-medium leading-normal mt-0.5">
-                  Quick confirmation from the hospital directly
+                 Receive appointment confirmation directly from the centre’s coordination team.
                 </p>
               </div>
             </div>
@@ -405,10 +405,10 @@ export default function BookAppointment({ isHomePage = false }) {
               </div>
               <div>
                 <h5 className="text-sm font-extrabold text-[#0f2a4a]">
-                  Secure &amp; Private
+                  Secure &amp; Confidential
                 </h5>
                 <p className="text-xs text-slate-500 font-medium leading-normal mt-0.5">
-                  Your information is safe and confidential
+                  Your personal and medical information is handled securely and confidentially.
                 </p>
               </div>
             </div>
