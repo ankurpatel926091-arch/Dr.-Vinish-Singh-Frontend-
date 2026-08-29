@@ -32,7 +32,7 @@ const hospitalDetails = {
   evening: {
     key: "evening",
     name: "Dr. Shilpi Maternity & Urology Centre",
-    fullOption: "Evening OPD: Dr. Shilpi Maternity & Urology Centre (Pakkabag, 03 PM - 06 PM)",
+    fullOption: "Evening OPD: Dr. Shilpi Maternity & Urology Centre (Pakkabag, 03 PM - 07 PM)",
     badge: "EVENING CONSULTATION CENTRE",
     timing: "03:00 PM – 07:00 PM",
     location: "596Pb/1114/03, Ring Rd, Pakkabag, Lucknow",
@@ -268,7 +268,7 @@ export default function BookAppointmentPage() {
 
       for (const baseUrl of apiUrls) {
         try {
-          const res = await fetch(`${baseUrl}/enquiries`, {
+          const res = await fetch(`${baseUrl}/appointments`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -276,8 +276,9 @@ export default function BookAppointmentPage() {
             body: JSON.stringify({
               name: formData.name,
               phone: formData.phone,
-              service: formData.service || "Appointment Request",
-              subject: `Appointment: ${formData.service}`,
+              centre: formData.hospital || "Rudraksh IVF & Urology Centre (Sharda Nagar)",
+              problem: formData.service || "General Urology Consultation",
+              preferredTime: formData.preferredTime || "11:00 AM",
               message: fullMessage,
             }),
           });
@@ -289,6 +290,27 @@ export default function BookAppointmentPage() {
         } catch (err) {
           // Try next fallback URL
         }
+      }
+
+      // Save appointment record to localStorage for Admin Panel sync
+      const newAptRecord = {
+        id: Date.now(),
+        name: formData.name.trim(),
+        phone: formData.phone.trim(),
+        centre: formData.hospital || "Rudraksh IVF & Urology Centre (Sharda Nagar)",
+        problem: formData.service || "General Urology Consultation",
+        date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+        time: formData.preferredTime || "11:00 AM",
+        message: formData.message ? formData.message.trim() : "Appointment booking request from website",
+        status: "Pending"
+      };
+
+      try {
+        const existingApts = JSON.parse(localStorage.getItem('dr_vinish_appointments') || '[]');
+        localStorage.setItem('dr_vinish_appointments', JSON.stringify([newAptRecord, ...existingApts]));
+        window.dispatchEvent(new Event('storage'));
+      } catch (err) {
+        console.warn('LocalStorage save appointment error:', err);
       }
 
       setSubmitted(true);

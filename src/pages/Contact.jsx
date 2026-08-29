@@ -203,6 +203,26 @@ export default function Contact() {
         }
       }
 
+      // Save contact enquiry to localStorage for Admin Panel sync
+      const newEnquiryRecord = {
+        id: Date.now(),
+        name: formData.name.trim(),
+        phone: formData.phone.trim(),
+        subject: formData.service || "General Inquiry",
+        service: formData.service || "General Inquiry",
+        message: formData.message ? formData.message.trim() : "Contact enquiry from website",
+        status: "New",
+        date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+      };
+
+      try {
+        const existingEnquiries = JSON.parse(localStorage.getItem('dr_vinish_enquiries') || '[]');
+        localStorage.setItem('dr_vinish_enquiries', JSON.stringify([newEnquiryRecord, ...existingEnquiries]));
+        window.dispatchEvent(new Event('storage'));
+      } catch (err) {
+        console.warn('LocalStorage save enquiry error:', err);
+      }
+
       setSubmitted(true);
       setLastSubmittedPhone(formData.phone);
       setFormData({
