@@ -41,6 +41,27 @@ function CategoryMenuCard({
       {/* Menu Items List */}
       <div className="space-y-1 flex-1">
         {items.map((sub, sIdx) => {
+          if (sub.isHeader || sub.heading || (sub.isDivider && sub.heading)) {
+            const headingText = sub.heading || sub.label || sub.title;
+            const HeaderIcon = sub.icon;
+            return (
+              <div key={`head-${sIdx}`} className="pt-2.5 pb-1.5 border-t border-slate-200/80 mt-3 mb-1 flex items-center justify-between min-h-[36px]">
+                <h4 className="font-extrabold text-[#103F7C] text-[13.5px] sm:text-[14.5px] xl:text-[15px] tracking-tight leading-snug">
+                  {headingText}
+                </h4>
+                {HeaderIcon && (
+                  <div
+                    className={`w-6.5 h-6.5 sm:w-7 sm:h-7 rounded-xl flex items-center justify-center shrink-0 ${
+                      sub.iconBg || "bg-rose-50 text-rose-600 border border-rose-100"
+                    }`}
+                  >
+                    <HeaderIcon size={compact ? 13 : 14} />
+                  </div>
+                )}
+              </div>
+            );
+          }
+
           if (sub.isDivider) {
             return (
               <div key={`div-${sIdx}`} className="border-t border-slate-200/80 my-2" />

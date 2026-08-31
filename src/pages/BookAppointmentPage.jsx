@@ -51,6 +51,7 @@ const hospitalServices = {
     "Reconstructive Urology & Stricture",
     "Kidney Transplant Evaluation",
     "General Urology Consultation",
+    "Others",
   ],
   evening: [
     "General Gynecology",

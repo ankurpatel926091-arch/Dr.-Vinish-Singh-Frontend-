@@ -82,7 +82,7 @@ export const conditionsMenuCategories = [
       { label: "Hypospadias", href: "/paediatric/hypospadias", icon: Stethoscope, iconBg: "bg-blue-50 text-blue-600" },
       { label: "Hydrocele", href: "/paediatric/hydrocele", icon: Droplets, iconBg: "bg-sky-50 text-sky-600" },
       { label: "Paediatric Urinary Problems", href: "/paediatric/urinary-problems", icon: Activity, iconBg: "bg-emerald-50 text-emerald-600" },
-      { isDivider: true },
+      { isHeader: true, heading: "Urological Cancers", icon: ShieldAlert, iconBg: "bg-rose-50 text-rose-600 border border-rose-100" },
       { label: "Prostate Cancer", href: "/cancers/prostate-cancer", icon: ShieldAlert, iconBg: "bg-rose-50 text-rose-600" },
       { label: "Kidney Cancer", href: "/cancers/kidney-cancer", icon: Target, iconBg: "bg-red-50 text-red-600" },
       { label: "Bladder Cancer", href: "/cancers/bladder-cancer", icon: Activity, iconBg: "bg-pink-50 text-pink-600" },

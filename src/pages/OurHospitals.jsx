@@ -61,7 +61,7 @@ const hospitalData = [
     locality: "Sharda Nagar, Lucknow",
     mapUrl: "https://maps.app.goo.gl/jbynbpoL5PcKca4Z9",
     mapIframe:
-      "https://maps.google.com/maps?q=26.792132,80.916962(Rudraksh+IVF+%26+Urology+Centre)&t=&z=16&ie=UTF8&iwloc=B&output=embed",
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3561.428!2d80.9242723!3d26.7803631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bff149cec4b2d%3A0xe680ad74dd601b3b!2sDr.%20Vinish%20Singh%20%7C%20Rudraksh%20IVF%20%26%20Urology%20Centre!5e0!3m2!1sen!2sin",
     image: hospitalBuildingImg,
     badgeText: "Main Building & IVF Desk",
     facilities: [
@@ -86,7 +86,7 @@ const hospitalData = [
     locality: "Pakkabag, Ring Road, Lucknow",
     mapUrl: "https://maps.app.goo.gl/w9mqio5fe4Hj8KLm9",
     mapIframe:
-      "https://maps.google.com/maps?q=26.878567,80.893877(Dr.+Shilpi+Maternity+%26+Urology+Centre)&t=&z=16&ie=UTF8&iwloc=B&output=embed",
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.200!2d80.8609337!3d26.8566859!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bff2d7be105cf%3A0x87c6db827648df8!2sDr.%20Shilpi%20Maternity%20%26%20Urology%20Centre!5e0!3m2!1sen!2sin",
     image: shilpiBuildingImg || hospitalBuildingImg,
     badgeText: "Evening OPD Centre",
     facilities: [

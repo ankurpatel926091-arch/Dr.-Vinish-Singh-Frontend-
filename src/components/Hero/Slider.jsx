@@ -57,7 +57,7 @@ function HeroSlider() {
               src={slide.image}
               alt={slide.title || `Slide ${i + 1}`}
               loading={i === 0 ? "eager" : "lazy"}
-              fetchPriority={i === 0 ? "high" : "low"}
+              fetchpriority={i === 0 ? "high" : "low"}
               decoding="async"
               className="w-full h-full object-fill object-center"
             />
@@ -121,4 +121,4 @@ function HeroSlider() {
   );
 }
 
-export default React.memo(HeroSlider);
+export default React.memo(HeroSlider);
