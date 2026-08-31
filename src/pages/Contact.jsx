@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Phone,
   Mail,
@@ -57,7 +57,9 @@ const socialAccounts = [
   },
 ];
 
-const hospitalLocations = [
+import { fetchPublicClinics } from "../api/clinicApi";
+
+const defaultHospitalLocations = [
   {
     id: "evening",
     tag: "Evening OPD",
@@ -89,11 +91,48 @@ const hospitalLocations = [
 ];
 
 export default function Contact() {
+  const [hospitalLocations, setHospitalLocations] = useState(defaultHospitalLocations);
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [formErrors, setFormErrors] = useState({});
   const [lastSubmittedPhone, setLastSubmittedPhone] = useState("");
+
+  const loadClinics = useCallback(async () => {
+    try {
+      const data = await fetchPublicClinics();
+      if (Array.isArray(data) && data.length > 0) {
+        const mapped = defaultHospitalLocations.map(def => {
+          const matched = data.find(c =>
+            (c.tag && c.tag.toLowerCase().includes(def.id)) ||
+            (c.name && c.name.toLowerCase().includes(def.id === 'morning' ? 'rudraksh' : 'shilpi'))
+          );
+          if (!matched) return def;
+          return {
+            ...def,
+            title: matched.name || def.title,
+            timing: matched.timings ? `${matched.timings} (Mon – Sat)` : def.timing,
+            phone: matched.phone || def.phone,
+            tel: (matched.phone || def.phone).replace(/\D/g, ''),
+            address: matched.address || def.address,
+            embedUrl: matched.embedUrl || def.embedUrl,
+            mapUrl: matched.mapUrl || def.mapUrl
+          };
+        });
+        setHospitalLocations(mapped);
+      }
+    } catch (err) {}
+  }, []);
+
+  useEffect(() => {
+    loadClinics();
+    window.addEventListener('storage', loadClinics);
+    const interval = setInterval(loadClinics, 3000);
+    return () => {
+      window.removeEventListener('storage', loadClinics);
+      clearInterval(interval);
+    };
+  }, [loadClinics]);
   const [formData, setFormData] = useState({
     name: "",
     phone: "",

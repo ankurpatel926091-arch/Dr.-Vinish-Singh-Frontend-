@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Phone,
@@ -18,11 +18,12 @@ import {
 } from "lucide-react";
 import PageHero from "../PageHero";
 import ScrollReveal from "../ScrollReveal/ScrollReveal";
+import { fetchPublicClinics } from "../../api/clinicApi";
 
 import hospitalBuildingImg from "../../assets/OurHospital/1.jpg";
 import shilpiBuildingImg from "../../assets/OurHospital/2.jpg";
 
-const hospitalLocations = {
+const defaultHospitalLocations = {
   morning: {
     id: "morning",
     tag: "Morning OPD",
@@ -54,6 +55,50 @@ const hospitalLocations = {
 export default function BookAppointment({ isHomePage = false }) {
   const navigate = useNavigate();
   const [modalImage, setModalImage] = useState(null);
+  const [hospitals, setHospitals] = useState(defaultHospitalLocations);
+
+  const loadClinics = useCallback(async () => {
+    try {
+      const data = await fetchPublicClinics();
+      if (Array.isArray(data) && data.length > 0) {
+        const morningData = data.find(c => (c.tag && c.tag.toLowerCase().includes('morning')) || (c.name && c.name.includes('Rudraksh'))) || data[0];
+        const eveningData = data.find(c => (c.tag && c.tag.toLowerCase().includes('evening')) || (c.name && c.name.includes('Shilpi'))) || data[1] || data[0];
+
+        setHospitals({
+          morning: {
+            ...defaultHospitalLocations.morning,
+            title: morningData.name || morningData.title || defaultHospitalLocations.morning.title,
+            timing: morningData.timings || morningData.timing || defaultHospitalLocations.morning.timing,
+            phone: morningData.phone || defaultHospitalLocations.morning.phone,
+            address: morningData.address || defaultHospitalLocations.morning.address,
+            image: morningData.image || defaultHospitalLocations.morning.image,
+            mapUrl: morningData.mapUrl || defaultHospitalLocations.morning.mapUrl,
+            embedUrl: morningData.embedUrl || defaultHospitalLocations.morning.embedUrl
+          },
+          evening: {
+            ...defaultHospitalLocations.evening,
+            title: eveningData.name || eveningData.title || defaultHospitalLocations.evening.title,
+            timing: eveningData.timings || eveningData.timing || defaultHospitalLocations.evening.timing,
+            phone: eveningData.phone || defaultHospitalLocations.evening.phone,
+            address: eveningData.address || defaultHospitalLocations.evening.address,
+            image: eveningData.image || defaultHospitalLocations.evening.image,
+            mapUrl: eveningData.mapUrl || defaultHospitalLocations.evening.mapUrl,
+            embedUrl: eveningData.embedUrl || defaultHospitalLocations.evening.embedUrl
+          }
+        });
+      }
+    } catch (err) {}
+  }, []);
+
+  useEffect(() => {
+    loadClinics();
+    window.addEventListener('storage', loadClinics);
+    const interval = setInterval(loadClinics, 30000);
+    return () => {
+      window.removeEventListener('storage', loadClinics);
+      clearInterval(interval);
+    };
+  }, [loadClinics]);
 
   const handleBookClick = (hospitalKey) => {
     navigate(`/book-appointment?hospital=${hospitalKey}`);
@@ -104,7 +149,7 @@ export default function BookAppointment({ isHomePage = false }) {
                 {/* Top-Right Full Photo Button */}
                 <button
                   type="button"
-                  onClick={() => setModalImage(hospitalBuildingImg)}
+                  onClick={() => setModalImage(hospitals.morning.image || hospitalBuildingImg)}
                   className="absolute top-3 right-3 z-10 px-3 py-1.5 rounded-full bg-white/90 hover:bg-white text-slate-800 text-[11px] font-bold flex items-center gap-1.5 shadow-sm transition-all cursor-pointer border border-slate-200"
                 >
                   <Maximize2 size={12} />
@@ -112,8 +157,8 @@ export default function BookAppointment({ isHomePage = false }) {
                 </button>
 
                 <img
-                  src={hospitalBuildingImg}
-                  alt="Rudraksh IVF & Urology Centre"
+                  src={hospitals.morning.image || hospitalBuildingImg}
+                  alt={hospitals.morning.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
@@ -123,12 +168,12 @@ export default function BookAppointment({ isHomePage = false }) {
                 <div>
                   <h3 className="text-xl sm:text-2xl font-extrabold text-[#0f2a4a] leading-snug">
                     <a
-                      href={hospitalLocations.morning.mapUrl}
+                      href={hospitals.morning.mapUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover:underline hover:text-orange-600 transition-colors inline-flex items-center gap-2"
                     >
-                      <span>Rudraksh IVF &amp; Urology Centre</span>
+                      <span>{hospitals.morning.title}</span>
                       <MapPin size={18} className="text-orange-500 shrink-0 inline" />
                     </a>
                   </h3>
@@ -145,7 +190,7 @@ export default function BookAppointment({ isHomePage = false }) {
                           OPD CONSULTATION HOURS
                         </p>
                         <p className="text-xs sm:text-sm font-extrabold text-[#0f2a4a]">
-                          {hospitalLocations.morning.timing}
+                          {hospitals.morning.timing}
                         </p>
                       </div>
                     </div>
@@ -161,16 +206,16 @@ export default function BookAppointment({ isHomePage = false }) {
                             APPOINTMENTS &amp; HELPLINE
                           </p>
                           <a
-                            href={`tel:${hospitalLocations.morning.phone.replace(/\s+/g, '')}`}
+                            href={`tel:${hospitals.morning.phone.replace(/\s+/g, '')}`}
                             className="text-xs sm:text-sm font-extrabold text-[#0f2a4a] hover:text-orange-600 transition-colors"
                           >
-                            {hospitalLocations.morning.phone}
+                            {hospitals.morning.phone}
                           </a>
                         </div>
                       </div>
 
                       <a
-                        href={`tel:${hospitalLocations.morning.phone.replace(/\s+/g, '')}`}
+                        href={`tel:${hospitals.morning.phone.replace(/\s+/g, '')}`}
                         className="px-3.5 py-1.5 rounded-full bg-[#103F7C] hover:bg-blue-900 text-white font-extrabold text-xs flex items-center gap-1.5 shadow-xs transition-all shrink-0"
                       >
                         <Phone size={12} />
@@ -182,8 +227,8 @@ export default function BookAppointment({ isHomePage = false }) {
                   {/* Embedded Google Map Location Frame */}
                   <div className="mt-3 w-full h-40 sm:h-44 rounded-2xl overflow-hidden border border-slate-200/90 bg-slate-100 relative">
                     <iframe
-                      title="Rudraksh IVF & Urology Centre Google Map Location"
-                      src={hospitalLocations.morning.embedUrl}
+                      title={`${hospitals.morning.title} Google Map Location`}
+                      src={hospitals.morning.embedUrl}
                       width="100%"
                       height="100%"
                       style={{ border: 0 }}
@@ -221,7 +266,7 @@ export default function BookAppointment({ isHomePage = false }) {
                 {/* Top-Right Full Photo Button */}
                 <button
                   type="button"
-                  onClick={() => setModalImage(shilpiBuildingImg)}
+                  onClick={() => setModalImage(hospitals.evening.image || shilpiBuildingImg)}
                   className="absolute top-3 right-3 z-10 px-3 py-1.5 rounded-full bg-white/90 hover:bg-white text-slate-800 text-[11px] font-bold flex items-center gap-1.5 shadow-sm transition-all cursor-pointer border border-slate-200"
                 >
                   <Maximize2 size={12} />
@@ -229,8 +274,8 @@ export default function BookAppointment({ isHomePage = false }) {
                 </button>
 
                 <img
-                  src={shilpiBuildingImg}
-                  alt="Dr. Shilpi Maternity & Urology Centre"
+                  src={hospitals.evening.image || shilpiBuildingImg}
+                  alt={hospitals.evening.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
@@ -240,12 +285,12 @@ export default function BookAppointment({ isHomePage = false }) {
                 <div>
                   <h3 className="text-xl sm:text-2xl font-extrabold text-[#0f2a4a] leading-snug">
                     <a
-                      href={hospitalLocations.evening.mapUrl}
+                      href={hospitals.evening.mapUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="hover:underline hover:text-blue-700 transition-colors inline-flex items-center gap-2"
                     >
-                      <span>Dr. Shilpi Maternity &amp; Urology Centre</span>
+                      <span>{hospitals.evening.title}</span>
                       <MapPin size={18} className="text-[#103F7C] shrink-0 inline" />
                     </a>
                   </h3>
@@ -262,7 +307,7 @@ export default function BookAppointment({ isHomePage = false }) {
                           OPD CONSULTATION HOURS
                         </p>
                         <p className="text-xs sm:text-sm font-extrabold text-[#0f2a4a]">
-                          {hospitalLocations.evening.timing}
+                          {hospitals.evening.timing}
                         </p>
                       </div>
                     </div>
@@ -278,16 +323,16 @@ export default function BookAppointment({ isHomePage = false }) {
                             APPOINTMENTS &amp; HELPLINE
                           </p>
                           <a
-                            href={`tel:${hospitalLocations.evening.phone.replace(/\s+/g, '')}`}
+                            href={`tel:${hospitals.evening.phone.replace(/\s+/g, '')}`}
                             className="text-xs sm:text-sm font-extrabold text-[#0f2a4a] hover:text-orange-600 transition-colors"
                           >
-                            {hospitalLocations.evening.phone}
+                            {hospitals.evening.phone}
                           </a>
                         </div>
                       </div>
 
                       <a
-                        href={`tel:${hospitalLocations.evening.phone.replace(/\s+/g, '')}`}
+                        href={`tel:${hospitals.evening.phone.replace(/\s+/g, '')}`}
                         className="px-3.5 py-1.5 rounded-full bg-[#103F7C] hover:bg-blue-900 text-white font-extrabold text-xs flex items-center gap-1.5 shadow-xs transition-all shrink-0"
                       >
                         <Phone size={12} />
@@ -299,8 +344,8 @@ export default function BookAppointment({ isHomePage = false }) {
                   {/* Embedded Google Map Location Frame */}
                   <div className="mt-3 w-full h-40 sm:h-44 rounded-2xl overflow-hidden border border-slate-200/90 bg-slate-100 relative">
                     <iframe
-                      title="Dr. Shilpi Maternity & Urology Centre Google Map Location"
-                      src={hospitalLocations.evening.embedUrl}
+                      title={`${hospitals.evening.title} Google Map Location`}
+                      src={hospitals.evening.embedUrl}
                       width="100%"
                       height="100%"
                       style={{ border: 0 }}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import {
   Send,
@@ -18,7 +18,9 @@ import {
 } from "lucide-react";
 import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
 
-const hospitalDetails = {
+import { fetchPublicClinics } from "../api/clinicApi";
+
+const defaultHospitalDetails = {
   morning: {
     key: "morning",
     name: "Rudraksh IVF & Urology Centre",
@@ -99,11 +101,85 @@ export default function BookAppointmentPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
+  const [hospitalsInfo, setHospitalsInfo] = useState(defaultHospitalDetails);
+
+  const loadClinics = useCallback(async () => {
+    try {
+      const data = await fetchPublicClinics();
+      if (Array.isArray(data) && data.length > 0) {
+        const morningData =
+          data.find(
+            (c) =>
+              (c.tag && c.tag.toLowerCase().includes("morning")) ||
+              (c.name && c.name.includes("Rudraksh"))
+          ) || data[0];
+        const eveningData =
+          data.find(
+            (c) =>
+              (c.tag && c.tag.toLowerCase().includes("evening")) ||
+              (c.name && c.name.includes("Shilpi"))
+          ) ||
+          data[1] ||
+          data[0];
+
+        const morningName =
+          morningData.name ||
+          morningData.title ||
+          defaultHospitalDetails.morning.name;
+        const eveningName =
+          eveningData.name ||
+          eveningData.title ||
+          defaultHospitalDetails.evening.name;
+        const morningTiming =
+          morningData.timings ||
+          morningData.timing ||
+          defaultHospitalDetails.morning.timing;
+        const eveningTiming =
+          eveningData.timings ||
+          eveningData.timing ||
+          defaultHospitalDetails.evening.timing;
+
+        setHospitalsInfo({
+          morning: {
+            ...defaultHospitalDetails.morning,
+            name: morningName,
+            fullOption: `Morning OPD: ${morningName} (${morningTiming})`,
+            timing: morningTiming,
+            phone: morningData.phone || defaultHospitalDetails.morning.phone,
+            location:
+              morningData.address || defaultHospitalDetails.morning.location,
+            mapUrl: morningData.mapUrl || defaultHospitalDetails.morning.mapUrl,
+          },
+          evening: {
+            ...defaultHospitalDetails.evening,
+            name: eveningName,
+            fullOption: `Evening OPD: ${eveningName} (${eveningTiming})`,
+            timing: eveningTiming,
+            phone: eveningData.phone || defaultHospitalDetails.evening.phone,
+            location:
+              eveningData.address || defaultHospitalDetails.evening.location,
+            mapUrl: eveningData.mapUrl || defaultHospitalDetails.evening.mapUrl,
+          },
+        });
+      }
+    } catch (err) {}
+  }, []);
+
+  useEffect(() => {
+    loadClinics();
+    window.addEventListener("storage", loadClinics);
+    const interval = setInterval(loadClinics, 30000);
+    return () => {
+      window.removeEventListener("storage", loadClinics);
+      clearInterval(interval);
+    };
+  }, [loadClinics]);
+
   const hospitalParam = searchParams.get("hospital");
   const initialHospital =
     hospitalParam === "evening"
-      ? hospitalDetails.evening.fullOption
-      : hospitalDetails.morning.fullOption;
+      ? hospitalsInfo.evening.fullOption
+      : hospitalsInfo.morning.fullOption;
 
   const initialServices =
     hospitalParam === "evening"
@@ -181,8 +257,8 @@ export default function BookAppointmentPage() {
   const isEveningSelected =
     formData.hospital.includes("Shilpi") || formData.hospital.includes("Evening");
   const activeHospital = isEveningSelected
-    ? hospitalDetails.evening
-    : hospitalDetails.morning;
+    ? hospitalsInfo.evening
+    : hospitalsInfo.morning;
   const activeServices = isEveningSelected
     ? hospitalServices.evening
     : hospitalServices.morning;
@@ -190,27 +266,27 @@ export default function BookAppointmentPage() {
     ? timeSlots.evening
     : timeSlots.morning;
 
+  // Set step 2 on initial load if hospitalParam is present in URL
+  useEffect(() => {
+    if (hospitalParam === "evening" || hospitalParam === "morning") {
+      setCurrentStep(2);
+    }
+  }, [hospitalParam]);
+
+  // Keep hospital fullOption synced with hospitalsInfo without resetting currentStep or user entries
   useEffect(() => {
     if (hospitalParam === "evening") {
       setFormData((prev) => ({
         ...prev,
-        hospital: hospitalDetails.evening.fullOption,
-        service: hospitalServices.evening[0],
-        preferredTime: timeSlots.evening[0],
+        hospital: hospitalsInfo.evening.fullOption,
       }));
-      setCurrentStep(2);
     } else if (hospitalParam === "morning") {
       setFormData((prev) => ({
         ...prev,
-        hospital: hospitalDetails.morning.fullOption,
-        service: hospitalServices.morning[0],
-        preferredTime: timeSlots.morning[0],
+        hospital: hospitalsInfo.morning.fullOption,
       }));
-      setCurrentStep(2);
-    } else {
-      setCurrentStep(1);
     }
-  }, [hospitalParam]);
+  }, [hospitalParam, hospitalsInfo]);
 
   // Keep service and preferredTime valid when hospital changes manually
   useEffect(() => {
@@ -536,11 +612,11 @@ export default function BookAppointmentPage() {
                             }
                             className="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-white text-[#0f2a4a] text-sm sm:text-base font-semibold focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-all appearance-none pr-12 cursor-pointer shadow-xs"
                           >
-                            <option value={hospitalDetails.morning.fullOption}>
-                              {hospitalDetails.morning.fullOption}
+                            <option value={hospitalsInfo.morning.fullOption}>
+                              {hospitalsInfo.morning.fullOption}
                             </option>
-                            <option value={hospitalDetails.evening.fullOption}>
-                              {hospitalDetails.evening.fullOption}
+                            <option value={hospitalsInfo.evening.fullOption}>
+                              {hospitalsInfo.evening.fullOption}
                             </option>
                           </select>
                           <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
@@ -550,7 +626,7 @@ export default function BookAppointmentPage() {
 
                         <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs font-medium text-slate-500 px-1">
                           <a
-                            href={hospitalDetails.morning.mapUrl}
+                            href={hospitalsInfo.morning.mapUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-orange-600 hover:underline font-bold inline-flex items-center gap-1"
@@ -559,7 +635,7 @@ export default function BookAppointmentPage() {
                             <span>Rudraksh IVF (Morning Map)</span>
                           </a>
                           <a
-                            href={hospitalDetails.evening.mapUrl}
+                            href={hospitalsInfo.evening.mapUrl}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-[#103F7C] hover:underline font-bold inline-flex items-center gap-1"

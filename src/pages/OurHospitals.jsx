@@ -45,7 +45,9 @@ import laserTechImg from "../assets/images/img5.jpeg";
 import otSuiteImg from "../assets/images/img10.jpg";
 import vinishImg from "../assets/images/img12.png";
 
-const hospitalData = [
+import { fetchPublicClinics } from "../api/clinicApi";
+
+const defaultHospitalData = [
   {
     id: "hosp-2",
     name: "Rudraksh IVF & Urology Centre",
@@ -178,12 +180,51 @@ const hospitalHighlights = [
 ];
 
 export default function OurHospitals() {
+  const [hospitalsList, setHospitalsList] = useState(defaultHospitalData);
   const [activeTab, setActiveTab] = useState("All");
   const [copiedId, setCopiedId] = useState(null);
   const [lightboxImage, setLightboxImage] = useState(null);
   const [lightboxTitle, setLightboxTitle] = useState("");
   const [zoomLevel, setZoomLevel] = useState(1);
   const [rotation, setRotation] = useState(0);
+
+  const loadClinics = useCallback(async () => {
+    try {
+      const data = await fetchPublicClinics();
+      if (Array.isArray(data) && data.length > 0) {
+        const mapped = defaultHospitalData.map(def => {
+          const matched = data.find(c =>
+            (c.tag && c.tag.toLowerCase().includes(def.type.toLowerCase().split(' ')[0])) ||
+            (c.name && c.name.toLowerCase().includes(def.id === 'hosp-2' ? 'rudraksh' : 'shilpi'))
+          );
+          if (!matched) return def;
+          return {
+            ...def,
+            name: matched.name || def.name,
+            timing: matched.timings || def.timing,
+            phone: matched.phone || def.phone,
+            phoneRaw: `tel:${(matched.phone || def.phone).replace(/\D/g, '')}`,
+            address: matched.address || def.address,
+            locality: matched.city || def.locality,
+            image: matched.image || def.image,
+            mapIframe: matched.embedUrl || def.mapIframe,
+            mapUrl: matched.mapUrl || def.mapUrl
+          };
+        });
+        setHospitalsList(mapped);
+      }
+    } catch (err) {}
+  }, []);
+
+  useEffect(() => {
+    loadClinics();
+    window.addEventListener('storage', loadClinics);
+    const interval = setInterval(loadClinics, 3000);
+    return () => {
+      window.removeEventListener('storage', loadClinics);
+      clearInterval(interval);
+    };
+  }, [loadClinics]);
 
   const handleCopyAddress = (id, text) => {
     navigator.clipboard.writeText(text);
@@ -230,11 +271,11 @@ export default function OurHospitals() {
   }, [lightboxImage, closeLightbox]);
 
   const filteredHospitals = useMemo(() => {
-    return hospitalData.filter((hosp) => {
+    return hospitalsList.filter((hosp) => {
       if (activeTab === "All") return true;
       return hosp.type === activeTab;
     });
-  }, [activeTab]);
+  }, [activeTab, hospitalsList]);
 
   return (
     <section className="bg-slate-50/70 min-h-screen font-sans pb-16">

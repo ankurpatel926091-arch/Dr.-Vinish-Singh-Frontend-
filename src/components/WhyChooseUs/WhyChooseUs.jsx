@@ -128,7 +128,7 @@ export default function WhyChooseUs() {
           </h2>
 
           <p className="mt-2.5 text-sm sm:text-lg text-slate-500 leading-relaxed font-normal max-w-2xl mx-auto">
-            Combining extensive surgical expertise, advanced M.Ch. training, modern laser technology, and a compassionate, patient-first approach to deliver <p></p> precise and personalised urological care in Lucknow.
+            Combining extensive surgical expertise, advanced M.Ch. training, modern laser technology, and a compassionate, patient-first approach to deliver precise and personalised urological care in Lucknow.
           </p>
 
           {/* Sub Navigation Switcher Tabs */}
