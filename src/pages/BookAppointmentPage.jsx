@@ -267,6 +267,136 @@ export default function BookAppointmentPage() {
     message: "",
   });
 
+  // State for tracking Admin Confirmed appointments to disable slots
+  const [confirmedAppointments, setConfirmedAppointments] = useState([]);
+
+  const loadConfirmedAppointments = useCallback(async () => {
+    let combined = [];
+
+    // 1. Read local storage
+    try {
+      const saved = localStorage.getItem("dr_vinish_appointments");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          combined = [...parsed];
+        }
+      }
+    } catch (e) {}
+
+    // 2. Fetch from backend API
+    try {
+      const res = await fetch("http://localhost:5000/api/appointments/public/confirmed-slots");
+      if (res.ok) {
+        const json = await res.json();
+        if (json.success && Array.isArray(json.data)) {
+          json.data.forEach((item) => {
+            const itemId = item._id || item.id;
+            if (!combined.some((c) => String(c.id || c._id) === String(itemId))) {
+              combined.push(item);
+            }
+          });
+        }
+      }
+    } catch (e) {}
+
+    const confirmedOnly = combined.filter(
+      (apt) => (apt.status || "").toLowerCase() === "confirmed"
+    );
+
+    setConfirmedAppointments(confirmedOnly);
+  }, []);
+
+  useEffect(() => {
+    loadConfirmedAppointments();
+    window.addEventListener("storage", loadConfirmedAppointments);
+    const interval = setInterval(loadConfirmedAppointments, 2000);
+    return () => {
+      window.removeEventListener("storage", loadConfirmedAppointments);
+      clearInterval(interval);
+    };
+  }, [loadConfirmedAppointments]);
+
+  // Normalize date string for consistent comparison
+  const normalizeDateStr = (dStr) => {
+    if (!dStr) return "";
+    const str = String(dStr).trim();
+
+    if (/^\d{4}-\d{2}-\d{2}$/.test(str)) {
+      return str;
+    }
+
+    try {
+      const d = new Date(str);
+      if (!isNaN(d.getTime())) {
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return `${y}-${m}-${day}`;
+      }
+    } catch (e) {}
+
+    try {
+      const cleanStr = str.replace(/-/g, " ");
+      const parts = cleanStr.split(/\s+/);
+      if (parts.length >= 3) {
+        const day = parts[0].padStart(2, "0");
+        const monthMap = {
+          jan: "01", feb: "02", mar: "03", apr: "04", may: "05", jun: "06",
+          jul: "07", aug: "08", sep: "09", sept: "09", oct: "10", nov: "11", dec: "12"
+        };
+        const monthKey = parts[1].toLowerCase().slice(0, 4);
+        const month = monthMap[monthKey] || monthMap[monthKey.slice(0, 3)];
+        const year = parts[2];
+        if (day && month && year) {
+          return `${year}-${month}-${day}`;
+        }
+      }
+    } catch (e) {}
+
+    return str.toLowerCase().replace(/[^a-z0-9]/g, "");
+  };
+
+  const isSameDate = (d1, d2) => {
+    if (!d1 || !d2) return false;
+    return normalizeDateStr(d1) === normalizeDateStr(d2);
+  };
+
+  const isSameHospital = (aptCentre, currentHospital) => {
+    if (!aptCentre || !currentHospital) return true;
+    const c1 = String(aptCentre).toLowerCase();
+    const c2 = String(currentHospital).toLowerCase();
+
+    const isAptEvening = c1.includes("shilpi") || c1.includes("evening") || c1.includes("pakkabag");
+    const isCurrentEvening = c2.includes("shilpi") || c2.includes("evening") || c2.includes("pakkabag");
+
+    return isAptEvening === isCurrentEvening;
+  };
+
+  const isSlotDisabled = useCallback(
+    (slotTime) => {
+      if (!confirmedAppointments || confirmedAppointments.length === 0) return false;
+
+      const selectedDate = formData.preferredDate;
+      const selectedHospital = formData.hospital;
+
+      return confirmedAppointments.some((apt) => {
+        const isConfirmed = (apt.status || "").toLowerCase() === "confirmed";
+        if (!isConfirmed) return false;
+
+        const dateMatch = isSameDate(apt.date, selectedDate);
+        const hospitalMatch = isSameHospital(apt.centre || apt.hospital, selectedHospital);
+
+        const aptTimeStr = String(apt.time || "").trim().toLowerCase();
+        const slotTimeStr = String(slotTime || "").trim().toLowerCase();
+        const timeMatch = aptTimeStr === slotTimeStr;
+
+        return dateMatch && hospitalMatch && timeMatch;
+      });
+    },
+    [confirmedAppointments, formData.preferredDate, formData.hospital]
+  );
+
   const validateField = (name, value) => {
     let error = "";
     if (name === "name") {
@@ -330,27 +460,33 @@ export default function BookAppointmentPage() {
     ? timeSlots.evening
     : timeSlots.morning;
 
-  // Set step 2 on initial load if hospitalParam is present in URL
+  // Auto switch preferred time if currently selected slot becomes disabled
   useEffect(() => {
-    if (hospitalParam === "evening" || hospitalParam === "morning") {
-      setCurrentStep(2);
+    if (isSlotDisabled(formData.preferredTime)) {
+      const available = activeTimeSlots.find((s) => !isSlotDisabled(s));
+      if (available) {
+        setFormData((prev) => ({ ...prev, preferredTime: available }));
+      }
     }
-  }, [hospitalParam]);
+  }, [formData.preferredDate, formData.hospital, confirmedAppointments, isSlotDisabled, activeTimeSlots]);
 
-  // Keep hospital fullOption synced with hospitalsInfo without resetting currentStep or user entries
+  // Sync initial hospital and step ONCE when hospitalParam is present in URL
   useEffect(() => {
     if (hospitalParam === "evening") {
       setFormData((prev) => ({
         ...prev,
         hospital: hospitalsInfo.evening.fullOption,
       }));
+      setCurrentStep(2);
     } else if (hospitalParam === "morning") {
       setFormData((prev) => ({
         ...prev,
         hospital: hospitalsInfo.morning.fullOption,
       }));
+      setCurrentStep(2);
     }
-  }, [hospitalParam, hospitalsInfo]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hospitalParam]);
 
   // Keep service and preferredTime valid when hospital changes manually
   useEffect(() => {
@@ -839,21 +975,32 @@ export default function BookAppointmentPage() {
                         >
                           {activeTimeSlots.map((slot) => {
                             const isSelected = formData.preferredTime === slot;
+                            const isDisabled = isSlotDisabled(slot);
                             return (
                               <button
                                 key={slot}
                                 type="button"
+                                disabled={isDisabled}
                                 onClick={() =>
-                                  setFormData({ ...formData, preferredTime: slot })
+                                  !isDisabled && setFormData({ ...formData, preferredTime: slot })
                                 }
-                                className={`py-3 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer border ${
-                                  isSelected
-                                    ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white border-orange-600 shadow-md shadow-orange-500/25 scale-[1.02]"
-                                    : "bg-white text-[#0f2a4a] border-slate-200/90 hover:border-orange-300 hover:bg-orange-50/30 hover:text-orange-600 shadow-2xs"
+                                title={isDisabled ? "This time slot is already booked & confirmed." : `Select ${slot}`}
+                                className={`py-3 px-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center justify-center gap-1 border ${
+                                  isDisabled
+                                    ? "bg-slate-100/90 text-slate-400 border-slate-200/90 cursor-not-allowed opacity-60 line-through select-none shadow-none"
+                                    : isSelected
+                                    ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white border-orange-600 shadow-md shadow-orange-500/25 scale-[1.02] cursor-pointer"
+                                    : "bg-white text-[#0f2a4a] border-slate-200/90 hover:border-orange-300 hover:bg-orange-50/30 hover:text-orange-600 shadow-2xs cursor-pointer"
                                 }`}
                               >
-                                {isSelected && <Check size={14} className="shrink-0 stroke-[3]" />}
-                                <span>{slot}</span>
+                                {isDisabled ? (
+                                  <span className="text-[10px] font-extrabold text-rose-500 tracking-tight no-underline uppercase">Booked</span>
+                                ) : (
+                                  <>
+                                    {isSelected && <Check size={14} className="shrink-0 stroke-[3]" />}
+                                    <span>{slot}</span>
+                                  </>
+                                )}
                               </button>
                             );
                           })}
@@ -1021,7 +1168,7 @@ export default function BookAppointmentPage() {
                         <button
                           type="submit"
                           disabled={isSubmitting}
-                          className="flex-1 py-4 px-6 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-base shadow-lg shadow-orange-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 active:scale-98"
+                          className="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-sm sm:text-base shadow-md shadow-orange-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 active:scale-98 shrink-0"
                         >
                           {isSubmitting ? (
                             <>
