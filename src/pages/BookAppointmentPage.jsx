@@ -3,6 +3,7 @@ import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import {
   Send,
   CheckCircle2,
+  Check,
   Sparkles,
   Zap,
   Loader2,
@@ -75,26 +76,69 @@ const hospitalServices = {
 const timeSlots = {
   morning: [
     "10:00 AM",
+    "10:15 AM",
     "10:30 AM",
+    "10:45 AM",
     "11:00 AM",
+    "11:15 AM",
     "11:30 AM",
+    "11:45 AM",
     "12:00 PM",
+    "12:15 PM",
     "12:30 PM",
+    "12:45 PM",
     "01:00 PM",
+    "01:15 PM",
     "01:30 PM",
+    "01:45 PM",
     "02:00 PM",
+    "02:15 PM",
     "02:30 PM",
+    "02:45 PM",
     "03:00 PM",
   ],
   evening: [
     "03:00 PM",
+    "03:15 PM",
     "03:30 PM",
+    "03:45 PM",
     "04:00 PM",
+    "04:15 PM",
     "04:30 PM",
+    "04:45 PM",
     "05:00 PM",
+    "05:15 PM",
     "05:30 PM",
+    "05:45 PM",
     "06:00 PM",
+    "06:15 PM",
+    "06:30 PM",
+    "06:45 PM",
+    "07:00 PM",
   ],
+};
+
+const getTodayDateString = () => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
+const formatDateFormatted = (dateStr) => {
+  if (!dateStr) return "";
+  try {
+    const [y, m, d] = dateStr.split("-");
+    const dateObj = new Date(y, m - 1, d);
+    return dateObj.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+  } catch (e) {
+    return dateStr;
+  }
 };
 
 export default function BookAppointmentPage() {
@@ -197,12 +241,27 @@ export default function BookAppointmentPage() {
   const [formErrors, setFormErrors] = useState({});
   const [lastSubmittedPhone, setLastSubmittedPhone] = useState("");
   const [currentStep, setCurrentStep] = useState(1);
+  const [isMobile, setIsMobile] = useState(
+    typeof window !== "undefined" ? window.innerWidth < 640 : false
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const todayStr = getTodayDateString();
 
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
+    email: "",
     service: initialServices[0],
     hospital: initialHospital,
+    preferredDate: todayStr,
     preferredTime: initialTimeSlots[0],
     consultationType: "First Visit",
     message: "",
@@ -233,6 +292,11 @@ export default function BookAppointmentPage() {
         error = "Phone number is required.";
       } else if (!/^[6-9]\d{9}$/.test(digitsOnly)) {
         error = "Please enter a valid 10-digit Indian mobile number (e.g. 9876543210).";
+      }
+    } else if (name === "email") {
+      const trimmed = value.trim();
+      if (trimmed && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+        error = "Please enter a valid email address (e.g. example@gmail.com).";
       }
     }
     return error;
@@ -341,7 +405,8 @@ export default function BookAppointmentPage() {
 
       const apiUrls = getApiUrls();
       let savedToBackend = false;
-      const fullMessage = `Hospital: ${formData.hospital} | Preferred Time: ${formData.preferredTime} | Type: ${formData.consultationType} | Notes: ${formData.message || "N/A"}`;
+      const formattedAptDate = formatDateFormatted(formData.preferredDate);
+      const fullMessage = `Hospital: ${formData.hospital} | Date: ${formattedAptDate} | Preferred Time: ${formData.preferredTime} | Type: ${formData.consultationType} | Email: ${formData.email.trim() || "N/A"} | Notes: ${formData.message || "N/A"}`;
 
       for (const baseUrl of apiUrls) {
         try {
@@ -353,9 +418,13 @@ export default function BookAppointmentPage() {
             body: JSON.stringify({
               name: formData.name,
               phone: formData.phone,
+              email: formData.email ? formData.email.trim() : "",
               centre: formData.hospital || "Rudraksh IVF & Urology Centre (Sharda Nagar)",
               problem: formData.service || "General Urology Consultation",
-              preferredTime: formData.preferredTime || "11:00 AM",
+              date: formattedAptDate,
+              time: formData.preferredTime || "10:00 AM",
+              preferredTime: formData.preferredTime || "10:00 AM",
+              consultationType: formData.consultationType || "First Visit",
               message: fullMessage,
             }),
           });
@@ -374,10 +443,12 @@ export default function BookAppointmentPage() {
         id: Date.now(),
         name: formData.name.trim(),
         phone: formData.phone.trim(),
+        email: formData.email ? formData.email.trim() : "",
+        consultationType: formData.consultationType || "First Visit",
         centre: formData.hospital || "Rudraksh IVF & Urology Centre (Sharda Nagar)",
         problem: formData.service || "General Urology Consultation",
-        date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
-        time: formData.preferredTime || "11:00 AM",
+        date: formattedAptDate || new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
+        time: formData.preferredTime || "10:00 AM",
         message: formData.message ? formData.message.trim() : "Appointment booking request from website",
         status: "Pending"
       };
@@ -395,8 +466,10 @@ export default function BookAppointmentPage() {
       setFormData({
         name: "",
         phone: "",
+        email: "",
         service: activeServices[0],
         hospital: formData.hospital,
+        preferredDate: todayStr,
         preferredTime: activeTimeSlots[0],
         consultationType: "First Visit",
         message: "",
@@ -411,8 +484,8 @@ export default function BookAppointmentPage() {
   };
 
   return (
-    <div className="bg-slate-50 font-sans min-h-screen py-10 sm:py-16 px-4 sm:px-6">
-      <div className="max-w-3xl mx-auto">
+    <div className="bg-slate-50 font-sans min-h-screen py-8 sm:py-14">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Top Header Badge & Title */}
         <div className="text-center mb-8">
@@ -660,10 +733,10 @@ export default function BookAppointmentPage() {
                     </div>
                   )}
 
-                  {/* STEP 2: SELECT SPECIALITY, PREFERRED TIME & CONSULTATION TYPE */}
+                  {/* STEP 2: SELECT SPECIALITY, DATE, TIME SLOTS & CONSULTATION TYPE */}
                   {currentStep === 2 && (
                     <div className="space-y-6 animate-fadeIn">
-                      {/* SELECT SPECIALITY / TREATMENT */}
+                      {/* 1. SELECT SPECIALITY / TREATMENT */}
                       <div>
                         <label className="block text-sm sm:text-base font-extrabold text-[#0f2a4a] mb-3">
                           Select Speciality / Treatment
@@ -688,32 +761,24 @@ export default function BookAppointmentPage() {
                         </div>
                       </div>
 
-                      {/* PREFERRED TIME & CONSULTATION TYPE GRID */}
+                      {/* 2. SELECT DATE & CONSULTATION TYPE GRID */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-1">
-                        {/* PREFERRED TIME */}
+                        {/* SELECT DATE */}
                         <div>
                           <label className="block text-sm sm:text-base font-extrabold text-[#0f2a4a] mb-3 flex items-center gap-2">
-                            <Clock size={18} className="text-orange-500" />
-                            <span>Preferred Time</span>
+                            <Calendar size={18} className="text-orange-500" />
+                            <span>Select Date</span>
                           </label>
                           <div className="relative">
-                            <select
-                              value={formData.preferredTime}
+                            <input
+                              type="date"
+                              min={todayStr}
+                              value={formData.preferredDate}
                               onChange={(e) =>
-                                setFormData({ ...formData, preferredTime: e.target.value })
+                                setFormData({ ...formData, preferredDate: e.target.value })
                               }
-                              className="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-white text-[#0f2a4a] text-sm sm:text-base font-semibold focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-all appearance-none pr-12 cursor-pointer shadow-xs"
-                            >
-                              <option value="">Select Time</option>
-                              {activeTimeSlots.map((slot) => (
-                                <option key={slot} value={slot}>
-                                  {slot}
-                                </option>
-                              ))}
-                            </select>
-                            <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
-                              <ChevronDown size={18} />
-                            </div>
+                              className="w-full px-5 py-3.5 rounded-2xl border border-slate-200 bg-white text-[#0f2a4a] text-sm sm:text-base font-semibold focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-all shadow-xs cursor-pointer"
+                            />
                           </div>
                         </div>
 
@@ -722,7 +787,7 @@ export default function BookAppointmentPage() {
                           <label className="block text-sm sm:text-base font-extrabold text-[#0f2a4a] mb-3">
                             Consultation Type
                           </label>
-                          <div className="flex items-center gap-6 h-[54px] bg-slate-50/60 border border-slate-200/80 rounded-2xl px-5">
+                          <div className="flex items-center gap-6 h-[52px] bg-slate-50/60 border border-slate-200/80 rounded-2xl px-5">
                             {/* First Visit Radio */}
                             <label className="flex items-center gap-2.5 cursor-pointer text-sm font-extrabold text-[#0f2a4a] group">
                               <input
@@ -753,6 +818,45 @@ export default function BookAppointmentPage() {
                               <span className="group-hover:text-orange-600 transition-colors">Follow-up</span>
                             </label>
                           </div>
+                        </div>
+                      </div>
+
+                      {/* 3. AVAILABLE TIME SLOTS (15-Minute Grid Buttons) */}
+                      <div>
+                        <div className="flex items-center justify-between mb-3">
+                          <label className="block text-sm sm:text-base font-extrabold text-[#0f2a4a] flex items-center gap-2">
+                            <Clock size={18} className="text-orange-500" />
+                            <span>Available Time Slots</span>
+                          </label>
+                          <span className="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
+                            15-Min Slots • {activeHospital.timing}
+                          </span>
+                        </div>
+
+                        <div
+                          {...(isMobile ? { "data-lenis-prevent": "true" } : {})}
+                          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-2.5 max-h-56 sm:max-h-none overflow-y-auto sm:overflow-visible custom-scrollbar p-2 border border-slate-200/80 rounded-2xl bg-slate-50/40"
+                        >
+                          {activeTimeSlots.map((slot) => {
+                            const isSelected = formData.preferredTime === slot;
+                            return (
+                              <button
+                                key={slot}
+                                type="button"
+                                onClick={() =>
+                                  setFormData({ ...formData, preferredTime: slot })
+                                }
+                                className={`py-3 px-3 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer border ${
+                                  isSelected
+                                    ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white border-orange-600 shadow-md shadow-orange-500/25 scale-[1.02]"
+                                    : "bg-white text-[#0f2a4a] border-slate-200/90 hover:border-orange-300 hover:bg-orange-50/30 hover:text-orange-600 shadow-2xs"
+                                }`}
+                              >
+                                {isSelected && <Check size={14} className="shrink-0 stroke-[3]" />}
+                                <span>{slot}</span>
+                              </button>
+                            );
+                          })}
                         </div>
                       </div>
 
@@ -793,6 +897,10 @@ export default function BookAppointmentPage() {
                           <span className="font-extrabold text-[#0f2a4a] text-right">{formData.service}</span>
                         </div>
                         <div className="flex items-center justify-between gap-2 border-b border-slate-200/60 pb-2">
+                          <span className="font-semibold text-slate-500">Appointment Date:</span>
+                          <span className="font-extrabold text-[#0f2a4a] text-right">{formatDateFormatted(formData.preferredDate)}</span>
+                        </div>
+                        <div className="flex items-center justify-between gap-2 border-b border-slate-200/60 pb-2">
                           <span className="font-semibold text-slate-500">Preferred Time Slot:</span>
                           <span className="font-extrabold text-[#0f2a4a] text-right">{formData.preferredTime}</span>
                         </div>
@@ -803,7 +911,8 @@ export default function BookAppointmentPage() {
                       </div>
 
                       {/* Patient Details Inputs */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        {/* Your Name */}
                         <div>
                           <label className="block text-xs font-extrabold uppercase tracking-wider text-[#0f2a4a] mb-2">
                             Your Name *
@@ -829,6 +938,7 @@ export default function BookAppointmentPage() {
                           )}
                         </div>
 
+                        {/* Phone Number */}
                         <div>
                           <label className="block text-xs font-extrabold uppercase tracking-wider text-[#0f2a4a] mb-2">
                             Phone Number *
@@ -851,6 +961,31 @@ export default function BookAppointmentPage() {
                             <p className="text-[11px] font-bold text-red-500 mt-1.5 flex items-center gap-1">
                               <AlertCircle size={12} className="shrink-0" />
                               <span>{formErrors.phone}</span>
+                            </p>
+                          )}
+                        </div>
+
+                        {/* Gmail ID / Email Address */}
+                        <div>
+                          <label className="block text-xs font-extrabold uppercase tracking-wider text-[#0f2a4a] mb-2">
+                            Gmail ID / Email Address
+                          </label>
+                          <input
+                            type="email"
+                            name="email"
+                            placeholder="Enter Gmail / Email Address"
+                            value={formData.email}
+                            onChange={handleInputChange}
+                            className={`w-full px-4 py-3.5 rounded-2xl border text-sm font-semibold text-[#0f2a4a] focus:outline-none transition-all ${
+                              formErrors.email
+                                ? "border-red-400 focus:border-red-500 focus:ring-2 focus:ring-red-100 bg-red-50/20"
+                                : "border-slate-200 bg-slate-50/50 focus:bg-white focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500"
+                            }`}
+                          />
+                          {formErrors.email && (
+                            <p className="text-[11px] font-bold text-red-500 mt-1.5 flex items-center gap-1">
+                              <AlertCircle size={12} className="shrink-0" />
+                              <span>{formErrors.email}</span>
                             </p>
                           )}
                         </div>
