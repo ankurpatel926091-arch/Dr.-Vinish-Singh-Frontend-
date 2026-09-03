@@ -143,7 +143,7 @@ export default function AndrologyService() {
                 <span className="text-[10px] font-extrabold uppercase tracking-wider text-orange-600">Morning OPD</span>
                 <h4 className="font-bold text-slate-900 text-xs mt-0.5">
                   <a
-                    href="https://maps.app.goo.gl/jbynbpoL5PcKca4Z9"
+                    href="https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:underline hover:text-orange-600 inline-flex items-center gap-1 transition-colors"

@@ -61,6 +61,20 @@ import { fetchPublicClinics } from "../api/clinicApi";
 
 const defaultHospitalLocations = [
   {
+    id: "morning",
+    tag: "Morning OPD",
+    title: "Rudraksh IVF & Urology Centre",
+    subtitle: "Sharda Nagar, Lucknow",
+    timing: "10:00 AM – 03:00 PM (Mon – Sat)",
+    phone: "+91 89600 68307",
+    tel: "8960068307",
+    address: "1/795, Ratan Khand, Ruchi Khand 1, Sharda Nagar, Lucknow",
+    mapUrl: "https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow",
+    embedUrl:
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3561.428!2d80.9242723!3d26.7803631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bff149cec4b2d%3A0xe680ad74dd601b3b!2sDr.%20Vinish%20Singh%20%7C%20Rudraksh%20IVF%20%26%20Urology%20Centre!5e0!3m2!1sen!2sin",
+    badgeBg: "bg-orange-500 text-white",
+  },
+  {
     id: "evening",
     tag: "Evening OPD",
     title: "Dr. Shilpi Maternity & Urology Centre",
@@ -73,20 +87,6 @@ const defaultHospitalLocations = [
     embedUrl:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.200!2d80.8609337!3d26.8566859!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bff2d7be105cf%3A0x87c6db827648df8!2sDr.%20Shilpi%20Maternity%20%26%20Urology%20Centre!5e0!3m2!1sen!2sin",
     badgeBg: "bg-[#103F7C] text-white",
-  },
-  {
-    id: "morning",
-    tag: "Morning OPD",
-    title: "Rudraksh IVF & Urology Centre",
-    subtitle: "Sharda Nagar, Lucknow",
-    timing: "10:00 AM – 03:00 PM (Mon – Sat)",
-    phone: "+91 89600 68307",
-    tel: "8960068307",
-    address: "1/795, Ratan Khand, Ruchi Khand 1, Sharda Nagar, Lucknow",
-    mapUrl: "https://maps.app.goo.gl/jbynbpoL5PcKca4Z9",
-    embedUrl:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3561.428!2d80.9242723!3d26.7803631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bff149cec4b2d%3A0xe680ad74dd601b3b!2sDr.%20Vinish%20Singh%20%7C%20Rudraksh%20IVF%20%26%20Urology%20Centre!5e0!3m2!1sen!2sin",
-    badgeBg: "bg-orange-500 text-white",
   },
 ];
 
@@ -116,7 +116,7 @@ export default function Contact() {
             tel: (matched.phone || def.phone).replace(/\D/g, ''),
             address: matched.address || def.address,
             embedUrl: matched.embedUrl || def.embedUrl,
-            mapUrl: matched.mapUrl || def.mapUrl
+            mapUrl: (matched.mapUrl && !matched.mapUrl.includes('jbynbpoL5PcKca4Z9')) ? matched.mapUrl : def.mapUrl
           };
         });
         setHospitalLocations(mapped);
@@ -411,8 +411,14 @@ export default function Contact() {
                     </a>
                   </div>
 
-                  {/* Embedded Google Map (Stretches smoothly to match exact column height) */}
-                  <div className="w-full h-48 sm:h-[215px] rounded-xl overflow-hidden border border-slate-200/80 bg-slate-100 relative shrink-0">
+                  {/* Embedded Google Map (Clickable to open Google Maps in a new tab) */}
+                  <a
+                    href={hospital.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={`Open ${hospital.title} in Google Maps`}
+                    className="w-full h-48 sm:h-[215px] rounded-xl overflow-hidden border border-slate-200/80 bg-slate-100 relative shrink-0 block group/map cursor-pointer"
+                  >
                     <iframe
                       title={hospital.title}
                       src={hospital.embedUrl}
@@ -421,9 +427,16 @@ export default function Contact() {
                       style={{ border: 0 }}
                       allowFullScreen=""
                       loading="lazy"
-                      className="w-full h-full"
+                      className="w-full h-full pointer-events-none group-hover/map:scale-105 transition-transform duration-300"
                     />
-                  </div>
+                    <div className="absolute inset-0 bg-slate-900/0 group-hover/map:bg-slate-900/20 transition-all duration-300 flex items-center justify-center pointer-events-none">
+                      <span className="opacity-0 group-hover/map:opacity-100 transition-all duration-300 bg-[#103F7C] text-white text-xs font-extrabold px-3.5 py-2 rounded-xl shadow-lg flex items-center gap-1.5 transform translate-y-2 group-hover/map:translate-y-0">
+                        <MapPin size={14} className="text-orange-400" />
+                        <span>Open in Google Maps</span>
+                        <ExternalLink size={12} />
+                      </span>
+                    </div>
+                  </a>
 
                   {/* Location & Helpline Details Footer */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1 text-xs">

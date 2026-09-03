@@ -9,6 +9,7 @@ import {
   Moon,
   Calendar,
   Maximize2,
+  ExternalLink,
   X,
   Info,
   FileText,
@@ -33,7 +34,7 @@ const defaultHospitalLocations = {
     phone: "+91 89600 68307",
     address: "1/795, Ratan Khand, Sharda Nagar, Lucknow",
     image: hospitalBuildingImg,
-    mapUrl: "https://maps.app.goo.gl/jbynbpoL5PcKca4Z9",
+    mapUrl: "https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow",
     embedUrl:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3561.428!2d80.9242723!3d26.7803631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bff149cec4b2d%3A0xe680ad74dd601b3b!2sDr.%20Vinish%20Singh%20%7C%20Rudraksh%20IVF%20%26%20Urology%20Centre!5e0!3m2!1sen!2sin",
   },
@@ -224,8 +225,14 @@ export default function BookAppointment({ isHomePage = false }) {
                     </div>
                   </div>
 
-                  {/* Embedded Google Map Location Frame */}
-                  <div className="mt-3 w-full h-40 sm:h-44 rounded-2xl overflow-hidden border border-slate-200/90 bg-slate-100 relative">
+                  {/* Embedded Google Map Location Frame (Clickable to open Google Maps) */}
+                  <a
+                    href={hospitals.morning.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={`Open ${hospitals.morning.title} in Google Maps`}
+                    className="mt-3 w-full h-40 sm:h-44 rounded-2xl overflow-hidden border border-slate-200/90 bg-slate-100 relative block group/map cursor-pointer"
+                  >
                     <iframe
                       title={`${hospitals.morning.title} Google Map Location`}
                       src={hospitals.morning.embedUrl}
@@ -234,9 +241,16 @@ export default function BookAppointment({ isHomePage = false }) {
                       style={{ border: 0 }}
                       allowFullScreen=""
                       loading="lazy"
-                      className="w-full h-full"
+                      className="w-full h-full pointer-events-none group-hover/map:scale-105 transition-transform duration-300"
                     />
-                  </div>
+                    <div className="absolute inset-0 bg-slate-900/0 group-hover/map:bg-slate-900/20 transition-all duration-300 flex items-center justify-center pointer-events-none">
+                      <span className="opacity-0 group-hover/map:opacity-100 transition-all duration-300 bg-[#103F7C] text-white text-xs font-extrabold px-3 py-1.5 rounded-xl shadow-lg flex items-center gap-1.5 transform translate-y-2 group-hover/map:translate-y-0">
+                        <MapPin size={13} className="text-orange-400" />
+                        <span>Open in Google Maps</span>
+                        <ExternalLink size={12} />
+                      </span>
+                    </div>
+                  </a>
                 </div>
 
                 {/* Bottom CTA Button */}
@@ -341,8 +355,14 @@ export default function BookAppointment({ isHomePage = false }) {
                     </div>
                   </div>
 
-                  {/* Embedded Google Map Location Frame */}
-                  <div className="mt-3 w-full h-40 sm:h-44 rounded-2xl overflow-hidden border border-slate-200/90 bg-slate-100 relative">
+                  {/* Embedded Google Map Location Frame (Clickable to open Google Maps) */}
+                  <a
+                    href={hospitals.evening.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={`Open ${hospitals.evening.title} in Google Maps`}
+                    className="mt-3 w-full h-40 sm:h-44 rounded-2xl overflow-hidden border border-slate-200/90 bg-slate-100 relative block group/map cursor-pointer"
+                  >
                     <iframe
                       title={`${hospitals.evening.title} Google Map Location`}
                       src={hospitals.evening.embedUrl}
@@ -351,9 +371,16 @@ export default function BookAppointment({ isHomePage = false }) {
                       style={{ border: 0 }}
                       allowFullScreen=""
                       loading="lazy"
-                      className="w-full h-full"
+                      className="w-full h-full pointer-events-none group-hover/map:scale-105 transition-transform duration-300"
                     />
-                  </div>
+                    <div className="absolute inset-0 bg-slate-900/0 group-hover/map:bg-slate-900/20 transition-all duration-300 flex items-center justify-center pointer-events-none">
+                      <span className="opacity-0 group-hover/map:opacity-100 transition-all duration-300 bg-[#103F7C] text-white text-xs font-extrabold px-3 py-1.5 rounded-xl shadow-lg flex items-center gap-1.5 transform translate-y-2 group-hover/map:translate-y-0">
+                        <MapPin size={13} className="text-orange-400" />
+                        <span>Open in Google Maps</span>
+                        <ExternalLink size={12} />
+                      </span>
+                    </div>
+                  </a>
                 </div>
 
                 {/* Bottom CTA Button */}

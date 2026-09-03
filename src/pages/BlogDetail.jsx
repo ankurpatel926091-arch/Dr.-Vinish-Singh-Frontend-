@@ -19,7 +19,7 @@ import {
   Check,
   MapPin,
 } from "lucide-react";
-import { fetchBlogBySlug, fetchPublicBlogs } from "../api/blogApi";
+import { fetchBlogBySlug, fetchPublicBlogs, getInitialBlogs } from "../api/blogApi";
 import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
 import doctorThumb from "../assets/images/img12.png";
 
@@ -27,25 +27,39 @@ export default function BlogDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
-  const [article, setArticle] = useState(null);
-  const [allBlogs, setAllBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [allBlogs, setAllBlogs] = useState(() => getInitialBlogs());
+  const [article, setArticle] = useState(() => {
+    const list = getInitialBlogs();
+    return list.find((b) => b.slug === slug || b.id === slug || (b._id && b._id === slug)) || null;
+  });
+  const [loading, setLoading] = useState(() => !article);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     let isMounted = true;
 
-    setLoading(true);
+    const initialList = getInitialBlogs();
+    const existing = initialList.find((b) => b.slug === slug || b.id === slug || (b._id && b._id === slug));
+    if (existing && isMounted) {
+      setArticle(existing);
+      setLoading(false);
+      if (existing.title) {
+        document.title = `${existing.title} | Dr. Vinish Kumar Singh`;
+      }
+    }
 
     Promise.all([fetchBlogBySlug(slug), fetchPublicBlogs()]).then(([blogData, publicBlogs]) => {
       if (isMounted) {
-        setArticle(blogData);
-        setAllBlogs(publicBlogs || []);
-        setLoading(false);
-
-        if (blogData?.title) {
-          document.title = `${blogData.title} | Dr. Vinish Kumar Singh`;
+        if (blogData) {
+          setArticle(blogData);
+          if (blogData.title) {
+            document.title = `${blogData.title} | Dr. Vinish Kumar Singh`;
+          }
         }
+        if (Array.isArray(publicBlogs) && publicBlogs.length > 0) {
+          setAllBlogs(publicBlogs);
+        }
+        setLoading(false);
       }
     });
 
@@ -330,7 +344,7 @@ export default function BlogDetail() {
                 <p className="text-[11px] text-slate-600 font-medium leading-relaxed">
                   Morning OPD at{" "}
                   <a
-                    href="https://maps.app.goo.gl/jbynbpoL5PcKca4Z9"
+                    href="https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-bold text-orange-600 hover:underline inline-flex items-center gap-0.5"

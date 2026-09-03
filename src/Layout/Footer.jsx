@@ -192,7 +192,7 @@ function Footer() {
 
                 <h4 className="font-extrabold text-white text-sm sm:text-base mt-1.5">
                   <a
-                    href="https://maps.app.goo.gl/jbynbpoL5PcKca4Z9"
+                    href="https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:underline hover:text-orange-300 transition-colors inline-flex items-center gap-1.5"
@@ -216,7 +216,7 @@ function Footer() {
                   </a>
 
                   <a
-                    href="https://maps.app.goo.gl/jbynbpoL5PcKca4Z9"
+                    href="https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-orange-500 text-blue-100 hover:text-white text-xs font-bold flex items-center gap-1 transition-all"

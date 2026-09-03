@@ -219,7 +219,7 @@ export default function ConditionPage({
                     <Building2 size={15} className="text-orange-400 shrink-0 mt-0.5" />
                     <div>
                       <a
-                        href="https://maps.app.goo.gl/jbynbpoL5PcKca4Z9"
+                        href="https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="font-bold text-white hover:text-orange-400 hover:underline inline-flex items-center gap-1 transition-colors"

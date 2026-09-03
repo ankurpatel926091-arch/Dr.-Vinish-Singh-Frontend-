@@ -61,7 +61,7 @@ const defaultHospitalData = [
     address:
       "1/795, Ratan Khand, Ruchi Khand 1, Sharda Nagar, Lucknow, Uttar Pradesh 226002",
     locality: "Sharda Nagar, Lucknow",
-    mapUrl: "https://maps.app.goo.gl/jbynbpoL5PcKca4Z9",
+    mapUrl: "https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow",
     mapIframe:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3561.428!2d80.9242723!3d26.7803631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bff149cec4b2d%3A0xe680ad74dd601b3b!2sDr.%20Vinish%20Singh%20%7C%20Rudraksh%20IVF%20%26%20Urology%20Centre!5e0!3m2!1sen!2sin",
     image: hospitalBuildingImg,
@@ -208,7 +208,7 @@ export default function OurHospitals() {
             locality: matched.city || def.locality,
             image: matched.image || def.image,
             mapIframe: matched.embedUrl || def.mapIframe,
-            mapUrl: matched.mapUrl || def.mapUrl
+            mapUrl: (matched.mapUrl && !matched.mapUrl.includes('jbynbpoL5PcKca4Z9')) ? matched.mapUrl : def.mapUrl
           };
         });
         setHospitalsList(mapped);
@@ -510,8 +510,14 @@ export default function OurHospitals() {
                         </div>
                       </div>
 
-                      {/* Embedded Map Box */}
-                      <div className="w-full h-40 rounded-2xl overflow-hidden border border-slate-200 mb-6 bg-slate-100 relative group/map">
+                      {/* Embedded Map Box (Clickable to open Google Maps) */}
+                      <a
+                        href={hosp.mapUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title={`Open ${hosp.name} in Google Maps`}
+                        className="w-full h-40 rounded-2xl overflow-hidden border border-slate-200 mb-6 bg-slate-100 relative block group/map cursor-pointer"
+                      >
                         <iframe
                           title={hosp.name}
                           src={hosp.mapIframe}
@@ -521,8 +527,16 @@ export default function OurHospitals() {
                           allowFullScreen=""
                           loading="lazy"
                           referrerPolicy="no-referrer-when-downgrade"
+                          className="w-full h-full pointer-events-none group-hover/map:scale-105 transition-transform duration-300"
                         />
-                      </div>
+                        <div className="absolute inset-0 bg-slate-900/0 group-hover/map:bg-slate-900/20 transition-all duration-300 flex items-center justify-center pointer-events-none">
+                          <span className="opacity-0 group-hover/map:opacity-100 transition-all duration-300 bg-[#103F7C] text-white text-xs font-extrabold px-3 py-1.5 rounded-xl shadow-lg flex items-center gap-1.5 transform translate-y-2 group-hover/map:translate-y-0">
+                            <MapPin size={13} className="text-orange-400" />
+                            <span>Open in Google Maps</span>
+                            <ExternalLink size={12} />
+                          </span>
+                        </div>
+                      </a>
                     </div>
 
                     {/* Action Buttons Footer */}

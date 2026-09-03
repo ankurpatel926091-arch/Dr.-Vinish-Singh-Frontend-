@@ -202,7 +202,7 @@ Delivering comprehensive urological care through advanced laser procedures, mini
                 <p className="text-xs sm:text-sm text-slate-600 font-medium mt-1 leading-relaxed">
                   Leading advanced urological care at{" "}
                   <a
-                    href="https://maps.app.goo.gl/jbynbpoL5PcKca4Z9"
+                    href="https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-bold text-orange-600 hover:underline"

@@ -30,7 +30,7 @@ const defaultHospitalDetails = {
     timing: "10:00 AM – 03:00 PM",
     location: "1/795, Ratan Khand, Sharda Nagar, Lucknow",
     phone: "+91 89600 68307",
-    mapUrl: "https://maps.app.goo.gl/jbynbpoL5PcKca4Z9",
+    mapUrl: "https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow",
   },
   evening: {
     key: "evening",
@@ -240,6 +240,8 @@ export default function BookAppointmentPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const [formErrors, setFormErrors] = useState({});
   const [lastSubmittedPhone, setLastSubmittedPhone] = useState("");
+  const [lastSubmittedEmail, setLastSubmittedEmail] = useState("");
+  const [emailSentStatus, setEmailSentStatus] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [isMobile, setIsMobile] = useState(
     typeof window !== "undefined" ? window.innerWidth < 640 : false
@@ -529,20 +531,27 @@ export default function BookAppointmentPage() {
     try {
       const getApiUrls = () => {
         const urls = [];
+        const hostname = typeof window !== "undefined" ? window.location.hostname : "";
+        if (hostname === "localhost" || hostname === "127.0.0.1") {
+          urls.push(`http://${hostname}:5000/api`);
+          urls.push("http://localhost:5000/api");
+        }
         if (import.meta.env.VITE_API_BASE_URL) {
           urls.push(import.meta.env.VITE_API_BASE_URL);
         }
-        if (typeof window !== "undefined" && (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")) {
+        if (!urls.includes("http://localhost:5000/api")) {
           urls.push("http://localhost:5000/api");
         }
         urls.push("https://dr-vinish-backend.onrender.com/api");
-        return urls;
+        return Array.from(new Set(urls));
       };
 
       const apiUrls = getApiUrls();
       let savedToBackend = false;
+      let isEmailDispatched = false;
       const formattedAptDate = formatDateFormatted(formData.preferredDate);
       const fullMessage = `Hospital: ${formData.hospital} | Date: ${formattedAptDate} | Preferred Time: ${formData.preferredTime} | Type: ${formData.consultationType} | Email: ${formData.email.trim() || "N/A"} | Notes: ${formData.message || "N/A"}`;
+      const submittedUserEmail = formData.email ? formData.email.trim() : "";
 
       for (const baseUrl of apiUrls) {
         try {
@@ -554,7 +563,7 @@ export default function BookAppointmentPage() {
             body: JSON.stringify({
               name: formData.name,
               phone: formData.phone,
-              email: formData.email ? formData.email.trim() : "",
+              email: submittedUserEmail,
               centre: formData.hospital || "Rudraksh IVF & Urology Centre (Sharda Nagar)",
               problem: formData.service || "General Urology Consultation",
               date: formattedAptDate,
@@ -567,6 +576,10 @@ export default function BookAppointmentPage() {
 
           if (res.ok) {
             savedToBackend = true;
+            const resData = await res.json();
+            if (resData && resData.emailResult && resData.emailResult.success) {
+              isEmailDispatched = true;
+            }
             break;
           }
         } catch (err) {
@@ -579,7 +592,7 @@ export default function BookAppointmentPage() {
         id: Date.now(),
         name: formData.name.trim(),
         phone: formData.phone.trim(),
-        email: formData.email ? formData.email.trim() : "",
+        email: submittedUserEmail,
         consultationType: formData.consultationType || "First Visit",
         centre: formData.hospital || "Rudraksh IVF & Urology Centre (Sharda Nagar)",
         problem: formData.service || "General Urology Consultation",
@@ -597,8 +610,41 @@ export default function BookAppointmentPage() {
         console.warn('LocalStorage save appointment error:', err);
       }
 
+      // Fallback email dispatch to notify-email endpoint if main POST didn't report email success
+      if (!isEmailDispatched) {
+        for (const baseUrl of apiUrls) {
+          try {
+            const notifyRes = await fetch(`${baseUrl}/appointments/notify-email`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                appointment: newAptRecord,
+                status: "Pending"
+              }),
+            });
+            if (notifyRes.ok) {
+              const notifyData = await notifyRes.json();
+              if (notifyData && notifyData.result && notifyData.result.success) {
+                isEmailDispatched = true;
+                savedToBackend = true;
+                break;
+              }
+            }
+          } catch (e) {}
+        }
+      }
+
+      if (!savedToBackend) {
+        setErrorMessage("Server is unreachable right now. Please check backend connection or call helpline +91 89600 68307 directly.");
+        return;
+      }
+
       setSubmitted(true);
       setLastSubmittedPhone(formData.phone);
+      setLastSubmittedEmail(submittedUserEmail);
+      setEmailSentStatus(isEmailDispatched || !!submittedUserEmail);
       setFormData({
         name: "",
         phone: "",
@@ -772,10 +818,17 @@ export default function BookAppointmentPage() {
                   <h2 className="text-2xl font-black text-[#0f2a4a] mb-2">
                     Appointment Request Submitted!
                   </h2>
-                  <p className="text-sm text-slate-600 font-medium max-w-md mx-auto leading-relaxed mb-6">
+                  <p className="text-sm text-slate-600 font-medium max-w-md mx-auto leading-relaxed mb-3">
                     Thank you! Our clinic receptionist will contact you at{" "}
                     <span className="font-extrabold text-[#0f2a4a]">{lastSubmittedPhone}</span> within 30 minutes to confirm your OPD time slot.
                   </p>
+
+                  {lastSubmittedEmail && (
+                    <div className="bg-white border border-emerald-200 rounded-xl p-3 max-w-md mx-auto mb-6 text-xs text-emerald-800 font-semibold flex items-center justify-center gap-2 shadow-2xs">
+                      <span>📩 Confirmation Email sent to:</span>
+                      <span className="font-extrabold underline text-[#103F7C]">{lastSubmittedEmail}</span>
+                    </div>
+                  )}
                   <div className="flex flex-wrap items-center justify-center gap-3">
                     <button
                       type="button"
@@ -1114,13 +1167,18 @@ export default function BookAppointmentPage() {
 
                         {/* Gmail ID / Email Address */}
                         <div>
-                          <label className="block text-xs font-extrabold uppercase tracking-wider text-[#0f2a4a] mb-2">
-                            Gmail ID / Email Address
-                          </label>
+                          <div className="flex items-center justify-between mb-2">
+                            <label className="block text-xs font-extrabold uppercase tracking-wider text-[#0f2a4a]">
+                              Gmail ID / Email Address
+                            </label>
+                            <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
+                              For Instant Email Alert
+                            </span>
+                          </div>
                           <input
                             type="email"
                             name="email"
-                            placeholder="Enter Gmail / Email Address"
+                            placeholder="e.g. user@gmail.com (To receive instant confirmation email)"
                             value={formData.email}
                             onChange={handleInputChange}
                             className={`w-full px-4 py-3.5 rounded-2xl border text-sm font-semibold text-[#0f2a4a] focus:outline-none transition-all ${

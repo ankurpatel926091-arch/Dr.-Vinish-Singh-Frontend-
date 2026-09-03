@@ -12,7 +12,7 @@ const DEFAULT_CLINICS_DATA = [
     phone: '+91 89600 68307',
     tel: '8960068307',
     address: '1/795, Ratan Khand, Sharda Nagar, Lucknow',
-    mapUrl: 'https://maps.app.goo.gl/jbynbpoL5PcKca4Z9',
+    mapUrl: 'https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow',
     embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3561.428!2d80.9242723!3d26.7803631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bff149cec4b2d%3A0xe680ad74dd601b3b!2sDr.%20Vinish%20Singh%20%7C%20Rudraksh%20IVF%20%26%20Urology%20Centre!5e0!3m2!1sen!2sin',
     mapIframe: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3561.428!2d80.9242723!3d26.7803631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bff149cec4b2d%3A0xe680ad74dd601b3b!2sDr.%20Vinish%20Singh%20%7C%20Rudraksh%20IVF%20%26%20Urology%20Centre!5e0!3m2!1sen!2sin',
     active: true
@@ -36,6 +36,19 @@ const DEFAULT_CLINICS_DATA = [
     active: true
   }
 ];
+
+const sanitizeClinics = (list) => {
+  if (!Array.isArray(list)) return list;
+  return list.map(c => {
+    if ((c.name && c.name.toLowerCase().includes('rudraksh')) || c.clinicId === 'morning' || c.id === 'morning') {
+      return {
+        ...c,
+        mapUrl: 'https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow'
+      };
+    }
+    return c;
+  });
+};
 
 const getApiUrls = () => {
   const urls = [];
@@ -68,10 +81,11 @@ export const fetchPublicClinics = async () => {
       if (res.ok) {
         const json = await res.json();
         if (json && json.success && Array.isArray(json.data) && json.data.length > 0) {
+          const sanitized = sanitizeClinics(json.data);
           try {
-            localStorage.setItem('dr_vinish_clinics', JSON.stringify(json.data));
+            localStorage.setItem('dr_vinish_clinics', JSON.stringify(sanitized));
           } catch (e) {}
-          return json.data;
+          return sanitized;
         }
       } else {
         failedUrlsCooldown.set(fullUrl, now);
@@ -87,10 +101,10 @@ export const fetchPublicClinics = async () => {
     if (saved) {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed;
+        return sanitizeClinics(parsed);
       }
     }
   } catch (err) {}
 
-  return DEFAULT_CLINICS_DATA;
+  return sanitizeClinics(DEFAULT_CLINICS_DATA);
 };
