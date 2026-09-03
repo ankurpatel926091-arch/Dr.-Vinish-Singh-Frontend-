@@ -138,18 +138,17 @@ export default function BlogSection() {
                 className="h-full"
               >
                 <article
-                  className="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-2xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group h-full"
+                  className="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-2xs hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 flex flex-col justify-between group h-full"
                 >
                   <div>
                     {/* Blog Image Container */}
-                    <NavLink to={`/blog/${blog.slug}`} className="block relative h-64 sm:h-72 overflow-hidden bg-slate-100">
+                    <NavLink to={`/blog/${blog.slug}`} className="block relative h-56 sm:h-64 overflow-hidden bg-slate-100/90 p-2.5 flex items-center justify-center">
                       <img
                         src={blog.image}
                         alt={blog.title}
                         loading="lazy"
-                        className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                        className="w-full h-full object-contain rounded-2xl transition-transform duration-300 group-hover:scale-[1.01]"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent opacity-60 pointer-events-none" />
                     </NavLink>
 
                     {/* Article Content */}

@@ -271,7 +271,7 @@ export default function AwardsRecognition() {
         </ScrollReveal>
 
         {/* Minimal CTA Banner */}
-        <ScrollReveal variant="fade-up" delay={200} className="rounded-3xl bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#103F7C] text-white p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
+        <ScrollReveal variant="fade-up" delay={200} className="my-6 sm:my-8 rounded-3xl bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#103F7C] text-white p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-orange-300 text-xs font-bold uppercase tracking-wider mb-2">
               <Sparkles size={13} />

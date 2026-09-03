@@ -216,7 +216,7 @@ export default function BlogDetail() {
             <img
               src={article.image}
               alt={article.title}
-              className="max-h-[460px] w-auto max-w-full object-contain rounded-2xl shadow-2xs hover:scale-[1.01] transition-transform duration-500"
+              className="max-h-[460px] w-auto max-w-full object-contain rounded-2xl shadow-2xs"
             />
           </div>
         </ScrollReveal>
@@ -434,14 +434,14 @@ export default function BlogDetail() {
               {relatedArticles.map((rel) => (
                 <article
                   key={rel.id}
-                  className="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-2xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between group"
+                  className="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-2xs hover:shadow-md transition-all duration-300 hover:-translate-y-0.5 flex flex-col justify-between group"
                 >
                   <div>
-                    <div className="relative h-48 sm:h-52 overflow-hidden bg-slate-100">
+                    <div className="relative h-48 sm:h-52 overflow-hidden bg-slate-100/90 p-2 flex items-center justify-center">
                       <img
                         src={rel.image}
                         alt={rel.title}
-                        className="w-full h-full object-cover object-[center_28%] group-hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-contain rounded-xl transition-transform duration-300 group-hover:scale-[1.01]"
                       />
                     </div>
                     <div className="p-5">

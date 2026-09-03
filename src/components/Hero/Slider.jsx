@@ -44,7 +44,7 @@ function HeroSlider() {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="relative w-full aspect-[1920/860] sm:aspect-[1920/800] lg:aspect-[1920/740] xl:aspect-[1920/710] min-h-[360px] sm:min-h-[460px] lg:min-h-[540px] max-h-[calc(100vh-118px)] bg-[#0b3367] overflow-hidden">
+      <div className="relative w-full aspect-[1920/800] sm:aspect-[1920/800] lg:aspect-[1920/740] xl:aspect-[1920/710] bg-[#0b3367] overflow-hidden">
         {slides.map((slide, i) => (
           <div
             key={i}
@@ -52,14 +52,14 @@ function HeroSlider() {
             style={{ opacity: i === active ? 1 : 0, pointerEvents: i === active ? "auto" : "none" }}
             aria-hidden={i !== active}
           >
-            {/* Full-bleed banner image — fits 100% inside window width and height without side cropping */}
+            {/* Full-bleed banner image */}
             <img
               src={slide.image}
               alt={slide.title || `Slide ${i + 1}`}
               loading={i === 0 ? "eager" : "lazy"}
               fetchpriority={i === 0 ? "high" : "low"}
               decoding="async"
-              className="w-full h-full object-fill object-center"
+              className="w-full h-full object-contain sm:object-cover object-center"
             />
 
             {/* Optional caption — only renders if you set title/subtitle */}

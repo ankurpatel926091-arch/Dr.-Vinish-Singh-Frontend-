@@ -543,8 +543,8 @@ export default function Gallery() {
       )}
 
       {/* Minimal CTA Banner */}
-      <ScrollReveal variant="fade-up" delay={200} className="max-w-7xl mx-auto px-4 sm:px-6 pb-16">
-        <div className="rounded-3xl bg-gradient-to-r from-[#103F7C] to-blue-900 text-white p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md">
+      <ScrollReveal variant="fade-up" delay={200} className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <div className="rounded-3xl bg-gradient-to-r from-[#103F7C] to-blue-900 text-white p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md">
           <div>
             <h3 className="text-xl sm:text-2xl font-extrabold">Visit Our Specialised Care Centres in Lucknow</h3>
             <p className="text-xs sm:text-sm text-blue-100 mt-1 font-normal">

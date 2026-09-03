@@ -126,21 +126,21 @@ export default function ConditionPage({
       </div>
 
       {/* Main Content Grid: Sticky Left Sidebar + Right Detailed Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12 lg:py-16 w-full max-w-full overflow-hidden">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start w-full max-w-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12 lg:py-16">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-start w-full">
           
           {/* Left Column: Sticky Image, Category Switcher & Doctor OPD Card */}
-          <div className="lg:col-span-5 lg:sticky lg:top-28 space-y-5 sm:space-y-6 w-full max-w-full overflow-hidden">
+          <div className="lg:col-span-4 lg:sticky lg:top-28 space-y-5 sm:space-y-6 w-full min-w-0 max-w-full overflow-hidden">
             {/* Condition Illustration / Photo Container */}
             <ScrollReveal variant="fade-up">
-              <div className="relative rounded-3xl p-2 sm:p-2.5 bg-gradient-to-b from-[#103F7C]/15 via-blue-500/10 to-orange-500/15 shadow-xl w-full max-w-full overflow-hidden">
-                <div className="bg-white rounded-[22px] overflow-hidden min-h-[200px] max-h-[350px] aspect-[4/3] sm:aspect-auto sm:h-[350px] relative group border border-slate-200/90 flex items-center justify-center p-2.5 sm:p-5 w-full max-w-full">
+              <div className="relative rounded-3xl p-2 sm:p-2.5 bg-gradient-to-b from-[#103F7C]/15 via-blue-500/10 to-orange-500/15 shadow-xl w-full">
+                <div className="bg-white rounded-[22px] overflow-hidden min-h-[200px] max-h-[350px] aspect-[4/3] sm:aspect-auto sm:h-[350px] relative group border border-slate-200/90 flex items-center justify-center p-2.5 sm:p-5 w-full">
                   {image ? (
                     <img
                       src={image}
                       alt={title}
                       loading="lazy"
-                      className="w-full h-auto max-h-[330px] object-contain transition-transform duration-700 group-hover:scale-105"
+                      className="w-full h-full object-contain object-center mx-auto transition-transform duration-700 group-hover:scale-105"
                     />
                   ) : (
                     <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-blue-50/80 via-white to-slate-100 text-[#103F7C] p-4 sm:p-6 text-center rounded-xl border border-slate-200/80">
@@ -165,7 +165,7 @@ export default function ConditionPage({
             </ScrollReveal>
 
             {/* Category Selector Tabs */}
-            <div className="bg-white rounded-2xl p-2 border border-slate-200/80 shadow-2xs flex items-center gap-1.5 overflow-x-auto no-scrollbar touch-pan-x py-2.5 w-full max-w-full">
+            <div className="bg-white rounded-2xl p-2 border border-slate-200/80 shadow-2xs flex items-center gap-1.5 overflow-x-auto no-scrollbar touch-pan-x py-2.5 w-full min-w-0 max-w-full">
               {conditionsMenuCategories.map((cat) => {
                 const isSelected =
                   cat.title.toLowerCase().includes(selectedCategory.toLowerCase()) ||
@@ -195,7 +195,7 @@ export default function ConditionPage({
                 iconBg={activeCategoryObj.iconBg}
                 items={activeCategoryObj.items}
                 activeLabel={title}
-                className="w-full max-w-full overflow-hidden"
+                className="w-full max-w-full"
               />
             )}
 
@@ -274,7 +274,7 @@ export default function ConditionPage({
           </div>
 
           {/* Right Column: Main Overview & Clinical Care */}
-          <div className="lg:col-span-7 flex flex-col items-start space-y-6 w-full max-w-full overflow-hidden">
+          <div className="lg:col-span-8 flex flex-col items-start space-y-6 w-full">
             <ScrollReveal variant="fade-up" className="w-full space-y-4">
               {/* Feature Pills */}
               <div className="flex flex-wrap items-center gap-2">
@@ -315,7 +315,7 @@ export default function ConditionPage({
 
                 <div className="grid sm:grid-cols-2 gap-4 w-full">
                   {treatmentCards.map((card, idx) => (
-                    <ScrollReveal key={idx} variant="scale-up" delay={idx * 70}>
+                    <ScrollReveal key={idx} variant="scale-up" delay={idx * 70} className="h-full">
                       <div className="bg-white p-4.5 sm:p-5 rounded-2xl border border-slate-200/90 shadow-xs hover:border-[#103F7C] transition-all hover:shadow-md h-full group">
                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold mb-3 transition-transform group-hover:scale-110 ${idx % 2 === 0 ? "bg-blue-50 text-[#103F7C]" : "bg-orange-50 text-orange-600"}`}>
                           {idx % 2 === 0 ? <Activity size={20} /> : <ShieldCheck size={20} />}
@@ -339,7 +339,7 @@ export default function ConditionPage({
 
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
                   {detailedTreatments.map((item, idx) => (
-                    <ScrollReveal key={idx} variant="fade-up" delay={idx * 60}>
+                    <ScrollReveal key={idx} variant="fade-up" delay={idx * 60} className="h-full">
                       <div className="relative bg-gradient-to-b from-white to-slate-50/70 p-4.5 sm:p-5 rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-lg hover:border-blue-300 transition-all duration-300 h-full flex flex-col justify-between group overflow-hidden">
                         {/* Top Accent Gradient Pill Line */}
                         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-400 via-orange-500 to-[#103F7C] opacity-80 group-hover:opacity-100 transition-opacity" />
@@ -538,8 +538,8 @@ export default function ConditionPage({
       </div>
 
       {/* Bottom CTA Banner */}
-      <ScrollReveal variant="scale-up" className="max-w-7xl mx-auto px-4 sm:px-6 pb-12 sm:pb-16 pt-2 text-center">
-        <div className="bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#0c2e5c] text-white rounded-3xl p-6 sm:p-8 lg:p-10 border border-blue-900/30 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-6 relative overflow-hidden">
+      <ScrollReveal variant="scale-up" className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 text-center">
+        <div className="bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#0c2e5c] text-white rounded-3xl p-6 sm:p-8 border border-blue-900/30 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-6 relative overflow-hidden">
           <div className="absolute right-0 top-0 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
           <div className="text-center sm:text-left relative z-10">
             <h4 className="text-xl sm:text-3xl font-black text-white">Need Expert Medical Advice for {title}?</h4>

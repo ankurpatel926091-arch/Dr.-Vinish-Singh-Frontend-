@@ -586,13 +586,13 @@ export default function DrVinishKumarSingh() {
       </div>
 
       {/* ================= 3. INTERACTIVE CREDENTIALS TABS (EXPERIENCE, ACTIVITIES, THESIS, MEMBERSHIPS & SKILLS) ================= */}
-      <div className="py-14 lg:py-20 bg-slate-50/70">
+      <div className="py-10 lg:py-10 bg-slate-50/70">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           
           {/* Header */}
           <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-10">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100/70 text-orange-700 text-xs font-semibold uppercase tracking-wider mb-2">
-              <Briefcase size={14} className="text-orange-500" />
+            <Briefcase size={14} className="text-orange-500" />
               <span>Professional Portfolio</span>
             </div>
 
@@ -878,8 +878,8 @@ export default function DrVinishKumarSingh() {
       </div>
 
       {/* ================= 4. CTA BANNER SECTION ================= */}
-      <ScrollReveal variant="fade-up" delay={200} className="max-w-7xl mx-auto px-4 sm:px-6 py-14">
-        <div className="rounded-3xl bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#103F7C] text-white p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
+      <ScrollReveal variant="fade-up" delay={200} className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <div className="rounded-3xl bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#103F7C] text-white p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-orange-300 text-xs font-bold uppercase tracking-wider mb-2">
               <Sparkles size={13} />
