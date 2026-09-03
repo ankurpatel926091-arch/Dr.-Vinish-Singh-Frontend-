@@ -39,10 +39,10 @@ import shilpiBuildingImg from "../assets/OurHospital/2.jpg";
 import ourHospitalsBanner from "../assets/About/OurHospitals.png";
 
 // Facility Showcase Images
-import opdRoomImg from "../assets/images/img13.png";
-import receptionImg from "../assets/images/Img1.jpeg";
-import laserTechImg from "../assets/images/img5.jpeg";
-import otSuiteImg from "../assets/images/img10.jpg";
+import opdRoomImg from "../assets/images/opdRoom.png";
+import receptionImg from "../assets/images/Reception.png";
+import laserTechImg from "../assets/images/Laser Tech.png";
+import otSuiteImg from "../assets/images/OT.png";
 import vinishImg from "../assets/images/img12.png";
 
 import { fetchPublicClinics } from "../api/clinicApi";

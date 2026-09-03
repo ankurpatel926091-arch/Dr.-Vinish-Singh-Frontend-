@@ -77,7 +77,7 @@ export function mapBlogFields(blog) {
 
 const STATIC_BLOG_IDS = ['b1', 'b2', 'b3', 'b4', 'b5', 'b6'];
 
-// Synchronous instant helper to get cached backend blogs immediately (0ms delay)
+// Synchronous instant helper to get cached dynamic backend blogs from localStorage
 export const getInitialBlogs = () => {
   try {
     const cached = localStorage.getItem('dr_vinish_cached_blogs');
@@ -96,7 +96,7 @@ export const getInitialBlogs = () => {
 };
 
 // Fast helper to fetch with AbortController timeout
-const fetchWithTimeout = async (url, timeoutMs = 3500) => {
+const fetchWithTimeout = async (url, timeoutMs = 2500) => {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
@@ -114,34 +114,52 @@ const processBackendBlogs = (backendBlogs = []) => {
   const mappedBackend = backendBlogs.map(mapBlogFields);
   const sorted = sortBlogsByDateDesc(mappedBackend);
 
-  try {
-    localStorage.setItem('dr_vinish_cached_blogs', JSON.stringify(sorted));
-  } catch (e) {}
+  if (sorted.length > 0) {
+    try {
+      localStorage.setItem('dr_vinish_cached_blogs', JSON.stringify(sorted));
+    } catch (e) {}
+  }
 
   return sorted;
 };
 
-// Fetch all published blogs from API in parallel with fast timeouts & instant fallback
+// Fetch all published blogs from API endpoints with fast local priority & instant return
 export const fetchPublicBlogs = async () => {
-  const fetchPromises = API_URLS.map(async (baseUrl) => {
+  // 1. Try local backend fast first (returns in ~20ms if local backend is running)
+  const localUrl = API_URLS.find((url) => url.includes('localhost') || url.includes('127.0.0.1'));
+  if (localUrl) {
     try {
-      const res = await fetchWithTimeout(`${baseUrl}/blogs/public`, 3500);
+      const res = await fetchWithTimeout(`${localUrl}/blogs/public`, 1500);
+      if (res.ok) {
+        const json = await res.json();
+        if (json && json.success && Array.isArray(json.data) && json.data.length > 0) {
+          return processBackendBlogs(json.data);
+        }
+      }
+    } catch (err) {
+      // Local fetch failed or timed out fast, continue to online fallback
+    }
+  }
+
+  // 2. Fallback to remaining online endpoints in parallel with fast timeout
+  const otherUrls = API_URLS.filter((url) => url !== localUrl);
+  const fetchPromises = otherUrls.map(async (baseUrl) => {
+    try {
+      const res = await fetchWithTimeout(`${baseUrl}/blogs/public`, 3000);
       if (res.ok) {
         const json = await res.json();
         if (json && json.success && Array.isArray(json.data)) {
           return json.data;
         }
       }
-    } catch (err) {
-      // Endpoint timed out or failed
-    }
+    } catch (err) {}
     return null;
   });
 
   try {
     const results = await Promise.allSettled(fetchPromises);
     for (const result of results) {
-      if (result.status === 'fulfilled' && result.value !== null) {
+      if (result.status === 'fulfilled' && result.value !== null && result.value.length > 0) {
         return processBackendBlogs(result.value);
       }
     }
@@ -157,9 +175,23 @@ export const fetchBlogBySlug = async (slug) => {
     (b) => b.slug === slug || b.id === slug || (b._id && b._id === slug)
   );
 
-  const fetchPromises = API_URLS.map(async (baseUrl) => {
+  const localUrl = API_URLS.find((url) => url.includes('localhost') || url.includes('127.0.0.1'));
+  if (localUrl) {
     try {
-      const res = await fetchWithTimeout(`${baseUrl}/blogs/detail/${slug}`, 3500);
+      const res = await fetchWithTimeout(`${localUrl}/blogs/detail/${slug}`, 1500);
+      if (res.ok) {
+        const json = await res.json();
+        if (json && json.success && json.data) {
+          return mapBlogFields(json.data);
+        }
+      }
+    } catch (err) {}
+  }
+
+  const otherUrls = API_URLS.filter((url) => url !== localUrl);
+  const fetchPromises = otherUrls.map(async (baseUrl) => {
+    try {
+      const res = await fetchWithTimeout(`${baseUrl}/blogs/detail/${slug}`, 3000);
       if (res.ok) {
         const json = await res.json();
         if (json && json.success && json.data) {
