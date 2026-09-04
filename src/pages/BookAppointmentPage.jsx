@@ -288,7 +288,8 @@ export default function BookAppointmentPage() {
 
     // 2. Fetch from backend API
     try {
-      const res = await fetch("http://localhost:5000/api/appointments/public/confirmed-slots");
+      const publicApiUrl = import.meta.env.VITE_API_BASE_URL || "https://dr-vinish-backend.onrender.com/api";
+      const res = await fetch(`${publicApiUrl}/appointments/public/confirmed-slots`);
       if (res.ok) {
         const json = await res.json();
         if (json.success && Array.isArray(json.data)) {
@@ -539,10 +540,10 @@ export default function BookAppointmentPage() {
         if (import.meta.env.VITE_API_BASE_URL) {
           urls.push(import.meta.env.VITE_API_BASE_URL);
         }
+        urls.push("https://dr-vinish-backend.onrender.com/api");
         if (!urls.includes("http://localhost:5000/api")) {
           urls.push("http://localhost:5000/api");
         }
-        urls.push("https://dr-vinish-backend.onrender.com/api");
         return Array.from(new Set(urls));
       };
 
