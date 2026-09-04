@@ -587,11 +587,15 @@ export default function BookAppointmentPage() {
 
       for (const baseUrl of apiUrls) {
         try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 4000);
+
           const res = await fetch(`${baseUrl}/appointments`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
+            signal: controller.signal,
             body: JSON.stringify({
               name: formData.name,
               phone: formData.phone,
@@ -605,6 +609,7 @@ export default function BookAppointmentPage() {
               message: fullMessage,
             }),
           });
+          clearTimeout(timeoutId);
 
           if (res.ok) {
             savedToBackend = true;
