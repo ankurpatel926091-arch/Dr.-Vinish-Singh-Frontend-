@@ -376,7 +376,37 @@ export default function BookAppointmentPage() {
     return isAptEvening === isCurrentEvening;
   };
 
-  const isSlotDisabled = useCallback(
+  const parseTimeToMinutes = (timeStr) => {
+    if (!timeStr) return -1;
+    const match = String(timeStr).trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+    if (!match) return -1;
+    let hours = parseInt(match[1], 10);
+    const minutes = parseInt(match[2], 10);
+    const modifier = match[3].toUpperCase();
+
+    if (modifier === "PM" && hours < 12) hours += 12;
+    if (modifier === "AM" && hours === 12) hours = 0;
+
+    return hours * 60 + minutes;
+  };
+
+  const isPastSlot = useCallback(
+    (slotTime) => {
+      const selectedDate = formData.preferredDate;
+      if (!selectedDate || !isSameDate(selectedDate, getTodayDateString())) {
+        return false;
+      }
+      const slotMin = parseTimeToMinutes(slotTime);
+      if (slotMin === -1) return false;
+
+      const now = new Date();
+      const currentMin = now.getHours() * 60 + now.getMinutes();
+      return slotMin <= currentMin;
+    },
+    [formData.preferredDate]
+  );
+
+  const isBookedSlot = useCallback(
     (slotTime) => {
       if (!confirmedAppointments || confirmedAppointments.length === 0) return false;
 
@@ -392,12 +422,17 @@ export default function BookAppointmentPage() {
 
         const aptTimeStr = String(apt.time || "").trim().toLowerCase();
         const slotTimeStr = String(slotTime || "").trim().toLowerCase();
-        const timeMatch = aptTimeStr === slotTimeStr;
-
-        return dateMatch && hospitalMatch && timeMatch;
+        return dateMatch && hospitalMatch && aptTimeStr === slotTimeStr;
       });
     },
     [confirmedAppointments, formData.preferredDate, formData.hospital]
+  );
+
+  const isSlotDisabled = useCallback(
+    (slotTime) => {
+      return isPastSlot(slotTime) || isBookedSlot(slotTime);
+    },
+    [isPastSlot, isBookedSlot]
   );
 
   const validateField = (name, value) => {
@@ -1038,17 +1073,22 @@ export default function BookAppointmentPage() {
                                 onClick={() =>
                                   !isDisabled && setFormData({ ...formData, preferredTime: slot })
                                 }
-                                title={isDisabled ? "This time slot is already booked & confirmed." : `Select ${slot}`}
-                                className={`py-3 px-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center justify-center gap-1 border ${
+                                title={isBookedSlot(slot) ? "This time slot is already booked & confirmed." : isPastSlot(slot) ? "This time slot has already passed for today." : `Select ${slot}`}
+                                className={`py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center justify-center gap-1 border ${
                                   isDisabled
-                                    ? "bg-slate-100/90 text-slate-400 border-slate-200/90 cursor-not-allowed opacity-60 line-through select-none shadow-none"
+                                    ? "bg-slate-100/90 border-slate-200/90 cursor-not-allowed opacity-70 select-none shadow-none"
                                     : isSelected
                                     ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white border-orange-600 shadow-md shadow-orange-500/25 scale-[1.02] cursor-pointer"
                                     : "bg-white text-[#0f2a4a] border-slate-200/90 hover:border-orange-300 hover:bg-orange-50/30 hover:text-orange-600 shadow-2xs cursor-pointer"
                                 }`}
                               >
                                 {isDisabled ? (
-                                  <span className="text-[10px] font-extrabold text-rose-500 tracking-tight no-underline uppercase">Booked</span>
+                                  <div className="flex flex-col items-center justify-center leading-tight text-center">
+                                    <span className="line-through text-slate-500 font-bold text-xs">{slot}</span>
+                                    <span className={`text-[9px] font-extrabold tracking-tight no-underline uppercase mt-0.5 ${isBookedSlot(slot) ? "text-rose-500 font-black" : "text-slate-400 font-extrabold"}`}>
+                                      {isBookedSlot(slot) ? "Booked" : "Passed"}
+                                    </span>
+                                  </div>
                                 ) : (
                                   <>
                                     {isSelected && <Check size={14} className="shrink-0 stroke-[3]" />}
