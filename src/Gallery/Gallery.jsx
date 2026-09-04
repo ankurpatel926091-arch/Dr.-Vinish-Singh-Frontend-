@@ -49,6 +49,10 @@ export default function Gallery() {
   const [zoomLevel, setZoomLevel] = useState(1);
   const [rotation, setRotation] = useState(0);
 
+  // Pagination State
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 8;
+
   // Fetch active gallery items from backend API
   const fetchPublicGallery = useCallback(async () => {
     try {
@@ -155,6 +159,27 @@ export default function Gallery() {
       return item.category === activeCategory;
     });
   }, [galleryList, activeCategory]);
+
+  // Pagination Logic
+  const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE) || 1;
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const paginatedItems = useMemo(() => {
+    return filteredItems.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  }, [filteredItems, startIndex]);
+
+  useEffect(() => {
+    if (currentPage > totalPages && totalPages > 0) {
+      setCurrentPage(totalPages);
+    }
+  }, [totalPages, currentPage]);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    const galleryElem = document.getElementById("gallery-grid-section");
+    if (galleryElem) {
+      galleryElem.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   const getCategoryCount = useCallback(
     (catName) => {
@@ -291,7 +316,7 @@ export default function Gallery() {
       </div>
 
       {/* ================= MAIN GALLERY SECTION ================= */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 lg:py-14">
+      <div id="gallery-grid-section" className="max-w-7xl mx-auto px-4 sm:px-6 py-10 lg:py-14">
         {/* Category Filter Tabs */}
         <ScrollReveal variant="fade-up" delay={100} className="flex items-center justify-center sm:justify-start flex-wrap gap-2 mb-10">
           {categories.map((cat) => {
@@ -302,6 +327,7 @@ export default function Gallery() {
                 type="button"
                 onClick={() => {
                   setActiveCategory(cat);
+                  setCurrentPage(1);
                   setSelectedIndex(null);
                 }}
                 className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center gap-1.5 cursor-pointer ${
@@ -366,81 +392,141 @@ export default function Gallery() {
 
         {/* Actual Gallery Media Grid */}
         {!loading && !error && filteredItems.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
-            {filteredItems.map((item, idx) => (
-              <ScrollReveal key={item.id} variant="scale-up" delay={idx * 60} className="h-full">
-                <div
-                  onClick={() => openLightbox(idx)}
-                  onMouseEnter={(e) => handleCardMouseEnter(e, item.type)}
-                  onMouseLeave={(e) => handleCardMouseLeave(e, item.type)}
-                  className="group relative cursor-pointer bg-slate-900 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl border border-slate-200/90 hover:border-orange-400/50 transition-all duration-500 hover:-translate-y-1.5 h-80 sm:h-96 flex flex-col justify-end"
-                >
-                  {/* Media Display */}
-                  {item.type === "photo" ? (
-                    brokenMedia[item.id] ? (
-                      <div className="absolute inset-0 bg-slate-800 flex flex-col items-center justify-center text-slate-400 p-4 text-center">
-                        <ImageIcon size={32} className="mb-2 opacity-50 text-slate-500" />
-                        <span className="text-xs font-semibold text-slate-400">Media unavailable</span>
-                      </div>
-                    ) : (
-                      <img
-                        src={item.media}
-                        alt={item.title}
-                        loading="lazy"
-                        className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-108"
-                        onError={() => handleMediaError(item.id)}
-                      />
-                    )
-                  ) : (
-                    <div className="absolute inset-0 w-full h-full">
-                      <video
-                        src={item.media}
-                        muted
-                        loop
-                        playsInline
-                        preload="metadata"
-                        className="w-full h-full object-cover object-[center_28%] opacity-90 group-hover:opacity-100 transition-all duration-300"
-                        onError={() => handleMediaError(item.id)}
-                      />
-                    </div>
-                  )}
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
+              {paginatedItems.map((item, idx) => {
+                const globalIdx = startIndex + idx;
+                return (
+                  <ScrollReveal key={item.id} variant="scale-up" delay={idx * 60} className="h-full">
+                    <div
+                      onClick={() => openLightbox(globalIdx)}
+                      onMouseEnter={(e) => handleCardMouseEnter(e, item.type)}
+                      onMouseLeave={(e) => handleCardMouseLeave(e, item.type)}
+                      className="group relative cursor-pointer bg-slate-900 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl border border-slate-200/90 hover:border-orange-400/50 transition-all duration-500 hover:-translate-y-1.5 h-80 sm:h-96 flex flex-col justify-end"
+                    >
+                      {/* Media Display */}
+                      {item.type === "photo" ? (
+                        brokenMedia[item.id] ? (
+                          <div className="absolute inset-0 bg-slate-800 flex flex-col items-center justify-center text-slate-400 p-4 text-center">
+                            <ImageIcon size={32} className="mb-2 opacity-50 text-slate-500" />
+                            <span className="text-xs font-semibold text-slate-400">Media unavailable</span>
+                          </div>
+                        ) : (
+                          <img
+                            src={item.media}
+                            alt={item.title}
+                            loading="lazy"
+                            className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-108"
+                            onError={() => handleMediaError(item.id)}
+                          />
+                        )
+                      ) : (
+                        <div className="absolute inset-0 w-full h-full">
+                          <video
+                            src={item.media}
+                            muted
+                            loop
+                            playsInline
+                            preload="metadata"
+                            className="w-full h-full object-cover object-[center_28%] opacity-90 group-hover:opacity-100 transition-all duration-300"
+                            onError={() => handleMediaError(item.id)}
+                          />
+                        </div>
+                      )}
 
-                  {/* Floating Action Badge */}
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-                    {item.type === "photo" ? (
-                      <div className="w-12 h-12 rounded-full bg-white/95 text-[#103F7C] shadow-lg flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 border border-white/60">
-                        <Maximize2 size={20} className="text-[#103F7C]" />
+                      {/* Floating Action Badge */}
+                      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                        {item.type === "photo" ? (
+                          <div className="w-12 h-12 rounded-full bg-white/95 text-[#103F7C] shadow-lg flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-300 border border-white/60">
+                            <Maximize2 size={20} className="text-[#103F7C]" />
+                          </div>
+                        ) : (
+                          <div className="w-14 h-14 rounded-full bg-orange-500/95 text-white flex items-center justify-center shadow-xl border-2 border-white/60 group-hover:scale-110 transition-all duration-300">
+                            <Play size={24} className="ml-1 fill-white" />
+                          </div>
+                        )}
                       </div>
-                    ) : (
-                      <div className="w-14 h-14 rounded-full bg-orange-500/95 text-white flex items-center justify-center shadow-xl border-2 border-white/60 group-hover:scale-110 transition-all duration-300">
-                        <Play size={24} className="ml-1 fill-white" />
+
+                      {/* Overlay Text */}
+                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10 flex items-end justify-between gap-3">
+                        <div className="min-w-0 flex-1">
+                          <h3 className="text-white font-bold text-xs sm:text-sm leading-snug truncate drop-shadow-sm">
+                            {item.title}
+                          </h3>
+                          <p className="text-[10px] text-orange-300 font-semibold uppercase tracking-wider mt-0.5 flex items-center gap-1">
+                            {item.type === "video" ? (
+                              <Video size={11} className="text-orange-400" />
+                            ) : (
+                              <ImageIcon size={11} className="text-blue-300" />
+                            )}
+                            <span>{item.category}</span>
+                          </p>
+                        </div>
+                        <span className="text-[9.5px] font-bold text-white bg-black/60 backdrop-blur-xs px-2.5 py-1 rounded-full border border-white/20 shrink-0 uppercase tracking-wider">
+                          {item.tag || item.category}
+                        </span>
                       </div>
-                    )}
+                    </div>
+                  </ScrollReveal>
+                );
+              })}
+            </div>
+
+            {/* Pagination Controls */}
+            {filteredItems.length > ITEMS_PER_PAGE && (
+              <ScrollReveal variant="fade-up" delay={100} className="mt-10 sm:mt-12">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white px-5 sm:px-7 py-4 rounded-3xl border border-slate-200/90 shadow-xs">
+                  <div className="text-xs text-slate-500 font-semibold tracking-wide">
+                    Showing <span className="font-extrabold text-[#103F7C]">{startIndex + 1}</span> to{" "}
+                    <span className="font-extrabold text-[#103F7C]">
+                      {Math.min(startIndex + ITEMS_PER_PAGE, filteredItems.length)}
+                    </span>{" "}
+                    of <span className="font-extrabold text-slate-800">{filteredItems.length}</span> gallery items
                   </div>
 
-                  {/* Overlay Text */}
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10 flex items-end justify-between gap-3">
-                    <div className="min-w-0 flex-1">
-                      <h3 className="text-white font-bold text-xs sm:text-sm leading-snug truncate drop-shadow-sm">
-                        {item.title}
-                      </h3>
-                      <p className="text-[10px] text-orange-300 font-semibold uppercase tracking-wider mt-0.5 flex items-center gap-1">
-                        {item.type === "video" ? (
-                          <Video size={11} className="text-orange-400" />
-                        ) : (
-                          <ImageIcon size={11} className="text-blue-300" />
-                        )}
-                        <span>{item.category}</span>
-                      </p>
-                    </div>
-                    <span className="text-[9.5px] font-bold text-white bg-black/60 backdrop-blur-xs px-2.5 py-1 rounded-full border border-white/20 shrink-0 uppercase tracking-wider">
-                      {item.tag || item.category}
-                    </span>
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    {/* Previous Button */}
+                    <button
+                      type="button"
+                      disabled={currentPage === 1}
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      className="px-3.5 py-2 rounded-2xl bg-slate-100 text-slate-700 hover:bg-[#103F7C] hover:text-white disabled:opacity-40 disabled:hover:bg-slate-100 disabled:hover:text-slate-700 disabled:cursor-not-allowed text-xs font-bold transition-all flex items-center gap-1 cursor-pointer shadow-2xs"
+                    >
+                      <ChevronLeft size={16} />
+                      <span className="hidden sm:inline">Previous</span>
+                    </button>
+
+                    {/* Page Number Buttons */}
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                      <button
+                        key={page}
+                        type="button"
+                        onClick={() => handlePageChange(page)}
+                        className={`w-9 h-9 rounded-2xl text-xs font-extrabold transition-all cursor-pointer flex items-center justify-center ${
+                          currentPage === page
+                            ? "bg-[#103F7C] text-white shadow-md shadow-blue-900/20 scale-105"
+                            : "bg-white text-slate-700 hover:bg-slate-100 border border-slate-200/80"
+                        }`}
+                      >
+                        {page}
+                      </button>
+                    ))}
+
+                    {/* Next Button */}
+                    <button
+                      type="button"
+                      disabled={currentPage === totalPages}
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      className="px-3.5 py-2 rounded-2xl bg-slate-100 text-slate-700 hover:bg-[#103F7C] hover:text-white disabled:opacity-40 disabled:hover:bg-slate-100 disabled:hover:text-slate-700 disabled:cursor-not-allowed text-xs font-bold transition-all flex items-center gap-1 cursor-pointer shadow-2xs"
+                    >
+                      <span className="hidden sm:inline">Next</span>
+                      <ChevronRight size={16} />
+                    </button>
                   </div>
                 </div>
               </ScrollReveal>
-            ))}
-          </div>
+            )}
+          </>
         )}
       </div>
 

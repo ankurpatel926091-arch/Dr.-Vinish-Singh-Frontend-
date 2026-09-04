@@ -16,8 +16,8 @@ import ScrollReveal from "../ScrollReveal/ScrollReveal";
 import img1 from "../../assets/images/Img1.jpeg";
 import img2 from "../../assets/images/img2.jpeg";
 import img3 from "../../assets/images/img3.jpeg";
-import img4 from "../../assets/images/img13.png";
-import img5 from "../../assets/images/img5.jpeg";
+import img4 from "../../assets/OurHospital/1.jpg";
+import img5 from "../../assets/images/Reception.png";
 import img7 from "../../assets/images/img6.jpeg";
 
 const galleryPhotos = [
@@ -146,8 +146,7 @@ export default function HomeGallery() {
           </h2>
 
           <p className="mt-2.5 text-sm sm:text-base text-slate-600 font-medium leading-relaxed max-w-2xl mx-auto">
-            A Glimpse Inside Our Centres
-Explore our modern facilities, advanced clinical environment, medical initiatives, and meaningful moments from our journey of patient care and recovery.
+            A Glimpse Inside Our Centres Explore our modern facilities, advanced clinical environment, medical initiatives, and meaningful moments from our journey of patient care and recovery.
           </p>
         </ScrollReveal>
 
