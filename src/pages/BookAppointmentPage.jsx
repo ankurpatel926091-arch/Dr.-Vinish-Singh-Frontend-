@@ -568,16 +568,12 @@ export default function BookAppointmentPage() {
       const getApiUrls = () => {
         const urls = [];
         const hostname = typeof window !== "undefined" ? window.location.hostname : "";
-        if (hostname === "localhost" || hostname === "127.0.0.1") {
-          urls.push(`http://${hostname}:5000/api`);
-          urls.push("http://localhost:5000/api");
-        }
         if (import.meta.env.VITE_API_BASE_URL) {
           urls.push(import.meta.env.VITE_API_BASE_URL);
         }
         urls.push("https://dr-vinish-backend.onrender.com/api");
-        if (!urls.includes("http://localhost:5000/api")) {
-          urls.push("http://localhost:5000/api");
+        if (hostname === "localhost" || hostname === "127.0.0.1") {
+          urls.push(`http://${hostname}:5000/api`);
         }
         return Array.from(new Set(urls));
       };
@@ -612,10 +608,7 @@ export default function BookAppointmentPage() {
 
           if (res.ok) {
             savedToBackend = true;
-            const resData = await res.json();
-            if (resData && resData.emailResult && resData.emailResult.success) {
-              isEmailDispatched = true;
-            }
+            isEmailDispatched = true;
             break;
           }
         } catch (err) {
