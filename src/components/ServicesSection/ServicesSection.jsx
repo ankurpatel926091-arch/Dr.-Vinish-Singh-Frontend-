@@ -112,7 +112,7 @@ Delivering comprehensive urological care through advanced laser procedures, mini
         </ScrollReveal>
 
         {/* ================= 4 SERVICES CARDS GRID ================= */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-4.5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
           {servicesData.map((service, index) => {
             const IconComp = service.icon;
             return (
@@ -128,7 +128,7 @@ Delivering comprehensive urological care through advanced laser procedures, mini
                   className="block group h-full focus:outline-none"
                 >
                   <div
-                    className="bg-white rounded-3xl p-5 sm:p-5.5 border border-slate-200/90 flex flex-col justify-between group relative overflow-hidden h-full cursor-pointer"
+                    className="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/90 flex flex-col justify-between group relative overflow-hidden h-full cursor-pointer"
                   >
                     {/* Top Accent Line */}
                     <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${service.accentColor}`} />

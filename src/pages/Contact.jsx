@@ -18,6 +18,7 @@ import { FaWhatsapp as FaWhatsappIcon, FaFacebookF, FaInstagram, FaLinkedinIn, F
 import { FaXTwitter } from "react-icons/fa6";
 import PageHero from "../components/PageHero";
 import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
+import CustomSelect from "../components/CustomSelect";
 
 const socialAccounts = [
   {
@@ -551,18 +552,18 @@ export default function Contact() {
                       <label className="block text-xs font-bold text-slate-700 mb-1">
                         Choose Service
                       </label>
-                      <select
+                      <CustomSelect
+                        options={[
+                          { value: "", label: "Select a Service" },
+                          { value: "Laser Kidney Stones", label: "Laser Kidney Stones (RIRS / PCNL)" },
+                          { value: "Enlarged Prostate (HolEP)", label: "Enlarged Prostate Laser Surgery (HolEP)" },
+                          { value: "UTI & Female Urology", label: "Recurrent Female UTI & Bladder Care" },
+                          { value: "Andrology & Male Health", label: "Male Infertility & Erectile Dysfunction" },
+                          { value: "General Consultation", label: "General Urology & OPD Consultation" },
+                        ]}
                         value={formData.service}
-                        onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                        className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-sm font-medium text-slate-900 focus:outline-none focus:border-[#103F7C] focus:ring-2 focus:ring-blue-100 transition-all cursor-pointer"
-                      >
-                        <option value="">Select a Service</option>
-                        <option value="Laser Kidney Stones">Laser Kidney Stones (RIRS / PCNL)</option>
-                        <option value="Enlarged Prostate (HolEP)">Enlarged Prostate Laser Surgery (HolEP)</option>
-                        <option value="UTI & Female Urology">Recurrent Female UTI &amp; Bladder Care</option>
-                        <option value="Andrology & Male Health">Male Infertility &amp; Erectile Dysfunction</option>
-                        <option value="General Consultation">General Urology &amp; OPD Consultation</option>
-                      </select>
+                        onChange={(val) => setFormData({ ...formData, service: val })}
+                      />
                     </div>
 
                     {/* Message Field */}

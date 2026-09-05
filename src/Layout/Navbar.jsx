@@ -205,34 +205,30 @@ function Navbar() {
     e.preventDefault();
     closeAllMenus();
 
-    const scrollToAppointment = (immediate = false) => {
+    if (location.pathname === "/" && location.hash === "#book-appointment") {
       const el = document.getElementById("book-appointment");
       if (el) {
+        const getElementDocumentTop = (element) => {
+          let top = 0;
+          let curr = element;
+          while (curr) {
+            top += curr.offsetTop;
+            curr = curr.offsetParent;
+          }
+          return top;
+        };
         const header = document.querySelector("header");
-        const headerHeight = header ? header.offsetHeight : 120;
-        const topPos = el.getBoundingClientRect().top + window.pageYOffset;
-        const targetScrollY = Math.max(0, topPos - (headerHeight + 20));
-
+        const headerHeight = header ? header.offsetHeight : 95;
+        const offset = -(headerHeight - 25);
+        const targetScrollY = Math.max(0, getElementDocumentTop(el) + offset);
         if (window.lenis) {
-          window.lenis.scrollTo(targetScrollY, {
-            immediate: immediate,
-            duration: immediate ? 0 : 0.5,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-          });
+          window.lenis.scrollTo(targetScrollY, { duration: 0.6 });
         } else {
-          window.scrollTo({ top: targetScrollY, behavior: immediate ? "instant" : "smooth" });
+          window.scrollTo({ top: targetScrollY, behavior: "smooth" });
         }
       }
-    };
-
-    if (location.pathname === "/") {
-      scrollToAppointment(false);
     } else {
       navigate("/#book-appointment");
-      setTimeout(() => scrollToAppointment(true), 80);
-      setTimeout(() => scrollToAppointment(false), 350);
-      setTimeout(() => scrollToAppointment(false), 800);
-      setTimeout(() => scrollToAppointment(false), 1400);
     }
   };
 

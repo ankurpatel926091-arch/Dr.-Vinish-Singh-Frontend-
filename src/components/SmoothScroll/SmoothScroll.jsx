@@ -46,61 +46,89 @@ export default function SmoothScroll({ children }) {
       const rawHash = decodeURIComponent(location.hash.replace("#", "")).trim();
       const targetId = rawHash.replace(/[\s_]+/g, "-");
 
-      const scrollToTarget = (immediate = false) => {
-        const targetEl = document.getElementById(targetId) || document.getElementById(rawHash);
-        if (targetEl) {
-          const header = document.querySelector("header");
-          const headerHeight = header ? header.offsetHeight : 120;
-          const topPos = targetEl.getBoundingClientRect().top + window.pageYOffset;
-          const targetScrollY = Math.max(0, topPos - (headerHeight + 20));
+      let animFrameId;
+      let resizeObserver;
+      let stopTimer;
+      let attempts = 0;
+      let lastTargetY = null;
 
+      const getElementDocumentTop = (el) => {
+        let top = 0;
+        let curr = el;
+        while (curr) {
+          top += curr.offsetTop;
+          curr = curr.offsetParent;
+        }
+        return top;
+      };
+
+      const getTargetScrollY = (targetEl) => {
+        const header = document.querySelector("header");
+        const headerHeight = header ? header.offsetHeight : 95;
+        const offset = -(headerHeight - 25);
+        const docTop = getElementDocumentTop(targetEl);
+        return Math.max(0, docTop + offset);
+      };
+
+      const performScroll = () => {
+        const targetEl =
+          document.getElementById(targetId) ||
+          document.getElementById(rawHash);
+
+        if (!targetEl) {
+          if (attempts < 40) {
+            attempts++;
+            animFrameId = requestAnimationFrame(performScroll);
+          }
+          return;
+        }
+
+        const currentTargetY = getTargetScrollY(targetEl);
+
+        // Only trigger scroll if initial call or document Y position shifted significantly (> 15px)
+        if (lastTargetY === null || Math.abs(currentTargetY - lastTargetY) > 15) {
+          lastTargetY = currentTargetY;
           if (window.lenis) {
-            window.lenis.scrollTo(targetScrollY, {
-              immediate: immediate,
-              duration: immediate ? 0 : 0.4,
+            window.lenis.scrollTo(currentTargetY, {
+              duration: 0.6,
               easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             });
           } else {
-            window.scrollTo({ top: targetScrollY, behavior: immediate ? "instant" : "smooth" });
+            window.scrollTo({ top: currentTargetY, behavior: "smooth" });
           }
-          return true;
         }
-        return false;
       };
 
-      // Multi-stage scroll adjustments as page images & fonts load
-      scrollToTarget(true);
-      const t1 = setTimeout(() => scrollToTarget(true), 100);
-      const t2 = setTimeout(() => scrollToTarget(false), 400);
-      const t3 = setTimeout(() => scrollToTarget(false), 800);
-      const t4 = setTimeout(() => scrollToTarget(false), 1400);
+      // Initial scroll on next frame
+      animFrameId = requestAnimationFrame(performScroll);
 
-      // ResizeObserver to track layout height expansion as images load
-      let resizeObserver;
+      // Observe document layout size changes when lazy images load above
       if (typeof ResizeObserver !== "undefined") {
-        let lastHeight = document.body.scrollHeight;
+        let lastBodyHeight = document.body.scrollHeight;
         resizeObserver = new ResizeObserver(() => {
-          const newHeight = document.body.scrollHeight;
-          if (Math.abs(newHeight - lastHeight) > 15) {
-            lastHeight = newHeight;
-            scrollToTarget(false);
+          const currentBodyHeight = document.body.scrollHeight;
+          if (Math.abs(currentBodyHeight - lastBodyHeight) > 15) {
+            lastBodyHeight = currentBodyHeight;
+            performScroll();
           }
         });
         resizeObserver.observe(document.body);
       }
 
-      // Cleanup observer after 3 seconds
-      const stopTimer = setTimeout(() => {
+      // Listen for image load events
+      const handleImageLoad = () => performScroll();
+      window.addEventListener("load", handleImageLoad, true);
+
+      stopTimer = setTimeout(() => {
         if (resizeObserver) resizeObserver.disconnect();
-      }, 3000);
+        window.removeEventListener("load", handleImageLoad, true);
+      }, 2500);
 
       return () => {
-        clearTimeout(t1);
-        clearTimeout(t2);
-        clearTimeout(t3);
-        clearTimeout(t4);
-        clearTimeout(stopTimer);
+        if (animFrameId) cancelAnimationFrame(animFrameId);
         if (resizeObserver) resizeObserver.disconnect();
+        if (stopTimer) clearTimeout(stopTimer);
+        window.removeEventListener("load", handleImageLoad, true);
       };
     } else {
       lenisRef.current.scrollTo(0, { immediate: true });

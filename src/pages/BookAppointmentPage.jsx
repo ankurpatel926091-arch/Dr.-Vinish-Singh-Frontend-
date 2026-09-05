@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useSearchParams, useNavigate, Link } from "react-router-dom";
 import {
   Send,
@@ -18,6 +18,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
+import CustomSelect from "../components/CustomSelect";
 
 import { fetchPublicClinics } from "../api/clinicApi";
 
@@ -126,6 +127,31 @@ const getTodayDateString = () => {
   return `${year}-${month}-${day}`;
 };
 
+const getTomorrowDateString = () => {
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const year = tomorrow.getFullYear();
+  const month = String(tomorrow.getMonth() + 1).padStart(2, "0");
+  const day = String(tomorrow.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+
+const getNextDayDateString = (dateStr) => {
+  if (!dateStr) return getTomorrowDateString();
+  try {
+    const parts = dateStr.split("-");
+    if (parts.length === 3) {
+      const d = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+      d.setDate(d.getDate() + 1);
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+  } catch (e) {}
+  return getTomorrowDateString();
+};
+
 const formatDateFormatted = (dateStr) => {
   if (!dateStr) return "";
   try {
@@ -144,6 +170,18 @@ const formatDateFormatted = (dateStr) => {
 export default function BookAppointmentPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+
+  const dateInputRef = useRef(null);
+
+  const handleOpenDatePicker = () => {
+    try {
+      if (dateInputRef.current && typeof dateInputRef.current.showPicker === "function") {
+        dateInputRef.current.showPicker();
+      } else if (dateInputRef.current) {
+        dateInputRef.current.focus();
+      }
+    } catch (err) {}
+  };
 
   const [hospitalsInfo, setHospitalsInfo] = useState(defaultHospitalDetails);
 
@@ -220,10 +258,8 @@ export default function BookAppointmentPage() {
   }, [loadClinics]);
 
   const hospitalParam = searchParams.get("hospital");
-  const initialHospital =
-    hospitalParam === "evening"
-      ? hospitalsInfo.evening.fullOption
-      : hospitalsInfo.morning.fullOption;
+  const initialHospitalKey =
+    hospitalParam === "evening" ? "evening" : "morning";
 
   const initialServices =
     hospitalParam === "evening"
@@ -262,10 +298,10 @@ export default function BookAppointmentPage() {
     phone: "",
     email: "",
     service: initialServices[0],
-    hospital: initialHospital,
-    preferredDate: todayStr,
-    preferredTime: initialTimeSlots[0],
-    consultationType: "First Visit",
+    hospital: initialHospitalKey,
+    preferredDate: "",
+    preferredTime: "",
+    consultationType: "",
     message: "",
   });
 
@@ -273,41 +309,81 @@ export default function BookAppointmentPage() {
   const [confirmedAppointments, setConfirmedAppointments] = useState([]);
 
   const loadConfirmedAppointments = useCallback(async () => {
-    let combined = [];
+    const getApiUrls = () => {
+      const urls = [];
+      const hostname = typeof window !== "undefined" ? window.location.hostname : "";
+      if (hostname === "localhost" || hostname === "127.0.0.1") {
+        urls.push(`http://${hostname}:5000/api`);
+      }
+      if (import.meta.env.VITE_API_BASE_URL) {
+        urls.push(import.meta.env.VITE_API_BASE_URL);
+      }
+      urls.push("https://dr-vinish-backend.onrender.com/api");
+      return Array.from(new Set(urls));
+    };
 
-    // 1. Read local storage
+    let backendSlots = null;
+    const apiUrls = getApiUrls();
+
+    for (const baseUrl of apiUrls) {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000);
+        const res = await fetch(`${baseUrl}/appointments/public/confirmed-slots`, {
+          signal: controller.signal,
+        });
+        clearTimeout(timeoutId);
+        if (res.ok) {
+          const json = await res.json();
+          if (json.success && Array.isArray(json.data)) {
+            backendSlots = json.data;
+            break;
+          }
+        }
+      } catch (e) {}
+    }
+
+    let localApts = [];
     try {
       const saved = localStorage.getItem("dr_vinish_appointments");
       if (saved) {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed)) {
-          combined = [...parsed];
+          localApts = parsed;
         }
       }
     } catch (e) {}
 
-    // 2. Fetch from backend API
-    try {
-      const publicApiUrl = import.meta.env.VITE_API_BASE_URL || "https://dr-vinish-backend.onrender.com/api";
-      const res = await fetch(`${publicApiUrl}/appointments/public/confirmed-slots`);
-      if (res.ok) {
-        const json = await res.json();
-        if (json.success && Array.isArray(json.data)) {
-          json.data.forEach((item) => {
-            const itemId = item._id || item.id;
-            if (!combined.some((c) => String(c.id || c._id) === String(itemId))) {
-              combined.push(item);
-            }
-          });
+    let finalSlots = [];
+
+    if (backendSlots !== null) {
+      // Backend is authoritative for active booked slots
+      finalSlots = [...backendSlots];
+
+      // Add recent local bookings (< 15s old) if not present yet in backend data and not cancelled
+      const now = Date.now();
+      localApts.forEach((lItem) => {
+        const st = (lItem.status || "").toLowerCase();
+        const isCancelled = st === "cancelled" || st === "canceled" || st === "rejected";
+        if (isCancelled) return;
+
+        const isRecent = lItem.id && typeof lItem.id === "number" && now - lItem.id < 15000;
+        if (isRecent) {
+          const itemId = lItem._id || lItem.id;
+          if (!finalSlots.some((b) => String(b.id || b._id) === String(itemId))) {
+            finalSlots.push(lItem);
+          }
         }
-      }
-    } catch (e) {}
+      });
+    } else {
+      // Fallback when backend is offline
+      finalSlots = localApts.filter((apt) => {
+        const st = (apt.status || "").toLowerCase();
+        return st !== "cancelled" && st !== "canceled" && st !== "rejected";
+      });
+    }
 
-    const confirmedOnly = combined.filter(
-      (apt) => (apt.status || "").toLowerCase() === "confirmed"
-    );
-
-    setConfirmedAppointments(confirmedOnly);
+    setConfirmedAppointments(finalSlots);
   }, []);
 
   useEffect(() => {
@@ -391,8 +467,8 @@ export default function BookAppointmentPage() {
   };
 
   const isPastSlot = useCallback(
-    (slotTime) => {
-      const selectedDate = formData.preferredDate;
+    (slotTime, targetDate) => {
+      const selectedDate = targetDate !== undefined ? targetDate : formData.preferredDate;
       if (!selectedDate || !isSameDate(selectedDate, getTodayDateString())) {
         return false;
       }
@@ -407,15 +483,16 @@ export default function BookAppointmentPage() {
   );
 
   const isBookedSlot = useCallback(
-    (slotTime) => {
+    (slotTime, targetDate) => {
       if (!confirmedAppointments || confirmedAppointments.length === 0) return false;
 
-      const selectedDate = formData.preferredDate;
+      const selectedDate = targetDate !== undefined ? targetDate : formData.preferredDate;
       const selectedHospital = formData.hospital;
 
       return confirmedAppointments.some((apt) => {
-        const isConfirmed = (apt.status || "").toLowerCase() === "confirmed";
-        if (!isConfirmed) return false;
+        const st = (apt.status || "").toLowerCase();
+        const isCancelled = st === "cancelled" || st === "canceled" || st === "rejected";
+        if (isCancelled) return false;
 
         const dateMatch = isSameDate(apt.date, selectedDate);
         const hospitalMatch = isSameHospital(apt.centre || apt.hospital, selectedHospital);
@@ -429,8 +506,8 @@ export default function BookAppointmentPage() {
   );
 
   const isSlotDisabled = useCallback(
-    (slotTime) => {
-      return isPastSlot(slotTime) || isBookedSlot(slotTime);
+    (slotTime, targetDate) => {
+      return isPastSlot(slotTime, targetDate) || isBookedSlot(slotTime, targetDate);
     },
     [isPastSlot, isBookedSlot]
   );
@@ -487,7 +564,9 @@ export default function BookAppointmentPage() {
 
   // Derived active hospital information for dynamic UI
   const isEveningSelected =
-    formData.hospital.includes("Shilpi") || formData.hospital.includes("Evening");
+    formData.hospital === "evening" ||
+    formData.hospital.includes("Shilpi") ||
+    formData.hospital.includes("Evening");
   const activeHospital = isEveningSelected
     ? hospitalsInfo.evening
     : hospitalsInfo.morning;
@@ -498,32 +577,67 @@ export default function BookAppointmentPage() {
     ? timeSlots.evening
     : timeSlots.morning;
 
-  // Auto switch preferred time if currently selected slot becomes disabled
+  const findNextAvailableDate = useCallback(
+    (startDateStr) => {
+      let curr = startDateStr || getTodayDateString();
+      for (let i = 0; i < 30; i++) {
+        const hasOpenSlot = activeTimeSlots.some((slot) => !isSlotDisabled(slot, curr));
+        if (hasOpenSlot) {
+          return curr;
+        }
+        curr = getNextDayDateString(curr);
+      }
+      return getNextDayDateString(startDateStr || getTodayDateString());
+    },
+    [activeTimeSlots, isSlotDisabled]
+  );
+
+  // Auto switch date to next day if all slots for preferredDate are passed/booked
   useEffect(() => {
-    if (isSlotDisabled(formData.preferredTime)) {
-      const available = activeTimeSlots.find((s) => !isSlotDisabled(s));
-      if (available) {
-        setFormData((prev) => ({ ...prev, preferredTime: available }));
+    const checkDate = formData.preferredDate || getTodayDateString();
+
+    if (activeTimeSlots.length > 0) {
+      const allSlotsDisabled = activeTimeSlots.every((slot) => isSlotDisabled(slot, checkDate));
+
+      if (allSlotsDisabled) {
+        const nextDate = findNextAvailableDate(checkDate);
+        if (nextDate !== formData.preferredDate) {
+          setFormData((prev) => ({ ...prev, preferredDate: nextDate }));
+        }
+      } else if (!formData.preferredDate) {
+        setFormData((prev) => ({ ...prev, preferredDate: checkDate }));
       }
     }
-  }, [formData.preferredDate, formData.hospital, confirmedAppointments, isSlotDisabled, activeTimeSlots]);
+  }, [
+    formData.preferredDate,
+    formData.hospital,
+    activeTimeSlots,
+    isSlotDisabled,
+    findNextAvailableDate,
+  ]);
 
-  // Sync initial hospital and step ONCE when hospitalParam is present in URL
+  // Auto switch / select preferred time if both Date and Consultation Type are selected
   useEffect(() => {
-    if (hospitalParam === "evening") {
-      setFormData((prev) => ({
-        ...prev,
-        hospital: hospitalsInfo.evening.fullOption,
-      }));
-      setCurrentStep(2);
-    } else if (hospitalParam === "morning") {
-      setFormData((prev) => ({
-        ...prev,
-        hospital: hospitalsInfo.morning.fullOption,
-      }));
-      setCurrentStep(2);
+    if (formData.preferredDate && formData.consultationType) {
+      if (!formData.preferredTime || isSlotDisabled(formData.preferredTime)) {
+        const available = activeTimeSlots.find((s) => !isSlotDisabled(s));
+        if (available) {
+          setFormData((prev) => ({ ...prev, preferredTime: available }));
+        }
+      }
+    } else if (formData.preferredTime) {
+      setFormData((prev) => ({ ...prev, preferredTime: "" }));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formData.preferredDate, formData.consultationType, formData.hospital, confirmedAppointments, isSlotDisabled, activeTimeSlots]);
+
+  // Sync initial hospital when hospitalParam is present in URL
+  useEffect(() => {
+    if (hospitalParam === "evening" || hospitalParam === "morning") {
+      setFormData((prev) => ({
+        ...prev,
+        hospital: hospitalParam,
+      }));
+    }
   }, [hospitalParam]);
 
   // Keep service and preferredTime valid when hospital changes manually
@@ -531,8 +645,8 @@ export default function BookAppointmentPage() {
     if (!activeServices.includes(formData.service)) {
       setFormData((prev) => ({ ...prev, service: activeServices[0] }));
     }
-    if (!activeTimeSlots.includes(formData.preferredTime)) {
-      setFormData((prev) => ({ ...prev, preferredTime: activeTimeSlots[0] }));
+    if (formData.preferredTime && !activeTimeSlots.includes(formData.preferredTime)) {
+      setFormData((prev) => ({ ...prev, preferredTime: "" }));
     }
   }, [formData.hospital, isEveningSelected]);
 
@@ -544,6 +658,18 @@ export default function BookAppointmentPage() {
 
   const handleNextFromStep2 = (e) => {
     e.preventDefault();
+    if (!formData.preferredDate) {
+      setErrorMessage("Please select an appointment date.");
+      return;
+    }
+    if (!formData.consultationType) {
+      setErrorMessage("Please select consultation type (First Visit or Follow-up).");
+      return;
+    }
+    if (!formData.preferredTime) {
+      setErrorMessage("Please select an available time slot.");
+      return;
+    }
     setErrorMessage("");
     setCurrentStep(3);
   };
@@ -582,7 +708,7 @@ export default function BookAppointmentPage() {
       let savedToBackend = false;
       let isEmailDispatched = false;
       const formattedAptDate = formatDateFormatted(formData.preferredDate);
-      const fullMessage = `Hospital: ${formData.hospital} | Date: ${formattedAptDate} | Preferred Time: ${formData.preferredTime} | Type: ${formData.consultationType} | Email: ${formData.email.trim() || "N/A"} | Notes: ${formData.message || "N/A"}`;
+      const fullMessage = `Hospital: ${activeHospital.fullOption} | Date: ${formattedAptDate} | Preferred Time: ${formData.preferredTime} | Type: ${formData.consultationType} | Email: ${formData.email.trim() || "N/A"} | Notes: ${formData.message || "N/A"}`;
       const submittedUserEmail = formData.email ? formData.email.trim() : "";
 
       for (const baseUrl of apiUrls) {
@@ -600,7 +726,7 @@ export default function BookAppointmentPage() {
               name: formData.name,
               phone: formData.phone,
               email: submittedUserEmail,
-              centre: formData.hospital || "Rudraksh IVF & Urology Centre (Sharda Nagar)",
+              centre: activeHospital.fullOption || "Rudraksh IVF & Urology Centre (Sharda Nagar)",
               problem: formData.service || "General Urology Consultation",
               date: formattedAptDate,
               time: formData.preferredTime || "10:00 AM",
@@ -628,7 +754,7 @@ export default function BookAppointmentPage() {
         phone: formData.phone.trim(),
         email: submittedUserEmail,
         consultationType: formData.consultationType || "First Visit",
-        centre: formData.hospital || "Rudraksh IVF & Urology Centre (Sharda Nagar)",
+        centre: activeHospital.fullOption || "Rudraksh IVF & Urology Centre (Sharda Nagar)",
         problem: formData.service || "General Urology Consultation",
         date: formattedAptDate || new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
         time: formData.preferredTime || "10:00 AM",
@@ -720,26 +846,26 @@ export default function BookAppointmentPage() {
 
         {/* Main Appointment Card */}
         <ScrollReveal variant="fade-up">
-          <div className="bg-white rounded-3xl border border-slate-200/80 shadow-xl overflow-hidden">
+          <div className="bg-white rounded-3xl border border-slate-200/80 shadow-xl overflow-hidden max-w-full">
             
             {/* Card Content & Form */}
-            <div className="p-6 sm:p-10">
+            <div className="p-4 sm:p-8 lg:p-10">
 
               {/* Step Progress Bar */}
               {!submitted && (
-                <div className="flex items-center justify-between border-b border-slate-100 pb-6 mb-8 px-2 sm:px-6">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-4 mb-6 sm:pb-6 sm:mb-8 px-1 sm:px-4">
                   {/* Step 1: Hospital */}
                   <button
                     type="button"
                     onClick={() => setCurrentStep(1)}
-                    className={`flex items-center gap-2 font-bold text-xs sm:text-sm cursor-pointer transition-all ${
+                    className={`flex items-center gap-1.5 sm:gap-2 font-bold text-xs sm:text-sm cursor-pointer transition-all ${
                       currentStep === 1
                         ? "text-[#0f2a4a] font-black"
                         : "text-slate-500 hover:text-slate-700"
                     }`}
                   >
                     <span
-                      className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs font-extrabold transition-all ${
+                      className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs font-extrabold transition-all shrink-0 ${
                         currentStep === 1
                           ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-sm"
                           : currentStep > 1
@@ -749,12 +875,12 @@ export default function BookAppointmentPage() {
                     >
                       {currentStep > 1 ? "✓" : "1"}
                     </span>
-                    <span>Hospital</span>
+                    <span className="text-[11px] sm:text-sm">Hospital</span>
                   </button>
 
                   {/* Line 1 -> 2 */}
                   <div
-                    className={`flex-1 h-0.5 mx-2 sm:mx-4 transition-all ${
+                    className={`flex-1 h-0.5 mx-1.5 sm:mx-4 transition-all min-w-[12px] ${
                       currentStep > 1 ? "bg-orange-500" : "bg-slate-200"
                     }`}
                   />
@@ -763,14 +889,14 @@ export default function BookAppointmentPage() {
                   <button
                     type="button"
                     onClick={() => setCurrentStep(2)}
-                    className={`flex items-center gap-2 font-bold text-xs sm:text-sm cursor-pointer transition-all ${
+                    className={`flex items-center gap-1.5 sm:gap-2 font-bold text-xs sm:text-sm cursor-pointer transition-all ${
                       currentStep === 2
                         ? "text-[#0f2a4a] font-black"
                         : "text-slate-500 hover:text-slate-700"
                     }`}
                   >
                     <span
-                      className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs font-extrabold transition-all ${
+                      className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs font-extrabold transition-all shrink-0 ${
                         currentStep === 2
                           ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-sm"
                           : currentStep > 2
@@ -780,12 +906,12 @@ export default function BookAppointmentPage() {
                     >
                       {currentStep > 2 ? "✓" : "2"}
                     </span>
-                    <span>Speciality</span>
+                    <span className="text-[11px] sm:text-sm">Speciality</span>
                   </button>
 
                   {/* Line 2 -> 3 */}
                   <div
-                    className={`flex-1 h-0.5 mx-2 sm:mx-4 transition-all ${
+                    className={`flex-1 h-0.5 mx-1.5 sm:mx-4 transition-all min-w-[12px] ${
                       currentStep > 2 ? "bg-orange-500" : "bg-slate-200"
                     }`}
                   />
@@ -794,14 +920,14 @@ export default function BookAppointmentPage() {
                   <button
                     type="button"
                     onClick={() => setCurrentStep(3)}
-                    className={`flex items-center gap-2 font-bold text-xs sm:text-sm cursor-pointer transition-all ${
+                    className={`flex items-center gap-1.5 sm:gap-2 font-bold text-xs sm:text-sm cursor-pointer transition-all ${
                       currentStep === 3
                         ? "text-[#0f2a4a] font-black"
                         : "text-slate-400 hover:text-slate-600"
                     }`}
                   >
                     <span
-                      className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs font-extrabold transition-all ${
+                      className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs font-extrabold transition-all shrink-0 ${
                         currentStep === 3
                           ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-sm"
                           : "bg-slate-100 text-slate-500"
@@ -809,21 +935,21 @@ export default function BookAppointmentPage() {
                     >
                       3
                     </span>
-                    <span>Details</span>
+                    <span className="text-[11px] sm:text-sm">Details</span>
                   </button>
                 </div>
               )}
 
               {/* Dynamic Selected Hospital Info Banner (Shows on Step 2 & 3) */}
               {!submitted && currentStep > 1 && (
-                <div className="bg-gradient-to-r from-blue-50/80 via-slate-50 to-orange-50/40 border border-blue-100 rounded-2xl p-4 sm:p-5 mb-6 shadow-xs animate-fadeIn">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <div>
+                <div className="bg-gradient-to-r from-blue-50/80 via-slate-50 to-orange-50/40 border border-blue-100 rounded-2xl p-3.5 sm:p-5 mb-6 shadow-xs animate-fadeIn">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                    <div className="min-w-0 flex-1">
                       <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#103F7C]/10 text-[#103F7C] text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider mb-1">
                         <Hospital size={12} />
                         <span>{activeHospital.badge}</span>
                       </div>
-                      <h3 className="text-base sm:text-lg font-extrabold text-[#0f2a4a]">
+                      <h3 className="text-sm sm:text-lg font-extrabold text-[#0f2a4a] leading-tight">
                         {activeHospital.name}
                       </h3>
                       <div className="text-xs sm:text-sm text-slate-600 font-medium mt-1 flex flex-wrap items-center gap-x-4 gap-y-1">
@@ -835,7 +961,7 @@ export default function BookAppointmentPage() {
                     <button
                       type="button"
                       onClick={() => setCurrentStep(1)}
-                      className="px-3.5 py-1.5 rounded-xl bg-white border border-slate-200 text-[#0f2a4a] text-xs font-bold hover:bg-slate-50 hover:border-orange-400 transition-all cursor-pointer shadow-2xs"
+                      className="w-full sm:w-auto text-center px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-[#0f2a4a] text-xs font-bold hover:bg-slate-50 hover:border-orange-400 transition-all cursor-pointer shadow-2xs shrink-0"
                     >
                       Change Centre
                     </button>
@@ -845,14 +971,14 @@ export default function BookAppointmentPage() {
               
               {/* Success Notification Alert */}
               {submitted ? (
-                <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-6 sm:p-8 text-center my-4 animate-fadeIn">
-                  <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
-                    <CheckCircle2 size={36} />
+                <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 sm:p-8 text-center my-4 animate-fadeIn">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
+                    <CheckCircle2 size={32} className="sm:w-9 sm:h-9" />
                   </div>
-                  <h2 className="text-2xl font-black text-[#0f2a4a] mb-2">
+                  <h2 className="text-xl sm:text-2xl font-black text-[#0f2a4a] mb-2">
                     Appointment Request Submitted!
                   </h2>
-                  <p className="text-sm text-slate-600 font-medium max-w-md mx-auto leading-relaxed mb-3">
+                  <p className="text-xs sm:text-sm text-slate-600 font-medium max-w-md mx-auto leading-relaxed mb-3">
                     Thank you! Our clinic receptionist will contact you at{" "}
                     <span className="font-extrabold text-[#0f2a4a]">{lastSubmittedPhone}</span> within 30 minutes to confirm your OPD time slot.
                   </p>
@@ -860,23 +986,23 @@ export default function BookAppointmentPage() {
                   {lastSubmittedEmail && (
                     <div className="bg-white border border-emerald-200 rounded-xl p-3 max-w-md mx-auto mb-6 text-xs text-emerald-800 font-semibold flex items-center justify-center gap-2 shadow-2xs">
                       <span>📩 Confirmation Email sent to:</span>
-                      <span className="font-extrabold underline text-[#103F7C]">{lastSubmittedEmail}</span>
+                      <span className="font-extrabold underline text-[#103F7C] break-all">{lastSubmittedEmail}</span>
                     </div>
                   )}
-                  <div className="flex flex-wrap items-center justify-center gap-3">
+                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3">
                     <button
                       type="button"
                       onClick={() => {
                         setSubmitted(false);
                         setCurrentStep(1);
                       }}
-                      className="px-6 py-2.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white text-xs sm:text-sm font-bold shadow-md hover:from-orange-600 hover:to-orange-700 transition-all cursor-pointer"
+                      className="px-6 py-3 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white text-xs sm:text-sm font-bold shadow-md hover:from-orange-600 hover:to-orange-700 transition-all cursor-pointer text-center"
                     >
                       Submit Another Request
                     </button>
                     <Link
                       to="/"
-                      className="px-6 py-2.5 rounded-full bg-slate-100 text-[#0f2a4a] text-xs sm:text-sm font-bold hover:bg-slate-200 transition-all"
+                      className="px-6 py-3 rounded-full bg-slate-100 text-[#0f2a4a] text-xs sm:text-sm font-bold hover:bg-slate-200 transition-all text-center"
                     >
                       Return to Homepage
                     </Link>
@@ -897,57 +1023,59 @@ export default function BookAppointmentPage() {
                   {currentStep === 1 && (
                     <div className="space-y-6 animate-fadeIn">
                       <div>
-                        <label className="block text-sm sm:text-base font-extrabold text-[#0f2a4a] mb-3">
+                        <label className="block text-xs sm:text-base font-extrabold uppercase tracking-wider text-[#0f2a4a] mb-2.5">
                           Select Hospital Centre
                         </label>
-                        <div className="relative">
-                          <select
-                            value={formData.hospital}
-                            onChange={(e) =>
-                              setFormData({ ...formData, hospital: e.target.value })
-                            }
-                            className="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-white text-[#0f2a4a] text-sm sm:text-base font-semibold focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-all appearance-none pr-12 cursor-pointer shadow-xs"
-                          >
-                            <option value={hospitalsInfo.morning.fullOption}>
-                              {hospitalsInfo.morning.fullOption}
-                            </option>
-                            <option value={hospitalsInfo.evening.fullOption}>
-                              {hospitalsInfo.evening.fullOption}
-                            </option>
-                          </select>
-                          <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
-                            <ChevronDown size={18} />
-                          </div>
-                        </div>
+                        <CustomSelect
+                          options={[
+                            {
+                              value: "morning",
+                              label: hospitalsInfo.morning.fullOption,
+                              subtext: hospitalsInfo.morning.location,
+                            },
+                            {
+                              value: "evening",
+                              label: hospitalsInfo.evening.fullOption,
+                              subtext: hospitalsInfo.evening.location,
+                            },
+                          ]}
+                          value={formData.hospital === "evening" ? "evening" : "morning"}
+                          onChange={(selectedKey) => {
+                            setFormData((prev) => ({ ...prev, hospital: selectedKey }));
+                            navigate(`/book-appointment?hospital=${selectedKey}`, { replace: true });
+                          }}
+                          icon={Hospital}
+                        />
 
-                        <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs font-medium text-slate-500 px-1">
+                        {/* Location Quick Maps Buttons */}
+                        <div className="mt-3.5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 text-xs font-semibold">
                           <a
                             href={hospitalsInfo.morning.mapUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-orange-600 hover:underline font-bold inline-flex items-center gap-1"
+                            className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-orange-50/80 hover:bg-orange-100 text-orange-700 font-bold border border-orange-200/70 transition-all text-xs text-center"
                           >
-                            <MapPin size={12} />
+                            <MapPin size={13} className="text-orange-500 shrink-0" />
                             <span>Rudraksh IVF (Morning Map)</span>
                           </a>
                           <a
                             href={hospitalsInfo.evening.mapUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-[#103F7C] hover:underline font-bold inline-flex items-center gap-1"
+                            className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-blue-50/80 hover:bg-blue-100 text-[#103F7C] font-bold border border-blue-200/70 transition-all text-xs text-center"
                           >
-                            <MapPin size={12} />
+                            <MapPin size={13} className="text-[#103F7C] shrink-0" />
                             <span>Dr. Shilpi Centre (Evening Map)</span>
                           </a>
                         </div>
                       </div>
 
                       {/* Step 1 Next Button */}
-                      <div className="pt-4 flex justify-end">
+                      <div className="pt-2 flex justify-end">
                         <button
                           type="button"
                           onClick={handleNextFromStep1}
-                          className="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-sm sm:text-base shadow-md shadow-orange-500/20 transition-all flex items-center gap-2 cursor-pointer active:scale-98"
+                          className="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-sm sm:text-base shadow-md shadow-orange-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
                         >
                           <span>Next: Select Speciality</span>
                           <ArrowRight size={18} />
@@ -961,58 +1089,52 @@ export default function BookAppointmentPage() {
                     <div className="space-y-6 animate-fadeIn">
                       {/* 1. SELECT SPECIALITY / TREATMENT */}
                       <div>
-                        <label className="block text-sm sm:text-base font-extrabold text-[#0f2a4a] mb-3">
+                        <label className="block text-xs sm:text-base font-extrabold uppercase tracking-wider text-[#0f2a4a] mb-2.5">
                           Select Speciality / Treatment
                         </label>
-                        <div className="relative">
-                          <select
-                            value={formData.service}
-                            onChange={(e) =>
-                              setFormData({ ...formData, service: e.target.value })
-                            }
-                            className="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-white text-[#0f2a4a] text-sm sm:text-base font-semibold focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-all appearance-none pr-12 cursor-pointer shadow-xs"
-                          >
-                            {activeServices.map((serviceOption) => (
-                              <option key={serviceOption} value={serviceOption}>
-                                {serviceOption}
-                              </option>
-                            ))}
-                          </select>
-                          <div className="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
-                            <ChevronDown size={18} />
-                          </div>
-                        </div>
+                        <CustomSelect
+                          options={activeServices}
+                          value={formData.service}
+                          onChange={(serviceOption) =>
+                            setFormData({ ...formData, service: serviceOption })
+                          }
+                        />
                       </div>
 
                       {/* 2. SELECT DATE & CONSULTATION TYPE GRID */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-1">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
                         {/* SELECT DATE */}
                         <div>
-                          <label className="block text-sm sm:text-base font-extrabold text-[#0f2a4a] mb-3 flex items-center gap-2">
-                            <Calendar size={18} className="text-orange-500" />
+                          <label
+                            onClick={handleOpenDatePicker}
+                            className="block text-xs sm:text-base font-extrabold uppercase tracking-wider text-[#0f2a4a] mb-2 flex items-center gap-1.5 cursor-pointer select-none"
+                          >
+                            <Calendar size={16} className="text-orange-500" />
                             <span>Select Date</span>
                           </label>
-                          <div className="relative">
+                          <div className="relative cursor-pointer" onClick={handleOpenDatePicker}>
                             <input
+                              ref={dateInputRef}
                               type="date"
                               min={todayStr}
                               value={formData.preferredDate}
+                              onClick={handleOpenDatePicker}
                               onChange={(e) =>
                                 setFormData({ ...formData, preferredDate: e.target.value })
                               }
-                              className="w-full px-5 py-3.5 rounded-2xl border border-slate-200 bg-white text-[#0f2a4a] text-sm sm:text-base font-semibold focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-all shadow-xs cursor-pointer"
+                              className="w-full px-4 py-3 sm:py-3.5 rounded-2xl border border-slate-200 bg-white text-[#0f2a4a] text-sm sm:text-base font-semibold focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-all shadow-xs cursor-pointer"
                             />
                           </div>
                         </div>
 
                         {/* CONSULTATION TYPE */}
                         <div>
-                          <label className="block text-sm sm:text-base font-extrabold text-[#0f2a4a] mb-3">
+                          <label className="block text-xs sm:text-base font-extrabold uppercase tracking-wider text-[#0f2a4a] mb-2">
                             Consultation Type
                           </label>
-                          <div className="flex items-center gap-6 h-[52px] bg-slate-50/60 border border-slate-200/80 rounded-2xl px-5">
+                          <div className="flex items-center justify-around sm:justify-start gap-4 min-h-[50px] bg-slate-50/70 border border-slate-200/80 rounded-2xl px-4 py-2">
                             {/* First Visit Radio */}
-                            <label className="flex items-center gap-2.5 cursor-pointer text-sm font-extrabold text-[#0f2a4a] group">
+                            <label className="flex items-center gap-2 cursor-pointer text-xs sm:text-sm font-extrabold text-[#0f2a4a] group">
                               <input
                                 type="radio"
                                 name="consultationType"
@@ -1027,7 +1149,7 @@ export default function BookAppointmentPage() {
                             </label>
 
                             {/* Follow-up Radio */}
-                            <label className="flex items-center gap-2.5 cursor-pointer text-sm font-extrabold text-[#0f2a4a] group">
+                            <label className="flex items-center gap-2 cursor-pointer text-xs sm:text-sm font-extrabold text-[#0f2a4a] group">
                               <input
                                 type="radio"
                                 name="consultationType"
@@ -1044,67 +1166,69 @@ export default function BookAppointmentPage() {
                         </div>
                       </div>
 
-                      {/* 3. AVAILABLE TIME SLOTS (15-Minute Grid Buttons) */}
-                      <div>
-                        <div className="flex items-center justify-between mb-3">
-                          <label className="block text-sm sm:text-base font-extrabold text-[#0f2a4a] flex items-center gap-2">
-                            <Clock size={18} className="text-orange-500" />
-                            <span>Available Time Slots</span>
-                          </label>
-                          <span className="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
-                            15-Min Slots • {activeHospital.timing}
-                          </span>
-                        </div>
+                      {/* 3. AVAILABLE TIME SLOTS (Opens after Date & Consultation Type selection) */}
+                      {formData.preferredDate && formData.consultationType && (
+                        <div className="space-y-3 animate-fadeIn">
+                          <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                            <label className="block text-xs sm:text-base font-extrabold uppercase tracking-wider text-[#0f2a4a] flex items-center gap-1.5">
+                              <Clock size={16} className="text-orange-500" />
+                              <span>Available Time Slots</span>
+                            </label>
+                            <span className="text-[10px] sm:text-xs font-semibold text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full">
+                              15-Min Slots • {activeHospital.timing}
+                            </span>
+                          </div>
 
-                        <div
-                          {...(isMobile ? { "data-lenis-prevent": "true" } : {})}
-                          className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-2.5 max-h-56 sm:max-h-none overflow-y-auto sm:overflow-visible custom-scrollbar p-2 border border-slate-200/80 rounded-2xl bg-slate-50/40"
-                        >
-                          {activeTimeSlots.map((slot) => {
-                            const isSelected = formData.preferredTime === slot;
-                            const isDisabled = isSlotDisabled(slot);
-                            return (
-                              <button
-                                key={slot}
-                                type="button"
-                                disabled={isDisabled}
-                                onClick={() =>
-                                  !isDisabled && setFormData({ ...formData, preferredTime: slot })
-                                }
-                                title={isBookedSlot(slot) ? "This time slot is already booked & confirmed." : isPastSlot(slot) ? "This time slot has already passed for today." : `Select ${slot}`}
-                                className={`py-2.5 px-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 flex items-center justify-center gap-1 border ${
-                                  isDisabled
-                                    ? "bg-slate-100/90 border-slate-200/90 cursor-not-allowed opacity-70 select-none shadow-none"
-                                    : isSelected
-                                    ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white border-orange-600 shadow-md shadow-orange-500/25 scale-[1.02] cursor-pointer"
-                                    : "bg-white text-[#0f2a4a] border-slate-200/90 hover:border-orange-300 hover:bg-orange-50/30 hover:text-orange-600 shadow-2xs cursor-pointer"
-                                }`}
-                              >
-                                {isDisabled ? (
-                                  <div className="flex flex-col items-center justify-center leading-tight text-center">
-                                    <span className="line-through text-slate-500 font-bold text-xs">{slot}</span>
-                                    <span className={`text-[9px] font-extrabold tracking-tight no-underline uppercase mt-0.5 ${isBookedSlot(slot) ? "text-rose-500 font-black" : "text-slate-400 font-extrabold"}`}>
-                                      {isBookedSlot(slot) ? "Booked" : "Passed"}
-                                    </span>
-                                  </div>
-                                ) : (
-                                  <>
-                                    {isSelected && <Check size={14} className="shrink-0 stroke-[3]" />}
-                                    <span>{slot}</span>
-                                  </>
-                                )}
-                              </button>
-                            );
-                          })}
+                          <div
+                            {...(isMobile ? { "data-lenis-prevent": "true" } : {})}
+                            className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 max-h-60 sm:max-h-none overflow-y-auto sm:overflow-visible custom-scrollbar p-2 border border-slate-200/80 rounded-2xl bg-slate-50/40"
+                          >
+                            {activeTimeSlots.map((slot) => {
+                              const isSelected = formData.preferredTime === slot;
+                              const isDisabled = isSlotDisabled(slot);
+                              return (
+                                <button
+                                  key={slot}
+                                  type="button"
+                                  disabled={isDisabled}
+                                  onClick={() =>
+                                    !isDisabled && setFormData({ ...formData, preferredTime: slot })
+                                  }
+                                  title={isBookedSlot(slot) ? "This time slot is already booked & confirmed." : isPastSlot(slot) ? "This time slot has already passed for today." : `Select ${slot}`}
+                                  className={`py-2 px-1.5 rounded-xl text-xs font-bold transition-all duration-200 flex items-center justify-center gap-1 border min-h-[44px] ${
+                                    isDisabled
+                                      ? "bg-slate-100/90 border-slate-200/90 cursor-not-allowed opacity-70 select-none shadow-none"
+                                      : isSelected
+                                      ? "bg-gradient-to-r from-orange-500 to-orange-600 text-white border-orange-600 shadow-md shadow-orange-500/25 scale-[1.02] cursor-pointer"
+                                      : "bg-white text-[#0f2a4a] border-slate-200/90 hover:border-orange-300 hover:bg-orange-50/30 hover:text-orange-600 shadow-2xs cursor-pointer"
+                                  }`}
+                                >
+                                  {isDisabled ? (
+                                    <div className="flex flex-col items-center justify-center leading-tight text-center">
+                                      <span className="line-through text-slate-500 font-bold text-xs">{slot}</span>
+                                      <span className={`text-[9px] font-extrabold tracking-tight no-underline uppercase mt-0.5 ${isBookedSlot(slot) ? "text-rose-500 font-black" : "text-slate-400 font-extrabold"}`}>
+                                        {isBookedSlot(slot) ? "Booked" : "Passed"}
+                                      </span>
+                                    </div>
+                                  ) : (
+                                    <>
+                                      {isSelected && <Check size={14} className="shrink-0 stroke-[3]" />}
+                                      <span className="text-xs sm:text-sm">{slot}</span>
+                                    </>
+                                  )}
+                                </button>
+                              );
+                            })}
+                          </div>
                         </div>
-                      </div>
+                      )}
 
                       {/* Step 2 Back & Next Buttons */}
-                      <div className="pt-4 flex items-center justify-between gap-4">
+                      <div className="pt-4 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
                         <button
                           type="button"
                           onClick={() => setCurrentStep(1)}
-                          className="px-6 py-3.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm sm:text-base transition-all flex items-center gap-2 cursor-pointer"
+                          className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm sm:text-base transition-all flex items-center justify-center gap-2 cursor-pointer"
                         >
                           <ArrowLeft size={18} />
                           <span>Back</span>
@@ -1113,7 +1237,7 @@ export default function BookAppointmentPage() {
                         <button
                           type="button"
                           onClick={handleNextFromStep2}
-                          className="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-sm sm:text-base shadow-md shadow-orange-500/20 transition-all flex items-center gap-2 cursor-pointer active:scale-98"
+                          className="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-sm sm:text-base shadow-md shadow-orange-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
                         >
                           <span>Next: Patient Details</span>
                           <ArrowRight size={18} />
@@ -1129,11 +1253,11 @@ export default function BookAppointmentPage() {
                       <div className="bg-slate-50 border border-slate-200/70 rounded-2xl p-4 sm:p-5 space-y-2 text-xs sm:text-sm text-slate-600">
                         <div className="flex items-center justify-between gap-2 border-b border-slate-200/60 pb-2">
                           <span className="font-semibold text-slate-500">Selected Centre:</span>
-                          <span className="font-extrabold text-[#0f2a4a] text-right">{activeHospital.name}</span>
+                          <span className="font-extrabold text-[#0f2a4a] text-right truncate max-w-[60%]">{activeHospital.name}</span>
                         </div>
                         <div className="flex items-center justify-between gap-2 border-b border-slate-200/60 pb-2">
                           <span className="font-semibold text-slate-500">Speciality / Treatment:</span>
-                          <span className="font-extrabold text-[#0f2a4a] text-right">{formData.service}</span>
+                          <span className="font-extrabold text-[#0f2a4a] text-right truncate max-w-[60%]">{formData.service}</span>
                         </div>
                         <div className="flex items-center justify-between gap-2 border-b border-slate-200/60 pb-2">
                           <span className="font-semibold text-slate-500">Appointment Date:</span>
@@ -1150,7 +1274,7 @@ export default function BookAppointmentPage() {
                       </div>
 
                       {/* Patient Details Inputs */}
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
                         {/* Your Name */}
                         <div>
                           <label className="block text-xs font-extrabold uppercase tracking-wider text-[#0f2a4a] mb-2">
@@ -1163,7 +1287,7 @@ export default function BookAppointmentPage() {
                             placeholder="Enter Your Full Name"
                             value={formData.name}
                             onChange={handleInputChange}
-                            className={`w-full px-4 py-3.5 rounded-2xl border text-sm font-semibold text-[#0f2a4a] focus:outline-none transition-all ${
+                            className={`w-full px-4 py-3.5 rounded-2xl border text-base sm:text-sm font-semibold text-[#0f2a4a] focus:outline-none transition-all ${
                               formErrors.name
                                 ? "border-red-400 focus:border-red-500 focus:ring-2 focus:ring-red-100 bg-red-50/20"
                                 : "border-slate-200 bg-slate-50/50 focus:bg-white focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500"
@@ -1190,7 +1314,7 @@ export default function BookAppointmentPage() {
                             placeholder="Enter 10-Digit Mobile Number"
                             value={formData.phone}
                             onChange={handleInputChange}
-                            className={`w-full px-4 py-3.5 rounded-2xl border text-sm font-semibold text-[#0f2a4a] focus:outline-none transition-all ${
+                            className={`w-full px-4 py-3.5 rounded-2xl border text-base sm:text-sm font-semibold text-[#0f2a4a] focus:outline-none transition-all ${
                               formErrors.phone
                                 ? "border-red-400 focus:border-red-500 focus:ring-2 focus:ring-red-100 bg-red-50/20"
                                 : "border-slate-200 bg-slate-50/50 focus:bg-white focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500"
@@ -1210,17 +1334,17 @@ export default function BookAppointmentPage() {
                             <label className="block text-xs font-extrabold uppercase tracking-wider text-[#0f2a4a]">
                               Gmail ID / Email Address
                             </label>
-                            <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
-                              For Instant Email Alert
+                            <span className="text-[9px] sm:text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full shrink-0">
+                              Instant Email Alert
                             </span>
                           </div>
                           <input
                             type="email"
                             name="email"
-                            placeholder="e.g. user@gmail.com (To receive instant confirmation email)"
+                            placeholder="e.g. user@gmail.com"
                             value={formData.email}
                             onChange={handleInputChange}
-                            className={`w-full px-4 py-3.5 rounded-2xl border text-sm font-semibold text-[#0f2a4a] focus:outline-none transition-all ${
+                            className={`w-full px-4 py-3.5 rounded-2xl border text-base sm:text-sm font-semibold text-[#0f2a4a] focus:outline-none transition-all ${
                               formErrors.email
                                 ? "border-red-400 focus:border-red-500 focus:ring-2 focus:ring-red-100 bg-red-50/20"
                                 : "border-slate-200 bg-slate-50/50 focus:bg-white focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500"
@@ -1247,16 +1371,16 @@ export default function BookAppointmentPage() {
                           onChange={(e) =>
                             setFormData({ ...formData, message: e.target.value })
                           }
-                          className="w-full px-4 py-3 rounded-2xl border border-slate-200 bg-slate-50/50 focus:bg-white text-sm font-medium text-[#0f2a4a] focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-all resize-none"
+                          className="w-full px-4 py-3 rounded-2xl border border-slate-200 bg-slate-50/50 focus:bg-white text-base sm:text-sm font-medium text-[#0f2a4a] focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-all resize-none"
                         />
                       </div>
 
                       {/* Step 3 Back & Submit Buttons */}
-                      <div className="pt-2 flex items-center justify-between gap-4">
+                      <div className="pt-2 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
                         <button
                           type="button"
                           onClick={() => setCurrentStep(2)}
-                          className="px-6 py-3.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm sm:text-base transition-all flex items-center gap-2 cursor-pointer"
+                          className="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm sm:text-base transition-all flex items-center justify-center gap-2 cursor-pointer"
                         >
                           <ArrowLeft size={18} />
                           <span>Back</span>
@@ -1265,7 +1389,7 @@ export default function BookAppointmentPage() {
                         <button
                           type="submit"
                           disabled={isSubmitting}
-                          className="px-8 py-3.5 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-sm sm:text-base shadow-md shadow-orange-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 active:scale-98 shrink-0"
+                          className="w-full sm:w-auto px-8 py-3.5 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-sm sm:text-base shadow-md shadow-orange-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-70 active:scale-98 shrink-0"
                         >
                           {isSubmitting ? (
                             <>
@@ -1288,7 +1412,7 @@ export default function BookAppointmentPage() {
             </div>
 
             {/* Dynamic Need Help Footer Bar */}
-            <div className="bg-slate-50/70 border-t border-slate-100 py-4 px-6 text-center text-xs sm:text-sm font-semibold text-slate-600">
+            <div className="bg-slate-50/70 border-t border-slate-100 py-3.5 px-4 sm:px-6 text-center text-xs sm:text-sm font-semibold text-slate-600">
               Need help for {activeHospital.name}? Call us at{" "}
               <a href={`tel:${activeHospital.phone.replace(/\s+/g, '')}`} className="text-orange-600 font-bold hover:underline">
                 {activeHospital.phone}

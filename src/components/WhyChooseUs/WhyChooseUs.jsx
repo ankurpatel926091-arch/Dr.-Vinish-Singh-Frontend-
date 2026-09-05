@@ -161,7 +161,7 @@ export default function WhyChooseUs() {
 
         {/* TAB 1: 6 FEATURES GRID */}
         {activeTab === "features" && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-4.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
             {whyUsFeatures.map((item, idx) => {
               const IconComp = item.icon;
               return (
@@ -172,7 +172,7 @@ export default function WhyChooseUs() {
                   className="h-full"
                 >
                   <div
-                    className={`bg-white rounded-3xl p-5 sm:p-5.5 border border-slate-200/90 shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group h-full ${item.hoverBorder}`}
+                    className={`bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/90 shadow-xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between group h-full ${item.hoverBorder}`}
                   >
                     <div>
                       {/* Top Row: Icon & Badge */}

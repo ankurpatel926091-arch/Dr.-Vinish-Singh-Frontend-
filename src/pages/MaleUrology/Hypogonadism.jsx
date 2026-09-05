@@ -11,7 +11,7 @@ export default function Hypogonadism() {
       category="Male Urology"
       heroBg={hypogonadismBanner}
       overviewTitle="Restoring Vitality, Energy & Hormonal Health"
-      overviewText="Male hypogonadism (low testosterone / Low T) occurs when the testicles do not produce sufficient testosterone hormone, resulting in chronic fatigue, reduced sex drive, loss of muscle mass, depression, and erectile weakness. Senior Urologist Dr. Vinish Kumar Singh conducts complete pituitary-gonadal profiling and provides bio-identical Testosterone Replacement Therapy (TRT)."
+      overviewText="Male hypogonadism (low testosterone / Low T) occurs when the testicles do not produce sufficient testosterone hormone, resulting in chronic fatigue, reduced sex drive, loss of muscle mass, depression, and erectile weakness. Senior Urologist Dr. Vinish Kumar Singh conducts complete pituitary-gonadal profiling and provides bio-identical Testosterone Replacement Therapy (TRT). Treatment is carefully tailored to the underlying cause, symptoms, hormone levels, and individual health needs to ensure safe and effective testosterone management.Early evaluation and timely management can help improve energy levels, sexual health, muscle strength, and overall quality of life in men affected by low testosterone."
       treatmentCards={[
         {
           title: "Bio-Identical Testosterone Therapy (TRT)",
