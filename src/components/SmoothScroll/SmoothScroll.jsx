@@ -8,6 +8,10 @@ export default function SmoothScroll({ children }) {
   const location = useLocation();
 
   useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
     // Initialize Lenis with smooth wheel and touch configuration
     const lenis = new Lenis({
       duration: 0.7,
@@ -22,6 +26,12 @@ export default function SmoothScroll({ children }) {
 
     lenisRef.current = lenis;
     window.lenis = lenis;
+
+    // Reset scroll to top on initial page load / refresh if no hash
+    if (!window.location.hash) {
+      lenis.scrollTo(0, { immediate: true });
+      window.scrollTo(0, 0);
+    }
 
     let animationFrameId;
     function raf(time) {

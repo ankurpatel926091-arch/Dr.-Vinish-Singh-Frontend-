@@ -846,7 +846,7 @@ export default function BookAppointmentPage() {
 
         {/* Main Appointment Card */}
         <ScrollReveal variant="fade-up">
-          <div className="bg-white rounded-3xl border border-slate-200/80 shadow-xl overflow-hidden max-w-full">
+          <div className="bg-white rounded-3xl border border-slate-200/80 shadow-xl max-w-full">
             
             {/* Card Content & Form */}
             <div className="p-4 sm:p-8 lg:p-10">
@@ -980,7 +980,7 @@ export default function BookAppointmentPage() {
                   </h2>
                   <p className="text-xs sm:text-sm text-slate-600 font-medium max-w-md mx-auto leading-relaxed mb-3">
                     Thank you! Our clinic receptionist will contact you at{" "}
-                    <span className="font-extrabold text-[#0f2a4a]">{lastSubmittedPhone}</span> within 30 minutes to confirm your OPD time slot.
+                    <span className="font-extrabold text-[#0f2a4a]">{lastSubmittedPhone}</span> shortly to confirm your appointment.
                   </p>
 
                   {lastSubmittedEmail && (
@@ -1180,7 +1180,8 @@ export default function BookAppointmentPage() {
                           </div>
 
                           <div
-                            {...(isMobile ? { "data-lenis-prevent": "true" } : {})}
+                            data-lenis-prevent="true"
+                            data-lenis-prevent-touch="true"
                             className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 max-h-60 sm:max-h-none overflow-y-auto sm:overflow-visible custom-scrollbar p-2 border border-slate-200/80 rounded-2xl bg-slate-50/40"
                           >
                             {activeTimeSlots.map((slot) => {

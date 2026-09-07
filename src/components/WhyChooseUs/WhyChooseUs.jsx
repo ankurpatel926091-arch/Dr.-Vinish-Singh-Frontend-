@@ -30,6 +30,8 @@ const whyUsFeatures = [
     badge: "MINIMALLY INVASIVE PRECISION",
     iconBg: "bg-blue-50 text-[#103F7C] border-blue-200",
     hoverBorder: "hover:border-[#103F7C]",
+    linkText: "Explore Laser Treatments",
+    linkUrl: "/services/urology",
   },
   {
     icon: Award,
@@ -38,6 +40,8 @@ const whyUsFeatures = [
     badge: "SUPER-SPECIALISED CARE",
     iconBg: "bg-orange-50 text-orange-600 border-orange-200",
     hoverBorder: "hover:border-orange-500",
+    linkText: "Know Your Specialist",
+    linkUrl: "/about/dr-vinish-kumar-singh",
   },
   {
     icon: Building2,
@@ -46,6 +50,8 @@ const whyUsFeatures = [
     badge: "ACCESSIBLE UROLOGY CARE",
     iconBg: "bg-blue-50 text-[#103F7C] border-blue-200",
     hoverBorder: "hover:border-[#103F7C]",
+    linkText: "View Center Details",
+    linkUrl: "/about/our-hospitals",
   },
   {
     icon: Clock,
@@ -54,6 +60,8 @@ const whyUsFeatures = [
     badge: "MINIMALLY INVASIVE APPROACH",
     iconBg: "bg-orange-50 text-orange-600 border-orange-200",
     hoverBorder: "hover:border-orange-500",
+    linkText: "Explore Treatment Benefits",
+    linkUrl: "/conditions/kidney-stone",
   },
   {
     icon: Stethoscope,
@@ -62,6 +70,8 @@ const whyUsFeatures = [
     badge: "COMPLETE CARE SPECTRUM",
     iconBg: "bg-blue-50 text-[#103F7C] border-blue-200",
     hoverBorder: "hover:border-[#103F7C]",
+    linkText: "Explore Specialities",
+    linkUrl: "/services/andrology",
   },
   {
     icon: ShieldCheck,
@@ -70,6 +80,8 @@ const whyUsFeatures = [
     badge: "PATIENT-FIRST APPROACH",
     iconBg: "bg-orange-50 text-orange-600 border-orange-200",
     hoverBorder: "hover:border-orange-500",
+    linkText: "Discover Our Approach",
+    linkUrl: "/about/qualifications",
   },
 ];
 
@@ -198,10 +210,13 @@ export default function WhyChooseUs() {
                       </p>
                     </div>
 
-                    <div className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm font-extrabold text-[#103F7C] group-hover:text-orange-600 transition-colors">
-                      <span>Evidence-Based Treatment</span>
+                    <NavLink
+                      to={item.linkUrl || "/#book-appointment"}
+                      className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm font-extrabold text-[#103F7C] group-hover:text-orange-600 transition-colors"
+                    >
+                      <span>{item.linkText || "Evidence-Based Treatment"}</span>
                       <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                    </div>
+                    </NavLink>
                   </div>
                 </ScrollReveal>
               );

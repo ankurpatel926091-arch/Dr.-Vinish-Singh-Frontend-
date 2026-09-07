@@ -121,11 +121,13 @@
   scrollbar-width: none;
 }
 
-/* Custom Styled Scrollbar for Time Slots Container */
+/* Custom Styled Scrollbar for Time Slots & Dropdown Containers */
 .custom-scrollbar {
   -webkit-overflow-scrolling: touch;
   touch-action: pan-y;
   overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
 }
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;

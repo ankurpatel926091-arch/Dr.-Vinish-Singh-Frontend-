@@ -94,18 +94,18 @@ export default function FaqSection() {
                     </span>
 
                     {/* Smooth Rotating Toggle Button */}
-                    <div
-                      className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${isOpen
-                          ? "bg-[#103F7C] text-white shadow-md shadow-blue-900/20"
-                          : "bg-slate-100 text-slate-600 group-hover:bg-blue-100 group-hover:text-[#103F7C]"
-                        }`}
+                    <motion.div
+                      animate={{
+                        backgroundColor: isOpen ? "#103F7C" : "#f1f5f9",
+                        color: isOpen ? "#ffffff" : "#475569",
+                        rotate: isOpen ? 45 : 0,
+                        scale: isOpen ? 1.05 : 1,
+                      }}
+                      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                      className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shrink-0 shadow-xs group-hover:shadow-md cursor-pointer"
                     >
-                      {isOpen ? (
-                        <Minus size={18} className="transition-transform duration-300" />
-                      ) : (
-                        <Plus size={18} className="transition-transform duration-300" />
-                      )}
-                    </div>
+                      <Plus size={20} className="stroke-[2.5]" />
+                    </motion.div>
                   </button>
 
                   {/* Accordion Content */}

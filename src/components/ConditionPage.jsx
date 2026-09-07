@@ -506,12 +506,18 @@ export default function ConditionPage({
                       <HelpCircle size={16} className={`shrink-0 ${isOpen ? "text-orange-500" : "text-slate-400"}`} />
                       <span>{faq.q}</span>
                     </span>
-                    <ChevronDown
-                      size={16}
-                      className={`transition-transform duration-300 shrink-0 ${
-                        isOpen ? "rotate-180 text-orange-500" : "text-slate-400"
-                      }`}
-                    />
+                    <motion.div
+                      animate={{ rotate: isOpen ? 180 : 0 }}
+                      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                      className="shrink-0"
+                    >
+                      <ChevronDown
+                        size={18}
+                        className={`transition-colors duration-300 ${
+                          isOpen ? "text-orange-500" : "text-slate-400"
+                        }`}
+                      />
+                    </motion.div>
                   </button>
 
                   <AnimatePresence initial={false}>
