@@ -151,7 +151,7 @@ export default function NephrologyService() {
                 </h4>
                 <p className="text-[11px] text-slate-500 font-normal mt-0.5">10:00 AM – 03:00 PM (Sharda Nagar)</p>
                 <a href="tel:8960068307" className="font-extrabold text-xs text-orange-600 hover:underline block mt-2">
-                  Call: +91 89600 68307
+                  Call: +91 72759 81480
                 </a>
               </div>
 

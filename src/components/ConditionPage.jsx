@@ -66,7 +66,7 @@ export default function ConditionPage({
     },
     {
       q: "How can I book an OPD consultation?",
-      a: "You can book directly by calling our clinic helpline at +91 72759 81480 or messaging us on WhatsApp for same-day appointment scheduling.",
+      a: "You can easily book an appointment by filling out the online Book Appointment form on our website, calling our clinic helpline at +91 72759 81480, or messaging us on WhatsApp for OPD consultation.",
     },
     {
       q: "Which hospitals does Dr. Vinish Kumar Singh consult at?",
@@ -125,14 +125,14 @@ export default function ConditionPage({
         </div>
       </div>
 
-      {/* Main Content Grid: Sticky Left Sidebar + Right Detailed Content */}
+      {/* Main Content Grid: Left Sidebar + Right Detailed Content */}
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-6 sm:py-12 lg:py-16">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-start w-full">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-stretch w-full">
           
-          {/* Left Column: Sticky Image, Category Switcher & Doctor OPD Card */}
-          <div className="lg:col-span-4 lg:sticky lg:top-28 space-y-5 sm:space-y-6 w-full min-w-0 max-w-full overflow-hidden">
+          {/* Left Column: Image, Category Switcher & Doctor OPD Card */}
+          <div className="lg:col-span-4 flex flex-col justify-between h-full space-y-5 sm:space-y-6 w-full min-w-0 max-w-full overflow-hidden">
             {/* Condition Illustration / Photo Container */}
-            <ScrollReveal variant="fade-up">
+            <ScrollReveal variant="fade-up" className="shrink-0">
               <div className="relative rounded-3xl p-2 sm:p-2.5 bg-gradient-to-b from-[#103F7C]/15 via-blue-500/10 to-orange-500/15 shadow-xl w-full">
                 <div className="bg-white rounded-[22px] overflow-hidden min-h-[200px] max-h-[350px] aspect-[4/3] sm:aspect-auto sm:h-[350px] relative group border border-slate-200/90 flex items-center justify-center p-2.5 sm:p-5 w-full">
                   {image ? (
@@ -165,7 +165,7 @@ export default function ConditionPage({
             </ScrollReveal>
 
             {/* Category Selector Tabs */}
-            <div className="bg-white rounded-2xl p-2 border border-slate-200/80 shadow-2xs flex items-center gap-1.5 overflow-x-auto no-scrollbar touch-pan-x py-2.5 w-full min-w-0 max-w-full">
+            <div className="bg-white rounded-2xl p-2 border border-slate-200/80 shadow-2xs flex items-center gap-1.5 overflow-x-auto no-scrollbar touch-pan-x py-2.5 w-full min-w-0 max-w-full shrink-0">
               {conditionsMenuCategories.map((cat) => {
                 const isSelected =
                   cat.title.toLowerCase().includes(selectedCategory.toLowerCase()) ||
@@ -195,12 +195,12 @@ export default function ConditionPage({
                 iconBg={activeCategoryObj.iconBg}
                 items={activeCategoryObj.items}
                 activeLabel={title}
-                className="w-full max-w-full"
+                className="w-full max-w-full shrink-0"
               />
             )}
 
             {/* Quick Doctor Consultation & OPD Card */}
-            <ScrollReveal variant="scale-up">
+            <ScrollReveal variant="scale-up" className="mt-auto pt-2 shrink-0">
               <div className="bg-gradient-to-br from-[#103F7C] via-blue-900 to-[#0a274c] text-white rounded-3xl p-4 sm:p-5 shadow-xl border border-blue-800/40 space-y-4 font-sans relative overflow-hidden w-full max-w-full">
                 <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-orange-500/10 rounded-full blur-2xl pointer-events-none" />
 
@@ -274,8 +274,8 @@ export default function ConditionPage({
           </div>
 
           {/* Right Column: Main Overview & Clinical Care */}
-          <div className="lg:col-span-8 flex flex-col items-start space-y-6 w-full">
-            <ScrollReveal variant="fade-up" className="w-full space-y-4">
+          <div className="lg:col-span-8 flex flex-col justify-between h-full space-y-6 w-full">
+            <ScrollReveal variant="fade-up" className="w-full space-y-4 shrink-0">
               {/* Feature Pills */}
               <div className="flex flex-wrap items-center gap-2">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100/80 text-[#103F7C] text-xs font-extrabold uppercase tracking-wider">
@@ -307,13 +307,13 @@ export default function ConditionPage({
 
             {/* Treatment Cards Grid */}
             {treatmentCards.length > 0 && (
-              <div className="w-full space-y-3 pt-2">
+              <div className="w-full space-y-3 pt-2 shrink-0">
                 <h3 className="font-extrabold text-slate-900 text-lg sm:text-xl flex items-center gap-2">
                   <Activity size={20} className="text-[#103F7C]" />
                   <span>Core Treatment Approaches</span>
                 </h3>
 
-                <div className="grid sm:grid-cols-2 gap-4 w-full">
+                <div className="grid sm:grid-cols-2 gap-5 sm:gap-6 w-full">
                   {treatmentCards.map((card, idx) => (
                     <ScrollReveal key={idx} variant="scale-up" delay={idx * 70} className="h-full">
                       <div className="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/90 shadow-xs hover:border-[#103F7C] transition-all hover:shadow-md h-full group">
@@ -331,13 +331,13 @@ export default function ConditionPage({
 
             {/* Detailed Surgical & Medical Protocols */}
             {detailedTreatments.length > 0 && (
-              <div className="w-full space-y-3 pt-2">
+              <div className="w-full space-y-3 pt-2 shrink-0">
                 <h3 className="font-extrabold text-slate-900 text-lg sm:text-xl flex items-center gap-2">
                   <Zap size={20} className="text-orange-500" />
                   <span>Advanced Treatment Protocols</span>
                 </h3>
 
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4.5 w-full">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 w-full">
                   {detailedTreatments.map((item, idx) => (
                     <ScrollReveal key={idx} variant="fade-up" delay={idx * 60} className="h-full">
                       <div className="relative bg-gradient-to-b from-white to-slate-50/70 p-6 sm:p-7 rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-lg hover:border-blue-300 transition-all duration-300 h-full flex flex-col justify-between group overflow-hidden">
@@ -375,7 +375,7 @@ export default function ConditionPage({
 
             {/* Clinical Highlights Checklist */}
             {highlights.length > 0 && (
-              <div className="space-y-3 w-full pt-2">
+              <div className="space-y-3 w-full pt-2 shrink-0">
                 <h3 className="font-extrabold text-slate-900 text-lg sm:text-xl flex items-center gap-2">
                   <Award size={20} className="text-orange-500" />
                   <span>Key Clinical Advantages</span>
@@ -395,7 +395,7 @@ export default function ConditionPage({
             )}
 
             {/* Right Column Bottom OPD Consultation Banner */}
-            <div className="w-full pt-3">
+            <div className="w-full pt-3 mt-auto shrink-0">
               <div className="bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#0c2e5c] text-white rounded-3xl p-5 sm:p-6 shadow-xl border border-blue-800/40 flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-5 relative overflow-hidden">
                 <div className="absolute -right-6 -bottom-6 w-36 h-36 bg-orange-500/15 rounded-full blur-2xl pointer-events-none" />
                 <div className="space-y-1 relative z-10 text-center sm:text-left">

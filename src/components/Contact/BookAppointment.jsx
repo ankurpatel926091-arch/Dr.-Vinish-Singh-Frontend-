@@ -31,7 +31,7 @@ const defaultHospitalLocations = {
     badgeLabel: "MORNING CONSULTATION CENTRE",
     title: "Rudraksh IVF & Urology Centre",
     timing: "10:00 AM – 03:00 PM",
-    phone: "+91 89600 68307",
+    phone: "+91 72759 81480",
     address: "1/795, Ratan Khand, Sharda Nagar, Lucknow",
     image: hospitalBuildingImg,
     mapUrl: "https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow",

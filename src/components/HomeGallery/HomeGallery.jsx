@@ -14,10 +14,10 @@ import {
 import ScrollReveal from "../ScrollReveal/ScrollReveal";
 
 import img1 from "../../assets/images/Img1.jpeg";
-import img2 from "../../assets/images/img2.jpeg";
-import img3 from "../../assets/images/img3.jpeg";
+import img2 from "../../assets/images/img3.jpeg";
+import img3 from "../../assets/images/img12.png";
 import img4 from "../../assets/OurHospital/1.jpg";
-import img5 from "../../assets/images/Reception.png";
+import img5 from "../../assets/images/img15.webp";
 import img7 from "../../assets/images/img6.jpeg";
 
 const galleryPhotos = [

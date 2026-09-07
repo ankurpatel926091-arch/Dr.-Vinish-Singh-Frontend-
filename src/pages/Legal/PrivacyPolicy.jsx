@@ -451,7 +451,7 @@ export default function PrivacyPolicy() {
                     <Phone size={15} className="text-orange-500 shrink-0" />
                     <span className="text-slate-500 font-medium">Rudraksh Centre:</span>
                     <a href="tel:8960068307" className="font-bold text-[#103F7C] hover:underline">
-                      +91 89600 68307
+                      +91 72759 81480
                     </a>
                   </div>
 
@@ -524,8 +524,8 @@ export default function PrivacyPolicy() {
                   <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 block">
                     Rudraksh Centre Helpline
                   </span>
-                  <a href="tel:8960068307" className="font-extrabold text-[#103F7C] hover:underline text-sm block">
-                    +91 89600 68307
+                  <a href="tel:7275981480" className="font-extrabold text-[#103F7C] hover:underline text-sm block">
+                    +91 72759 81480
                   </a>
                 </div>
 

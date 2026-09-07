@@ -27,15 +27,15 @@ export default function Hero() {
       <div className="absolute right-0 bottom-1/4 w-96 h-96 bg-orange-200/20 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
           
           {/* ================= LEFT COLUMN: DOCTOR IMAGE & DECORATIVE FRAME ================= */}
-          <div className="lg:col-span-5 relative flex justify-center order-2 lg:order-1">
-            <ScrollReveal variant="scale-up" duration={800} className="w-full max-w-md lg:max-w-none">
-              <div className="relative">
+          <div className="lg:col-span-5 relative flex flex-col justify-between h-full order-2 lg:order-1">
+            <ScrollReveal variant="scale-up" duration={800} className="w-full h-full flex flex-col justify-between max-w-md lg:max-w-none">
+              <div className="relative h-full flex flex-col justify-between">
                 {/* Outer Decorative Glow & Border */}
-                <div className="relative rounded-3xl p-2 bg-gradient-to-b from-[#103F7C]/15 via-blue-500/10 to-orange-500/15 shadow-xl">
-                  <div className="bg-white rounded-[22px] overflow-hidden h-[440px] sm:h-[500px] relative group">
+                <div className="relative rounded-3xl p-2 bg-gradient-to-b from-[#103F7C]/15 via-blue-500/10 to-orange-500/15 shadow-xl flex-1 flex flex-col">
+                  <div className="bg-white rounded-[22px] overflow-hidden flex-1 min-h-[380px] sm:min-h-[440px] relative group">
                     <img
                       src={doctorImg}
                       alt="Dr. Vinish Kumar Singh - Senior Urologist & Kidney Transplant Surgeon"
@@ -83,7 +83,7 @@ export default function Hero() {
                 </ScrollReveal>
 
                 {/* Action Buttons Under Doctor Photo */}
-                <div className="mt-4 flex flex-col sm:flex-row items-center gap-3 w-full">
+                <div className="mt-4 flex flex-col sm:flex-row items-center gap-3 w-full shrink-0">
                   <NavLink
                     to="/book-appointment"
                     className="flex-1 w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-xs sm:text-sm shadow-md shadow-orange-500/20 transition-all duration-300 hover:scale-102 active:scale-98"
@@ -106,12 +106,10 @@ export default function Hero() {
           </div>
 
           {/* ================= RIGHT COLUMN: ABOUT DOCTOR BIO, QUALIFICATIONS & EXPERIENCE ================= */}
-          <div className="lg:col-span-7 flex flex-col items-start order-1 lg:order-2">
+          <div className="lg:col-span-7 flex flex-col justify-between h-full order-1 lg:order-2">
             
-           
-
             {/* Headline */}
-            <ScrollReveal variant="fade-up" delay={150}>
+            <ScrollReveal variant="fade-up" delay={150} className="shrink-0">
               <h1 className="text-2xl sm:text-3xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
                 Leading Consultant Urologist &amp;{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#103F7C] via-blue-700 to-orange-500">
@@ -121,15 +119,13 @@ export default function Hero() {
             </ScrollReveal>
 
             {/* Rich Doctor Profile Card */}
-            <ScrollReveal variant="fade-up" delay={200} className="mt-3.5 w-full">
+            <ScrollReveal variant="fade-up" delay={200} className="my-auto py-3 w-full flex-1 flex flex-col justify-center">
               <DoctorProfileCard />
             </ScrollReveal>
 
-
-
             {/* 3 Quick Highlight Stats */}
-            <div className="mt-6 grid grid-cols-3 gap-3 w-full">
-              <ScrollReveal variant="scale-up" delay={450}>
+            <div className="mt-auto pt-2 grid grid-cols-3 gap-3 w-full shrink-0">
+              <ScrollReveal variant="scale-up" delay={450} className="h-full">
                 <div className="bg-white rounded-2xl p-3 border border-slate-200/80 shadow-2xs h-full">
                   <div className="flex items-center gap-1.5 mb-0.5">
                     <Award size={16} className="text-orange-500 shrink-0" />
@@ -139,7 +135,7 @@ export default function Hero() {
                 </div>
               </ScrollReveal>
 
-              <ScrollReveal variant="scale-up" delay={520}>
+              <ScrollReveal variant="scale-up" delay={520} className="h-full">
                 <div className="bg-white rounded-2xl p-3 border border-slate-200/80 shadow-2xs h-full">
                   <div className="flex items-center gap-1.5 mb-0.5">
                     <UserCheck size={16} className="text-blue-600 shrink-0" />
@@ -149,7 +145,7 @@ export default function Hero() {
                 </div>
               </ScrollReveal>
 
-              <ScrollReveal variant="scale-up" delay={590}>
+              <ScrollReveal variant="scale-up" delay={590} className="h-full">
                 <div className="bg-white rounded-2xl p-3 border border-slate-200/80 shadow-2xs h-full">
                   <div className="flex items-center gap-1.5 mb-0.5">
                     <ShieldCheck size={16} className="text-emerald-500 shrink-0" />

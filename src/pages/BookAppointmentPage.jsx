@@ -30,7 +30,7 @@ const defaultHospitalDetails = {
     badge: "MORNING CONSULTATION CENTRE",
     timing: "10:00 AM – 03:00 PM",
     location: "1/795, Ratan Khand, Sharda Nagar, Lucknow",
-    phone: "+91 89600 68307",
+    phone: "++91 72759 81480",
     mapUrl: "https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow",
   },
   evening: {
@@ -797,7 +797,7 @@ export default function BookAppointmentPage() {
       }
 
       if (!savedToBackend) {
-        setErrorMessage("Server is unreachable right now. Please check backend connection or call helpline +91 89600 68307 directly.");
+        setErrorMessage("Server is unreachable right now. Please check backend connection or call helpline +91 72759 81480 directly.");
         return;
       }
 

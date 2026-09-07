@@ -67,7 +67,7 @@ const defaultHospitalLocations = [
     title: "Rudraksh IVF & Urology Centre",
     subtitle: "Sharda Nagar, Lucknow",
     timing: "10:00 AM – 03:00 PM (Mon – Sat)",
-    phone: "+91 89600 68307",
+    phone: "+91 72759 81480",
     tel: "8960068307",
     address: "1/795, Ratan Khand, Ruchi Khand 1, Sharda Nagar, Lucknow",
     mapUrl: "https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow",
@@ -320,8 +320,8 @@ export default function Contact() {
                 <a
                   href="tel:8960068307"
                   className="text-sm font-extrabold text-slate-900 hover:text-orange-500 transition-colors"
-                >
-                  +91 89600 68307
+                  >
+                    +91 72759 81480
                 </a>
               </div>
             </div>

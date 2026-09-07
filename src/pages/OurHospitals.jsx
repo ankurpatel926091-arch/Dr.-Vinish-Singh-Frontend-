@@ -56,7 +56,7 @@ const defaultHospitalData = [
     badgeColor: "bg-orange-50 text-orange-600 border-orange-200",
     headerGradient: "from-orange-500/10 via-amber-500/5 to-transparent",
     timing: "10:00 AM - 03:00 PM",
-    phone: "+91 89600 68307",
+    phone: "+91 72759 81480",
     phoneRaw: "tel:8960068307",
     address:
       "1/795, Ratan Khand, Ruchi Khand 1, Sharda Nagar, Lucknow, Uttar Pradesh 226002",
@@ -670,7 +670,7 @@ export default function OurHospitals() {
               className="px-6 py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs sm:text-sm shadow-lg transition-transform hover:scale-105 shrink-0 flex items-center gap-2"
             >
               <Phone size={16} />
-              <span>Call for Appointment: +91 89600 68307</span>
+              <span>Call for Appointment: +91 72759 81480</span>
             </a>
           </div>
         </ScrollReveal>

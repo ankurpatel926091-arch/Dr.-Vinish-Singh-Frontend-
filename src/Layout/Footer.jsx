@@ -212,7 +212,7 @@ function Footer() {
                     className="font-bold text-orange-400 hover:underline flex items-center gap-1.5 text-xs sm:text-sm"
                   >
                     <FaPhoneAlt size={12} />
-                    <span>+91 89600 68307</span>
+                    <span>+91 72759 81480</span>
                   </a>
 
                   <a
