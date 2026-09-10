@@ -52,14 +52,14 @@ const sanitizeClinics = (list) => {
 
 const getApiUrls = () => {
   const urls = [];
+  if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+    urls.push(`http://${window.location.hostname}:5000/api`);
+  }
   if (import.meta.env.VITE_API_BASE_URL) {
     urls.push(import.meta.env.VITE_API_BASE_URL);
   }
-  if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
-    urls.push('http://localhost:5000/api');
-  }
   urls.push('https://dr-vinish-backend.onrender.com/api');
-  return urls;
+  return Array.from(new Set(urls));
 };
 
 const failedUrlsCooldown = new Map();

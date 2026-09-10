@@ -18,34 +18,35 @@ import {
   ChevronDown,
 } from "lucide-react";
 import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
-import CustomSelect from "../components/CustomSelect";
 
 import { fetchPublicClinics } from "../api/clinicApi";
 
-const defaultHospitalDetails = {
-  morning: {
-    key: "morning",
+const defaultHospitalDetails = [
+  {
+    _id: "68c123456789012345678901",
+    clinicId: "morning",
     name: "Rudraksh IVF & Urology Centre",
-    fullOption: "Morning OPD: Rudraksh IVF & Urology Centre (Sharda Nagar, 10 AM - 03 PM)",
-    badge: "MORNING CONSULTATION CENTRE",
-    timing: "10:00 AM – 03:00 PM",
-    location: "1/795, Ratan Khand, Sharda Nagar, Lucknow",
-    phone: "++91 72759 81480",
+    tag: "Morning OPD",
+    badgeLabel: "MORNING CONSULTATION CENTRE",
+    timings: "10:00 AM – 03:00 PM",
+    address: "1/795, Ratan Khand, Sharda Nagar, Lucknow",
+    phone: "+91 72759 81480",
     mapUrl: "https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow",
   },
-  evening: {
-    key: "evening",
+  {
+    _id: "68c123456789012345678902",
+    clinicId: "evening",
     name: "Dr. Shilpi Maternity & Urology Centre",
-    fullOption: "Evening OPD: Dr. Shilpi Maternity & Urology Centre (Pakkabag, 03 PM - 07 PM)",
-    badge: "EVENING CONSULTATION CENTRE",
-    timing: "03:00 PM – 07:00 PM",
-    location: "596Pb/1114/03, Ring Rd, Pakkabag, Lucknow",
+    tag: "Evening OPD",
+    badgeLabel: "EVENING CONSULTATION CENTRE",
+    timings: "03:00 PM – 07:00 PM",
+    address: "596Pb/1114/03, Ring Rd, Pakkabag, Lucknow",
     phone: "+91 86048 91955",
     mapUrl: "https://maps.app.goo.gl/w9mqio5fe4Hj8KLm9",
-  },
-};
+  }
+];
 
-const hospitalServices = {
+const hospitalServicesMap = {
   morning: [
     "Laser Kidney Stones (RIRS / PCNL)",
     "Prostate Surgery (HolEP / TURP)",
@@ -74,47 +75,20 @@ const hospitalServices = {
   ],
 };
 
-const timeSlots = {
+const timeSlotsMap = {
   morning: [
-    "10:00 AM",
-    "10:15 AM",
-    "10:30 AM",
-    "10:45 AM",
-    "11:00 AM",
-    "11:15 AM",
-    "11:30 AM",
-    "11:45 AM",
-    "12:00 PM",
-    "12:15 PM",
-    "12:30 PM",
-    "12:45 PM",
-    "01:00 PM",
-    "01:15 PM",
-    "01:30 PM",
-    "01:45 PM",
-    "02:00 PM",
-    "02:15 PM",
-    "02:30 PM",
-    "02:45 PM",
+    "10:00 AM", "10:15 AM", "10:30 AM", "10:45 AM",
+    "11:00 AM", "11:15 AM", "11:30 AM", "11:45 AM",
+    "12:00 PM", "12:15 PM", "12:30 PM", "12:45 PM",
+    "01:00 PM", "01:15 PM", "01:30 PM", "01:45 PM",
+    "02:00 PM", "02:15 PM", "02:30 PM", "02:45 PM",
     "03:00 PM",
   ],
   evening: [
-    "03:00 PM",
-    "03:15 PM",
-    "03:30 PM",
-    "03:45 PM",
-    "04:00 PM",
-    "04:15 PM",
-    "04:30 PM",
-    "04:45 PM",
-    "05:00 PM",
-    "05:15 PM",
-    "05:30 PM",
-    "05:45 PM",
-    "06:00 PM",
-    "06:15 PM",
-    "06:30 PM",
-    "06:45 PM",
+    "03:00 PM", "03:15 PM", "03:30 PM", "03:45 PM",
+    "04:00 PM", "04:15 PM", "04:30 PM", "04:45 PM",
+    "05:00 PM", "05:15 PM", "05:30 PM", "05:45 PM",
+    "06:00 PM", "06:15 PM", "06:30 PM", "06:45 PM",
     "07:00 PM",
   ],
 };
@@ -183,93 +157,48 @@ export default function BookAppointmentPage() {
     } catch (err) {}
   };
 
-  const [hospitalsInfo, setHospitalsInfo] = useState(defaultHospitalDetails);
+  const [clinicsList, setClinicsList] = useState(defaultHospitalDetails);
+  const hospitalParam = searchParams.get("hospital");
+
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    clinic: "",
+    service: hospitalServicesMap.morning[0],
+    preferredDate: "",
+    preferredTime: "",
+    consultationType: "First Visit",
+    message: "",
+  });
 
   const loadClinics = useCallback(async () => {
     try {
       const data = await fetchPublicClinics();
       if (Array.isArray(data) && data.length > 0) {
-        const morningData =
-          data.find(
-            (c) =>
-              (c.tag && c.tag.toLowerCase().includes("morning")) ||
-              (c.name && c.name.includes("Rudraksh"))
-          ) || data[0];
-        const eveningData =
-          data.find(
-            (c) =>
-              (c.tag && c.tag.toLowerCase().includes("evening")) ||
-              (c.name && c.name.includes("Shilpi"))
-          ) ||
-          data[1] ||
-          data[0];
+        setClinicsList(data);
 
-        const morningName =
-          morningData.name ||
-          morningData.title ||
-          defaultHospitalDetails.morning.name;
-        const eveningName =
-          eveningData.name ||
-          eveningData.title ||
-          defaultHospitalDetails.evening.name;
-        const morningTiming =
-          morningData.timings ||
-          morningData.timing ||
-          defaultHospitalDetails.morning.timing;
-        const eveningTiming =
-          eveningData.timings ||
-          eveningData.timing ||
-          defaultHospitalDetails.evening.timing;
+        const paramLower = (hospitalParam || "").toLowerCase();
+        let targetClinic = data[0];
 
-        setHospitalsInfo({
-          morning: {
-            ...defaultHospitalDetails.morning,
-            name: morningName,
-            fullOption: `Morning OPD: ${morningName} (${morningTiming})`,
-            timing: morningTiming,
-            phone: morningData.phone || defaultHospitalDetails.morning.phone,
-            location:
-              morningData.address || defaultHospitalDetails.morning.location,
-            mapUrl: morningData.mapUrl || defaultHospitalDetails.morning.mapUrl,
-          },
-          evening: {
-            ...defaultHospitalDetails.evening,
-            name: eveningName,
-            fullOption: `Evening OPD: ${eveningName} (${eveningTiming})`,
-            timing: eveningTiming,
-            phone: eveningData.phone || defaultHospitalDetails.evening.phone,
-            location:
-              eveningData.address || defaultHospitalDetails.evening.location,
-            mapUrl: eveningData.mapUrl || defaultHospitalDetails.evening.mapUrl,
-          },
-        });
+        if (paramLower === "evening") {
+          targetClinic = data.find(c => (c.tag && c.tag.toLowerCase().includes("evening")) || (c.name && c.name.includes("Shilpi"))) || data[1] || data[0];
+        } else if (paramLower === "morning") {
+          targetClinic = data.find(c => (c.tag && c.tag.toLowerCase().includes("morning")) || (c.name && c.name.includes("Rudraksh"))) || data[0];
+        }
+
+        const targetId = targetClinic._id || targetClinic.id;
+        setFormData(prev => ({
+          ...prev,
+          clinic: prev.clinic || targetId
+        }));
       }
     } catch (err) {}
-  }, []);
+  }, [hospitalParam]);
 
   useEffect(() => {
     loadClinics();
-    window.addEventListener("storage", loadClinics);
-    const interval = setInterval(loadClinics, 30000);
-    return () => {
-      window.removeEventListener("storage", loadClinics);
-      clearInterval(interval);
-    };
   }, [loadClinics]);
-
-  const hospitalParam = searchParams.get("hospital");
-  const initialHospitalKey =
-    hospitalParam === "evening" ? "evening" : "morning";
-
-  const initialServices =
-    hospitalParam === "evening"
-      ? hospitalServices.evening
-      : hospitalServices.morning;
-
-  const initialTimeSlots =
-    hospitalParam === "evening"
-      ? timeSlots.evening
-      : timeSlots.morning;
 
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -279,31 +208,15 @@ export default function BookAppointmentPage() {
   const [lastSubmittedEmail, setLastSubmittedEmail] = useState("");
   const [emailSentStatus, setEmailSentStatus] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
-  const [isMobile, setIsMobile] = useState(
-    typeof window !== "undefined" ? window.innerWidth < 640 : false
-  );
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 640);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const todayStr = getTodayDateString();
 
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    service: initialServices[0],
-    hospital: initialHospitalKey,
-    preferredDate: "",
-    preferredTime: "",
-    consultationType: "",
-    message: "",
-  });
+  // Find current selected clinic object
+  const activeClinic = clinicsList.find(c => String(c._id || c.id) === String(formData.clinic)) || clinicsList[0] || defaultHospitalDetails[0];
+
+  const isEveningSelected = (activeClinic.tag && activeClinic.tag.toLowerCase().includes("evening")) || (activeClinic.name && activeClinic.name.includes("Shilpi"));
+  const activeServices = isEveningSelected ? hospitalServicesMap.evening : hospitalServicesMap.morning;
+  const activeTimeSlots = isEveningSelected ? timeSlotsMap.evening : timeSlotsMap.morning;
 
   // State for tracking Admin Confirmed appointments to disable slots
   const [confirmedAppointments, setConfirmedAppointments] = useState([]);
@@ -357,10 +270,7 @@ export default function BookAppointmentPage() {
     let finalSlots = [];
 
     if (backendSlots !== null) {
-      // Backend is authoritative for active booked slots
       finalSlots = [...backendSlots];
-
-      // Add recent local bookings (< 15s old) if not present yet in backend data and not cancelled
       const now = Date.now();
       localApts.forEach((lItem) => {
         const st = (lItem.status || "").toLowerCase();
@@ -376,7 +286,6 @@ export default function BookAppointmentPage() {
         }
       });
     } else {
-      // Fallback when backend is offline
       finalSlots = localApts.filter((apt) => {
         const st = (apt.status || "").toLowerCase();
         return st !== "cancelled" && st !== "canceled" && st !== "rejected";
@@ -388,15 +297,8 @@ export default function BookAppointmentPage() {
 
   useEffect(() => {
     loadConfirmedAppointments();
-    window.addEventListener("storage", loadConfirmedAppointments);
-    const interval = setInterval(loadConfirmedAppointments, 2000);
-    return () => {
-      window.removeEventListener("storage", loadConfirmedAppointments);
-      clearInterval(interval);
-    };
   }, [loadConfirmedAppointments]);
 
-  // Normalize date string for consistent comparison
   const normalizeDateStr = (dStr) => {
     if (!dStr) return "";
     const str = String(dStr).trim();
@@ -441,15 +343,22 @@ export default function BookAppointmentPage() {
     return normalizeDateStr(d1) === normalizeDateStr(d2);
   };
 
-  const isSameHospital = (aptCentre, currentHospital) => {
-    if (!aptCentre || !currentHospital) return true;
-    const c1 = String(aptCentre).toLowerCase();
-    const c2 = String(currentHospital).toLowerCase();
+  const isSameClinic = (aptClinic, currentClinicId) => {
+    if (!aptClinic || !currentClinicId) return true;
 
-    const isAptEvening = c1.includes("shilpi") || c1.includes("evening") || c1.includes("pakkabag");
-    const isCurrentEvening = c2.includes("shilpi") || c2.includes("evening") || c2.includes("pakkabag");
+    if (typeof aptClinic === "object" && aptClinic._id) {
+      if (String(aptClinic._id) === String(currentClinicId)) return true;
+    }
 
-    return isAptEvening === isCurrentEvening;
+    if (typeof aptClinic === "string") {
+      if (aptClinic === String(currentClinicId)) return true;
+      const c1 = aptClinic.toLowerCase();
+      const isEveningSelected = activeClinic && (activeClinic.tag || "").toLowerCase().includes("evening");
+      const isAptEvening = c1.includes("shilpi") || c1.includes("evening");
+      return isAptEvening === isEveningSelected;
+    }
+
+    return false;
   };
 
   const parseTimeToMinutes = (timeStr) => {
@@ -487,7 +396,7 @@ export default function BookAppointmentPage() {
       if (!confirmedAppointments || confirmedAppointments.length === 0) return false;
 
       const selectedDate = targetDate !== undefined ? targetDate : formData.preferredDate;
-      const selectedHospital = formData.hospital;
+      const selectedClinicId = formData.clinic;
 
       return confirmedAppointments.some((apt) => {
         const st = (apt.status || "").toLowerCase();
@@ -495,14 +404,14 @@ export default function BookAppointmentPage() {
         if (isCancelled) return false;
 
         const dateMatch = isSameDate(apt.date, selectedDate);
-        const hospitalMatch = isSameHospital(apt.centre || apt.hospital, selectedHospital);
+        const clinicMatch = isSameClinic(apt.clinic || apt.centre || apt.hospital, selectedClinicId);
 
         const aptTimeStr = String(apt.time || "").trim().toLowerCase();
         const slotTimeStr = String(slotTime || "").trim().toLowerCase();
-        return dateMatch && hospitalMatch && aptTimeStr === slotTimeStr;
+        return dateMatch && clinicMatch && aptTimeStr === slotTimeStr;
       });
     },
-    [confirmedAppointments, formData.preferredDate, formData.hospital]
+    [confirmedAppointments, formData.preferredDate, formData.clinic]
   );
 
   const isSlotDisabled = useCallback(
@@ -549,11 +458,9 @@ export default function BookAppointmentPage() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    // Strictly prevent numbers and special characters from being typed in Name field
     if (name === "name" && value && !/^[a-zA-Z\s.'-]*$/.test(value)) {
       return;
     }
-    // Strictly allow only numbers and phone symbols in Phone field
     if (name === "phone" && value && !/^[0-9\s\-\+\(\)]*$/.test(value)) {
       return;
     }
@@ -561,21 +468,6 @@ export default function BookAppointmentPage() {
     const error = validateField(name, value);
     setFormErrors((prev) => ({ ...prev, [name]: error }));
   };
-
-  // Derived active hospital information for dynamic UI
-  const isEveningSelected =
-    formData.hospital === "evening" ||
-    formData.hospital.includes("Shilpi") ||
-    formData.hospital.includes("Evening");
-  const activeHospital = isEveningSelected
-    ? hospitalsInfo.evening
-    : hospitalsInfo.morning;
-  const activeServices = isEveningSelected
-    ? hospitalServices.evening
-    : hospitalServices.morning;
-  const activeTimeSlots = isEveningSelected
-    ? timeSlots.evening
-    : timeSlots.morning;
 
   const findNextAvailableDate = useCallback(
     (startDateStr) => {
@@ -592,7 +484,6 @@ export default function BookAppointmentPage() {
     [activeTimeSlots, isSlotDisabled]
   );
 
-  // Auto switch date to next day if all slots for preferredDate are passed/booked
   useEffect(() => {
     const checkDate = formData.preferredDate || getTodayDateString();
 
@@ -610,13 +501,12 @@ export default function BookAppointmentPage() {
     }
   }, [
     formData.preferredDate,
-    formData.hospital,
+    formData.clinic,
     activeTimeSlots,
     isSlotDisabled,
     findNextAvailableDate,
   ]);
 
-  // Auto switch / select preferred time if both Date and Consultation Type are selected
   useEffect(() => {
     if (formData.preferredDate && formData.consultationType) {
       if (!formData.preferredTime || isSlotDisabled(formData.preferredTime)) {
@@ -628,19 +518,8 @@ export default function BookAppointmentPage() {
     } else if (formData.preferredTime) {
       setFormData((prev) => ({ ...prev, preferredTime: "" }));
     }
-  }, [formData.preferredDate, formData.consultationType, formData.hospital, confirmedAppointments, isSlotDisabled, activeTimeSlots]);
+  }, [formData.preferredDate, formData.consultationType, formData.clinic, confirmedAppointments, isSlotDisabled, activeTimeSlots]);
 
-  // Sync initial hospital when hospitalParam is present in URL
-  useEffect(() => {
-    if (hospitalParam === "evening" || hospitalParam === "morning") {
-      setFormData((prev) => ({
-        ...prev,
-        hospital: hospitalParam,
-      }));
-    }
-  }, [hospitalParam]);
-
-  // Keep service and preferredTime valid when hospital changes manually
   useEffect(() => {
     if (!activeServices.includes(formData.service)) {
       setFormData((prev) => ({ ...prev, service: activeServices[0] }));
@@ -648,10 +527,14 @@ export default function BookAppointmentPage() {
     if (formData.preferredTime && !activeTimeSlots.includes(formData.preferredTime)) {
       setFormData((prev) => ({ ...prev, preferredTime: "" }));
     }
-  }, [formData.hospital, isEveningSelected]);
+  }, [formData.clinic, isEveningSelected]);
 
   const handleNextFromStep1 = (e) => {
     e.preventDefault();
+    if (!formData.clinic) {
+      setErrorMessage("Please select a clinic centre.");
+      return;
+    }
     setErrorMessage("");
     setCurrentStep(2);
   };
@@ -694,13 +577,13 @@ export default function BookAppointmentPage() {
       const getApiUrls = () => {
         const urls = [];
         const hostname = typeof window !== "undefined" ? window.location.hostname : "";
+        if (hostname === "localhost" || hostname === "127.0.0.1") {
+          urls.push(`http://${hostname}:5000/api`);
+        }
         if (import.meta.env.VITE_API_BASE_URL) {
           urls.push(import.meta.env.VITE_API_BASE_URL);
         }
         urls.push("https://dr-vinish-backend.onrender.com/api");
-        if (hostname === "localhost" || hostname === "127.0.0.1") {
-          urls.push(`http://${hostname}:5000/api`);
-        }
         return Array.from(new Set(urls));
       };
 
@@ -708,7 +591,6 @@ export default function BookAppointmentPage() {
       let savedToBackend = false;
       let isEmailDispatched = false;
       const formattedAptDate = formatDateFormatted(formData.preferredDate);
-      const fullMessage = `Hospital: ${activeHospital.fullOption} | Date: ${formattedAptDate} | Preferred Time: ${formData.preferredTime} | Type: ${formData.consultationType} | Email: ${formData.email.trim() || "N/A"} | Notes: ${formData.message || "N/A"}`;
       const submittedUserEmail = formData.email ? formData.email.trim() : "";
 
       for (const baseUrl of apiUrls) {
@@ -723,16 +605,15 @@ export default function BookAppointmentPage() {
             },
             signal: controller.signal,
             body: JSON.stringify({
-              name: formData.name,
-              phone: formData.phone,
+              name: formData.name.trim(),
+              phone: formData.phone.trim(),
               email: submittedUserEmail,
-              centre: activeHospital.fullOption || "Rudraksh IVF & Urology Centre (Sharda Nagar)",
+              clinic: formData.clinic,
               problem: formData.service || "General Urology Consultation",
               date: formattedAptDate,
               time: formData.preferredTime || "10:00 AM",
-              preferredTime: formData.preferredTime || "10:00 AM",
               consultationType: formData.consultationType || "First Visit",
-              message: fullMessage,
+              message: formData.message ? formData.message.trim() : "",
             }),
           });
           clearTimeout(timeoutId);
@@ -742,23 +623,20 @@ export default function BookAppointmentPage() {
             isEmailDispatched = true;
             break;
           }
-        } catch (err) {
-          // Try next fallback URL
-        }
+        } catch (err) {}
       }
 
-      // Save appointment record to localStorage for Admin Panel sync
       const newAptRecord = {
         id: Date.now(),
         name: formData.name.trim(),
         phone: formData.phone.trim(),
         email: submittedUserEmail,
         consultationType: formData.consultationType || "First Visit",
-        centre: activeHospital.fullOption || "Rudraksh IVF & Urology Centre (Sharda Nagar)",
+        clinic: activeClinic,
         problem: formData.service || "General Urology Consultation",
         date: formattedAptDate || new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
         time: formData.preferredTime || "10:00 AM",
-        message: formData.message ? formData.message.trim() : "Appointment booking request from website",
+        message: formData.message ? formData.message.trim() : "",
         status: "Pending"
       };
 
@@ -768,32 +646,6 @@ export default function BookAppointmentPage() {
         window.dispatchEvent(new Event('storage'));
       } catch (err) {
         console.warn('LocalStorage save appointment error:', err);
-      }
-
-      // Fallback email dispatch to notify-email endpoint if main POST didn't report email success
-      if (!isEmailDispatched) {
-        for (const baseUrl of apiUrls) {
-          try {
-            const notifyRes = await fetch(`${baseUrl}/appointments/notify-email`, {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                appointment: newAptRecord,
-                status: "Pending"
-              }),
-            });
-            if (notifyRes.ok) {
-              const notifyData = await notifyRes.json();
-              if (notifyData && notifyData.result && notifyData.result.success) {
-                isEmailDispatched = true;
-                savedToBackend = true;
-                break;
-              }
-            }
-          } catch (e) {}
-        }
       }
 
       if (!savedToBackend) {
@@ -809,8 +661,8 @@ export default function BookAppointmentPage() {
         name: "",
         phone: "",
         email: "",
+        clinic: formData.clinic,
         service: activeServices[0],
-        hospital: formData.hospital,
         preferredDate: todayStr,
         preferredTime: activeTimeSlots[0],
         consultationType: "First Visit",
@@ -878,7 +730,6 @@ export default function BookAppointmentPage() {
                     <span className="text-[11px] sm:text-sm">Hospital</span>
                   </button>
 
-                  {/* Line 1 -> 2 */}
                   <div
                     className={`flex-1 h-0.5 mx-1.5 sm:mx-4 transition-all min-w-[12px] ${
                       currentStep > 1 ? "bg-orange-500" : "bg-slate-200"
@@ -909,7 +760,6 @@ export default function BookAppointmentPage() {
                     <span className="text-[11px] sm:text-sm">Speciality</span>
                   </button>
 
-                  {/* Line 2 -> 3 */}
                   <div
                     className={`flex-1 h-0.5 mx-1.5 sm:mx-4 transition-all min-w-[12px] ${
                       currentStep > 2 ? "bg-orange-500" : "bg-slate-200"
@@ -941,20 +791,22 @@ export default function BookAppointmentPage() {
               )}
 
               {/* Dynamic Selected Hospital Info Banner (Shows on Step 2 & 3) */}
-              {!submitted && currentStep > 1 && (
+              {!submitted && currentStep > 1 && activeClinic && (
                 <div className="bg-gradient-to-r from-blue-50/80 via-slate-50 to-orange-50/40 border border-blue-100 rounded-2xl p-3.5 sm:p-5 mb-6 shadow-xs animate-fadeIn">
                   <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div className="min-w-0 flex-1">
                       <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#103F7C]/10 text-[#103F7C] text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wider mb-1">
                         <Hospital size={12} />
-                        <span>{activeHospital.badge}</span>
+                        <span>{activeClinic.badgeLabel || activeClinic.tag}</span>
                       </div>
                       <h3 className="text-sm sm:text-lg font-extrabold text-[#0f2a4a] leading-tight">
-                        {activeHospital.name}
+                        {activeClinic.name}
                       </h3>
                       <div className="text-xs sm:text-sm text-slate-600 font-medium mt-1 flex flex-wrap items-center gap-x-4 gap-y-1">
-                        <span>⏰ <strong>Hours:</strong> {activeHospital.timing}</span>
-                        <span>📞 <strong>Helpline:</strong> <a href={`tel:${activeHospital.phone.replace(/\s+/g, '')}`} className="text-orange-600 font-extrabold hover:underline">{activeHospital.phone}</a></span>
+                        <span>⏰ <strong>Hours:</strong> {activeClinic.timings || activeClinic.timing}</span>
+                        {activeClinic.phone && (
+                          <span>📞 <strong>Helpline:</strong> <a href={`tel:${activeClinic.phone.replace(/\s+/g, '')}`} className="text-orange-600 font-extrabold hover:underline">{activeClinic.phone}</a></span>
+                        )}
                       </div>
                     </div>
 
@@ -1011,7 +863,6 @@ export default function BookAppointmentPage() {
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
                   
-                  {/* Error Notification Alert */}
                   {errorMessage && (
                     <div className="bg-rose-50 border border-rose-200 rounded-2xl p-4 flex items-center gap-3 text-rose-700 text-xs sm:text-sm font-semibold">
                       <AlertCircle size={18} className="shrink-0 text-rose-500" />
@@ -1019,54 +870,48 @@ export default function BookAppointmentPage() {
                     </div>
                   )}
 
-                  {/* STEP 1: SELECT HOSPITAL CENTRE */}
+                  {/* STEP 1: SELECT HOSPITAL CLINIC CENTRE */}
                   {currentStep === 1 && (
                     <div className="space-y-6 animate-fadeIn">
                       <div>
                         <label className="block text-xs sm:text-base font-extrabold uppercase tracking-wider text-[#0f2a4a] mb-2.5">
-                          Select Hospital Centre
+                          Select Hospital Clinic Centre
                         </label>
-                        <CustomSelect
-                          options={[
-                            {
-                              value: "morning",
-                              label: hospitalsInfo.morning.fullOption,
-                              subtext: hospitalsInfo.morning.location,
-                            },
-                            {
-                              value: "evening",
-                              label: hospitalsInfo.evening.fullOption,
-                              subtext: hospitalsInfo.evening.location,
-                            },
-                          ]}
-                          value={formData.hospital === "evening" ? "evening" : "morning"}
-                          onChange={(selectedKey) => {
-                            setFormData((prev) => ({ ...prev, hospital: selectedKey }));
-                            navigate(`/book-appointment?hospital=${selectedKey}`, { replace: true });
-                          }}
-                          icon={Hospital}
-                        />
+                        
+                        {/* Requirement 13: Standard & Dynamic Clinic Select Dropdown */}
+                        <div className="relative">
+                          <select
+                            name="clinic"
+                            value={formData.clinic}
+                            onChange={(e) => {
+                              const selectedId = e.target.value;
+                              setFormData(prev => ({ ...prev, clinic: selectedId }));
+                            }}
+                            className="w-full px-4 py-3.5 rounded-2xl border border-slate-200 bg-white text-[#0f2a4a] text-sm sm:text-base font-bold focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-all shadow-xs cursor-pointer appearance-none"
+                          >
+                            {clinicsList.map((c) => (
+                              <option key={c._id || c.id} value={c._id || c.id}>
+                                {c.name} {c.timings ? `(${c.timings})` : c.timing ? `(${c.timing})` : ''}
+                              </option>
+                            ))}
+                          </select>
+                          <ChevronDown className="w-5 h-5 text-slate-400 absolute right-4 top-4 pointer-events-none" />
+                        </div>
 
                         {/* Location Quick Maps Buttons */}
                         <div className="mt-3.5 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 text-xs font-semibold">
-                          <a
-                            href={hospitalsInfo.morning.mapUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-orange-50/80 hover:bg-orange-100 text-orange-700 font-bold border border-orange-200/70 transition-all text-xs text-center"
-                          >
-                            <MapPin size={13} className="text-orange-500 shrink-0" />
-                            <span>Rudraksh IVF (Morning Map)</span>
-                          </a>
-                          <a
-                            href={hospitalsInfo.evening.mapUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-blue-50/80 hover:bg-blue-100 text-[#103F7C] font-bold border border-blue-200/70 transition-all text-xs text-center"
-                          >
-                            <MapPin size={13} className="text-[#103F7C] shrink-0" />
-                            <span>Dr. Shilpi Centre (Evening Map)</span>
-                          </a>
+                          {clinicsList.map((c) => (
+                            <a
+                              key={c._id || c.id}
+                              href={c.mapUrl || '#'}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-orange-50/80 hover:bg-orange-100 text-orange-700 font-bold border border-orange-200/70 transition-all text-xs text-center"
+                            >
+                              <MapPin size={13} className="text-orange-500 shrink-0" />
+                              <span>{c.name} (Map)</span>
+                            </a>
+                          ))}
                         </div>
                       </div>
 
@@ -1087,23 +932,28 @@ export default function BookAppointmentPage() {
                   {/* STEP 2: SELECT SPECIALITY, DATE, TIME SLOTS & CONSULTATION TYPE */}
                   {currentStep === 2 && (
                     <div className="space-y-6 animate-fadeIn">
-                      {/* 1. SELECT SPECIALITY / TREATMENT */}
                       <div>
                         <label className="block text-xs sm:text-base font-extrabold uppercase tracking-wider text-[#0f2a4a] mb-2.5">
                           Select Speciality / Treatment
                         </label>
-                        <CustomSelect
-                          options={activeServices}
-                          value={formData.service}
-                          onChange={(serviceOption) =>
-                            setFormData({ ...formData, service: serviceOption })
-                          }
-                        />
+                        <div className="relative">
+                          <select
+                            name="service"
+                            value={formData.service}
+                            onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                            className="w-full px-4 py-3.5 rounded-2xl border border-slate-200 bg-white text-[#0f2a4a] text-sm sm:text-base font-bold focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 transition-all shadow-xs cursor-pointer appearance-none"
+                          >
+                            {activeServices.map((srv, i) => (
+                              <option key={i} value={srv}>
+                                {srv}
+                              </option>
+                            ))}
+                          </select>
+                          <ChevronDown className="w-5 h-5 text-slate-400 absolute right-4 top-4 pointer-events-none" />
+                        </div>
                       </div>
 
-                      {/* 2. SELECT DATE & CONSULTATION TYPE GRID */}
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
-                        {/* SELECT DATE */}
                         <div>
                           <label
                             onClick={handleOpenDatePicker}
@@ -1127,13 +977,11 @@ export default function BookAppointmentPage() {
                           </div>
                         </div>
 
-                        {/* CONSULTATION TYPE */}
                         <div>
                           <label className="block text-xs sm:text-base font-extrabold uppercase tracking-wider text-[#0f2a4a] mb-2">
                             Consultation Type
                           </label>
                           <div className="flex items-center justify-around sm:justify-start gap-4 min-h-[50px] bg-slate-50/70 border border-slate-200/80 rounded-2xl px-4 py-2">
-                            {/* First Visit Radio */}
                             <label className="flex items-center gap-2 cursor-pointer text-xs sm:text-sm font-extrabold text-[#0f2a4a] group">
                               <input
                                 type="radio"
@@ -1148,7 +996,6 @@ export default function BookAppointmentPage() {
                               <span className="group-hover:text-orange-600 transition-colors">First Visit</span>
                             </label>
 
-                            {/* Follow-up Radio */}
                             <label className="flex items-center gap-2 cursor-pointer text-xs sm:text-sm font-extrabold text-[#0f2a4a] group">
                               <input
                                 type="radio"
@@ -1166,7 +1013,6 @@ export default function BookAppointmentPage() {
                         </div>
                       </div>
 
-                      {/* 3. AVAILABLE TIME SLOTS (Opens after Date & Consultation Type selection) */}
                       {formData.preferredDate && formData.consultationType && (
                         <div className="space-y-3 animate-fadeIn">
                           <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
@@ -1175,7 +1021,7 @@ export default function BookAppointmentPage() {
                               <span>Available Time Slots</span>
                             </label>
                             <span className="text-[10px] sm:text-xs font-semibold text-slate-500 bg-slate-100 px-2.5 py-0.5 rounded-full">
-                              15-Min Slots • {activeHospital.timing}
+                              15-Min Slots • {activeClinic.timings || activeClinic.timing}
                             </span>
                           </div>
 
@@ -1224,7 +1070,6 @@ export default function BookAppointmentPage() {
                         </div>
                       )}
 
-                      {/* Step 2 Back & Next Buttons */}
                       <div className="pt-4 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
                         <button
                           type="button"
@@ -1250,11 +1095,10 @@ export default function BookAppointmentPage() {
                   {/* STEP 3: PATIENT DETAILS */}
                   {currentStep === 3 && (
                     <div className="space-y-6 animate-fadeIn">
-                      {/* Summary Card */}
                       <div className="bg-slate-50 border border-slate-200/70 rounded-2xl p-4 sm:p-5 space-y-2 text-xs sm:text-sm text-slate-600">
                         <div className="flex items-center justify-between gap-2 border-b border-slate-200/60 pb-2">
-                          <span className="font-semibold text-slate-500">Selected Centre:</span>
-                          <span className="font-extrabold text-[#0f2a4a] text-right truncate max-w-[60%]">{activeHospital.name}</span>
+                          <span className="font-semibold text-slate-500">Selected Clinic:</span>
+                          <span className="font-extrabold text-[#0f2a4a] text-right truncate max-w-[60%]">{activeClinic.name}</span>
                         </div>
                         <div className="flex items-center justify-between gap-2 border-b border-slate-200/60 pb-2">
                           <span className="font-semibold text-slate-500">Speciality / Treatment:</span>
@@ -1274,9 +1118,7 @@ export default function BookAppointmentPage() {
                         </div>
                       </div>
 
-                      {/* Patient Details Inputs */}
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
-                        {/* Your Name */}
                         <div>
                           <label className="block text-xs font-extrabold uppercase tracking-wider text-[#0f2a4a] mb-2">
                             Your Name *
@@ -1302,7 +1144,6 @@ export default function BookAppointmentPage() {
                           )}
                         </div>
 
-                        {/* Phone Number */}
                         <div>
                           <label className="block text-xs font-extrabold uppercase tracking-wider text-[#0f2a4a] mb-2">
                             Phone Number *
@@ -1329,7 +1170,6 @@ export default function BookAppointmentPage() {
                           )}
                         </div>
 
-                        {/* Gmail ID / Email Address */}
                         <div>
                           <div className="flex items-center justify-between mb-2">
                             <label className="block text-xs font-extrabold uppercase tracking-wider text-[#0f2a4a]">
@@ -1360,7 +1200,6 @@ export default function BookAppointmentPage() {
                         </div>
                       </div>
 
-                      {/* Message (Optional) */}
                       <div>
                         <label className="block text-xs font-extrabold uppercase tracking-wider text-[#0f2a4a] mb-2">
                           Message (Optional)
@@ -1376,7 +1215,6 @@ export default function BookAppointmentPage() {
                         />
                       </div>
 
-                      {/* Step 3 Back & Submit Buttons */}
                       <div className="pt-2 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
                         <button
                           type="button"
@@ -1412,12 +1250,13 @@ export default function BookAppointmentPage() {
 
             </div>
 
-            {/* Dynamic Need Help Footer Bar */}
             <div className="bg-slate-50/70 border-t border-slate-100 py-3.5 px-4 sm:px-6 text-center text-xs sm:text-sm font-semibold text-slate-600">
-              Need help for {activeHospital.name}? Call us at{" "}
-              <a href={`tel:${activeHospital.phone.replace(/\s+/g, '')}`} className="text-orange-600 font-bold hover:underline">
-                {activeHospital.phone}
-              </a>
+              Need help for {activeClinic.name}? Call us at{" "}
+              {activeClinic.phone && (
+                <a href={`tel:${activeClinic.phone.replace(/\s+/g, '')}`} className="text-orange-600 font-bold hover:underline">
+                  {activeClinic.phone}
+                </a>
+              )}
             </div>
 
           </div>
