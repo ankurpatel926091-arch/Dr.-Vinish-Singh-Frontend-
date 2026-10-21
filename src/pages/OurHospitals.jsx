@@ -219,10 +219,8 @@ export default function OurHospitals() {
   useEffect(() => {
     loadClinics();
     window.addEventListener('storage', loadClinics);
-    const interval = setInterval(loadClinics, 3000);
     return () => {
       window.removeEventListener('storage', loadClinics);
-      clearInterval(interval);
     };
   }, [loadClinics]);
 

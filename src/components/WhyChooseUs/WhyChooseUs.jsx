@@ -284,7 +284,7 @@ export default function WhyChooseUs() {
               </div>
 
               <div className="p-3 border-l border-white/15">
-                <h4 className="text-3xl sm:text-4xl font-extrabold text-orange-400">5000+</h4>
+                <h4 className="text-3xl sm:text-4xl font-extrabold text-orange-400">15000+</h4>
                 <p className="text-xs sm:text-sm text-blue-100 mt-1 font-semibold">Successful Procedures</p>
                 <p className="text-[12px] text-blue-200/80 mt-0.5">RIRS, HoLEP & PCNL</p>
               </div>

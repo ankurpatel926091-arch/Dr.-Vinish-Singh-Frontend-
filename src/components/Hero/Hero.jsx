@@ -139,7 +139,7 @@ export default function Hero() {
                 <div className="bg-white rounded-2xl p-3 border border-slate-200/80 shadow-2xs h-full">
                   <div className="flex items-center gap-1.5 mb-0.5">
                     <UserCheck size={16} className="text-blue-600 shrink-0" />
-                    <h4 className="text-base sm:text-lg font-extrabold text-[#103F7C]">5000+</h4>
+                    <h4 className="text-base sm:text-lg font-extrabold text-[#103F7C]">15000+</h4>
                   </div>
                   <p className="text-[10px] font-medium text-slate-500">Laser Procedures</p>
                 </div>

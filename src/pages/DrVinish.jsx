@@ -64,39 +64,33 @@ const academicQualifications = [
     degreeLevel: "Graduation",
     badgeBg: "bg-emerald-600 text-white",
   },
-  {
-    examination: "Intermediate",
-    passingYear: "1999",
-    institute: "CBSE Board, Gaya",
-    degreeLevel: "Higher Secondary",
-    badgeBg: "bg-slate-700 text-white",
-  },
-  {
-    examination: "High School",
-    passingYear: "1997",
-    institute: "CBSE Board, Lucknow",
-    degreeLevel: "Secondary School",
-    badgeBg: "bg-slate-500 text-white",
-  },
+ 
+  
 ];
 
 // Work Experience Data (Extracted directly from dr-vinish-singh.aspx)
 const workExperienceData = [
   {
     institution: "TSM Medical College & Hospital, Lucknow",
-    designation: "Associate Professor in Urology",
-    duration: "2017 - Present",
+    designation: " Professor in Urology",
+    duration: "2017 - 2026",
     type: "Academic & Clinical",
   },
   {
-    institution: "SKD Kanpur Road & Ajanta Hospital Alambagh, Lucknow",
+    institution: "SKD Kanpur Road ",
     designation: "Consultant Urologist & Transplant Surgeon",
-    duration: "Present",
+    duration: "2022-2024",
     type: "Clinical Care",
   },
   {
-    institution: "Department of Urology, Institute of Nephro-urology, Bangalore",
-    designation: "Worked as Post Graduate student (M.Ch Urology)",
+    institution: "Ajanta Hospital Alambagh, Lucknow",
+    designation: "Consultant Urologist & Transplant Surgeon",
+    duration: "2022-2023",
+    type: "Clinical Care",
+  },
+  {
+    institution: "Department of Urology, Institute of Nephro-Urology, Bangalore",
+    designation: "Worked as Post Graduate Student (M.Ch Urology)",
     duration: "3rd year / 3 Years Residency",
     type: "Super Speciality Training",
   },
@@ -112,12 +106,7 @@ const workExperienceData = [
     duration: "3 Years Residency",
     type: "PG Residency",
   },
-  {
-    institution: "G.M. & ASSOCIATED Hospital Lucknow and U.H.M Hospital, Kanpur",
-    designation: "Intern",
-    duration: "1 year",
-    type: "Rotatory Internship",
-  },
+  
 ];
 
 // Curricular Activities Data (Detailed Sections from dr-vinish-singh.aspx)
@@ -303,7 +292,7 @@ export default function DrVinishKumarSingh() {
       <PageHero
         title="Consultant Urologist & Transplant Surgeon"
         subTitle="Dr. Vinish Kumar Singh"
-        // description="M.B.B.S. (KGMU), M.S. (General Surgery), FIAGES, M.Ch (Urology - INU Bangalore) | Associate Professor in TSM Medical College | 15+ Years Clinical Practice & 5000+ Laser Surgeries"
+        // description="M.B.B.S. (KGMU), M.S. (General Surgery), FIAGES, M.Ch (Urology - INU Bangalore) | Associate Professor in TSM Medical College | 15+ Years Clinical Practice & 15000+ Laser Surgeries"
         bgImage={headerBannerBg}
       />
 

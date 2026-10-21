@@ -128,10 +128,8 @@ export default function Contact() {
   useEffect(() => {
     loadClinics();
     window.addEventListener('storage', loadClinics);
-    const interval = setInterval(loadClinics, 3000);
     return () => {
       window.removeEventListener('storage', loadClinics);
-      clearInterval(interval);
     };
   }, [loadClinics]);
   const [formData, setFormData] = useState({
