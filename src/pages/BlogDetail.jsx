@@ -8,7 +8,6 @@ import {
   BookOpen,
   CheckCircle2,
   ChevronRight,
-  Share2,
   PhoneCall,
   HelpCircle,
   Sparkles,
@@ -23,10 +22,28 @@ import { fetchBlogBySlug, fetchPublicBlogs, getInitialBlogs } from "../api/blogA
 import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
 import doctorThumb from "../assets/images/img12.png";
 
+const cleanBlogHtml = (html) => {
+  const parsedContent = new DOMParser().parseFromString(html, "text/html");
+
+  parsedContent.body
+    .querySelectorAll("p, h1, h2, h3, h4, h5, h6, blockquote, li, div")
+    .forEach((element) => {
+      const hasMedia = element.querySelector("img, video, iframe, table, hr");
+      if (!element.textContent.trim() && !hasMedia) {
+        element.remove();
+      }
+    });
+
+  while (parsedContent.body.lastElementChild?.tagName === "BR") {
+    parsedContent.body.lastElementChild.remove();
+  }
+
+  return parsedContent.body.innerHTML;
+};
+
 export default function BlogDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const [copied, setCopied] = useState(false);
   const [allBlogs, setAllBlogs] = useState(() => getInitialBlogs());
   const [article, setArticle] = useState(() => {
     const list = getInitialBlogs();
@@ -66,25 +83,14 @@ export default function BlogDetail() {
     return () => { isMounted = false; };
   }, [slug]);
 
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator
-        .share({
-          title: article?.title,
-          url: window.location.href,
-        })
-        .catch(() => {});
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
-    }
-  };
-
   // Filter 3 related articles excluding current
   const relatedArticles = useMemo(
     () => allBlogs.filter((b) => (b.slug !== article?.slug && b.id !== article?.id)).slice(0, 3),
     [allBlogs, article]
+  );
+  const cleanedRawContent = useMemo(
+    () => (article?.rawContent ? cleanBlogHtml(article.rawContent) : ""),
+    [article?.rawContent]
   );
 
   if (loading) {
@@ -183,7 +189,7 @@ export default function BlogDetail() {
                 </div>
               </div>
 
-              {/* Meta Tags & Share Button */}
+              {/* Meta Tags */}
               <div className="flex items-center gap-4 sm:gap-6 flex-wrap">
                 <div className="flex items-center gap-3 text-blue-100 font-medium text-xs">
                   <span className="flex items-center gap-1.5 text-orange-300 font-bold">
@@ -197,14 +203,6 @@ export default function BlogDetail() {
                   </span>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={handleShare}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all border border-white/20 active:scale-95 cursor-pointer"
-                >
-                  {copied ? <Check size={14} className="text-emerald-400" /> : <Share2 size={14} />}
-                  <span>{copied ? "Link Copied!" : "Share"}</span>
-                </button>
               </div>
             </div>
           </div>
@@ -241,11 +239,11 @@ export default function BlogDetail() {
 
             {/* Dynamic Content Container */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 md:p-9 border border-slate-200/80 shadow-2xs space-y-6">
-              {article.rawContent && (article.rawContent.includes('<p>') || article.rawContent.includes('<h') || article.rawContent.includes('<table>') || article.rawContent.includes('<ul>')) ? (
+              {cleanedRawContent && (cleanedRawContent.includes("<p") || cleanedRawContent.includes("<h") || cleanedRawContent.includes("<table") || cleanedRawContent.includes("<ul")) ? (
                 <div
                   className="text-slate-700 text-sm sm:text-base leading-relaxed space-y-4 [&_h2]:text-xl [&_h2]:sm:text-2xl [&_h2]:font-extrabold [&_h2]:text-[#103F7C] [&_h2]:mt-6 [&_h2]:mb-2 [&_h3]:text-lg [&_h3]:font-bold [&_h3]:text-slate-800 [&_ul]:space-y-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:space-y-2 [&_ol]:list-decimal [&_ol]:pl-5 [&_blockquote]:border-l-4 [&_blockquote]:border-orange-500 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-slate-600"
                   dangerouslySetInnerHTML={{
-                    __html: article.rawContent.replace(
+                    __html: cleanedRawContent.replace(
                       new RegExp(`^\\s*<(p|h1|h2|h3)[^>]*>\\s*${article.title?.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}\\s*<\\/(p|h1|h2|h3)>`, 'i'),
                       ''
                     )
@@ -313,7 +311,7 @@ export default function BlogDetail() {
           </div>
 
           {/* Sidebar Column (1 Col) */}
-          <div className="space-y-6 sticky top-24">
+          <div className="space-y-6 lg:sticky lg:top-44 lg:self-start">
             
             {/* Doctor Profile & OPD Booking Widget */}
             <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-2xs space-y-5">
@@ -367,7 +365,7 @@ export default function BlogDetail() {
 
               <div className="pt-1 space-y-2.5">
                 <a
-                  href="tel:8960068307"
+                  href="tel:72759 81480"
                   className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-xs sm:text-sm shadow-md shadow-orange-500/20 transition-all active:scale-98"
                 >
                   <PhoneCall size={15} />
@@ -375,7 +373,7 @@ export default function BlogDetail() {
                 </a>
 
                 <Link
-                  to="/#book-appointment"
+                  to="/appointment-request"
                   className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs transition-all"
                 >
                   <span>Book Online Appointment</span>

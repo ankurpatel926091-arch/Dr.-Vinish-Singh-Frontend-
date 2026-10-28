@@ -9,7 +9,6 @@ import {
   ZoomOut,
   RotateCw,
   ArrowRight,
-  Maximize2,
 } from "lucide-react";
 import ScrollReveal from "../ScrollReveal/ScrollReveal";
 
@@ -170,15 +169,6 @@ export default function HomeGallery() {
                     alt={item.title}
                     className="w-full h-full object-cover object-[center_28%] transition-transform duration-700 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-4">
-                    <span className="text-white text-xs font-bold flex items-center gap-1.5">
-                      <Maximize2 size={14} className="text-orange-400" />
-                      <span>Expand Photo</span>
-                    </span>
-                    <span className="text-[10px] font-bold text-orange-300 uppercase tracking-wider bg-black/50 px-2.5 py-1 rounded-full border border-white/20">
-                      {item.category}
-                    </span>
-                  </div>
                 </div>
               </div>
             </ScrollReveal>
@@ -280,4 +270,3 @@ export default function HomeGallery() {
     </section>
   );
 }
-

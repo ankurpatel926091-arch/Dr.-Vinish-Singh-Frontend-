@@ -37,7 +37,6 @@ import {
 
 import logo from "../assets/logo.png";
 
-// Navigation Data with Icons & Descriptions (Declared statically outside to avoid re-allocation per render)
 const navLinks = [
   {
     label: "Home",
@@ -110,33 +109,39 @@ const navLinks = [
         ],
       },
       {
-        title: "Kidney & Renal Transplant Conditions",
+        title: "Kidney & Renal Transplant",
         icon: HeartPulse,
         iconBg: "bg-emerald-50 text-emerald-600 border border-emerald-100",
         items: [
           { label: "End-Stage Kidney Disease", href: "/services/nephrology", icon: ShieldAlert, iconBg: "bg-emerald-50 text-emerald-600" },
-          { label: "Kidney Failure Requiring Transplant", href: "/services/renal-transplant", icon: Activity, iconBg: "bg-teal-50 text-teal-600" },
-          { label: "Kidney Transplant Evaluation", href: "/conditions/kidney-transplant-eval", icon: ClipboardCheck, iconBg: "bg-blue-50 text-blue-600" },
-          { label: "Living Donor Kidney Transplant", href: "/conditions/living-donor-transplant", icon: HeartPulse, iconBg: "bg-rose-50 text-rose-600" },
-          { label: "Deceased Donor Kidney Transplant", href: "/conditions/deceased-donor-transplant", icon: Building2, iconBg: "bg-indigo-50 text-indigo-600" },
-          { label: "Post-Transplant Urological Complications", href: "/conditions/post-transplant-care", icon: Stethoscope, iconBg: "bg-amber-50 text-amber-600" },
+          { label: "Kidney Failure Transplant", href: "/services/renal-transplant", icon: Activity, iconBg: "bg-teal-50 text-teal-600" },
+          { label: "Kidney Transplant Eval", href: "/conditions/kidney-transplant-eval", icon: ClipboardCheck, iconBg: "bg-blue-50 text-blue-600" },
+          { label: "Living Donor Transplant", href: "/conditions/living-donor-transplant", icon: HeartPulse, iconBg: "bg-rose-50 text-rose-600" },
+          { label: "Deceased Donor Transplant", href: "/conditions/deceased-donor-transplant", icon: Building2, iconBg: "bg-indigo-50 text-indigo-600" },
+          { label: "Post-Transplant Care", href: "/conditions/post-transplant-care", icon: Stethoscope, iconBg: "bg-amber-50 text-amber-600" },
+          { isHeader: true, heading: "Uro-Onco Surgery", icon: Target, iconBg: "bg-rose-50 text-rose-600 border border-rose-100" },
+          { label: "Prostate Cancer Surgery", href: "/cancers/prostate-cancer", icon: ShieldAlert, iconBg: "bg-rose-50 text-rose-600" },
+          { label: "Radical Cystectomy", href: "/cancers/bladder-cancer", icon: Activity, iconBg: "bg-pink-50 text-pink-600" },
+          { label: "Radical Nephrectomy", href: "/cancers/kidney-cancer", icon: Target, iconBg: "bg-red-50 text-red-600" },
         ],
       },
       {
-        title: "Paediatric Urological Conditions",
+        title: "Paediatric & Cancers",
         icon: UserCheck,
         iconBg: "bg-teal-50 text-teal-600 border border-teal-100",
         items: [
           { label: "Undescended Testis", href: "/paediatric/undescended-testis", icon: Baby, iconBg: "bg-teal-50 text-teal-600" },
           { label: "Phimosis", href: "/paediatric/phimosis", icon: Scissors, iconBg: "bg-cyan-50 text-cyan-600" },
           { label: "Hypospadias", href: "/paediatric/hypospadias", icon: Stethoscope, iconBg: "bg-blue-50 text-blue-600" },
-          { label: "Hydrocele", href: "/paediatric/hydrocele", icon: Droplets, iconBg: "bg-sky-50 text-sky-600" },
-          { label: "Paediatric Urinary Problems", href: "/paediatric/urinary-problems", icon: Activity, iconBg: "bg-emerald-50 text-emerald-600" },
+          { label: "Paediatric Urinary", href: "/paediatric/urinary-problems", icon: Activity, iconBg: "bg-emerald-50 text-emerald-600" },
           { isHeader: true, heading: "Urological Cancers", icon: ShieldAlert, iconBg: "bg-rose-50 text-rose-600 border border-rose-100" },
           { label: "Prostate Cancer", href: "/cancers/prostate-cancer", icon: ShieldAlert, iconBg: "bg-rose-50 text-rose-600" },
           { label: "Kidney Cancer", href: "/cancers/kidney-cancer", icon: Target, iconBg: "bg-red-50 text-red-600" },
           { label: "Bladder Cancer", href: "/cancers/bladder-cancer", icon: Activity, iconBg: "bg-pink-50 text-pink-600" },
-          { label: "Testicular Cancer", href: "/cancers/testicular-cancer", icon: Stethoscope, iconBg: "bg-orange-50 text-orange-600" },
+          { isHeader: true, heading: "Laparoscopic", icon: Scissors, iconBg: "bg-blue-50 text-blue-600 border border-blue-100" },
+          { label: "Laparoscopic Radical Prostatectomy", href: "/cancers/prostate-cancer", icon: ShieldAlert, iconBg: "bg-rose-50 text-rose-600" },
+          { label: "Laparoscopic Partial Nephrectomy", href: "/cancers/kidney-cancer", icon: Target, iconBg: "bg-red-50 text-red-600" },
+          { label: "Laparoscopic Radical Cystectomy", href: "/cancers/bladder-cancer", icon: Activity, iconBg: "bg-pink-50 text-pink-600" },
         ],
       },
     ],
@@ -182,7 +187,7 @@ const navLinks = [
     href: "/gallery",
   },
   {
-    label: "Contact",
+    label: "Contact Us",
     href: "/contact",
   },
 ];
@@ -204,32 +209,7 @@ function Navbar() {
   const handleBookAppointmentClick = (e) => {
     e.preventDefault();
     closeAllMenus();
-
-    if (location.pathname === "/" && location.hash === "#book-appointment") {
-      const el = document.getElementById("book-appointment");
-      if (el) {
-        const getElementDocumentTop = (element) => {
-          let top = 0;
-          let curr = element;
-          while (curr) {
-            top += curr.offsetTop;
-            curr = curr.offsetParent;
-          }
-          return top;
-        };
-        const header = document.querySelector("header");
-        const headerHeight = header ? header.offsetHeight : 95;
-        const offset = -(headerHeight - 25);
-        const targetScrollY = Math.max(0, getElementDocumentTop(el) + offset);
-        if (window.lenis) {
-          window.lenis.scrollTo(targetScrollY, { duration: 0.6 });
-        } else {
-          window.scrollTo({ top: targetScrollY, behavior: "smooth" });
-        }
-      }
-    } else {
-      navigate("/#book-appointment");
-    }
+    navigate("/appointment-request");
   };
 
   useEffect(() => {
@@ -248,12 +228,10 @@ function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close all submenus immediately on route change
   useEffect(() => {
     closeAllMenus();
   }, [location.pathname]);
 
-  // Lock body scroll when mobile menu is open to allow 100% touch scrolling inside drawer
   useEffect(() => {
     if (menuOpen) {
       document.body.style.overflow = "hidden";
@@ -385,19 +363,18 @@ function Navbar() {
                             : "opacity-0 invisible translate-y-3 pointer-events-none"
                         } ${
                           item.isMegaMenu
-                            ? "left-1/2 -translate-x-1/2 w-full max-w-7xl px-2 sm:px-4"
+                            ? "left-1/2 -translate-x-1/2 w-[95vw] max-w-[1200px] px-2 sm:px-4"
                             : item.isUrologyGuide
-                            ? "left-1/2 -translate-x-1/2"
+                            ? "left-1/2 -translate-x-1/2 w-[95vw] max-w-[1000px]"
                             : item.alignRight
                             ? "right-0 left-auto"
                             : "left-1/2 -translate-x-1/2"
                         }`}
                       >
                         {item.isMegaMenu ? (
-                          /* ================= 4-COLUMN MEGA MENU (Conditions Treated) ================= */
-                          <div className="w-full rounded-3xl bg-white p-4 lg:p-5 shadow-[0_25px_60px_-15px_rgba(16,63,124,0.2)] border border-slate-200 ring-1 ring-slate-900/5">
-                            {/* 4-Column Grid Layout with Column Card Containers */}
-                            <div className="grid grid-cols-4 gap-3 lg:gap-4">
+                          /* ================= 4-COLUMN MEGA MENU ================= */
+                          <div className="w-full rounded-3xl bg-white p-2.5 lg:p-3 shadow-[0_25px_60px_-15px_rgba(16,63,124,0.2)] border border-slate-200 ring-1 ring-slate-900/5">
+                            <div className="grid grid-cols-4 items-start gap-2">
                               {item.megaMenuColumns.map((col, cIdx) => (
                                 <CategoryMenuCard
                                   key={cIdx}
@@ -413,22 +390,20 @@ function Navbar() {
                           </div>
                         ) : item.isUrologyGuide ? (
                           /* ================= 2-COLUMN UROLOGY GUIDE MENU ================= */
-                          <div className="w-[1060px] xl:w-[1140px] max-w-[95vw] rounded-3xl bg-white p-4 lg:p-5 shadow-[0_25px_60px_-15px_rgba(16,63,124,0.2)] border border-slate-200 ring-1 ring-slate-900/5">
-                            <div className="grid grid-cols-12 gap-4 lg:gap-5">
-                              {/* Left Card: Male Urology Guide (Col Span 6 - 2 Column Subgrid: 4 Left, 4 Right) */}
-                              <div className="col-span-6 bg-slate-50/70 rounded-2xl p-3.5 sm:p-4 border border-slate-200/70 flex flex-col space-y-3">
-                                {/* Card Header */}
+                          <div className="w-full rounded-3xl bg-white p-3 lg:p-4 shadow-[0_25px_60px_-15px_rgba(16,63,124,0.2)] border border-slate-200 ring-1 ring-slate-900/5">
+                            <div className="grid grid-cols-12 gap-3 lg:gap-4">
+                              {/* Left Card: Male Urology Guide */}
+                              <div className="col-span-6 bg-slate-50/70 rounded-2xl p-3 sm:p-4 border border-slate-200/70 flex flex-col space-y-3">
                                 <div className="flex items-center justify-between pb-2.5 border-b border-slate-200/60">
-                                  <h4 className="font-extrabold text-[#103F7C] text-[15px] sm:text-[16px] xl:text-[17px] tracking-tight">
+                                  <h4 className="font-extrabold text-[#103F7C] text-[14px] sm:text-[15px] xl:text-[16px] tracking-tight">
                                     {item.guideColumns[0].title}
                                   </h4>
-                                  <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 border border-slate-200/60 ${item.guideColumns[0].iconBg}`}>
-                                    <Users size={16} />
+                                  <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center shrink-0 border border-slate-200/60 ${item.guideColumns[0].iconBg}`}>
+                                    <Users size={15} />
                                   </div>
                                 </div>
 
-                                {/* 2-Column Subgrid (4 Left Side, 4 Right Side) */}
-                                <div className="grid grid-cols-2 gap-2.5">
+                                <div className="grid grid-cols-1 xl:grid-cols-2 gap-2 xl:gap-2.5">
                                   {item.guideColumns[0].items.map((sub, sIdx) => {
                                     const SubIcon = sub.icon;
                                     return (
@@ -437,22 +412,22 @@ function Navbar() {
                                         to={sub.href}
                                         onClick={closeAllMenus}
                                         className={({ isActive }) =>
-                                          `group/item flex items-center gap-2.5 p-2.5 rounded-xl transition-all duration-200 border ${
+                                          `group/item flex items-center gap-2 p-2 xl:p-2.5 rounded-xl transition-all duration-200 border ${
                                             isActive
                                               ? "bg-white text-[#103F7C] font-semibold shadow-xs border-blue-300 ring-1 ring-blue-500/10"
                                               : "bg-white hover:shadow-xs border border-slate-200/80 hover:border-blue-200 text-slate-800 hover:text-[#103F7C]"
                                           }`
                                         }
                                       >
-                                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-transform duration-200 group-hover/item:scale-105 ${sub.iconBg}`}>
-                                          <SubIcon size={15} />
+                                        <div className={`w-7 h-7 xl:w-8 xl:h-8 rounded-lg flex items-center justify-center shrink-0 transition-transform duration-200 group-hover/item:scale-105 ${sub.iconBg}`}>
+                                          <SubIcon size={14} />
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                          <div className="text-[12.5px] xl:text-[13px] font-extrabold text-slate-900 group-hover/item:text-[#103F7C] leading-tight truncate">
+                                          <div className="text-[12px] xl:text-[12.5px] font-extrabold text-slate-900 group-hover/item:text-[#103F7C] leading-tight truncate">
                                             {sub.label}
                                           </div>
                                           {sub.desc && (
-                                            <div className="text-[10px] font-medium text-slate-500 group-hover/item:text-slate-600 leading-none mt-0.5 truncate">
+                                            <div className="text-[9px] xl:text-[10px] font-medium text-slate-500 group-hover/item:text-slate-600 leading-none mt-0.5 truncate">
                                               {sub.desc}
                                             </div>
                                           )}
@@ -464,20 +439,18 @@ function Navbar() {
                                 </div>
                               </div>
 
-                              {/* Right Card: Female Urology Guide (Col Span 6 - 2 Column Subgrid: 3 Left, 3 Right) */}
-                              <div className="col-span-6 bg-slate-50/70 rounded-2xl p-3.5 sm:p-4 border border-slate-200/70 flex flex-col space-y-3">
-                                {/* Card Header */}
+                              {/* Right Card: Female Urology Guide */}
+                              <div className="col-span-6 bg-slate-50/70 rounded-2xl p-3 sm:p-4 border border-slate-200/70 flex flex-col space-y-3">
                                 <div className="flex items-center justify-between pb-2.5 border-b border-slate-200/60">
-                                  <h4 className="font-extrabold text-[#103F7C] text-[15px] sm:text-[16px] xl:text-[17px] tracking-tight">
+                                  <h4 className="font-extrabold text-[#103F7C] text-[14px] sm:text-[15px] xl:text-[16px] tracking-tight">
                                     {item.guideColumns[1].title}
                                   </h4>
-                                  <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 border border-slate-200/60 ${item.guideColumns[1].iconBg}`}>
-                                    <HeartPulse size={16} />
+                                  <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-xl flex items-center justify-center shrink-0 border border-slate-200/60 ${item.guideColumns[1].iconBg}`}>
+                                    <HeartPulse size={15} />
                                   </div>
                                 </div>
 
-                                {/* 2-Column Subgrid (3 Left Side, 3 Right Side) */}
-                                <div className="grid grid-cols-2 gap-2.5">
+                                <div className="grid grid-cols-1 xl:grid-cols-2 gap-2 xl:gap-2.5">
                                   {item.guideColumns[1].items.map((sub, sIdx) => {
                                     const SubIcon = sub.icon;
                                     return (
@@ -486,22 +459,22 @@ function Navbar() {
                                         to={sub.href}
                                         onClick={closeAllMenus}
                                         className={({ isActive }) =>
-                                          `group/item flex items-center gap-2.5 p-2.5 rounded-xl transition-all duration-200 border ${
+                                          `group/item flex items-center gap-2 p-2 xl:p-2.5 rounded-xl transition-all duration-200 border ${
                                             isActive
                                               ? "bg-white text-[#103F7C] font-semibold shadow-xs border-blue-300 ring-1 ring-blue-500/10"
                                               : "bg-white hover:shadow-xs border border-slate-200/80 hover:border-blue-200 text-slate-800 hover:text-[#103F7C]"
                                           }`
                                         }
                                       >
-                                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-transform duration-200 group-hover/item:scale-105 ${sub.iconBg}`}>
-                                          <SubIcon size={15} />
+                                        <div className={`w-7 h-7 xl:w-8 xl:h-8 rounded-lg flex items-center justify-center shrink-0 transition-transform duration-200 group-hover/item:scale-105 ${sub.iconBg}`}>
+                                          <SubIcon size={14} />
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                          <div className="text-[12.5px] xl:text-[13px] font-extrabold text-slate-900 group-hover/item:text-[#103F7C] leading-tight truncate">
+                                          <div className="text-[12px] xl:text-[12.5px] font-extrabold text-slate-900 group-hover/item:text-[#103F7C] leading-tight truncate">
                                             {sub.label}
                                           </div>
                                           {sub.desc && (
-                                            <div className="text-[10px] font-medium text-slate-500 group-hover/item:text-slate-600 leading-none mt-0.5 truncate">
+                                            <div className="text-[9px] xl:text-[10px] font-medium text-slate-500 group-hover/item:text-slate-600 leading-none mt-0.5 truncate">
                                               {sub.desc}
                                             </div>
                                           )}
@@ -558,14 +531,12 @@ function Navbar() {
                                           }`
                                         }
                                       >
-                                        {/* Icon Box */}
                                         <div
                                           className={`w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover/item:scale-105 ${child.iconBg}`}
                                         >
                                           <IconComponent size={17} />
                                         </div>
 
-                                        {/* Content */}
                                         <div className="flex-1 min-w-0">
                                           <div className="text-[13.5px] font-bold text-slate-900 group-hover/item:text-[#103F7C] leading-snug truncate">
                                             {child.label}
@@ -577,7 +548,6 @@ function Navbar() {
                                           )}
                                         </div>
 
-                                        {/* Hover Arrow */}
                                         <ChevronRight
                                           size={14}
                                           className="text-slate-400 group-hover/item:text-orange-500 group-hover/item:translate-x-0.5 transition-all duration-200 flex-shrink-0"
@@ -598,10 +568,8 @@ function Navbar() {
 
             {/* ================= CTA Buttons ================= */}
             <div className="nav-desktop-container items-center gap-3.5 lg:gap-5 flex-shrink-0">
-            
-
               <a
-                href="/#book-appointment"
+                href="/appointment-request"
                 onClick={handleBookAppointmentClick}
                 className="inline-flex items-center justify-center gap-2 px-5 lg:px-6 h-10 lg:h-11 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-sm lg:text-[14.5px] font-extrabold shadow-md hover:shadow-lg shadow-orange-500/20 transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] whitespace-nowrap cursor-pointer"
               >
@@ -635,182 +603,183 @@ function Navbar() {
               <div
                 data-lenis-prevent="true"
                 data-lenis-prevent-touch="true"
-                className="bg-slate-50/95 backdrop-blur-md border-t border-slate-200/80 px-4 py-4 max-h-[calc(100vh-100px)] overflow-y-auto overscroll-contain touch-pan-y"
+                className="bg-slate-50/95 backdrop-blur-md border-t border-slate-200/80 px-4 py-4 max-h-[calc(100dvh-120px)] overflow-y-auto overscroll-contain touch-pan-y custom-scrollbar"
               >
-            <div className="flex flex-col gap-2">
-              {navLinks.map((item) => (
-                <div
-                  key={item.label}
-                  className="bg-white rounded-xl border border-slate-200/70 overflow-hidden shadow-sm"
-                >
-                  {/* Normal Link in Mobile */}
-                  {!item.dropdown ? (
-                    <NavLink
-                      to={item.href}
-                      onClick={closeAllMenus}
-                      className={({ isActive }) =>
-                        `flex items-center justify-between px-4 py-3 text-[15px] font-semibold transition ${
-                          isActive
-                            ? "text-[#103F7C] bg-blue-50/60"
-                            : "text-slate-800 hover:bg-slate-50"
-                        }`
-                      }
+                <div className="flex flex-col gap-2">
+                  {navLinks.map((item) => (
+                    <div
+                      key={item.label}
+                      className="bg-white rounded-xl border border-slate-200/70 overflow-hidden shadow-sm"
                     >
-                      <span>{item.label}</span>
-                      <ChevronRight size={16} className="text-slate-400" />
-                    </NavLink>
-                  ) : (
-                    /* Dropdown Accordion Header */
-                    <div>
-                      <button
-                        type="button"
-                        onClick={() => toggleMobileDropdown(item.label)}
-                        className="w-full flex items-center justify-between px-4 py-3 text-[15px] font-semibold text-slate-800 hover:bg-slate-50 transition"
-                      >
-                        <span className="text-[#103F7C]">{item.label}</span>
-                        <ChevronDown
-                          size={18}
-                          className={`text-slate-500 transition-transform duration-300 ${
-                            activeMobileDropdown === item.label
-                              ? "rotate-180 text-orange-500"
-                              : ""
-                          }`}
-                        />
-                      </button>
-
-                      {/* Dropdown Items Card Container in Mobile */}
-                      <AnimatePresence initial={false}>
-                        {activeMobileDropdown === item.label && (
-                          <motion.div
-                            key="dropdown-content"
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
-                            className="overflow-hidden border-t border-slate-100 bg-slate-50/50 p-2"
+                      {/* Normal Link in Mobile */}
+                      {!item.dropdown ? (
+                        <NavLink
+                                                   to={item.href}
+                          onClick={closeAllMenus}
+                          className={({ isActive }) =>
+                            `flex items-center justify-between px-4 py-3 text-[15px] font-semibold transition ${
+                              isActive
+                                ? "text-[#103F7C] bg-blue-50/60"
+                                : "text-slate-800 hover:bg-slate-50"
+                            }`
+                          }
+                        >
+                          <span>{item.label}</span>
+                          <ChevronRight size={16} className="text-slate-400" />
+                        </NavLink>
+                      ) : (
+                        /* Dropdown Accordion Header */
+                        <div>
+                          <button
+                            type="button"
+                            onClick={() => toggleMobileDropdown(item.label)}
+                            className="w-full flex items-center justify-between px-4 py-3 text-[15px] font-semibold text-slate-800 hover:bg-slate-50 transition"
                           >
-                            {item.isMegaMenu ? (
-                              <div className="flex flex-col gap-3 p-1">
-                                {item.megaMenuColumns.map((col, cIdx) => (
-                                  <CategoryMenuCard
-                                    key={cIdx}
-                                    title={col.title}
-                                    icon={col.icon}
-                                    iconBg={col.iconBg}
-                                    items={col.items}
-                                    onItemClick={closeAllMenus}
-                                  />
-                                ))}
-                              </div>
-                            ) : item.isUrologyGuide ? (
-                              <div className="flex flex-col gap-3 p-1">
-                                {item.guideColumns.map((col, cIdx) => {
-                                  const ColIcon = col.icon;
-                                  return (
-                                    <div key={cIdx} className="bg-white rounded-xl p-3 border border-slate-200/80 shadow-2xs space-y-2">
-                                      <div className="flex items-center justify-between pb-1.5 border-b border-slate-100">
-                                        <h5 className="font-extrabold text-[#103F7C] text-[13px]">
-                                          {col.title}
-                                        </h5>
-                                        <div className={`w-6 h-6 rounded-lg flex items-center justify-center ${col.iconBg}`}>
-                                          <ColIcon size={13} />
-                                        </div>
-                                      </div>
-                                      <div className="space-y-1.5">
-                                        {col.items.map((sub, sIdx) => {
-                                          const SubIcon = sub.icon;
-                                          return (
-                                            <NavLink
-                                              key={sIdx}
-                                              to={sub.href}
-                                              onClick={closeAllMenus}
-                                              className={({ isActive }) =>
-                                                `flex items-center gap-2.5 p-2 rounded-lg transition ${
-                                                  isActive
-                                                    ? "bg-blue-100/70 text-[#103F7C] font-semibold"
-                                                    : "bg-white hover:bg-slate-50 text-slate-700"
-                                                }`
-                                              }
-                                            >
-                                              <div className={`w-7 h-7 rounded-md flex items-center justify-center shrink-0 ${sub.iconBg}`}>
-                                                <SubIcon size={14} />
-                                              </div>
-                                              <div className="flex-1 min-w-0">
-                                                <div className="text-xs font-bold text-slate-800 truncate">{sub.label}</div>
-                                              </div>
-                                            </NavLink>
-                                          );
-                                        })}
-                                      </div>
-                                    </div>
-                                  );
-                                })}
-                              </div>
-                            ) : (
-                              <div className="flex flex-col gap-1.5">
-                                {item.children &&
-                                  item.children.map((child) => {
-                                    const IconComponent = child.icon;
-                                    return (
-                                      <NavLink
-                                        key={child.label}
-                                        to={child.href}
-                                        onClick={closeAllMenus}
-                                        className={({ isActive }) =>
-                                          `flex items-center gap-3 p-2.5 rounded-xl transition ${
-                                            isActive
-                                              ? "bg-blue-100/70 text-[#103F7C] font-semibold"
-                                              : "bg-[#fff] hover:bg-blue-50/60 text-slate-700"
-                                          }`
-                                        }
-                                      >
-                                        <div
-                                          className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${child.iconBg}`}
-                                        >
-                                          <IconComponent size={17} />
-                                        </div>
-                                        <div className="flex-1 min-w-0">
-                                          <div className="text-[13.5px] font-semibold text-slate-800 leading-snug">
-                                            {child.label}
-                                          </div>
-                                          {child.desc && (
-                                            <div className="text-[10.5px] text-slate-500 truncate">
-                                              {child.desc}
-                                            </div>
-                                          )}
-                                        </div>
-                                      </NavLink>
-                                    );
-                                  })}
-                              </div>
-                            )}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  )}
-                </div>
-              ))}
+                            <span className="text-[#103F7C]">{item.label}</span>
+                            <ChevronDown
+                              size={18}
+                              className={`text-slate-500 transition-transform duration-300 ${
+                                activeMobileDropdown === item.label
+                                  ? "rotate-180 text-orange-500"
+                                  : ""
+                              }`}
+                            />
+                          </button>
 
-              {/* Mobile CTA */}
-              <div className="pt-3 pb-2">
-                <a
-                  href="/#book-appointment"
-                  onClick={handleBookAppointmentClick}
-                  className="w-full flex items-center justify-center gap-2 h-12 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold shadow-md shadow-orange-500/20 active:scale-98 transition-all cursor-pointer"
-                >
-                  <Calendar size={18} />
-                  <span>Book Appointment</span>
-                </a>
+                          {/* Dropdown Items Card Container in Mobile */}
+                          <AnimatePresence initial={false}>
+                            {activeMobileDropdown === item.label && (
+                              <motion.div
+                                key="dropdown-content"
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
+                                className="overflow-hidden border-t border-slate-100 bg-slate-50/50 p-2"
+                              >
+                                {item.isMegaMenu ? (
+                                  <div className="flex flex-col gap-2 p-1">
+                                    {item.megaMenuColumns.map((col, cIdx) => (
+                                      <CategoryMenuCard
+                                        key={cIdx}
+                                        title={col.title}
+                                        icon={col.icon}
+                                        iconBg={col.iconBg}
+                                        items={col.items}
+                                        onItemClick={closeAllMenus}
+                                      />
+                                    ))}
+                                  </div>
+                                ) : item.isUrologyGuide ? (
+                                  <div className="flex flex-col gap-3 p-1">
+                                    {item.guideColumns.map((col, cIdx) => {
+                                      const ColIcon = col.icon;
+                                      return (
+                                        <div key={cIdx} className="bg-white rounded-xl p-3 border border-slate-200/80 shadow-2xs space-y-2">
+                                          <div className="flex items-center justify-between pb-1.5 border-b border-slate-100">
+                                            <h5 className="font-extrabold text-[#103F7C] text-[13px]">
+                                              {col.title}
+                                            </h5>
+                                            <div className={`w-6 h-6 rounded-lg flex items-center justify-center ${col.iconBg}`}>
+                                              <ColIcon size={13} />
+                                            </div>
+                                          </div>
+                                          <div className="space-y-1.5">
+                                            {col.items.map((sub, sIdx) => {
+                                              const SubIcon = sub.icon;
+                                              return (
+                                                <NavLink
+                                                  key={sIdx}
+                                                  to={sub.href}
+                                                  onClick={closeAllMenus}
+                                                  className={({ isActive }) =>
+                                                    `flex items-center gap-2.5 p-2 rounded-lg transition ${
+                                                      isActive
+                                                        ? "bg-blue-100/70 text-[#103F7C] font-semibold"
+                                                        : "bg-white hover:bg-slate-50 text-slate-700"
+                                                    }`
+                                                  }
+                                                >
+                                                  <div className={`w-7 h-7 rounded-md flex items-center justify-center shrink-0 ${sub.iconBg}`}>
+                                                    <SubIcon size={14} />
+                                                  </div>
+                                                  <div className="flex-1 min-w-0">
+                                                    <div className="text-xs font-bold text-slate-800 truncate">{sub.label}</div>
+                                                  </div>
+                                                </NavLink>
+                                              );
+                                            })}
+                                          </div>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                ) : (
+                                  <div className="flex flex-col gap-1.5">
+                                    {item.children &&
+                                      item.children.map((child) => {
+                                        const IconComponent = child.icon;
+                                        return (
+                                          <NavLink
+                                            key={child.label}
+                                            to={child.href}
+                                            onClick={closeAllMenus}
+                                            className={({ isActive }) =>
+                                              `flex items-center gap-3 p-2.5 rounded-xl transition ${
+                                                isActive
+                                                  ? "bg-blue-100/70 text-[#103F7C] font-semibold"
+                                                  : "bg-[#fff] hover:bg-blue-50/60 text-slate-700"
+                                              }`
+                                            }
+                                          >
+                                            <div
+                                              className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${child.iconBg}`}
+                                            >
+                                              <IconComponent size={17} />
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                              <div className="text-[13.5px] font-semibold text-slate-800 leading-snug">
+                                                {child.label}
+                                              </div>
+                                              {child.desc && (
+                                                <div className="text-[10.5px] text-slate-500 truncate">
+                                                  {child.desc}
+                                                </div>
+                                              )}
+                                            </div>
+                                          </NavLink>
+                                        );
+                                      })}
+                                  </div>
+                                )}
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+
+                  {/* Mobile CTA */}
+                  <div className="pt-3 pb-2">
+                    <a
+                      href="/appointment-request"
+                      onClick={handleBookAppointmentClick}
+                      className="w-full flex items-center justify-center gap-2 h-12 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold shadow-md shadow-orange-500/20 active:scale-98 transition-all cursor-pointer"
+                    >
+                      <Calendar size={18} />
+                      <span>Book Appointment</span>
+                    </a>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </header>
   );
 }
 
 export default React.memo(Navbar);
+                         

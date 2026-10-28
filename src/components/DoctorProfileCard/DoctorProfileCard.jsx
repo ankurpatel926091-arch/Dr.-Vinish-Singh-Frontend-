@@ -3,7 +3,7 @@ import React from "react";
 export default function DoctorProfileCard() {
   return (
     <div className="bg-gradient-to-br from-blue-50/60 via-sky-50/30 to-slate-50/80 p-5 sm:p-6 rounded-2xl border border-blue-100/80 shadow-2xs w-full h-full flex flex-col justify-center">
-      <div className="text-slate-700 text-xs sm:text-sm leading-relaxed space-y-2 sm:space-y-2.5 font-normal text-left">
+      <div className="text-slate-700 text-xs sm:text-sm leading-relaxed space-y-2 sm:space-y-2.5 font-normal text-justify">
         <p>
           <strong className="font-bold text-slate-900">Dr. Vinish Kumar Singh</strong> is a distinguished{" "}
           <span className="font-semibold text-[#103F7C]">

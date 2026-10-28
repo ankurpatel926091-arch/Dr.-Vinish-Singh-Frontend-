@@ -158,7 +158,7 @@ export default function AwardsRecognition() {
             <div className="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center mb-3">
               <BadgeCheck size={20} />
             </div>
-            <h4 className="font-extrabold text-xl text-[#103F7C]">5,000+</h4>
+            <h4 className="font-extrabold text-xl text-[#103F7C]">15,000+</h4>
             <p className="text-xs font-medium text-slate-500 mt-0.5">Laser Surgeries</p>
           </div>
 
@@ -282,7 +282,7 @@ export default function AwardsRecognition() {
           </div>
           
           <NavLink
-            to="/#book-appointment"
+            to="/appointment-request"
             className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-bold shadow-md transition-all hover:scale-105 active:scale-95 shrink-0"
           >
             <Calendar size={16} />

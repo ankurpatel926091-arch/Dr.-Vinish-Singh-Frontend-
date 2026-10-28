@@ -25,7 +25,7 @@ const quickLinks = [
   { name: "Blogs", path: "/blogs" },
   { name: "Gallery", path: "/gallery" },
   { name: "Contact Us", path: "/contact" },
-  { name: "Book Appointment", path: "/book-appointment" },
+  { name: "Book Appointment", path: "/appointment-request" },
 ];
 
 const conditions = [
@@ -208,7 +208,7 @@ function Footer() {
 
                 <div className="mt-3 flex items-center justify-between gap-2 border-t border-white/10 pt-2.5">
                   <a
-                    href="tel:8960068307"
+                    href="tel:7275981480"
                     className="font-bold text-orange-400 hover:underline flex items-center gap-1.5 text-xs sm:text-sm"
                   >
                     <FaPhoneAlt size={12} />
@@ -235,7 +235,7 @@ function Footer() {
                     <span>Evening OPD</span>
                   </span>
                   <span className="text-xs bg-blue-500/20 px-2.5 py-0.5 rounded-full border border-blue-400/30 text-blue-200 font-bold">
-                    03 PM - 06 PM
+                    05 PM - 07 PM
                   </span>
                 </div>
 
@@ -282,17 +282,17 @@ function Footer() {
       </div>
 
       {/* Bottom Copyright Bar */}
-      <div className="bg-[#03152d] py-3.5 sm:py-4 px-4 sm:px-6 lg:px-6 text-white text-xs sm:text-sm font-medium border-t border-white/10">
+      <div className="bg-[#03152d] py-2.5 sm:py-3 px-4 sm:px-6 lg:px-6 text-white text-xs sm:text-sm border-t border-white/10">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-blue-100/90">
           
           {/* Left: Copyright */}
-          <div className="text-center md:text-left text-xs sm:text-sm text-slate-200 font-medium">
+          <div className="text-center md:text-left text-xs sm:text-sm text-slate-200 font-normal">
             <span>© {year} Dr. Vinish Kumar Singh Clinic. All rights reserved.</span>
           </div>
 
           {/* Center: Design & Developed by CodeCrafter */}
           <div className="flex items-center justify-center gap-2.5">
-            <span className="text-slate-200 font-medium text-xs sm:text-sm">Design &amp; Developed by</span>
+            <span className="text-slate-200 font-normal text-xs sm:text-sm">Design &amp; Developed by</span>
             <a
               href="https://codecrafter.co.in"
               target="_blank"
@@ -302,13 +302,13 @@ function Footer() {
               <img
                 src={codeCrafterLogo}
                 alt="CodeCrafter Web Solutions"
-                className="h-9 sm:h-11 w-auto object-contain"
+                className="h-8 sm:h-9 w-auto object-contain"
               />
             </a>
           </div>
 
           {/* Right: Privacy Policy & Terms of Service */}
-          <div className="flex items-center justify-center md:justify-end gap-3 text-xs sm:text-sm font-semibold text-slate-200">
+          <div className="flex items-center justify-center md:justify-end gap-3 text-xs sm:text-sm font-medium text-slate-200">
             <Link to="/privacy-policy" className="hover:text-orange-400 transition-colors">
               Privacy Policy
             </Link>

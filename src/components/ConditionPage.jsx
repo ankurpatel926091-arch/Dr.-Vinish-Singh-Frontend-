@@ -77,7 +77,7 @@ export default function ConditionPage({
   const displayFaqs = faqs.length > 0 ? faqs : defaultFaqs;
 
   return (
-    <section className="bg-slate-50/80 min-h-screen font-sans selection:bg-[#103F7C] selection:text-white overflow-x-hidden w-full max-w-full">
+    <section className="bg-slate-50/80 min-h-screen font-sans selection:bg-[#103F7C] selection:text-white overflow-x-clip w-full max-w-full">
       {/* Page Hero */}
       <PageHero
         title={title}
@@ -102,7 +102,7 @@ export default function ConditionPage({
       </div>
 
       {/* Top Clinical Highlights Bar */}
-      <div className="bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#0c2e5a] text-white py-3.5 shadow-md border-b border-white/10 w-full max-w-full overflow-hidden">
+      {/* <div className="bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#0c2e5a] text-white py-3.5 shadow-md border-b border-white/10 w-full max-w-full overflow-hidden">
         <div className="max-w-7xl mx-auto px-3 sm:px-6">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 text-center">
             <div className="bg-white/10 sm:bg-transparent rounded-2xl p-2.5 sm:p-0 flex flex-col items-center justify-center border border-white/10 sm:border-0 sm:border-r border-white/15">
@@ -123,14 +123,14 @@ export default function ConditionPage({
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Main Content Grid: Left Sidebar + Right Detailed Content */}
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 py-6 sm:py-12 lg:py-16">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-stretch w-full">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-start w-full">
           
           {/* Left Column: Image, Category Switcher & Doctor OPD Card */}
-          <div className="lg:col-span-4 flex flex-col justify-between h-full space-y-5 sm:space-y-6 w-full min-w-0 max-w-full overflow-hidden">
+          <div className="lg:col-span-4 flex flex-col gap-4 sm:gap-5 w-full min-w-0 max-w-full lg:sticky lg:top-32 lg:self-start">
             {/* Condition Illustration / Photo Container */}
             <ScrollReveal variant="fade-up" className="shrink-0">
               <div className="relative rounded-3xl p-2 sm:p-2.5 bg-gradient-to-b from-[#103F7C]/15 via-blue-500/10 to-orange-500/15 shadow-xl w-full">
@@ -165,7 +165,7 @@ export default function ConditionPage({
             </ScrollReveal>
 
             {/* Category Selector Tabs */}
-            <div className="bg-white rounded-2xl p-2 border border-slate-200/80 shadow-2xs flex items-center gap-1.5 overflow-x-auto no-scrollbar touch-pan-x py-2.5 w-full min-w-0 max-w-full shrink-0">
+            <div className="bg-white rounded-2xl p-2 border border-slate-200/80 shadow-2xs flex flex-wrap items-center gap-1.5 py-2.5 w-full min-w-0 max-w-full shrink-0">
               {conditionsMenuCategories.map((cat) => {
                 const isSelected =
                   cat.title.toLowerCase().includes(selectedCategory.toLowerCase()) ||
@@ -175,13 +175,13 @@ export default function ConditionPage({
                     key={cat.id}
                     type="button"
                     onClick={() => setSelectedCategory(cat.title)}
-                    className={`px-3 py-1.5 rounded-xl text-[11px] sm:text-[11.5px] font-bold whitespace-nowrap transition-all cursor-pointer shrink-0 ${
+                    className={`px-3 py-1.5 rounded-xl text-[11px] sm:text-[11.5px] font-bold text-center transition-all cursor-pointer ${
                       isSelected
                         ? "bg-[#103F7C] text-white shadow-xs"
                         : "bg-slate-100/80 text-slate-700 hover:bg-slate-200/80"
                     }`}
                   >
-                    {cat.title.replace("Conditions", "").replace("Urological", "").trim()}
+                    {cat.title.replace(/ Conditions$/, "")}
                   </button>
                 );
               })}
@@ -200,7 +200,7 @@ export default function ConditionPage({
             )}
 
             {/* Quick Doctor Consultation & OPD Card */}
-            <ScrollReveal variant="scale-up" className="mt-auto pt-2 shrink-0">
+            <ScrollReveal variant="scale-up" className="pt-1 shrink-0">
               <div className="bg-gradient-to-br from-[#103F7C] via-blue-900 to-[#0a274c] text-white rounded-3xl p-4 sm:p-5 shadow-xl border border-blue-800/40 space-y-4 font-sans relative overflow-hidden w-full max-w-full">
                 <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-orange-500/10 rounded-full blur-2xl pointer-events-none" />
 
@@ -252,7 +252,7 @@ export default function ConditionPage({
 
                 <div className="pt-2 flex items-center gap-2.5 relative z-10">
                   <NavLink
-                    to="/#book-appointment"
+                    to="/appointment-request"
                     className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white text-xs font-black shadow-md transition-all hover:scale-[1.02] active:scale-[0.98]"
                   >
                     <Calendar size={14} />
@@ -406,8 +406,8 @@ export default function ConditionPage({
                   to="/contact"
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xs sm:text-sm shadow-md transition-all shrink-0 hover:scale-105 active:scale-95 relative z-10"
                 >
-                  <Calendar size={16} />
-                  <span>Book Consultation</span>
+                  <Phone size={16} />
+                  <span>Contact Us</span>
                   <ArrowRight size={16} />
                 </NavLink>
               </div>
@@ -439,7 +439,7 @@ export default function ConditionPage({
                 </p>
                 <div className="mt-5 sm:mt-8">
                   <NavLink
-                    to="/#book-appointment"
+                    to="/appointment-request"
                     className="inline-flex items-center gap-2.5 px-6 py-3.5 sm:px-8 sm:py-4 rounded-full bg-[#103F7C] hover:bg-blue-900 text-white font-extrabold text-xs sm:text-base shadow-lg transition-all hover:scale-102"
                   >
                     <Calendar size={16} className="sm:w-5 sm:h-5" />
@@ -552,7 +552,7 @@ export default function ConditionPage({
             <p className="text-xs sm:text-lg text-blue-100 mt-1.5 sm:mt-2 font-normal">Consult Senior Urologist &amp; Kidney Transplant Surgeon Dr. Vinish Kumar Singh in Lucknow.</p>
           </div>
           <NavLink
-            to="/#book-appointment"
+            to="/appointment-request"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 sm:px-8 sm:py-4 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-xs sm:text-base shadow-lg transition-all shrink-0 hover:scale-105 relative z-10"
           >
             <Calendar size={16} className="sm:w-5 sm:h-5" />

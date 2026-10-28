@@ -163,7 +163,7 @@ export default function UrologyService() {
                   </a>
                 </h4>
                 <p className="text-[11px] text-slate-500 font-normal mt-0.5">10:00 AM – 03:00 PM (Sharda Nagar)</p>
-                <a href="tel:8960068307" className="font-extrabold text-xs text-orange-600 hover:underline block mt-2">
+                <a href="tel:72759 81480" className="font-extrabold text-xs text-orange-600 hover:underline block mt-2">
                   Call: +91 72759 81480
                 </a>
               </div>
@@ -199,7 +199,7 @@ export default function UrologyService() {
                 Direct consultation for kidney stone, prostate, or urinary issues with Dr. Vinish Kumar Singh.
               </p>
               <NavLink
-                to="/#book-appointment"
+                to="/appointment-request"
                 className="w-full py-3 px-4 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all hover:scale-102"
               >
                 <span>Schedule Appointment</span>
@@ -214,4 +214,3 @@ export default function UrologyService() {
     </section>
   );
 }
-

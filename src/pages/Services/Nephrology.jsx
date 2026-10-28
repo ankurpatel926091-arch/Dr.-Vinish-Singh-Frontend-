@@ -54,7 +54,7 @@ export default function NephrologyService() {
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-16">
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-start">
           
           {/* Main Content (8 Cols) */}
           <div className="lg:col-span-8 space-y-8">
@@ -150,7 +150,7 @@ export default function NephrologyService() {
                   </a>
                 </h4>
                 <p className="text-[11px] text-slate-500 font-normal mt-0.5">10:00 AM – 03:00 PM (Sharda Nagar)</p>
-                <a href="tel:8960068307" className="font-extrabold text-xs text-orange-600 hover:underline block mt-2">
+                <a href="tel:72759 81480" className="font-extrabold text-xs text-orange-600 hover:underline block mt-2">
                   Call: +91 72759 81480
                 </a>
               </div>
@@ -186,7 +186,7 @@ export default function NephrologyService() {
                 Early kidney function screening, serum creatinine check, or CKD consultation with Dr. Vinish Kumar Singh.
               </p>
               <NavLink
-                to="/#book-appointment"
+                to="/appointment-request"
                 className="w-full py-3 px-4 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all hover:scale-102"
               >
                 <span>Schedule Appointment</span>

@@ -154,7 +154,7 @@ export default function FaqSection() {
                 <span>Call +91 &nbsp;72759 81480</span>
               </a>
               <a
-                href="#book-appointment"
+                href="/appointment-request"
                 className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-white/15 hover:bg-white/25 text-white font-semibold text-xs sm:text-sm border border-white/20 backdrop-blur-sm transition-all duration-300 w-full sm:w-auto"
               >
                 <Calendar size={16} />
@@ -168,4 +168,3 @@ export default function FaqSection() {
     </section>
   );
 }
-

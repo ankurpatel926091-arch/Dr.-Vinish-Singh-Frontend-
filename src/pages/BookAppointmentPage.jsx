@@ -110,6 +110,9 @@ const getTomorrowDateString = () => {
   return `${year}-${month}-${day}`;
 };
 
+const getPhoneNumbers = (phone = "") =>
+  phone.split(/[;,]/).map((number) => number.trim()).filter(Boolean);
+
 const getNextDayDateString = (dateStr) => {
   if (!dateStr) return getTomorrowDateString();
   try {
@@ -213,6 +216,7 @@ export default function BookAppointmentPage() {
 
   // Find current selected clinic object
   const activeClinic = clinicsList.find(c => String(c._id || c.id) === String(formData.clinic)) || clinicsList[0] || defaultHospitalDetails[0];
+  const activeClinicPhoneNumbers = getPhoneNumbers(activeClinic.phone);
 
   const isEveningSelected = (activeClinic.tag && activeClinic.tag.toLowerCase().includes("evening")) || (activeClinic.name && activeClinic.name.includes("Shilpi"));
   const activeServices = isEveningSelected ? hospitalServicesMap.evening : hospitalServicesMap.morning;
@@ -701,7 +705,7 @@ export default function BookAppointmentPage() {
           <div className="bg-white rounded-3xl border border-slate-200/80 shadow-xl max-w-full">
             
             {/* Card Content & Form */}
-            <div className="p-4 sm:p-8 lg:p-10">
+            <div className={`p-4 sm:p-8 lg:p-10 ${submitted ? "pb-2 sm:pb-3 lg:pb-3" : ""}`}>
 
               {/* Step Progress Bar */}
               {!submitted && (
@@ -805,7 +809,18 @@ export default function BookAppointmentPage() {
                       <div className="text-xs sm:text-sm text-slate-600 font-medium mt-1 flex flex-wrap items-center gap-x-4 gap-y-1">
                         <span>⏰ <strong>Hours:</strong> {activeClinic.timings || activeClinic.timing}</span>
                         {activeClinic.phone && (
-                          <span>📞 <strong>Helpline:</strong> <a href={`tel:${activeClinic.phone.replace(/\s+/g, '')}`} className="text-orange-600 font-extrabold hover:underline">{activeClinic.phone}</a></span>
+                          <span className="inline-flex flex-wrap items-center gap-x-1">
+                            📞 <strong>Helpline:</strong>
+                            {activeClinicPhoneNumbers.map((phone) => (
+                              <a
+                                key={phone}
+                                href={`tel:${phone.replace(/[^\d+]/g, "")}`}
+                                className="text-orange-600 font-extrabold hover:underline"
+                              >
+                                {phone}
+                              </a>
+                            ))}
+                          </span>
                         )}
                       </div>
                     </div>
@@ -823,7 +838,7 @@ export default function BookAppointmentPage() {
               
               {/* Success Notification Alert */}
               {submitted ? (
-                <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 sm:p-8 text-center my-4 animate-fadeIn">
+                <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-5 sm:p-8 text-center mt-4 mb-2 animate-fadeIn">
                   <div className="w-14 h-14 sm:w-16 sm:h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
                     <CheckCircle2 size={32} className="sm:w-9 sm:h-9" />
                   </div>
@@ -1253,9 +1268,13 @@ export default function BookAppointmentPage() {
             <div className="bg-slate-50/70 border-t border-slate-100 py-3.5 px-4 sm:px-6 text-center text-xs sm:text-sm font-semibold text-slate-600">
               Need help for {activeClinic.name}? Call us at{" "}
               {activeClinic.phone && (
-                <a href={`tel:${activeClinic.phone.replace(/\s+/g, '')}`} className="text-orange-600 font-bold hover:underline">
-                  {activeClinic.phone}
-                </a>
+                activeClinicPhoneNumbers.map((phone) => (
+                  <React.Fragment key={phone}>
+                    <a href={`tel:${phone.replace(/[^\d+]/g, "")}`} className="text-orange-600 font-bold hover:underline">
+                      {phone}
+                    </a>{" "}
+                  </React.Fragment>
+                ))
               )}
             </div>
 

@@ -69,6 +69,10 @@ export const conditionsMenuCategories = [
       { label: "Living Donor Kidney Transplant", href: "/conditions/living-donor-transplant", icon: HeartPulse, iconBg: "bg-rose-50 text-rose-600" },
       { label: "Deceased Donor Kidney Transplant", href: "/conditions/deceased-donor-transplant", icon: Building2, iconBg: "bg-indigo-50 text-indigo-600" },
       { label: "Post-Transplant Urological Complications", href: "/conditions/post-transplant-care", icon: Stethoscope, iconBg: "bg-amber-50 text-amber-600" },
+      { isHeader: true, heading: "Uro-Onco Surgery", icon: Target, iconBg: "bg-rose-50 text-rose-600 border border-rose-100" },
+      { label: "Prostate Cancer Surgery", href: "/cancers/prostate-cancer", icon: ShieldAlert, iconBg: "bg-rose-50 text-rose-600" },
+      { label: "Radical Cystectomy", href: "/cancers/bladder-cancer", icon: Activity, iconBg: "bg-pink-50 text-pink-600" },
+      { label: "Radical Nephrectomy", href: "/cancers/kidney-cancer", icon: Target, iconBg: "bg-red-50 text-red-600" },
     ],
   },
   {
@@ -87,6 +91,10 @@ export const conditionsMenuCategories = [
       { label: "Kidney Cancer", href: "/cancers/kidney-cancer", icon: Target, iconBg: "bg-red-50 text-red-600" },
       { label: "Bladder Cancer", href: "/cancers/bladder-cancer", icon: Activity, iconBg: "bg-pink-50 text-pink-600" },
       { label: "Testicular Cancer", href: "/cancers/testicular-cancer", icon: Stethoscope, iconBg: "bg-orange-50 text-orange-600" },
+      { isHeader: true, heading: "Laparoscopic", icon: Scissors, iconBg: "bg-blue-50 text-blue-600 border border-blue-100" },
+      { label: "Laparoscopic Radical Prostatectomy", href: "/cancers/prostate-cancer", icon: ShieldAlert, iconBg: "bg-rose-50 text-rose-600" },
+      { label: "Laparoscopic Partial Nephrectomy", href: "/cancers/kidney-cancer", icon: Target, iconBg: "bg-red-50 text-red-600" },
+      { label: "Laparoscopic Radical Cystectomy", href: "/cancers/bladder-cancer", icon: Activity, iconBg: "bg-pink-50 text-pink-600" },
     ],
   },
 ];

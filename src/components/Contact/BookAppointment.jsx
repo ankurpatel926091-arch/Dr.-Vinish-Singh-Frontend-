@@ -31,7 +31,7 @@ const defaultHospitalLocations = {
     badgeLabel: "MORNING CONSULTATION CENTRE",
     title: "Rudraksh IVF & Urology Centre",
     timing: "10:00 AM – 03:00 PM",
-    phone: "+91 72759 81480",
+    phone: "+91 89600 68307, +91 72759 81480",
     address: "1/795, Ratan Khand, Sharda Nagar, Lucknow",
     image: hospitalBuildingImg,
     mapUrl: "https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow",
@@ -44,7 +44,7 @@ const defaultHospitalLocations = {
     badgeLabel: "EVENING CONSULTATION CENTRE",
     title: "Dr. Shilpi Maternity & Urology Centre",
     timing: "03:00 PM – 07:00 PM",
-    phone: "+91 86048 91955",
+    phone: "+91 86048 91955, +91 72759 81480",
     address: "596Pb/1114/03, Ring Rd, Pakkabag, Lucknow",
     image: shilpiBuildingImg,
     mapUrl: "https://maps.app.goo.gl/w9mqio5fe4Hj8KLm9",
@@ -52,6 +52,11 @@ const defaultHospitalLocations = {
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.200!2d80.8609337!3d26.8566859!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bff2d7be105cf%3A0x87c6db827648df8!2sDr.%20Shilpi%20Maternity%20%26%20Urology%20Centre!5e0!3m2!1sen!2sin",
   },
 };
+
+const getPhoneNumbers = (phone = "") =>
+  phone.split(/[;,]/).map((number) => number.trim()).filter(Boolean);
+
+const getPhoneHref = (phone) => `tel:${phone.replace(/[^\d+]/g, "")}`;
 
 export default function BookAppointment({ isHomePage = false }) {
   const navigate = useNavigate();
@@ -105,6 +110,9 @@ export default function BookAppointment({ isHomePage = false }) {
     navigate(`/book-appointment?hospital=${hospitalKey}`);
   };
 
+  const morningPhoneNumbers = getPhoneNumbers(hospitals.morning.phone);
+  const eveningPhoneNumbers = getPhoneNumbers(hospitals.evening.phone);
+
   return (
     <section id="book-appointment" className="bg-slate-50 font-sans py-8 sm:py-14 scroll-mt-28 sm:scroll-mt-36">
       {/* Header Banner / Title */}
@@ -119,7 +127,7 @@ export default function BookAppointment({ isHomePage = false }) {
            Book Your <span className="bg-gradient-to-r from-[#103F7C] to-orange-500 bg-clip-text text-transparent">Consultation</span>
           </h2>
 
-          <p className="mt-2.5 text-sm sm:text-base text-slate-600 font-medium leading-relaxed max-w-xl mx-auto">
+          <p className="mt-2.5 text-sm sm:te xt-base text-slate-600 font-medium leading-relaxed max-w-xl mx-auto">
             Choose your preferred healthcare centre and submit your details. Our team will contact you shortly to confirm your OPD appointment with Dr. Vinish Kumar Singh.
           </p>
         </ScrollReveal>
@@ -206,17 +214,22 @@ export default function BookAppointment({ isHomePage = false }) {
                           <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
                             APPOINTMENTS &amp; HELPLINE
                           </p>
-                          <a
-                            href={`tel:${hospitals.morning.phone.replace(/\s+/g, '')}`}
-                            className="text-xs sm:text-sm font-extrabold text-[#0f2a4a] hover:text-orange-600 transition-colors"
-                          >
-                            {hospitals.morning.phone}
-                          </a>
+                          <div className="flex flex-wrap items-center gap-x-1">
+                            {morningPhoneNumbers.map((phone) => (
+                              <a
+                                key={phone}
+                                href={getPhoneHref(phone)}
+                                className="whitespace-nowrap text-xs sm:text-sm font-extrabold text-[#0f2a4a] hover:text-orange-600 transition-colors"
+                              >
+                                {phone}
+                              </a>
+                            ))}
+                          </div>
                         </div>
                       </div>
 
                       <a
-                        href={`tel:${hospitals.morning.phone.replace(/\s+/g, '')}`}
+                        href={getPhoneHref(morningPhoneNumbers[0] || hospitals.morning.phone)}
                         className="px-3.5 py-1.5 rounded-full bg-[#103F7C] hover:bg-blue-900 text-white font-extrabold text-xs flex items-center gap-1.5 shadow-xs transition-all shrink-0"
                       >
                         <Phone size={12} />
@@ -336,17 +349,22 @@ export default function BookAppointment({ isHomePage = false }) {
                           <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
                             APPOINTMENTS &amp; HELPLINE
                           </p>
-                          <a
-                            href={`tel:${hospitals.evening.phone.replace(/\s+/g, '')}`}
-                            className="text-xs sm:text-sm font-extrabold text-[#0f2a4a] hover:text-orange-600 transition-colors"
-                          >
-                            {hospitals.evening.phone}
-                          </a>
+                          <div className="flex flex-wrap items-center gap-x-1">
+                            {eveningPhoneNumbers.map((phone) => (
+                              <a
+                                key={phone}
+                                href={getPhoneHref(phone)}
+                                className="whitespace-nowrap text-xs sm:text-sm font-extrabold text-[#0f2a4a] hover:text-orange-600 transition-colors"
+                              >
+                                {phone}
+                              </a>
+                            ))}
+                          </div>
                         </div>
                       </div>
 
                       <a
-                        href={`tel:${hospitals.evening.phone.replace(/\s+/g, '')}`}
+                        href={getPhoneHref(eveningPhoneNumbers[0] || hospitals.evening.phone)}
                         className="px-3.5 py-1.5 rounded-full bg-[#103F7C] hover:bg-blue-900 text-white font-extrabold text-xs flex items-center gap-1.5 shadow-xs transition-all shrink-0"
                       >
                         <Phone size={12} />

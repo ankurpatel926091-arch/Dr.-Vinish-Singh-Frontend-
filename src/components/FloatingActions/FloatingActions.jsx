@@ -1,12 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FaPhoneAlt, FaWhatsapp, FaCalendarAlt, FaChevronUp } from "react-icons/fa";
-import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function FloatingActions() {
   const [showScrollTop, setShowScrollTop] = useState(false);
   const animFrameIdRef = useRef(null);
-  const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     let ticking = false;
@@ -99,7 +97,6 @@ function FloatingActions() {
         <a
           href="tel:+917275981480"
           aria-label="Call Doctor"
-          title="Call Doctor"
           className="w-10 h-10 sm:w-13 sm:h-13 rounded-full bg-[#FF2D75] hover:bg-[#e01b63] text-white flex items-center justify-center shadow-md shadow-pink-500/20 transition-all duration-300 hover:scale-110 active:scale-95"
         >
           <FaPhoneAlt className="text-base sm:text-2xl" />
@@ -116,7 +113,6 @@ function FloatingActions() {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Chat on WhatsApp"
-          title="Chat on WhatsApp"
           className="relative w-10 h-10 sm:w-13 sm:h-13 rounded-full bg-gradient-to-tr from-[#128C7E] via-[#25D366] to-[#20bd5a] text-white flex items-center justify-center shadow-lg shadow-emerald-500/30 transition-all duration-300 hover:scale-110 active:scale-95 border border-white/20"
         >
           <span className="absolute -inset-1 rounded-full bg-[#25D366]/35 animate-ping pointer-events-none" style={{ animationDuration: "2.5s" }} />
@@ -130,37 +126,8 @@ function FloatingActions() {
           Book Appointment
         </span>
         <NavLink
-          to="/#book-appointment"
-          onClick={(e) => {
-            e.preventDefault();
-            if (location.pathname === "/" && location.hash === "#book-appointment") {
-              const el = document.getElementById("book-appointment");
-              if (el) {
-                const getElementDocumentTop = (element) => {
-                  let top = 0;
-                  let curr = element;
-                  while (curr) {
-                    top += curr.offsetTop;
-                    curr = curr.offsetParent;
-                  }
-                  return top;
-                };
-                const header = document.querySelector("header");
-                const headerHeight = header ? header.offsetHeight : 95;
-                const offset = -(headerHeight - 25);
-                const targetScrollY = Math.max(0, getElementDocumentTop(el) + offset);
-                if (window.lenis) {
-                  window.lenis.scrollTo(targetScrollY, { duration: 0.6 });
-                } else {
-                  window.scrollTo({ top: targetScrollY, behavior: "smooth" });
-                }
-              }
-            } else {
-              navigate("/#book-appointment");
-            }
-          }}
+          to="/appointment-request"
           aria-label="Book Appointment"
-          title="Book Appointment"
           className="w-10 h-10 sm:w-13 sm:h-13 rounded-full bg-[#00A8E8] hover:bg-[#0092c9] text-white flex items-center justify-center shadow-md shadow-sky-500/20 transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer"
         >
           <FaCalendarAlt className="text-base sm:text-2xl" />
@@ -173,7 +140,6 @@ function FloatingActions() {
           type="button"
           onClick={scrollToTop}
           aria-label="Scroll to top"
-          title="Scroll to Top"
           className="relative w-10 h-10 sm:w-13 sm:h-13 rounded-full bg-white text-[#FF2D75] shadow-md flex items-center justify-center transition-transform duration-300 hover:scale-110 active:scale-95 group"
         >
           <span
@@ -189,4 +155,3 @@ function FloatingActions() {
 }
 
 export default React.memo(FloatingActions);
-

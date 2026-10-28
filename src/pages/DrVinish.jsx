@@ -91,7 +91,7 @@ const workExperienceData = [
   {
     institution: "Department of Urology, Institute of Nephro-Urology, Bangalore",
     designation: "Worked as Post Graduate Student (M.Ch Urology)",
-    duration: "3rd year / 3 Years Residency",
+    duration: "2014-2017",
     type: "Super Speciality Training",
   },
   {
@@ -298,7 +298,7 @@ export default function DrVinishKumarSingh() {
 
       {/* ================= 1. DOCTOR MAIN PROFILE SECTION ================= */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-16">
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-stretch">
           
           {/* Left Column - Doctor Image Frame & Action Bar */}
           <ScrollReveal variant="scale-up" duration={800} className="lg:col-span-5 relative flex flex-col items-center">
@@ -357,21 +357,21 @@ export default function DrVinishKumarSingh() {
               {/* Action Box Under Photo Card */}
               <div className="mt-5 w-full bg-white rounded-3xl p-5 border border-slate-200/90 shadow-sm flex flex-col gap-4">
                 {/* Action Buttons */}
-                <div className="flex flex-col gap-2.5">
+                <div className="flex flex-col lg:flex-row gap-2.5">
                   <NavLink
-                    to="/#book-appointment"
-                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-xs sm:text-sm shadow-md shadow-orange-500/20 transition-all duration-300 hover:scale-[1.02] active:scale-98"
+                    to="/appointment-request"
+                    className="w-full min-w-0 lg:flex-1 inline-flex items-center justify-center gap-1 px-2.5 py-3.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-[11px] sm:text-xs shadow-md shadow-orange-500/20 transition-all duration-300 hover:scale-[1.02] active:scale-98 whitespace-nowrap"
                   >
-                    <Calendar size={17} />
+                    <Calendar size={15} className="shrink-0" />
                     <span>Book a Consultation</span>
-                    <ArrowRight size={16} />
+                    <ArrowRight size={14} className="shrink-0" />
                   </NavLink>
 
                   <a
                     href="tel:+917275981480"
-                    className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full border border-slate-300 hover:border-[#103F7C] text-[#103F7C] hover:bg-[#103F7C] hover:text-white font-extrabold text-xs sm:text-sm bg-white shadow-2xs transition-all duration-300 hover:scale-[1.02] active:scale-98"
+                    className="w-full min-w-0 lg:flex-1 inline-flex items-center justify-center gap-1 px-2.5 py-3.5 rounded-full border border-slate-300 hover:border-[#103F7C] text-[#103F7C] hover:bg-[#103F7C] hover:text-white font-extrabold text-[11px] sm:text-xs bg-white shadow-2xs transition-all duration-300 hover:scale-[1.02] active:scale-98 whitespace-nowrap"
                   >
-                    <Phone size={16} />
+                    <Phone size={14} className="shrink-0" />
                     <span>Call +91 72759 81480</span>
                   </a>
                 </div>
@@ -436,7 +436,7 @@ export default function DrVinishKumarSingh() {
           </ScrollReveal>
 
           {/* Right Column - Doctor Biography, Credentials & Quote */}
-          <ScrollReveal variant="slide-left" delay={150} className="lg:col-span-7 flex flex-col items-start">
+          <ScrollReveal variant="slide-left" delay={150} className="lg:col-span-7 flex flex-col">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-100/70 text-[#103F7C] border border-blue-200/70 text-xs font-extrabold uppercase tracking-wider mb-3">
               <Sparkles size={13} className="text-orange-500" />
               <span>EXPERTISE • EXPERIENCE • EXCELLENCE</span>
@@ -474,7 +474,7 @@ export default function DrVinishKumarSingh() {
           
 
             {/* Key Clinical Appointments Summary */}
-            <div className="grid sm:grid-cols-2 gap-3.5 w-full mt-4 sm:mt-5">
+            <div className="grid sm:grid-cols-2 gap-3.5 w-full mt-auto pt-4 sm:pt-5">
               <div className="bg-white p-3.5 rounded-2xl border border-slate-200/90 shadow-2xs flex items-center gap-3.5 hover:border-blue-300 transition-colors">
                 <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#103F7C] flex items-center justify-center shrink-0 font-bold border border-blue-100">
                   <Building2 size={20} />
@@ -879,7 +879,7 @@ export default function DrVinishKumarSingh() {
           </div>
           
           <NavLink
-            to="/#book-appointment"
+            to="/appointment-request"
             className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-bold shadow-md transition-all hover:scale-105 active:scale-95 shrink-0"
           >
             <Calendar size={16} />

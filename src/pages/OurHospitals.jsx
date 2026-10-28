@@ -57,9 +57,8 @@ const defaultHospitalData = [
     headerGradient: "from-orange-500/10 via-amber-500/5 to-transparent",
     timing: "10:00 AM - 03:00 PM",
     phone: "+91 72759 81480",
-    phoneRaw: "tel:8960068307",
-    address:
-      "1/795, Ratan Khand, Ruchi Khand 1, Sharda Nagar, Lucknow, Uttar Pradesh 226002",
+    phoneRaw: "tel:+917275981480",
+    address: "1/795, Ratan Khand, Sharda Nagar, Lucknow, UP 226002",
     locality: "Sharda Nagar, Lucknow",
     mapUrl: "https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow",
     mapIframe:
@@ -83,8 +82,7 @@ const defaultHospitalData = [
     timing: "03:00 PM - 06:00 PM",
     phone: "+91 86048 91955",
     phoneRaw: "tel:8604891955",
-    address:
-      "596Pb/1114/03, Ring Rd, Pakkabag, Lalabagh, Kanpur, Lucknow, Uttar Pradesh 226017",
+    address: "596Pb/1114/03, Ring Rd, Pakkabag, Lucknow, UP 226017",
     locality: "Pakkabag, Ring Road, Lucknow",
     mapUrl: "https://maps.app.goo.gl/w9mqio5fe4Hj8KLm9",
     mapIframe:
@@ -203,7 +201,7 @@ export default function OurHospitals() {
             name: matched.name || def.name,
             timing: matched.timings || def.timing,
             phone: matched.phone || def.phone,
-            phoneRaw: `tel:${(matched.phone || def.phone).replace(/\D/g, '')}`,
+            phoneRaw: `tel:${(matched.phone || def.phone).split(/[;,]/)[0].replace(/[^\d+]/g, '')}`,
             address: matched.address || def.address,
             locality: matched.city || def.locality,
             image: matched.image || def.image,
@@ -334,6 +332,7 @@ export default function OurHospitals() {
         >
           {filteredHospitals.map((hosp, idx) => {
             const isSingle = filteredHospitals.length === 1;
+            const phoneNumbers = hosp.phone.split(/[;,]/).map((phone) => phone.trim()).filter(Boolean);
 
             return (
               <ScrollReveal
@@ -438,12 +437,17 @@ export default function OurHospitals() {
                               <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">
                                 Appointments &amp; Helpline
                               </span>
-                              <a
-                                href={hosp.phoneRaw}
-                                className="font-extrabold text-[#103F7C] hover:underline text-sm sm:text-base"
-                              >
-                                {hosp.phone}
-                              </a>
+                              <div className="flex flex-row flex-wrap items-center gap-x-2">
+                                {phoneNumbers.map((phone) => (
+                                  <a
+                                    key={phone}
+                                    href={`tel:${phone.replace(/[^\d+]/g, "")}`}
+                                    className="whitespace-nowrap font-extrabold text-[#103F7C] hover:underline text-sm sm:text-base"
+                                  >
+                                    {phone}
+                                  </a>
+                                ))}
+                              </div>
                             </div>
                             <a
                               href={hosp.phoneRaw}
@@ -483,9 +487,15 @@ export default function OurHospitals() {
                                 )}
                               </button>
                             </div>
-                            <p className="text-xs sm:text-sm text-slate-700 font-medium leading-relaxed mt-1">
+                            <a
+                              href={hosp.mapUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label={`View ${hosp.name} address on Google Maps`}
+                              className="mt-1 block text-xs sm:text-sm text-slate-700 font-medium leading-relaxed hover:text-[#103F7C] hover:underline"
+                            >
                               {hosp.address}
-                            </p>
+                            </a>
                           </div>
                         </div>
                       </div>
@@ -550,7 +560,7 @@ export default function OurHospitals() {
                       </a>
 
                       <NavLink
-                        to="/#book-appointment"
+                        to="/appointment-request"
                         className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-xs shadow-xs transition-all duration-300 hover:scale-102"
                       >
                         <Calendar size={14} />
@@ -664,7 +674,7 @@ export default function OurHospitals() {
             </div>
 
             <a
-              href="tel:8960068307"
+              href="tel:+917275981480"
               className="px-6 py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs sm:text-sm shadow-lg transition-transform hover:scale-105 shrink-0 flex items-center gap-2"
             >
               <Phone size={16} />

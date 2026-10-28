@@ -10,7 +10,7 @@ const DEFAULT_CLINICS_DATA = [
     locality: 'Sharda Nagar, Lucknow',
     timing: '10:00 AM – 03:00 PM',
     phone: '+91 72759 81480',
-    tel: '8960068307',
+    tel: '72759 81480',
     address: '1/795, Ratan Khand, Sharda Nagar, Lucknow',
     mapUrl: 'https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow',
     embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3561.428!2d80.9242723!3d26.7803631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bff149cec4b2d%3A0xe680ad74dd601b3b!2sDr.%20Vinish%20Singh%20%7C%20Rudraksh%20IVF%20%26%20Urology%20Centre!5e0!3m2!1sen!2sin',

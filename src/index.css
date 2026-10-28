@@ -77,6 +77,22 @@
   animation-play-state: paused;
 }
 
+.services-marquee-track {
+  animation: services-marquee 32s linear infinite;
+  will-change: transform;
+}
+
+.services-marquee-track:hover,
+.services-marquee-track:focus-within {
+  animation-play-state: paused;
+}
+
+@keyframes services-marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
 /* Accessibility: Respect user settings for reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
@@ -84,6 +100,11 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .services-marquee-track {
+    animation: none;
+    transform: none;
   }
 }
 

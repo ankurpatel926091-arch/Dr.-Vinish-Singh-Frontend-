@@ -7,9 +7,10 @@ import {
   RefreshCw,
   ArrowRight,
   Sparkles,
-  CheckCircle2,
   ShieldCheck,
   MapPin,
+  ShieldAlert,
+  Scissors,
 } from "lucide-react";
 import ScrollReveal from "../ScrollReveal/ScrollReveal";
 
@@ -82,6 +83,30 @@ export const servicesData = [
       "Post-Transplant Monitoring and Follow-Up",
     ],
   },
+  {
+    id: "uro-onco-surgery",
+    title: "Uro-Onco Surgery",
+    subtitle: "SPECIALISED UROLOGICAL CANCER SURGERY",
+    path: "/cancers/prostate-cancer",
+    icon: ShieldAlert,
+    badgeBg: "bg-rose-50 text-rose-600 border-rose-200",
+    accentColor: "from-rose-600 to-red-600",
+    description:
+      "Comprehensive surgical care for prostate, kidney, and bladder cancers, with treatment plans tailored to each patient's diagnosis.",
+    highlights: [],
+  },
+  {
+    id: "laparoscopic",
+    title: "Laparoscopic",
+    subtitle: "MINIMALLY INVASIVE UROLOGICAL SURGERY",
+    path: "/cancers/kidney-cancer",
+    icon: Scissors,
+    badgeBg: "bg-indigo-50 text-indigo-600 border-indigo-200",
+    accentColor: "from-indigo-600 to-blue-700",
+    description:
+      "Advanced laparoscopic procedures for urological conditions, designed to support precise surgery and faster recovery.",
+    highlights: [],
+  },
 ];
 
 export default function ServicesSection() {
@@ -111,81 +136,75 @@ export default function ServicesSection() {
 Delivering comprehensive urological care through advanced laser procedures, minimally invasive surgeries, and evidence-based treatments for kidney, prostate, and male reproductive health conditions.          </p>
         </ScrollReveal>
 
-        {/* ================= 4 SERVICES CARDS GRID ================= */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
-          {servicesData.map((service, index) => {
-            const IconComp = service.icon;
-            return (
-              <ScrollReveal
-                key={service.id}
-                variant="scale-up"
-                delay={index * 120}
-                className="h-full"
+        {/* ================= 6 SERVICES CAROUSEL ================= */}
+        <div className="overflow-hidden motion-reduce:overflow-x-auto">
+          <div className="services-marquee-track flex w-max" role="region" aria-label="Medical specialties carousel">
+            {[0, 1].map((copyIndex) => (
+              <div
+                key={copyIndex}
+                className="services-marquee-group flex shrink-0 gap-4 pr-4 lg:gap-5 lg:pr-5"
+                aria-hidden={copyIndex === 1}
               >
-                <NavLink
-                  to={service.path}
-                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                  className="block group h-full focus:outline-none"
-                >
-                  <div
-                    className="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/90 flex flex-col justify-between group relative overflow-hidden h-full cursor-pointer"
-                  >
-                    {/* Top Accent Line */}
-                    <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${service.accentColor}`} />
+                {servicesData.map((service, index) => {
+                  const IconComp = service.icon;
+                  return (
+                    <div
+                      key={service.id}
+                      className="w-[calc(100vw-2rem)] shrink-0 sm:w-[calc(100vw-3rem)] md:w-[calc((100vw-4rem)/2)] lg:w-[calc((min(100vw,80rem)-5.5rem)/3)]"
+                    >
+                      <ScrollReveal variant="scale-up" delay={index * 120} className="h-full">
+                        <NavLink
+                          to={service.path}
+                          tabIndex={copyIndex === 1 ? -1 : undefined}
+                          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                          className="block group h-full focus:outline-none"
+                        >
+                          <div className="bg-white rounded-3xl p-5 sm:p-6 border border-slate-200/90 flex flex-col justify-between group relative overflow-hidden h-full cursor-pointer">
+                            <div className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${service.accentColor}`} />
 
-                    <div>
-                      {/* Icon & Badge */}
-                      <div className="flex items-center justify-between mb-5">
-                        <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center justify-center text-[#103F7C]">
-                          <IconComp size={22} />
-                        </div>
+                            <div>
+                              <div className="flex items-center justify-between mb-5">
+                                <div className="w-12 h-12 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-center justify-center text-[#103F7C]">
+                                  <IconComp size={22} />
+                                </div>
 
-                        <span className={`text-[11px] font-extrabold px-3 py-1 rounded-full border ${service.badgeBg}`}>
-                          Specialty
-                        </span>
-                      </div>
+                                <span className={`text-[11px] font-extrabold px-3 py-1 rounded-full border ${service.badgeBg}`}>
+                                  Specialty
+                                </span>
+                              </div>
 
-                      {/* Title & Subtitle */}
-                      <h3 className="font-extrabold text-slate-900 text-xl sm:text-2xl leading-snug mb-1.5 min-h-[3.5rem]">
-                        {service.id === "renal-transplant" ? (
-                          <>
-                            Renal Transplant <br className="hidden sm:block" />Care
-                          </>
-                        ) : (
-                          service.title
-                        )}
-                      </h3>
+                              <h3 className="font-extrabold text-slate-900 text-xl sm:text-2xl leading-snug mb-1.5 min-h-[3.5rem]">
+                                {service.id === "renal-transplant" ? (
+                                  <>
+                                    Renal Transplant <br className="hidden sm:block" />Care
+                                  </>
+                                ) : (
+                                  service.title
+                                )}
+                              </h3>
 
-                      <p className="text-xs sm:text-[12.5px] font-extrabold text-orange-600 mb-3.5 uppercase tracking-wider min-h-[2.5rem] flex items-center">
-                        {service.subtitle}
-                      </p>
+                              <p className="text-xs sm:text-[12.5px] font-extrabold text-orange-600 mb-3.5 uppercase tracking-wider min-h-[2.5rem] flex items-center">
+                                {service.subtitle}
+                              </p>
 
-                      {/* Description */}
-                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal mb-5 min-h-[4.25rem]">
-                        {service.description}
-                      </p>
+                              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal mb-5 min-h-[4.25rem]">
+                                {service.description}
+                              </p>
+                            </div>
 
-                      {/* Key Highlights Checklist */}
-                      <div className="space-y-2.5 border-t border-slate-100 pt-4 mb-6">
-                        {service.highlights.map((highlight, idx) => (
-                          <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-[13px] font-medium text-slate-800">
-                            <CheckCircle2 size={15} className="text-emerald-600 shrink-0 mt-0.5" />
-                            <span className="leading-snug text-xs sm:text-[12.5px]">{highlight}</span>
+                            <div className="w-full py-3 px-4 rounded-xl bg-slate-50 text-[#103F7C] border border-slate-200/80 font-bold text-xs sm:text-sm flex items-center justify-between">
+                              <span>Explore Specialty</span>
+                              <ArrowRight size={15} />
+                            </div>
                           </div>
-                        ))}
-                      </div>
+                        </NavLink>
+                      </ScrollReveal>
                     </div>
-
-                    {/* Card Action Link */}
-                    <div className="w-full py-3 px-4 rounded-xl bg-slate-50 text-[#103F7C] border border-slate-200/80 font-bold text-xs sm:text-sm flex items-center justify-between">
-                      <span>Explore Specialty</span>
-                      <ArrowRight size={15} />
-                    </div>
-                  </div>
-                </NavLink>
-              </ScrollReveal>
-            );
-          })}
+                  );
+                })}
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* ================= BOTTOM QUALITY ASSURANCE BANNER ================= */}
@@ -224,7 +243,7 @@ Delivering comprehensive urological care through advanced laser procedures, mini
             </div>
 
             <NavLink
-              to="/#book-appointment"
+              to="/appointment-request"
               className="w-full sm:w-auto px-6 py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-extrabold shrink-0 transition-all hover:scale-105 shadow-md text-center"
             >
               Book Appointment
@@ -236,4 +255,3 @@ Delivering comprehensive urological care through advanced laser procedures, mini
     </section>
   );
 }
-

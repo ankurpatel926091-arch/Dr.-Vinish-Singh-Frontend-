@@ -78,6 +78,7 @@ const pageTitles = {
   "/about/awards-recognition": "Awards & Professional Recognition | Dr. Vinish Kumar Singh",
   "/about/experience": "15+ Years Clinical & Surgical Experience | Dr. Vinish Kumar Singh",
   "/contact": "Contact Us & Clinic Locations | Dr. Vinish Kumar Singh",
+  "/appointment-request": "Appointment Request | Dr. Vinish Kumar Singh",
   "/book-appointment": "Book Appointment | Dr. Vinish Kumar Singh",
   "/gallery": "Photo & Video Gallery | Dr. Vinish Kumar Singh Clinic",
   "/privacy-policy": "Privacy Policy | Dr. Vinish Kumar Singh Urology Clinic Lucknow",
@@ -131,6 +132,7 @@ export default function AppRoutes() {
         <Route path="/Blogs" element={<Blogs />} />
         <Route path="/BookAppointment" element={<BookAppointmentPage />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/appointment-request" element={<BookAppointment isHomePage={true} />} />
         <Route path="/select-hospital" element={<BookAppointment />} />
         <Route path="/book-appointment" element={<BookAppointmentPage />} />
         <Route path="/gallery" element={<Gallery />} />

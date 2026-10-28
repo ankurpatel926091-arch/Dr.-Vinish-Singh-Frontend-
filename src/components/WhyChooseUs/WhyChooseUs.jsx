@@ -211,7 +211,7 @@ export default function WhyChooseUs() {
                     </div>
 
                     <NavLink
-                      to={item.linkUrl || "/#book-appointment"}
+                      to={item.linkUrl || "/appointment-request"}
                       className="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between text-xs sm:text-sm font-extrabold text-[#103F7C] group-hover:text-orange-600 transition-colors"
                     >
                       <span>{item.linkText || "Evidence-Based Treatment"}</span>
@@ -316,7 +316,7 @@ export default function WhyChooseUs() {
 
               <div className="flex items-center gap-3 shrink-0">
                 <NavLink
-                  to="/#book-appointment"
+                  to="/appointment-request"
                   className="px-6 py-2.5 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs sm:text-sm shadow-md transition-all hover:scale-105 flex items-center gap-1.5"
                 >
                   <Calendar size={15} />
@@ -331,4 +331,3 @@ export default function WhyChooseUs() {
     </section>
   );
 }
-

@@ -8,7 +8,6 @@ import Testimonials from "../components/Testimonials/Testimonials";
 import HomeGallery from "../components/HomeGallery/HomeGallery";
 import InstagramFeed from "../components/Instagram/InstagramFeed";
 import FaqSection from "../components/Faq/FaqSection";
-import BookAppointment from "../components/Contact/BookAppointment";
 import BlogSection from "../components/BlogSection/BlogSection";
 
 export default function Home() {
@@ -23,7 +22,6 @@ export default function Home() {
       <HomeGallery />
       <InstagramFeed />
       <FaqSection />
-      <BookAppointment isHomePage={true} />
       <BlogSection />
     </>
   );

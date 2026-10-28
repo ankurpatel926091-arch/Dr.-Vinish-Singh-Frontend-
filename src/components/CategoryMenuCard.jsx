@@ -20,17 +20,23 @@ function CategoryMenuCard({
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
-      className={`bg-slate-50/80 rounded-3xl p-3.5 sm:p-4 border border-slate-200/80 shadow-2xs flex flex-col font-sans transition-all duration-300 ${className}`}
+      className={`bg-slate-50/80 rounded-3xl ${
+        compact ? "p-2" : "p-3 sm:p-3.5"
+      } border border-slate-200/80 shadow-2xs flex flex-col font-sans transition-all duration-300 ${className}`}
     >
       {/* Card Header */}
       {title && (
-        <div className="flex items-center justify-between pb-2.5 mb-2.5 border-b border-slate-200/70 min-h-[40px]">
-          <h4 className="font-extrabold text-[#103F7C] text-[13.5px] sm:text-[14.5px] xl:text-[15px] tracking-tight leading-snug">
+        <div className={`flex items-center justify-between border-b border-slate-200/70 ${
+          compact ? "pb-1.5 mb-1.5 min-h-[30px]" : "pb-2 mb-2 min-h-[36px]"
+        }`}>
+          <h4 className={`font-extrabold text-[#103F7C] tracking-tight leading-snug ${
+            compact ? "text-[12px] xl:text-[13px]" : "text-[13.5px] sm:text-[14.5px] xl:text-[15px]"
+          }`}>
             {title}
           </h4>
           {Icon && (
             <div
-              className={`w-7 h-7 sm:w-7.5 sm:h-7.5 rounded-xl flex items-center justify-center shrink-0 ${iconBg}`}
+              className={`${compact ? "w-5 h-5" : "w-7 h-7 sm:w-7.5 sm:h-7.5"} rounded-xl flex items-center justify-center shrink-0 ${iconBg}`}
             >
               <Icon size={compact ? 13 : 15} />
             </div>
@@ -39,19 +45,23 @@ function CategoryMenuCard({
       )}
 
       {/* Menu Items List */}
-      <div className="space-y-1 flex-1">
+      <div className={`${compact ? "space-y-0" : "space-y-0.5"} flex-1`}>
         {items.map((sub, sIdx) => {
           if (sub.isHeader || sub.heading || (sub.isDivider && sub.heading)) {
             const headingText = sub.heading || sub.label || sub.title;
             const HeaderIcon = sub.icon;
             return (
-              <div key={`head-${sIdx}`} className="pt-2.5 pb-1.5 border-t border-slate-200/80 mt-3 mb-1 flex items-center justify-between min-h-[36px]">
-                <h4 className="font-extrabold text-[#103F7C] text-[13.5px] sm:text-[14.5px] xl:text-[15px] tracking-tight leading-snug">
+              <div key={`head-${sIdx}`} className={`border-t border-slate-200/80 flex items-center justify-between ${
+                compact ? "pt-1 pb-0.5 mt-1.5 mb-0 min-h-[27px]" : "pt-1.5 pb-1 mt-2 mb-0.5 min-h-[32px]"
+              }`}>
+                <h4 className={`font-extrabold text-[#103F7C] tracking-tight leading-snug ${
+                  compact ? "text-[12px] xl:text-[13px]" : "text-[13.5px] sm:text-[14.5px] xl:text-[15px]"
+                }`}>
                   {headingText}
                 </h4>
                 {HeaderIcon && (
                   <div
-                    className={`w-6.5 h-6.5 sm:w-7 sm:h-7 rounded-xl flex items-center justify-center shrink-0 ${
+                    className={`${compact ? "w-5 h-5" : "w-6.5 h-6.5 sm:w-7 sm:h-7"} rounded-xl flex items-center justify-center shrink-0 ${
                       sub.iconBg || "bg-rose-50 text-rose-600 border border-rose-100"
                     }`}
                   >
@@ -87,7 +97,7 @@ function CategoryMenuCard({
                 className={({ isActive }) => {
                   const active = isActive || isExplicitActive || location.pathname === sub.href;
                   return `group/item flex items-center justify-between gap-2.5 ${
-                    compact ? "p-1.5" : "p-2 sm:p-2.5"
+                    compact ? "p-1" : "p-1.5 sm:p-2"
                   } rounded-xl sm:rounded-2xl transition-all duration-200 border ${
                     active
                       ? "bg-white text-[#103F7C] font-black shadow-xs border-blue-300/90 ring-1 ring-blue-500/10 scale-[1.01]"
@@ -95,17 +105,19 @@ function CategoryMenuCard({
                   }`;
                 }}
               >
-                <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                <div className={`flex min-w-0 flex-1 ${compact ? "items-start gap-1.5" : "items-center gap-2.5"}`}>
                   {SubIcon && (
                     <div
-                      className={`w-6.5 h-6.5 sm:w-7.5 sm:h-7.5 rounded-lg sm:rounded-xl flex items-center justify-center shrink-0 transition-transform duration-200 group-hover/item:scale-110 ${
+                      className={`${compact ? "w-5 h-5 mt-0.5" : "w-6.5 h-6.5 sm:w-7.5 sm:h-7.5"} rounded-lg sm:rounded-xl flex items-center justify-center shrink-0 transition-transform duration-200 group-hover/item:scale-110 ${
                         sub.iconBg || "bg-blue-50 text-[#103F7C]"
                       }`}
                     >
                       <SubIcon size={compact ? 12 : 14} />
                     </div>
                   )}
-                  <span className="text-[12px] sm:text-[12.5px] xl:text-[13px] font-bold leading-snug break-words flex-1 min-w-0 pr-1">
+                  <span className={`font-bold leading-tight break-words flex-1 min-w-0 pr-1 ${
+                    compact ? "text-[11px] xl:text-[11.5px]" : "text-[12px] sm:text-[12.5px] xl:text-[13px]"
+                  }`}>
                     {sub.label}
                   </span>
                 </div>
@@ -124,4 +136,3 @@ function CategoryMenuCard({
 }
 
 export default React.memo(CategoryMenuCard);
-

@@ -49,10 +49,6 @@ export default function Gallery() {
   const [zoomLevel, setZoomLevel] = useState(1);
   const [rotation, setRotation] = useState(0);
 
-  // Pagination State
-  const [currentPage, setCurrentPage] = useState(1);
-  const ITEMS_PER_PAGE = 8;
-
   // Fetch active gallery items from backend API
   const fetchPublicGallery = useCallback(async () => {
     try {
@@ -159,27 +155,6 @@ export default function Gallery() {
       return item.category === activeCategory;
     });
   }, [galleryList, activeCategory]);
-
-  // Pagination Logic
-  const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE) || 1;
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const paginatedItems = useMemo(() => {
-    return filteredItems.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-  }, [filteredItems, startIndex]);
-
-  useEffect(() => {
-    if (currentPage > totalPages && totalPages > 0) {
-      setCurrentPage(totalPages);
-    }
-  }, [totalPages, currentPage]);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    const galleryElem = document.getElementById("gallery-grid-section");
-    if (galleryElem) {
-      galleryElem.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   const getCategoryCount = useCallback(
     (catName) => {
@@ -327,7 +302,6 @@ export default function Gallery() {
                 type="button"
                 onClick={() => {
                   setActiveCategory(cat);
-                  setCurrentPage(1);
                   setSelectedIndex(null);
                 }}
                 className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center gap-1.5 cursor-pointer ${
@@ -394,8 +368,8 @@ export default function Gallery() {
         {!loading && !error && filteredItems.length > 0 && (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
-              {paginatedItems.map((item, idx) => {
-                const globalIdx = startIndex + idx;
+              {filteredItems.map((item, idx) => {
+                const globalIdx = idx;
                 return (
                   <ScrollReveal key={item.id} variant="scale-up" delay={idx * 60} className="h-full">
                     <div
@@ -472,60 +446,6 @@ export default function Gallery() {
               })}
             </div>
 
-            {/* Pagination Controls */}
-            {filteredItems.length > ITEMS_PER_PAGE && (
-              <ScrollReveal variant="fade-up" delay={100} className="mt-10 sm:mt-12">
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-white px-5 sm:px-7 py-4 rounded-3xl border border-slate-200/90 shadow-xs">
-                  <div className="text-xs text-slate-500 font-semibold tracking-wide">
-                    Showing <span className="font-extrabold text-[#103F7C]">{startIndex + 1}</span> to{" "}
-                    <span className="font-extrabold text-[#103F7C]">
-                      {Math.min(startIndex + ITEMS_PER_PAGE, filteredItems.length)}
-                    </span>{" "}
-                    of <span className="font-extrabold text-slate-800">{filteredItems.length}</span> gallery items
-                  </div>
-
-                  <div className="flex items-center gap-1.5 sm:gap-2">
-                    {/* Previous Button */}
-                    <button
-                      type="button"
-                      disabled={currentPage === 1}
-                      onClick={() => handlePageChange(currentPage - 1)}
-                      className="px-3.5 py-2 rounded-2xl bg-slate-100 text-slate-700 hover:bg-[#103F7C] hover:text-white disabled:opacity-40 disabled:hover:bg-slate-100 disabled:hover:text-slate-700 disabled:cursor-not-allowed text-xs font-bold transition-all flex items-center gap-1 cursor-pointer shadow-2xs"
-                    >
-                      <ChevronLeft size={16} />
-                      <span className="hidden sm:inline">Previous</span>
-                    </button>
-
-                    {/* Page Number Buttons */}
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                      <button
-                        key={page}
-                        type="button"
-                        onClick={() => handlePageChange(page)}
-                        className={`w-9 h-9 rounded-2xl text-xs font-extrabold transition-all cursor-pointer flex items-center justify-center ${
-                          currentPage === page
-                            ? "bg-[#103F7C] text-white shadow-md shadow-blue-900/20 scale-105"
-                            : "bg-white text-slate-700 hover:bg-slate-100 border border-slate-200/80"
-                        }`}
-                      >
-                        {page}
-                      </button>
-                    ))}
-
-                    {/* Next Button */}
-                    <button
-                      type="button"
-                      disabled={currentPage === totalPages}
-                      onClick={() => handlePageChange(currentPage + 1)}
-                      className="px-3.5 py-2 rounded-2xl bg-slate-100 text-slate-700 hover:bg-[#103F7C] hover:text-white disabled:opacity-40 disabled:hover:bg-slate-100 disabled:hover:text-slate-700 disabled:cursor-not-allowed text-xs font-bold transition-all flex items-center gap-1 cursor-pointer shadow-2xs"
-                    >
-                      <span className="hidden sm:inline">Next</span>
-                      <ChevronRight size={16} />
-                    </button>
-                  </div>
-                </div>
-              </ScrollReveal>
-            )}
           </>
         )}
       </div>
@@ -638,7 +558,7 @@ export default function Gallery() {
             </p>
           </div>
           <NavLink
-            to="/#book-appointment"
+            to="/appointment-request"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-semibold shadow-md transition-transform hover:scale-105 active:scale-95 shrink-0"
           >
             <Calendar size={16} />

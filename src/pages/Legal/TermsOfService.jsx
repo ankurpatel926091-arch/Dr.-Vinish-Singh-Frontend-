@@ -48,7 +48,7 @@ export default function TermsOfService() {
         bgImage={bannerImg}
       />
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-10 sm:pt-14">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-6 sm:pt-10">
         
         {/* ================= BREADCRUMBS & BACK LINK ================= */}
         <div className="flex flex-wrap items-center justify-between gap-3 mb-8">
@@ -617,7 +617,7 @@ export default function TermsOfService() {
                   <div className="flex items-center gap-2.5">
                     <Phone size={15} className="text-orange-500 shrink-0" />
                     <span className="text-slate-500 font-medium">Rudraksh Centre:</span>
-                    <a href="tel:8960068307" className="font-bold text-[#103F7C] hover:underline">
+                    <a href="tel:72759 81480" className="font-bold text-[#103F7C] hover:underline">
                       +91 72759 81480
                     </a>
                   </div>
@@ -636,10 +636,10 @@ export default function TermsOfService() {
           </div>
 
           {/* Sidebar Column (1 Col) */}
-          <div className="space-y-6">
+          <div className="space-y-6 lg:sticky lg:top-36 lg:self-start">
             
             {/* Direct Helpline Widget */}
-            <div className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-2xs space-y-5 sticky top-24">
+            <div className="bg-white rounded-3xl p-6 border border-slate-200/90 shadow-2xs space-y-5">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center shrink-0 font-bold">
                   <Phone size={18} />
@@ -659,7 +659,7 @@ export default function TermsOfService() {
                   <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 block">
                     Rudraksh Centre Helpline
                   </span>
-                  <a href="tel:8960068307" className="font-extrabold text-[#103F7C] hover:underline text-sm block">
+                  <a href="tel:72759 81480" className="font-extrabold text-[#103F7C] hover:underline text-sm block">
                     +91 72759 81480
                   </a>
                 </div>
@@ -685,7 +685,7 @@ export default function TermsOfService() {
 
               <div className="pt-2 border-t border-slate-100">
                 <Link
-                  to="/#book-appointment"
+                  to="/appointment-request"
                   className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-xs shadow-md transition-all cursor-pointer"
                 >
                   <Hospital size={15} />
