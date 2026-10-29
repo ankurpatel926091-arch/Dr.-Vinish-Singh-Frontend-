@@ -110,7 +110,7 @@ export default function Qualifications() {
           </ScrollReveal>
 
           {/* Right Qualifications Grid */}
-          <div className="lg:col-span-7 grid sm:grid-cols-2 gap-5">
+          <div className="lg:col-span-7 grid card-grid sm:grid-cols-2 gap-5">
             {qualifications.map((item, index) => {
               const IconComponent = item.icon;
               return (

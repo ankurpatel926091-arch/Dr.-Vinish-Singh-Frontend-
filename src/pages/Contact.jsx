@@ -306,7 +306,7 @@ export default function Contact() {
         </ScrollReveal>
 
         {/* ================= 3 Quick Contact Info Cards ================= */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+        <div className="grid card-grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
           {/* Card 1: Morning OPD Helpline */}
           <ScrollReveal variant="scale-up" delay={100}>
             <div className="bg-white rounded-2xl p-5 shadow-2xs border border-slate-200/80 flex items-center gap-3.5 hover:shadow-md transition-all h-full">
@@ -365,8 +365,8 @@ export default function Contact() {
         {/* ================= Main 2-Column Grid (100% Equal Baseline Alignment) ================= */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
-          {/* ================= LEFT COLUMN: Hospital Maps Cards (6 Cols) ================= */}
-          <div className="lg:col-span-6 flex flex-col justify-between space-y-6">
+          {/* ================= Hospital Maps Cards (6 Cols) ================= */}
+          <div className="lg:col-span-6 lg:col-start-1 lg:row-start-1 flex flex-col justify-between space-y-6">
             {hospitalLocations.map((hospital, index) => (
               <ScrollReveal key={hospital.id} variant="fade-up" delay={index * 150} className="flex-1 flex flex-col">
                 <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-all duration-300 border border-slate-200/90 flex-1 flex flex-col justify-between space-y-3">
@@ -457,8 +457,8 @@ export default function Contact() {
             ))}
           </div>
 
-          {/* ================= RIGHT COLUMN: Form Card & Social Media Card (6 Cols) ================= */}
-          <div className="lg:col-span-6 flex flex-col justify-between space-y-6">
+          {/* ================= Form Card & Social Media Card (6 Cols) ================= */}
+          <div className="lg:col-span-6 lg:col-start-7 lg:row-start-1 flex flex-col justify-between space-y-6 order-first lg:order-none">
             
             {/* Form Card */}
             <ScrollReveal variant="fade-up" delay={200}>

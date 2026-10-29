@@ -313,7 +313,7 @@ export default function ConditionPage({
                   <span>Core Treatment Approaches</span>
                 </h3>
 
-                <div className="grid sm:grid-cols-2 gap-5 sm:gap-6 w-full">
+                <div className="grid card-grid sm:grid-cols-2 gap-5 sm:gap-6 w-full">
                   {treatmentCards.map((card, idx) => (
                     <ScrollReveal key={idx} variant="scale-up" delay={idx * 70} className="h-full">
                       <div className="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/90 shadow-xs hover:border-[#103F7C] transition-all hover:shadow-md h-full group">
@@ -337,7 +337,7 @@ export default function ConditionPage({
                   <span>Advanced Treatment Protocols</span>
                 </h3>
 
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 w-full">
+                <div className="grid card-grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 w-full">
                   {detailedTreatments.map((item, idx) => (
                     <ScrollReveal key={idx} variant="fade-up" delay={idx * 60} className="h-full">
                       <div className="relative bg-gradient-to-b from-white to-slate-50/70 p-6 sm:p-7 rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-lg hover:border-blue-300 transition-all duration-300 h-full flex flex-col justify-between group overflow-hidden">
@@ -449,7 +449,7 @@ export default function ConditionPage({
                 </div>
               </div>
 
-              <div className="lg:col-span-7 grid sm:grid-cols-2 gap-4 sm:gap-5">
+              <div className="lg:col-span-7 grid card-grid sm:grid-cols-2 gap-4 sm:gap-5">
                 {symptoms.map((sym, idx) => (
                   <ScrollReveal key={idx} variant="scale-up" delay={idx * 60}>
                     <div className="bg-slate-50 p-6 sm:p-7 rounded-2xl border border-slate-200/90 shadow-2xs hover:border-orange-300 hover:bg-orange-50/40 transition-all duration-300 group h-full">

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import banner1 from "../../assets/banner-1.jpg";
-import banner2 from "../../assets/banner-2.jpg";
-import banner3 from "../../assets/banner-3.jpeg";
-import banner4 from "../../assets/banner-4.jpg"; // Assuming you have a fourth banner image
+import banner1 from "../../assets/banner-1-650.jpg";
+import banner2 from "../../assets/banner-2-650.jpg";
+import banner3 from "../../assets/banner-3-650.jpg";
+import banner4 from "../../assets/banner-4-650.jpg";
 
 import Marquee from "./Marquee";
 
@@ -40,11 +40,11 @@ function HeroSlider() {
 
   return (
     <section
-      className="relative w-full overflow-hidden"
+      className="relative w-full overflow-hidden flex flex-col lg:h-[calc(100vh-118px)]"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="relative w-full aspect-[1920/800] sm:aspect-[1920/800] lg:aspect-[1920/740] xl:aspect-[1920/710] bg-[#0b3367] overflow-hidden">
+      <div className="relative w-full flex-1 min-h-0 aspect-[1920/650] lg:aspect-auto bg-[#0b3367] overflow-hidden">
         {slides.map((slide, i) => (
           <div
             key={i}
@@ -59,7 +59,7 @@ function HeroSlider() {
               loading={i === 0 ? "eager" : "lazy"}
               fetchpriority={i === 0 ? "high" : "low"}
               decoding="async"
-              className="w-full h-full object-contain sm:object-cover object-center"
+              className="w-full h-full object-cover object-center"
             />
 
             {/* Optional caption — only renders if you set title/subtitle */}
@@ -98,7 +98,7 @@ function HeroSlider() {
         </button>
 
         {/* Dot pagination */}
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2.5 z-10">
+        <div className="absolute bottom-2.5 sm:bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 px-3 py-1 rounded-full bg-black/20 backdrop-blur-sm z-10">
           {slides.map((_, i) => (
             <button
               key={i}
@@ -116,7 +116,9 @@ function HeroSlider() {
       </div>
 
       {/* Marquee ticker right below the slider */}
-      <Marquee />
+      <div className="shrink-0">
+        <Marquee />
+      </div>
     </section>
   );
 }

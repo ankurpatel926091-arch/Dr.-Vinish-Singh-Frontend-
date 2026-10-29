@@ -88,7 +88,7 @@ export default function UrologyService() {
                 <span>Specialized Surgical Procedures</span>
               </h3>
 
-              <div className="grid sm:grid-cols-2 gap-4">
+              <div className="grid card-grid sm:grid-cols-2 gap-4">
                 {urologyProcedures.map((proc, idx) => (
                   <ScrollReveal key={idx} variant="scale-up" delay={idx * 60}>
                     <div
@@ -112,7 +112,7 @@ export default function UrologyService() {
             {/* Patient Benefits Grid */}
             <ScrollReveal variant="fade-up" delay={200} className="bg-gradient-to-r from-[#103F7C] to-blue-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl">
               <h3 className="text-xl font-extrabold mb-4">Why Choose Laser Urology Care?</h3>
-              <div className="grid sm:grid-cols-3 gap-4 text-xs">
+              <div className="grid card-grid sm:grid-cols-3 gap-4 text-xs">
                 <div className="bg-white/10 p-4 rounded-2xl border border-white/10">
                   <h4 className="font-bold text-orange-300 mb-1">Stitchless &amp; Painless</h4>
                   <p className="text-blue-100 font-normal">Endoscopic laser fibers enter via natural passages with zero cuts.</p>

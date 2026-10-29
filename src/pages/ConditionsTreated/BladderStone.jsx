@@ -119,7 +119,7 @@ export default function BladderStone() {
         </div>
 
         {/* 3-Column Treatment Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid card-grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {bladderTreatments.map((item, idx) => (
             <div
               key={idx}
@@ -188,7 +188,7 @@ export default function BladderStone() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid card-grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {bladderBenefits.map((b, i) => {
               const IconComp = b.icon;
               return (
@@ -229,7 +229,7 @@ export default function BladderStone() {
               If you experience sudden interruption in urine flow or pelvic discomfort, early evaluation prevents severe bladder wall infection:
             </p>
 
-            <div className="grid sm:grid-cols-2 gap-3.5">
+            <div className="grid card-grid sm:grid-cols-2 gap-3.5">
               {symptoms.map((item, i) => (
                 <div key={i} className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-2xs">
                   <div className="flex items-center gap-2 mb-1">

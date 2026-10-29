@@ -1,15 +1,40 @@
 import { Sparkles } from 'lucide-react'
 import React from 'react'
 import ScrollReveal from './ScrollReveal/ScrollReveal'
-import defaultBanner from '../assets/dr_vinish_banner.png'
+import urologyBanner from '../assets/page-hero-urology.svg'
+import kidneyBanner from '../assets/page-hero-kidney.svg'
+import prostateBanner from '../assets/page-hero-prostate.svg'
+import bladderBanner from '../assets/page-hero-bladder.svg'
+import andrologyBanner from '../assets/page-hero-andrology.svg'
+import clinicBanner from '../assets/page-hero-clinic.svg'
+import academicBanner from '../assets/page-hero-academic.svg'
+import legalBanner from '../assets/page-hero-legal.svg'
 
-const PageHero = ({ title, subTitle, description, bgImage = defaultBanner }) => {
+const PageHero = ({ title, subTitle, description }) => {
+  const pageContext = `${title} ${subTitle}`.toLowerCase()
+  const bgImage =
+    /privacy|terms|legal|policy|service agreement/.test(pageContext)
+      ? legalBanner
+      : /award|qualification|credential|about dr|dr\. vinish|academic/.test(pageContext)
+      ? academicBanner
+      : /hospital|contact|appointment|clinic|location/.test(pageContext)
+      ? clinicBanner
+      : /prostate|bph|holep/.test(pageContext)
+      ? prostateBanner
+      : /bladder|uti|urinary tract infection|urinary infection/.test(pageContext)
+      ? bladderBanner
+      : /andrology|infertility|erectile|male health|premature ejaculation|sexual health|varicocele/.test(pageContext)
+      ? andrologyBanner
+      : /kidney|stone|renal|nephrology|transplant/.test(pageContext)
+      ? kidneyBanner
+      : urologyBanner
+
   return (
     <div>
       <div className="relative text-white py-7 lg:py-9 overflow-hidden bg-[#103F7C]">
         {bgImage && (
           <div
-            className="absolute inset-0 bg-[size:100%_100%] bg-center bg-no-repeat transition-all duration-700 opacity-45"
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700 opacity-45"
             style={{ backgroundImage: `url("${bgImage}")` }}
           />
         )}

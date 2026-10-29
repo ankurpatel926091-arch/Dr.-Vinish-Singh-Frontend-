@@ -82,23 +82,23 @@ export default function Hero() {
                   </div>
                 </ScrollReveal>
 
-                {/* Action Buttons Under Doctor Photo */}
-                <div className="mt-4 flex flex-col sm:flex-row items-center gap-3 w-full shrink-0">
+                {/* Action Buttons Under Doctor Photo: 1 line side-by-side on mobile */}
+                <div className="mt-3 sm:mt-4 grid grid-cols-2 gap-2 w-full shrink-0">
                   <NavLink
                     to="/appointment-request"
-                    className="flex-1 w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-xs sm:text-sm shadow-md shadow-orange-500/20 transition-all duration-300 hover:scale-102 active:scale-98"
+                    className="w-full min-w-0 inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 py-2.5 sm:py-3 rounded-xl sm:rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-[10.5px] xs:text-[11px] sm:text-xs shadow-md shadow-orange-500/20 transition-all duration-300 hover:scale-102 active:scale-98 whitespace-nowrap overflow-hidden"
                   >
-                    <Calendar size={16} />
-                    <span>Book Appointment</span>
-                    <ArrowRight size={15} />
+                    <Calendar size={13} className="shrink-0" />
+                    <span className="truncate">Book Appointment</span>
+                    <ArrowRight size={12} className="shrink-0 hidden xs:inline" />
                   </NavLink>
 
                   <a
                     href="tel:+917275981480"
-                    className="flex-1 w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full border border-slate-300 hover:border-[#103F7C] text-[#103F7C] hover:bg-[#103F7C] hover:text-white font-extrabold text-xs sm:text-sm bg-white shadow-2xs transition-all duration-300 hover:scale-102 active:scale-98"
+                    className="w-full min-w-0 inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 py-2.5 sm:py-3 rounded-xl sm:rounded-full border border-slate-300 hover:border-[#103F7C] text-[#103F7C] hover:bg-[#103F7C] hover:text-white font-extrabold text-[10.5px] xs:text-[11px] sm:text-xs bg-white shadow-2xs transition-all duration-300 hover:scale-102 active:scale-98 whitespace-nowrap overflow-hidden"
                   >
-                    <Phone size={15} />
-                    <span>Call +91 72759 81480</span>
+                    <Phone size={13} className="shrink-0" />
+                    <span className="truncate">Call +91 72759 81480</span>
                   </a>
                 </div>
               </div>

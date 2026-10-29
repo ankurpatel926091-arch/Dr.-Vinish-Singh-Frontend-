@@ -17,7 +17,7 @@ const items = [...marqueeItems, ...marqueeItems];
 
 function Marquee() {
   return (
-    <div className="relative w-full bg-[#EBF4FF] border-y border-blue-200/70 overflow-hidden py-3 sm:py-3.5 shadow-inner">
+    <div className="relative w-full bg-[#EBF4FF] border-y border-blue-200/70 overflow-hidden py-2 sm:py-2.5 shadow-inner">
       {/* Subtle fade effect on left and right edges */}
       <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-r from-[#EBF4FF] to-transparent z-10 pointer-events-none" />
       <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-[#EBF4FF] to-transparent z-10 pointer-events-none" />

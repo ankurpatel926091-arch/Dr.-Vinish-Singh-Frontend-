@@ -173,7 +173,7 @@ export default function WhyChooseUs() {
 
         {/* TAB 1: 6 FEATURES GRID */}
         {activeTab === "features" && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
+          <div className="grid card-grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
             {whyUsFeatures.map((item, idx) => {
               const IconComp = item.icon;
               return (

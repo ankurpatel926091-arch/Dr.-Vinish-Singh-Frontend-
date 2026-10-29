@@ -428,7 +428,7 @@ export default function BlogDetail() {
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid card-grid grid-cols-1 md:grid-cols-3 gap-6">
               {relatedArticles.map((rel) => (
                 <article
                   key={rel.id}

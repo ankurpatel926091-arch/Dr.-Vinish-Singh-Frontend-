@@ -589,7 +589,7 @@ export default function OurHospitals() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid card-grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {facilityGallery.map((fac, idx) => (
               <ScrollReveal key={fac.id} variant="scale-up" delay={idx * 100}>
                 <div
@@ -641,7 +641,7 @@ export default function OurHospitals() {
             <p className="text-xs sm:text-sm text-blue-100 mt-1">Advanced diagnosis, personalised treatment, and compassionate care delivered across two specialised healthcare centres.</p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5">
+          <div className="grid card-grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5">
             {hospitalHighlights.map((item, idx) => {
               const IconComp = item.icon;
               return (

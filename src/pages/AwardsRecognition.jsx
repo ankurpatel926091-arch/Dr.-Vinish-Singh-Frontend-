@@ -137,7 +137,7 @@ export default function AwardsRecognition() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-16">
         
         {/* Top 4 Quick Impact Highlights */}
-        <ScrollReveal variant="fade-up" className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-14">
+        <ScrollReveal variant="fade-up" className="grid card-grid grid-cols-2 md:grid-cols-4 gap-4 mb-14">
           <div className="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-2xs hover:shadow-md transition-all">
             <div className="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center mb-3">
               <Trophy size={20} />
@@ -187,7 +187,7 @@ export default function AwardsRecognition() {
         </ScrollReveal>
 
         {/* 2-Column Balanced Cards Grid for Spacious & Premium Desktop Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-16">
+        <div className="grid card-grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 mb-16">
           {awardsData.map((award, index) => {
             const IconComp = award.icon;
             return (
@@ -250,7 +250,7 @@ export default function AwardsRecognition() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-5">
+          <div className="grid card-grid md:grid-cols-3 gap-5">
             {memberships.map((mem, i) => (
               <div
                 key={i}

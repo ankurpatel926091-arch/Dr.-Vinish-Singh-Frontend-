@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="440" viewBox="0 0 1920 440" fill="none">
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1920" y2="440" gradientUnits="userSpaceOnUse"><stop stop-color="#071A33"/><stop offset=".55" stop-color="#173C70"/><stop offset="1" stop-color="#071A33"/></linearGradient><radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="matrix(0 270 -480 0 1585 220)" gradientUnits="userSpaceOnUse"><stop stop-color="#7C6CE5" stop-opacity=".32"/><stop offset="1" stop-color="#7C6CE5" stop-opacity="0"/></radialGradient></defs>
+  <path fill="url(#bg)" d="M0 0h1920v440H0z"/><path fill="url(#glow)" d="M0 0h1920v440H0z"/>
+  <g stroke="#A8B9FF" stroke-opacity=".14"><path d="M0 78c250 100 460-60 700 10s390 102 640 14 390-58 580 0"/><path d="M0 108c250 100 460-60 700 10s390 102 640 14 390-58 580 0"/><path d="M0 334c250-100 460 60 700-10s390-102 640-14 390 58 580 0"/></g>
+  <g stroke="#98B5FF" stroke-opacity=".72" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"><path d="M1550 93v103c0 37-30 48-30 82v66"/><path d="M1638 93v103c0 37 30 48 30 82v66"/><path d="M1530 278c-46-38-108-21-120 31-10 44 31 66 77 51 24-8 39-27 63-27s39 19 63 27c46 15 87-7 77-51-12-52-74-69-120-31-12 10-18 24-20 41-2-17-8-31-20-41Z"/></g>
+  <path d="M1548 216h92m-46-45v91" stroke="#FF9A4A" stroke-opacity=".72" stroke-width="5" stroke-linecap="round"/>
+  <g fill="#B5C5FF" opacity=".55"><circle cx="1434" cy="128" r="4"/><circle cx="1781" cy="300" r="5"/><circle cx="1815" cy="166" r="3"/><circle cx="1397" cy="318" r="3"/></g>
+</svg>

@@ -86,7 +86,7 @@ export default function NephrologyService() {
                 <span>Core Nephrology Services</span>
               </h3>
 
-              <div className="grid sm:grid-cols-2 gap-4">
+              <div className="grid card-grid sm:grid-cols-2 gap-4">
                 {nephrologyServices.map((serv, idx) => (
                   <div
                     key={idx}

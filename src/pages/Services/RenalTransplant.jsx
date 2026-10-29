@@ -93,7 +93,7 @@ export default function RenalTransplantService() {
                 <span>Comprehensive Transplant Care Pathway</span>
               </h3>
 
-              <div className="grid sm:grid-cols-2 gap-4">
+              <div className="grid card-grid sm:grid-cols-2 gap-4">
                 {transplantPhases.map((tp, idx) => (
                   <div
                     key={idx}

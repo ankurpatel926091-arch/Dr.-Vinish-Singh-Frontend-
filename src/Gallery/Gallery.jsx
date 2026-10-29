@@ -327,7 +327,7 @@ export default function Gallery() {
 
         {/* Loading State: Skeleton Grid */}
         {loading && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
+          <div className="grid card-grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
             {Array.from({ length: 8 }).map((_, i) => (
               <SkeletonCard key={i} />
             ))}
@@ -367,7 +367,7 @@ export default function Gallery() {
         {/* Actual Gallery Media Grid */}
         {!loading && !error && filteredItems.length > 0 && (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
+            <div className="grid card-grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 sm:gap-6">
               {filteredItems.map((item, idx) => {
                 const globalIdx = idx;
                 return (

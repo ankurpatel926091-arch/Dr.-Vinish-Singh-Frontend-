@@ -87,7 +87,7 @@ export default function AndrologyService() {
                 <span>Specialized Andrological Treatments</span>
               </h3>
 
-              <div className="grid sm:grid-cols-2 gap-4">
+              <div className="grid card-grid sm:grid-cols-2 gap-4">
                 {andrologyTreatments.map((treat, idx) => (
                   <div
                     key={idx}

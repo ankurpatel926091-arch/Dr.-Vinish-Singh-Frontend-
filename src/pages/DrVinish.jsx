@@ -297,15 +297,15 @@ export default function DrVinishKumarSingh() {
       />
 
       {/* ================= 1. DOCTOR MAIN PROFILE SECTION ================= */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-16">
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-stretch">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-12 lg:py-16">
+        <div className="grid lg:grid-cols-12 gap-6 lg:gap-14 items-stretch">
           
           {/* Left Column - Doctor Image Frame & Action Bar */}
           <ScrollReveal variant="scale-up" duration={800} className="lg:col-span-5 relative flex flex-col items-center">
             <div className="relative w-full max-w-md">
               {/* Outer Decorative Glow Border */}
-              <div className="relative rounded-[32px] p-2.5 bg-gradient-to-b from-[#103F7C]/20 via-blue-500/12 to-orange-500/20 shadow-2xl shadow-blue-900/10">
-                <div className="bg-white rounded-[24px] overflow-hidden h-[480px] sm:h-[540px] relative group border border-slate-100">
+              <div className="relative rounded-2xl sm:rounded-[32px] p-1.5 sm:p-2.5 bg-gradient-to-b from-[#103F7C]/20 via-blue-500/12 to-orange-500/20 shadow-xl shadow-blue-900/10">
+                <div className="bg-white rounded-xl sm:rounded-[24px] overflow-hidden h-[350px] xs:h-[390px] sm:h-[540px] relative group border border-slate-100">
                   <img
                     src={doctorImage}
                     alt="Dr. Vinish Kumar Singh - Senior Urologist"
@@ -313,8 +313,8 @@ export default function DrVinishKumarSingh() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#061933]/95 via-[#0a274e]/30 to-transparent opacity-95" />
 
-                  {/* Top Right Floating Verification Badge */}
-                  <div className="absolute top-4 right-4 z-20">
+                  {/* Top Right Floating Verification Badge - Hidden on phone view */}
+                  <div className="absolute top-4 right-4 z-20 hidden sm:block">
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/90 text-white text-[10.5px] font-extrabold tracking-wide backdrop-blur-md shadow-md border border-white/20">
                       <BadgeCheck size={13} />
                       <span>Verified Urosurgeon</span>
@@ -322,66 +322,66 @@ export default function DrVinishKumarSingh() {
                   </div>
 
                   {/* Designation Tag & Info Overlay */}
-                  <div className="absolute bottom-5 left-5 right-5 text-white z-20">
-                    <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white text-[10.5px] font-extrabold uppercase tracking-wider mb-2 shadow-md">
-                      <Stethoscope size={13} />
+                  <div className="absolute bottom-3 left-3 right-3 sm:bottom-5 sm:left-5 sm:right-5 text-white z-20">
+                    <div className="inline-flex items-center gap-1 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white text-[9px] sm:text-[10.5px] font-extrabold uppercase tracking-wider mb-1.5 sm:mb-2 shadow-md">
+                      <Stethoscope size={11} className="sm:size-[13px]" />
                       <span>Urology &amp; Transplant Specialist</span>
                     </div>
 
-                    <h3 className="font-extrabold text-2xl sm:text-3xl leading-snug drop-shadow-md text-white">
+                    <h3 className="font-extrabold text-xl sm:text-3xl leading-snug drop-shadow-md text-white">
                       Dr. Vinish Kumar Singh
                     </h3>
                     
-                    <p className="text-xs sm:text-sm text-blue-100 font-semibold mt-1 drop-shadow-xs">
+                    <p className="text-[11px] sm:text-sm text-blue-100 font-semibold mt-0.5 sm:mt-1 drop-shadow-xs line-clamp-2 sm:line-clamp-none">
                       M.B.B.S. (KGMU), M.S. (General Surgery), FIAGES, M.Ch (Urology - INU Bangalore) | Associate Professor in TSM Medical College
                     </p>
                   </div>
                 </div>
               </div>
 
-              {/* Floating Degree Badge (Top Left) */}
-              <div className="absolute top-4 left-3 sm:top-6 sm:-left-6 bg-white/95 backdrop-blur-md shadow-xl border border-slate-200/90 rounded-2xl p-3 flex items-center gap-3 z-30 hover:scale-105 transition-transform duration-300">
-                <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#103F7C] flex items-center justify-center shrink-0 border border-blue-100">
-                  <GraduationCap size={22} />
+              {/* Floating Degree Badge (Top Left) - Compact on phone view */}
+              <div className="absolute top-3 left-2.5 sm:top-6 sm:-left-6 bg-white/95 backdrop-blur-md shadow-lg border border-slate-200/90 rounded-xl sm:rounded-2xl p-1.5 sm:p-3 flex items-center gap-2 sm:gap-3 z-30 hover:scale-105 transition-transform duration-300">
+                <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-blue-50 text-[#103F7C] flex items-center justify-center shrink-0 border border-blue-100">
+                  <GraduationCap className="w-4 h-4 sm:w-[22px] sm:h-[22px]" />
                 </div>
                 <div>
-                  <h4 className="font-extrabold text-xs sm:text-sm text-slate-900 leading-tight">
+                  <h4 className="font-extrabold text-[11px] sm:text-sm text-slate-900 leading-tight">
                     M.Ch Urology
                   </h4>
-                  <p className="text-[10px] sm:text-[11px] text-slate-500 font-semibold">
+                  <p className="text-[9px] sm:text-[11px] text-slate-500 font-semibold">
                     INU, Bangalore (2017)
                   </p>
                 </div>
               </div>
 
               {/* Action Box Under Photo Card */}
-              <div className="mt-5 w-full bg-white rounded-3xl p-5 border border-slate-200/90 shadow-sm flex flex-col gap-4">
-                {/* Action Buttons */}
-                <div className="flex flex-col lg:flex-row gap-2.5">
+              <div className="mt-3 sm:mt-5 w-full bg-white rounded-2xl sm:rounded-3xl p-3 sm:p-5 border border-slate-200/90 shadow-sm flex flex-col gap-3 sm:gap-4">
+                {/* Action Buttons: 1 line side-by-side on all screens including phone */}
+                <div className="grid grid-cols-2 gap-2 w-full">
                   <NavLink
                     to="/appointment-request"
-                    className="w-full min-w-0 lg:flex-1 inline-flex items-center justify-center gap-1 px-2.5 py-3.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-[11px] sm:text-xs shadow-md shadow-orange-500/20 transition-all duration-300 hover:scale-[1.02] active:scale-98 whitespace-nowrap"
+                    className="w-full min-w-0 inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 py-2.5 sm:py-3.5 rounded-xl sm:rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-[10.5px] xs:text-[11px] sm:text-xs shadow-md shadow-orange-500/20 transition-all duration-300 hover:scale-[1.02] active:scale-98 whitespace-nowrap overflow-hidden"
                   >
-                    <Calendar size={15} className="shrink-0" />
-                    <span>Book a Consultation</span>
-                    <ArrowRight size={14} className="shrink-0" />
+                    <Calendar size={13} className="shrink-0" />
+                    <span className="truncate">Book Consultation</span>
+                    <ArrowRight size={12} className="shrink-0 hidden xs:inline" />
                   </NavLink>
 
                   <a
                     href="tel:+917275981480"
-                    className="w-full min-w-0 lg:flex-1 inline-flex items-center justify-center gap-1 px-2.5 py-3.5 rounded-full border border-slate-300 hover:border-[#103F7C] text-[#103F7C] hover:bg-[#103F7C] hover:text-white font-extrabold text-[11px] sm:text-xs bg-white shadow-2xs transition-all duration-300 hover:scale-[1.02] active:scale-98 whitespace-nowrap"
+                    className="w-full min-w-0 inline-flex items-center justify-center gap-1 sm:gap-1.5 px-2 py-2.5 sm:py-3.5 rounded-xl sm:rounded-full border border-slate-300 hover:border-[#103F7C] text-[#103F7C] hover:bg-[#103F7C] hover:text-white font-extrabold text-[10.5px] xs:text-[11px] sm:text-xs bg-white shadow-2xs transition-all duration-300 hover:scale-[1.02] active:scale-98 whitespace-nowrap overflow-hidden"
                   >
-                    <Phone size={14} className="shrink-0" />
-                    <span>Call +91 72759 81480</span>
+                    <Phone size={13} className="shrink-0" />
+                    <span className="truncate">Call +91 72759 81480</span>
                   </a>
                 </div>
 
                 {/* Divider & Social Icons */}
-                <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-[11px] font-extrabold text-slate-500 uppercase tracking-wider">
+                <div className="pt-2 sm:pt-3 border-t border-slate-100 flex items-center justify-between">
+                  <span className="text-[10px] sm:text-[11px] font-extrabold text-slate-500 uppercase tracking-wider">
                     Follow Doctor:
                   </span>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1.5 sm:gap-2">
                     {[
                       {
                         icon: FaFacebookF,
@@ -422,9 +422,9 @@ export default function DrVinishKumarSingh() {
                           target="_blank"
                           rel="noopener noreferrer"
                           title={social.label}
-                          className={`w-8 h-8 rounded-full ${social.bg} text-white flex items-center justify-center shadow-xs transition-all duration-300 hover:scale-110`}
+                          className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full ${social.bg} text-white flex items-center justify-center shadow-xs transition-all duration-300 hover:scale-110`}
                         >
-                          <Icon size={12} />
+                          <Icon size={11} className="sm:size-3" />
                         </a>
                       );
                     })}

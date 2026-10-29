@@ -168,7 +168,7 @@ export default function KidneyStone() {
               Using state-of-the-art Holmium Laser fiber passed through a flexible kidney scope, stones are pulverized into fine sand-like dust with zero external cuts and rapid 24-hour recovery.
             </p>
 
-            <div className="grid sm:grid-cols-2 gap-3 mt-5">
+            <div className="grid card-grid sm:grid-cols-2 gap-3 mt-5">
               <div className="flex items-center gap-2 bg-white p-3 rounded-2xl border border-slate-200/80 shadow-2xs">
                 <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
                 <span className="text-xs font-bold text-slate-800">100% No Skin Cut</span>
@@ -231,7 +231,7 @@ export default function KidneyStone() {
         </ScrollReveal>
 
         {/* 3-Column Treatment Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+        <div className="grid card-grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {treatments.map((item, idx) => (
             <ScrollReveal
               key={idx}
@@ -306,7 +306,7 @@ export default function KidneyStone() {
             </p>
           </ScrollReveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid card-grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {laserBenefits.map((b, i) => {
               const IconComp = b.icon;
               return (
@@ -348,7 +348,7 @@ export default function KidneyStone() {
               If you experience any of the following warning signs, timely diagnostic evaluation (USG / CT KUB Scan) helps prevent severe kidney damage:
             </p>
 
-            <div className="grid sm:grid-cols-2 gap-3.5">
+            <div className="grid card-grid sm:grid-cols-2 gap-3.5">
               {symptoms.map((item, i) => (
                 <div key={i} className="bg-white p-4 rounded-2xl border border-slate-200/90 shadow-2xs">
                   <div className="flex items-center gap-2 mb-1">

@@ -79,7 +79,7 @@ const steps = [
           <div className="hidden lg:block absolute top-[36px] left-[10%] right-[10%] h-[2px] bg-slate-200 -z-0 rounded-full" />
 
           {/* Steps Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-4 items-start relative z-10">
+          <div className="grid card-grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-4 items-start relative z-10">
             {steps.map((step, idx) => {
               const IconComp = step.icon;
               return (
