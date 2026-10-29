@@ -11,26 +11,34 @@ import {
   Sparkles,
 } from "lucide-react";
 import ScrollReveal from "../ScrollReveal/ScrollReveal";
-import { fetchPublicBlogs, getInitialBlogs } from "../../api/blogApi";
+import { fetchPublicBlogs } from "../../api/blogApi";
 
 export default function BlogSection() {
-  const [blogsList, setBlogsList] = useState(() => getInitialBlogs());
-  const [isLoading, setIsLoading] = useState(() => blogsList.length === 0);
+  const [blogsList, setBlogsList] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
 
-    const loadData = () => {
-      fetchPublicBlogs().then((data) => {
+    const loadData = async () => {
+      setIsLoading(true);
+      setLoadError("");
+      try {
+        const data = await fetchPublicBlogs();
         if (isMounted) {
-          if (Array.isArray(data)) {
-            setBlogsList(data);
-          }
+          setBlogsList(data);
           setIsLoading(false);
         }
-      });
+      } catch (error) {
+        if (isMounted) {
+          setBlogsList([]);
+          setLoadError(error instanceof Error ? error.message : "Unable to load articles.");
+          setIsLoading(false);
+        }
+      }
     };
 
     loadData();
@@ -121,6 +129,12 @@ export default function BlogSection() {
           <div className="flex flex-col items-center justify-center py-12 text-slate-400">
             <div className="w-8 h-8 border-3 border-orange-500 border-t-transparent rounded-full animate-spin mb-2" />
             <p className="text-xs font-semibold">Loading medical insights...</p>
+          </div>
+        ) : loadError ? (
+          <div className="text-center py-12 bg-white rounded-3xl border border-red-200 p-8 max-w-lg mx-auto shadow-2xs">
+            <BookOpen className="w-10 h-10 text-red-400 mx-auto mb-3 opacity-80" />
+            <h3 className="font-extrabold text-slate-800 text-base">Articles Could Not Be Loaded</h3>
+            <p className="text-xs text-slate-500 mt-1">{loadError}</p>
           </div>
         ) : blogsList.length === 0 ? (
           <div className="text-center py-12 bg-white rounded-3xl border border-slate-200/80 p-8 max-w-lg mx-auto shadow-2xs">

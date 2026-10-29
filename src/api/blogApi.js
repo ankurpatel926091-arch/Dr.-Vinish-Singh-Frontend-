@@ -75,26 +75,6 @@ export function mapBlogFields(blog) {
   };
 }
 
-const STATIC_BLOG_IDS = ['b1', 'b2', 'b3', 'b4', 'b5', 'b6'];
-
-// Synchronous instant helper to get cached dynamic backend blogs from localStorage
-export const getInitialBlogs = () => {
-  try {
-    const cached = localStorage.getItem('dr_vinish_cached_blogs');
-    if (cached) {
-      const parsed = JSON.parse(cached);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        // Filter out legacy static blogs if present in cache
-        const dynamicOnly = parsed.filter((b) => !STATIC_BLOG_IDS.includes(b.id) && !STATIC_BLOG_IDS.includes(b._id));
-        return sortBlogsByDateDesc(dynamicOnly.map(mapBlogFields));
-      }
-    }
-  } catch (e) {
-    // Ignore parse errors
-  }
-  return [];
-};
-
 // Fast helper to fetch with AbortController timeout
 const fetchWithTimeout = async (url, timeoutMs = 2500) => {
   const controller = new AbortController();
@@ -109,107 +89,54 @@ const fetchWithTimeout = async (url, timeoutMs = 2500) => {
   }
 };
 
-// Process dynamic backend blogs, cache in localStorage, and return sorted array
-const processBackendBlogs = (backendBlogs = []) => {
-  const mappedBackend = backendBlogs.map(mapBlogFields);
-  const sorted = sortBlogsByDateDesc(mappedBackend);
+const processBackendBlogs = (backendBlogs) =>
+  sortBlogsByDateDesc(backendBlogs.map(mapBlogFields));
 
-  if (sorted.length > 0) {
-    try {
-      localStorage.setItem('dr_vinish_cached_blogs', JSON.stringify(sorted));
-    } catch (e) {}
-  }
-
-  return sorted;
-};
-
-// Fetch all published blogs from API endpoints with fast local priority & instant return
 export const fetchPublicBlogs = async () => {
-  // 1. Try local backend fast first (returns in ~20ms if local backend is running)
-  const localUrl = API_URLS.find((url) => url.includes('localhost') || url.includes('127.0.0.1'));
-  if (localUrl) {
+  const errors = [];
+  for (const baseUrl of API_URLS) {
     try {
-      const res = await fetchWithTimeout(`${localUrl}/blogs/public`, 1500);
-      if (res.ok) {
-        const json = await res.json();
-        if (json && json.success && Array.isArray(json.data) && json.data.length > 0) {
-          return processBackendBlogs(json.data);
-        }
-      }
-    } catch (err) {
-      // Local fetch failed or timed out fast, continue to online fallback
-    }
-  }
-
-  // 2. Fallback to remaining online endpoints in parallel with fast timeout
-  const otherUrls = API_URLS.filter((url) => url !== localUrl);
-  const fetchPromises = otherUrls.map(async (baseUrl) => {
-    try {
-      const res = await fetchWithTimeout(`${baseUrl}/blogs/public`, 3000);
+      const timeout = baseUrl.includes('localhost') || baseUrl.includes('127.0.0.1') ? 1500 : 3000;
+      const res = await fetchWithTimeout(`${baseUrl}/blogs/public`, timeout);
       if (res.ok) {
         const json = await res.json();
         if (json && json.success && Array.isArray(json.data)) {
-          return json.data;
+          return processBackendBlogs(json.data);
         }
+        errors.push(`${baseUrl} returned an invalid blog response`);
+      } else {
+        errors.push(`${baseUrl} returned ${res.status}`);
       }
-    } catch (err) {}
-    return null;
-  });
-
-  try {
-    const results = await Promise.allSettled(fetchPromises);
-    for (const result of results) {
-      if (result.status === 'fulfilled' && result.value !== null && result.value.length > 0) {
-        return processBackendBlogs(result.value);
-      }
+    } catch (error) {
+      errors.push(`${baseUrl}: ${error instanceof Error ? error.message : String(error)}`);
     }
-  } catch (err) {}
-
-  return getInitialBlogs();
-};
-
-// Fetch single blog detail by slug or ID from API
-export const fetchBlogBySlug = async (slug) => {
-  const initialList = getInitialBlogs();
-  const localMatch = initialList.find(
-    (b) => b.slug === slug || b.id === slug || (b._id && b._id === slug)
-  );
-
-  const localUrl = API_URLS.find((url) => url.includes('localhost') || url.includes('127.0.0.1'));
-  if (localUrl) {
-    try {
-      const res = await fetchWithTimeout(`${localUrl}/blogs/detail/${slug}`, 1500);
-      if (res.ok) {
-        const json = await res.json();
-        if (json && json.success && json.data) {
-          return mapBlogFields(json.data);
-        }
-      }
-    } catch (err) {}
   }
 
-  const otherUrls = API_URLS.filter((url) => url !== localUrl);
-  const fetchPromises = otherUrls.map(async (baseUrl) => {
+  throw new Error(`Unable to load blogs. ${errors.join("; ")}`);
+};
+
+export const fetchBlogBySlug = async (slug) => {
+  const errors = [];
+  for (const baseUrl of API_URLS) {
     try {
-      const res = await fetchWithTimeout(`${baseUrl}/blogs/detail/${slug}`, 3000);
+      const timeout = baseUrl.includes('localhost') || baseUrl.includes('127.0.0.1') ? 1500 : 3000;
+      const res = await fetchWithTimeout(`${baseUrl}/blogs/detail/${encodeURIComponent(slug)}`, timeout);
       if (res.ok) {
         const json = await res.json();
         if (json && json.success && json.data) {
           return mapBlogFields(json.data);
         }
+        errors.push(`${baseUrl} returned an invalid blog response`);
+      } else if (res.status !== 404) {
+        errors.push(`${baseUrl} returned ${res.status}`);
       }
-    } catch (err) {}
-    return null;
-  });
-
-  try {
-    const results = await Promise.allSettled(fetchPromises);
-    for (const result of results) {
-      if (result.status === 'fulfilled' && result.value) {
-        return result.value;
-      }
+    } catch (error) {
+      errors.push(`${baseUrl}: ${error instanceof Error ? error.message : String(error)}`);
     }
-  } catch (err) {}
+  }
 
-  return localMatch || null;
+  if (errors.length === API_URLS.length) {
+    throw new Error(`Unable to load blog article. ${errors.join("; ")}`);
+  }
+  return null;
 };

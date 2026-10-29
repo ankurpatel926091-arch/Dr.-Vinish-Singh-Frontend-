@@ -21,31 +21,6 @@ import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
 
 import { fetchPublicClinics } from "../api/clinicApi";
 
-const defaultHospitalDetails = [
-  {
-    _id: "68c123456789012345678901",
-    clinicId: "morning",
-    name: "Rudraksh IVF & Urology Centre",
-    tag: "Morning OPD",
-    badgeLabel: "MORNING CONSULTATION CENTRE",
-    timings: "10:00 AM – 03:00 PM",
-    address: "1/795, Ratan Khand, Sharda Nagar, Lucknow",
-    phone: "+91 72759 81480",
-    mapUrl: "https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow",
-  },
-  {
-    _id: "68c123456789012345678902",
-    clinicId: "evening",
-    name: "Dr. Shilpi Maternity & Urology Centre",
-    tag: "Evening OPD",
-    badgeLabel: "EVENING CONSULTATION CENTRE",
-    timings: "03:00 PM – 07:00 PM",
-    address: "596Pb/1114/03, Ring Rd, Pakkabag, Lucknow",
-    phone: "+91 86048 91955",
-    mapUrl: "https://maps.app.goo.gl/w9mqio5fe4Hj8KLm9",
-  }
-];
-
 const hospitalServicesMap = {
   morning: [
     "Laser Kidney Stones (RIRS / PCNL)",
@@ -160,7 +135,9 @@ export default function BookAppointmentPage() {
     } catch (err) {}
   };
 
-  const [clinicsList, setClinicsList] = useState(defaultHospitalDetails);
+  const [clinicsList, setClinicsList] = useState([]);
+  const [clinicsLoading, setClinicsLoading] = useState(true);
+  const [clinicsError, setClinicsError] = useState("");
   const hospitalParam = searchParams.get("hospital");
 
   const [formData, setFormData] = useState({
@@ -176,27 +153,34 @@ export default function BookAppointmentPage() {
   });
 
   const loadClinics = useCallback(async () => {
+    setClinicsLoading(true);
+    setClinicsError("");
     try {
       const data = await fetchPublicClinics();
-      if (Array.isArray(data) && data.length > 0) {
-        setClinicsList(data);
+      setClinicsList(data);
 
-        const paramLower = (hospitalParam || "").toLowerCase();
-        let targetClinic = data[0];
+      const paramLower = (hospitalParam || "").toLowerCase();
+      let targetClinic = data.find((clinic) => String(clinic._id || clinic.id) === hospitalParam) || data[0];
 
-        if (paramLower === "evening") {
-          targetClinic = data.find(c => (c.tag && c.tag.toLowerCase().includes("evening")) || (c.name && c.name.includes("Shilpi"))) || data[1] || data[0];
-        } else if (paramLower === "morning") {
-          targetClinic = data.find(c => (c.tag && c.tag.toLowerCase().includes("morning")) || (c.name && c.name.includes("Rudraksh"))) || data[0];
-        }
+      if (targetClinic && targetClinic === data[0] && paramLower === "evening") {
+        targetClinic = data.find(c => (c.tag || c.type || c.clinicId || "").toLowerCase().includes("evening") || (c.name && c.name.includes("Shilpi"))) || data[0];
+      } else if (targetClinic && targetClinic === data[0] && paramLower === "morning") {
+        targetClinic = data.find(c => (c.tag || c.type || c.clinicId || "").toLowerCase().includes("morning") || (c.name && c.name.includes("Rudraksh"))) || data[0];
+      }
 
+      if (targetClinic) {
         const targetId = targetClinic._id || targetClinic.id;
         setFormData(prev => ({
           ...prev,
           clinic: prev.clinic || targetId
         }));
       }
-    } catch (err) {}
+    } catch (error) {
+      setClinicsList([]);
+      setClinicsError(error instanceof Error ? error.message : "Unable to load clinic details.");
+    } finally {
+      setClinicsLoading(false);
+    }
   }, [hospitalParam]);
 
   useEffect(() => {
@@ -215,17 +199,22 @@ export default function BookAppointmentPage() {
   const todayStr = getTodayDateString();
 
   // Find current selected clinic object
-  const activeClinic = clinicsList.find(c => String(c._id || c.id) === String(formData.clinic)) || clinicsList[0] || defaultHospitalDetails[0];
-  const activeClinicPhoneNumbers = getPhoneNumbers(activeClinic.phone);
+  const activeClinic = clinicsList.find(c => String(c._id || c.id) === String(formData.clinic)) || clinicsList[0] || null;
+  const activeClinicPhoneNumbers = getPhoneNumbers(activeClinic?.phone);
 
-  const isEveningSelected = (activeClinic.tag && activeClinic.tag.toLowerCase().includes("evening")) || (activeClinic.name && activeClinic.name.includes("Shilpi"));
+  const activeClinicType = (activeClinic?.tag || activeClinic?.type || activeClinic?.clinicId || "").toLowerCase();
+  const isEveningSelected = activeClinicType.includes("evening") || (activeClinic?.name && activeClinic.name.includes("Shilpi"));
   const activeServices = isEveningSelected ? hospitalServicesMap.evening : hospitalServicesMap.morning;
   const activeTimeSlots = isEveningSelected ? timeSlotsMap.evening : timeSlotsMap.morning;
 
   // State for tracking Admin Confirmed appointments to disable slots
   const [confirmedAppointments, setConfirmedAppointments] = useState([]);
+  const [slotAvailabilityError, setSlotAvailabilityError] = useState("");
+  const [slotAvailabilityLoading, setSlotAvailabilityLoading] = useState(true);
 
   const loadConfirmedAppointments = useCallback(async () => {
+    setSlotAvailabilityLoading(true);
+    setSlotAvailabilityError("");
     const getApiUrls = () => {
       const urls = [];
       const hostname = typeof window !== "undefined" ? window.location.hostname : "";
@@ -239,68 +228,45 @@ export default function BookAppointmentPage() {
       return Array.from(new Set(urls));
     };
 
-    let backendSlots = null;
     const apiUrls = getApiUrls();
+    const errors = [];
 
     for (const baseUrl of apiUrls) {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 3000);
       try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 3000);
         const res = await fetch(`${baseUrl}/appointments/public/confirmed-slots`, {
           signal: controller.signal,
         });
-        clearTimeout(timeoutId);
         if (res.ok) {
           const json = await res.json();
           if (json.success && Array.isArray(json.data)) {
-            backendSlots = json.data;
-            break;
+            setConfirmedAppointments(json.data);
+            setSlotAvailabilityError("");
+            setSlotAvailabilityLoading(false);
+            return;
           }
+          errors.push(`${baseUrl} returned an invalid confirmed-slots response`);
+        } else {
+          errors.push(`${baseUrl} returned ${res.status}`);
         }
-      } catch (e) {}
-    }
-
-    let localApts = [];
-    try {
-      const saved = localStorage.getItem("dr_vinish_appointments");
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed)) {
-          localApts = parsed;
-        }
+      } catch (error) {
+        errors.push(`${baseUrl}: ${error instanceof Error ? error.message : String(error)}`);
+      } finally {
+        clearTimeout(timeoutId);
       }
-    } catch (e) {}
-
-    let finalSlots = [];
-
-    if (backendSlots !== null) {
-      finalSlots = [...backendSlots];
-      const now = Date.now();
-      localApts.forEach((lItem) => {
-        const st = (lItem.status || "").toLowerCase();
-        const isCancelled = st === "cancelled" || st === "canceled" || st === "rejected";
-        if (isCancelled) return;
-
-        const isRecent = lItem.id && typeof lItem.id === "number" && now - lItem.id < 15000;
-        if (isRecent) {
-          const itemId = lItem._id || lItem.id;
-          if (!finalSlots.some((b) => String(b.id || b._id) === String(itemId))) {
-            finalSlots.push(lItem);
-          }
-        }
-      });
-    } else {
-      finalSlots = localApts.filter((apt) => {
-        const st = (apt.status || "").toLowerCase();
-        return st !== "cancelled" && st !== "canceled" && st !== "rejected";
-      });
     }
 
-    setConfirmedAppointments(finalSlots);
+    setConfirmedAppointments([]);
+    setSlotAvailabilityLoading(false);
+    throw new Error(`Unable to load appointment availability. ${errors.join("; ")}`);
   }, []);
 
   useEffect(() => {
-    loadConfirmedAppointments();
+    loadConfirmedAppointments().catch((error) => {
+      setSlotAvailabilityError(error instanceof Error ? error.message : "Unable to load appointment availability.");
+      setSlotAvailabilityLoading(false);
+    });
   }, [loadConfirmedAppointments]);
 
   const normalizeDateStr = (dStr) => {
@@ -357,7 +323,8 @@ export default function BookAppointmentPage() {
     if (typeof aptClinic === "string") {
       if (aptClinic === String(currentClinicId)) return true;
       const c1 = aptClinic.toLowerCase();
-      const isEveningSelected = activeClinic && (activeClinic.tag || "").toLowerCase().includes("evening");
+      const clinicType = (activeClinic?.tag || activeClinic?.type || activeClinic?.clinicId || "").toLowerCase();
+      const isEveningSelected = clinicType.includes("evening");
       const isAptEvening = c1.includes("shilpi") || c1.includes("evening");
       return isAptEvening === isEveningSelected;
     }
@@ -545,6 +512,10 @@ export default function BookAppointmentPage() {
 
   const handleNextFromStep2 = (e) => {
     e.preventDefault();
+    if (slotAvailabilityLoading || slotAvailabilityError) {
+      setErrorMessage("Appointment availability is not confirmed yet. Please try again later.");
+      return;
+    }
     if (!formData.preferredDate) {
       setErrorMessage("Please select an appointment date.");
       return;
@@ -563,6 +534,11 @@ export default function BookAppointmentPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (slotAvailabilityLoading || slotAvailabilityError) {
+      setErrorMessage("Appointment availability is not confirmed yet. Please try again later.");
+      return;
+    }
 
     const nameErr = validateField("name", formData.name);
     const phoneErr = validateField("phone", formData.phone);
@@ -630,30 +606,8 @@ export default function BookAppointmentPage() {
         } catch (err) {}
       }
 
-      const newAptRecord = {
-        id: Date.now(),
-        name: formData.name.trim(),
-        phone: formData.phone.trim(),
-        email: submittedUserEmail,
-        consultationType: formData.consultationType || "First Visit",
-        clinic: activeClinic,
-        problem: formData.service || "General Urology Consultation",
-        date: formattedAptDate || new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
-        time: formData.preferredTime || "10:00 AM",
-        message: formData.message ? formData.message.trim() : "",
-        status: "Pending"
-      };
-
-      try {
-        const existingApts = JSON.parse(localStorage.getItem('dr_vinish_appointments') || '[]');
-        localStorage.setItem('dr_vinish_appointments', JSON.stringify([newAptRecord, ...existingApts]));
-        window.dispatchEvent(new Event('storage'));
-      } catch (err) {
-        console.warn('LocalStorage save appointment error:', err);
-      }
-
       if (!savedToBackend) {
-        setErrorMessage("Server is unreachable right now. Please check backend connection or call helpline +91 72759 81480 directly.");
+        setErrorMessage("Server is unreachable right now. Please check your connection and try again later.");
         return;
       }
 
@@ -681,6 +635,16 @@ export default function BookAppointmentPage() {
     }
   };
 
+  if (clinicsLoading || !activeClinic) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center px-4 text-center">
+        <p role={clinicsError ? "alert" : undefined} className={clinicsError ? "text-sm text-red-700" : "text-sm text-slate-500"}>
+          {clinicsLoading ? "Loading clinic details..." : clinicsError || "No clinic locations are currently available."}
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-slate-50 font-sans min-h-screen py-8 sm:py-14">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -699,6 +663,14 @@ export default function BookAppointmentPage() {
             Schedule your visit with our expert healthcare professionals in just a few simple steps
           </p>
         </div>
+
+        {(slotAvailabilityLoading || slotAvailabilityError) && (
+          <div role="alert" className="max-w-3xl mx-auto mb-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            {slotAvailabilityLoading
+              ? "Checking appointment availability..."
+              : "Appointment availability could not be loaded. Booking is unavailable until the server can confirm open slots."}
+          </div>
+        )}
 
         {/* Main Appointment Card */}
         <ScrollReveal variant="fade-up">

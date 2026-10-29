@@ -396,7 +396,7 @@ export default function KidneyStone() {
                 className="inline-flex items-center justify-center gap-2 w-full py-3.5 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs sm:text-sm shadow-md transition-all hover:scale-102"
               >
                 <Calendar size={16} />
-                <span>Schedule Evaluation</span>
+                <span>Contact Us</span>
               </NavLink>
             </div>
           </ScrollReveal>

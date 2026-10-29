@@ -18,7 +18,7 @@ import {
   Check,
   MapPin,
 } from "lucide-react";
-import { fetchBlogBySlug, fetchPublicBlogs, getInitialBlogs } from "../api/blogApi";
+import { fetchBlogBySlug, fetchPublicBlogs } from "../api/blogApi";
 import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
 import doctorThumb from "../assets/images/img12.png";
 
@@ -44,40 +44,37 @@ const cleanBlogHtml = (html) => {
 export default function BlogDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
-  const [allBlogs, setAllBlogs] = useState(() => getInitialBlogs());
-  const [article, setArticle] = useState(() => {
-    const list = getInitialBlogs();
-    return list.find((b) => b.slug === slug || b.id === slug || (b._id && b._id === slug)) || null;
-  });
-  const [loading, setLoading] = useState(() => !article);
+  const [allBlogs, setAllBlogs] = useState([]);
+  const [article, setArticle] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     let isMounted = true;
+    setArticle(null);
+    setAllBlogs([]);
+    setLoading(true);
+    setLoadError("");
 
-    const initialList = getInitialBlogs();
-    const existing = initialList.find((b) => b.slug === slug || b.id === slug || (b._id && b._id === slug));
-    if (existing && isMounted) {
-      setArticle(existing);
+    Promise.allSettled([fetchBlogBySlug(slug), fetchPublicBlogs()]).then(([articleResult, blogsResult]) => {
+      if (!isMounted) return;
+
+      const articleFromList = blogsResult.status === "fulfilled"
+        ? blogsResult.value.find((blog) => blog.slug === slug || blog.id === slug || blog._id === slug)
+        : null;
+      const resolvedArticle = articleResult.status === "fulfilled" ? articleResult.value || articleFromList : articleFromList;
+      setArticle(resolvedArticle || null);
+      if (resolvedArticle?.title) {
+        document.title = `${resolvedArticle.title} | Dr. Vinish Kumar Singh`;
+      } else if (articleResult.status === "rejected") {
+        setLoadError(articleResult.reason instanceof Error ? articleResult.reason.message : "Unable to load this article.");
+      }
+
+      if (blogsResult.status === "fulfilled") {
+        setAllBlogs(blogsResult.value);
+      }
       setLoading(false);
-      if (existing.title) {
-        document.title = `${existing.title} | Dr. Vinish Kumar Singh`;
-      }
-    }
-
-    Promise.all([fetchBlogBySlug(slug), fetchPublicBlogs()]).then(([blogData, publicBlogs]) => {
-      if (isMounted) {
-        if (blogData) {
-          setArticle(blogData);
-          if (blogData.title) {
-            document.title = `${blogData.title} | Dr. Vinish Kumar Singh`;
-          }
-        }
-        if (Array.isArray(publicBlogs) && publicBlogs.length > 0) {
-          setAllBlogs(publicBlogs);
-        }
-        setLoading(false);
-      }
     });
 
     return () => { isMounted = false; };
@@ -107,10 +104,10 @@ export default function BlogDetail() {
       <div className="min-h-[70vh] flex flex-col items-center justify-center text-center px-4 py-20 bg-slate-50 font-sans">
         <BookOpen className="w-16 h-16 text-orange-500 mb-4 animate-bounce" />
         <h1 className="text-3xl font-extrabold text-slate-900 mb-2">
-          Article Not Found
+          {loadError ? "Article Could Not Be Loaded" : "Article Not Found"}
         </h1>
         <p className="text-slate-600 mb-6 max-w-md">
-          The requested medical article or insight page could not be located.
+          {loadError || "The requested medical article or insight page could not be located."}
         </p>
         <button
           onClick={() => navigate("/")}

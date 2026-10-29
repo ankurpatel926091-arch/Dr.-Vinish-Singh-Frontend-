@@ -35,7 +35,6 @@ import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
 
 // Image Imports
 import hospitalBuildingImg from "../assets/OurHospital/1.jpg";
-import shilpiBuildingImg from "../assets/OurHospital/2.jpg";
 import ourHospitalsBanner from "../assets/About/OurHospitals.png";
 
 // Facility Showcase Images
@@ -46,57 +45,6 @@ import otSuiteImg from "../assets/images/OT.png";
 import vinishImg from "../assets/images/img12.png";
 
 import { fetchPublicClinics } from "../api/clinicApi";
-
-const defaultHospitalData = [
-  {
-    id: "hosp-2",
-    name: "Rudraksh IVF & Urology Centre",
-    tagline: "Morning Consultation Centre",
-    type: "Morning OPD",
-    badgeColor: "bg-orange-50 text-orange-600 border-orange-200",
-    headerGradient: "from-orange-500/10 via-amber-500/5 to-transparent",
-    timing: "10:00 AM - 03:00 PM",
-    phone: "+91 72759 81480",
-    phoneRaw: "tel:+917275981480",
-    address: "1/795, Ratan Khand, Sharda Nagar, Lucknow, UP 226002",
-    locality: "Sharda Nagar, Lucknow",
-    mapUrl: "https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow",
-    mapIframe:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3561.428!2d80.9242723!3d26.7803631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bff149cec4b2d%3A0xe680ad74dd601b3b!2sDr.%20Vinish%20Singh%20%7C%20Rudraksh%20IVF%20%26%20Urology%20Centre!5e0!3m2!1sen!2sin",
-    image: hospitalBuildingImg,
-    badgeText: "Main Building & IVF Desk",
-    facilities: [
-      "Advanced Laser Urology OPD",
-      "Infertility & IVF Unit",
-      "Ultrasound Guided Diagnostics",
-      "Daycare Recovery Beds",
-    ],
-  },
-  {
-    id: "hosp-1",
-    name: "Dr. Shilpi Maternity & Urology Centre",
-    tagline: "Evening Consultation Centre",
-    type: "Evening OPD",
-    badgeColor: "bg-blue-50 text-[#103F7C] border-blue-200",
-    headerGradient: "from-blue-600/10 via-sky-500/5 to-transparent",
-    timing: "03:00 PM - 06:00 PM",
-    phone: "+91 86048 91955",
-    phoneRaw: "tel:8604891955",
-    address: "596Pb/1114/03, Ring Rd, Pakkabag, Lucknow, UP 226017",
-    locality: "Pakkabag, Ring Road, Lucknow",
-    mapUrl: "https://maps.app.goo.gl/w9mqio5fe4Hj8KLm9",
-    mapIframe:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.200!2d80.8609337!3d26.8566859!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bff2d7be105cf%3A0x87c6db827648df8!2sDr.%20Shilpi%20Maternity%20%26%20Urology%20Centre!5e0!3m2!1sen!2sin",
-    image: shilpiBuildingImg || hospitalBuildingImg,
-    badgeText: "Evening OPD Centre",
-    facilities: [
-      "Kidney Stone Consultation",
-      "Laser Prostate OPD",
-      "Female Urology Clinic",
-      "Emergency Urinary Care",
-    ],
-  },
-];
 
 const facilityGallery = [
   {
@@ -178,7 +126,9 @@ const hospitalHighlights = [
 ];
 
 export default function OurHospitals() {
-  const [hospitalsList, setHospitalsList] = useState(defaultHospitalData);
+  const [hospitalsList, setHospitalsList] = useState([]);
+  const [clinicsLoading, setClinicsLoading] = useState(true);
+  const [clinicsError, setClinicsError] = useState("");
   const [activeTab, setActiveTab] = useState("All");
   const [copiedId, setCopiedId] = useState(null);
   const [lightboxImage, setLightboxImage] = useState(null);
@@ -187,31 +137,39 @@ export default function OurHospitals() {
   const [rotation, setRotation] = useState(0);
 
   const loadClinics = useCallback(async () => {
+    setClinicsLoading(true);
+    setClinicsError("");
     try {
       const data = await fetchPublicClinics();
-      if (Array.isArray(data) && data.length > 0) {
-        const mapped = defaultHospitalData.map(def => {
-          const matched = data.find(c =>
-            (c.tag && c.tag.toLowerCase().includes(def.type.toLowerCase().split(' ')[0])) ||
-            (c.name && c.name.toLowerCase().includes(def.id === 'hosp-2' ? 'rudraksh' : 'shilpi'))
-          );
-          if (!matched) return def;
-          return {
-            ...def,
-            name: matched.name || def.name,
-            timing: matched.timings || def.timing,
-            phone: matched.phone || def.phone,
-            phoneRaw: `tel:${(matched.phone || def.phone).split(/[;,]/)[0].replace(/[^\d+]/g, '')}`,
-            address: matched.address || def.address,
-            locality: matched.city || def.locality,
-            image: matched.image || def.image,
-            mapIframe: matched.embedUrl || def.mapIframe,
-            mapUrl: (matched.mapUrl && !matched.mapUrl.includes('jbynbpoL5PcKca4Z9')) ? matched.mapUrl : def.mapUrl
-          };
-        });
-        setHospitalsList(mapped);
-      }
-    } catch (err) {}
+      setHospitalsList(data.map((clinic) => {
+        const type = clinic.type || clinic.tag || clinic.clinicId || "";
+        const isEvening = type.toLowerCase().includes("evening");
+        return {
+          ...clinic,
+          id: clinic._id || clinic.id,
+          name: clinic.name || clinic.title,
+          tagline: clinic.badgeLabel || clinic.tag,
+          type,
+          badgeColor: isEvening
+            ? "bg-blue-50 text-[#103F7C] border-blue-200"
+            : "bg-orange-50 text-orange-600 border-orange-200",
+          headerGradient: isEvening
+            ? "from-blue-600/10 via-sky-500/5 to-transparent"
+            : "from-orange-500/10 via-amber-500/5 to-transparent",
+          timing: clinic.timings || clinic.timing,
+          phone: clinic.phone || "",
+          phoneRaw: clinic.phone ? `tel:${clinic.phone.split(/[;,]/)[0].replace(/[^\d+]/g, "")}` : "",
+          locality: clinic.locality || clinic.city,
+          mapIframe: clinic.embedUrl || clinic.mapIframe,
+          facilities: Array.isArray(clinic.facilities) ? clinic.facilities : [],
+        };
+      }));
+    } catch (error) {
+      setHospitalsList([]);
+      setClinicsError(error instanceof Error ? error.message : "Unable to load clinic details.");
+    } finally {
+      setClinicsLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -330,7 +288,13 @@ export default function OurHospitals() {
               : "grid lg:grid-cols-2 gap-8 lg:gap-10 mb-16"
           }
         >
-          {filteredHospitals.map((hosp, idx) => {
+          {clinicsLoading ? (
+            <p className="col-span-full text-center text-sm text-slate-500">Loading clinic details...</p>
+          ) : clinicsError ? (
+            <p role="alert" className="col-span-full text-center text-sm text-red-700">{clinicsError}</p>
+          ) : filteredHospitals.length === 0 ? (
+            <p className="col-span-full text-center text-sm text-slate-500">No clinic locations are currently available.</p>
+          ) : filteredHospitals.map((hosp, idx) => {
             const isSingle = filteredHospitals.length === 1;
             const phoneNumbers = hosp.phone.split(/[;,]/).map((phone) => phone.trim()).filter(Boolean);
 
@@ -356,15 +320,17 @@ export default function OurHospitals() {
                         : "relative h-64 sm:h-72 w-full overflow-hidden bg-slate-100 group"
                     }
                   >
-                    <img
-                      src={hosp.image}
-                      alt={hosp.name}
-                      loading="lazy"
-                      className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.015]"
-                    />
+                    {hosp.image && (
+                      <img
+                        src={hosp.image}
+                        alt={hosp.name}
+                        loading="lazy"
+                        className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.015]"
+                      />
+                    )}
 
                     {/* Top Floating Badges (Only in Grid View to Keep Single Card Photo Clean like Reference Photo 2) */}
-                    {!isSingle && (
+                    {!isSingle && hosp.image && (
                       <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2 z-10">
                         <span
                           className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-md border ${hosp.badgeColor}`}

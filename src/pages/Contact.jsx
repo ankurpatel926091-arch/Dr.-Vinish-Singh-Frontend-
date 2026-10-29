@@ -60,39 +60,10 @@ const socialAccounts = [
 
 import { fetchPublicClinics } from "../api/clinicApi";
 
-const defaultHospitalLocations = [
-  {
-    id: "morning",
-    tag: "Morning OPD",
-    title: "Rudraksh IVF & Urology Centre",
-    subtitle: "Sharda Nagar, Lucknow",
-    timing: "10:00 AM – 03:00 PM (Mon – Sat)",
-    phone: "+91 72759 81480",
-    tel: "72759 81480",
-    address: "1/795, Ratan Khand, Ruchi Khand 1, Sharda Nagar, Lucknow",
-    mapUrl: "https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow",
-    embedUrl:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3561.428!2d80.9242723!3d26.7803631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bff149cec4b2d%3A0xe680ad74dd601b3b!2sDr.%20Vinish%20Singh%20%7C%20Rudraksh%20IVF%20%26%20Urology%20Centre!5e0!3m2!1sen!2sin",
-    badgeBg: "bg-orange-500 text-white",
-  },
-  {
-    id: "evening",
-    tag: "Evening OPD",
-    title: "Dr. Shilpi Maternity & Urology Centre",
-    subtitle: "Pakkabag, Ring Rd",
-    timing: "03:00 PM – 07:00 PM (Mon – Sat)",
-    phone: "+91 86048 91955",
-    tel: "8604891955",
-    address: "596Pb/1114/03, Ring Rd, Pakkabag, Lalabagh, Lucknow",
-    mapUrl: "https://maps.app.goo.gl/w9mqio5fe4Hj8KLm9",
-    embedUrl:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.200!2d80.8609337!3d26.8566859!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bff2d7be105cf%3A0x87c6db827648df8!2sDr.%20Shilpi%20Maternity%20%26%20Urology%20Centre!5e0!3m2!1sen!2sin",
-    badgeBg: "bg-[#103F7C] text-white",
-  },
-];
-
 export default function Contact() {
-  const [hospitalLocations, setHospitalLocations] = useState(defaultHospitalLocations);
+  const [hospitalLocations, setHospitalLocations] = useState([]);
+  const [clinicsLoading, setClinicsLoading] = useState(true);
+  const [clinicsError, setClinicsError] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -100,29 +71,28 @@ export default function Contact() {
   const [lastSubmittedPhone, setLastSubmittedPhone] = useState("");
 
   const loadClinics = useCallback(async () => {
+    setClinicsLoading(true);
+    setClinicsError("");
     try {
       const data = await fetchPublicClinics();
-      if (Array.isArray(data) && data.length > 0) {
-        const mapped = defaultHospitalLocations.map(def => {
-          const matched = data.find(c =>
-            (c.tag && c.tag.toLowerCase().includes(def.id)) ||
-            (c.name && c.name.toLowerCase().includes(def.id === 'morning' ? 'rudraksh' : 'shilpi'))
-          );
-          if (!matched) return def;
-          return {
-            ...def,
-            title: matched.name || def.title,
-            timing: matched.timings ? `${matched.timings} (Mon – Sat)` : def.timing,
-            phone: matched.phone || def.phone,
-            tel: (matched.phone || def.phone).replace(/\D/g, ''),
-            address: matched.address || def.address,
-            embedUrl: matched.embedUrl || def.embedUrl,
-            mapUrl: (matched.mapUrl && !matched.mapUrl.includes('jbynbpoL5PcKca4Z9')) ? matched.mapUrl : def.mapUrl
-          };
-        });
-        setHospitalLocations(mapped);
-      }
-    } catch (err) {}
+      setHospitalLocations(data.map((clinic) => ({
+        ...clinic,
+        id: clinic._id || clinic.id,
+        title: clinic.name || clinic.title,
+        subtitle: clinic.locality || clinic.city,
+        timing: clinic.timings || clinic.timing,
+        tel: (clinic.phone || "").replace(/\D/g, ""),
+        embedUrl: clinic.embedUrl || clinic.mapIframe,
+        badgeBg: (clinic.tag || "").toLowerCase().includes("evening")
+          ? "bg-[#103F7C] text-white"
+          : "bg-orange-500 text-white",
+      })));
+    } catch (error) {
+      setHospitalLocations([]);
+      setClinicsError(error instanceof Error ? error.message : "Unable to load clinic details.");
+    } finally {
+      setClinicsLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -213,7 +183,7 @@ export default function Contact() {
         return urls;
       };
 
-      const apiUrls = getApiUrls();
+      const apiUrls = Array.from(new Set(getApiUrls()));
       let savedToBackend = false;
 
       for (const baseUrl of apiUrls) {
@@ -236,29 +206,12 @@ export default function Contact() {
             savedToBackend = true;
             break;
           }
-        } catch (err) {
-          // Try next fallback URL
-        }
+        } catch (err) {}
       }
 
-      // Save contact enquiry to localStorage for Admin Panel sync
-      const newEnquiryRecord = {
-        id: Date.now(),
-        name: formData.name.trim(),
-        phone: formData.phone.trim(),
-        subject: formData.service || "General Inquiry",
-        service: formData.service || "General Inquiry",
-        message: formData.message ? formData.message.trim() : "Contact enquiry from website",
-        status: "New",
-        date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
-      };
-
-      try {
-        const existingEnquiries = JSON.parse(localStorage.getItem('dr_vinish_enquiries') || '[]');
-        localStorage.setItem('dr_vinish_enquiries', JSON.stringify([newEnquiryRecord, ...existingEnquiries]));
-        window.dispatchEvent(new Event('storage'));
-      } catch (err) {
-        console.warn('LocalStorage save enquiry error:', err);
+      if (!savedToBackend) {
+        setErrorMessage("We could not submit your message right now. Please try again or contact the clinic directly.");
+        return;
       }
 
       setSubmitted(true);
@@ -307,41 +260,24 @@ export default function Contact() {
 
         {/* ================= 3 Quick Contact Info Cards ================= */}
         <div className="grid card-grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-          {/* Card 1: Morning OPD Helpline */}
-          <ScrollReveal variant="scale-up" delay={100}>
-            <div className="bg-white rounded-2xl p-5 shadow-2xs border border-slate-200/80 flex items-center gap-3.5 hover:shadow-md transition-all h-full">
-              <div className="w-11 h-11 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">
-                <Phone size={20} />
-              </div>
-              <div>
-                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Morning OPD Helpline</p>
-                <a
-                  href="tel:72759 81480"
-                  className="text-sm font-extrabold text-slate-900 hover:text-orange-500 transition-colors"
+          {hospitalLocations.filter((hospital) => hospital.phone).map((hospital, index) => (
+            <ScrollReveal key={hospital.id} variant="scale-up" delay={100 + index * 100}>
+              <div className="bg-white rounded-2xl p-5 shadow-2xs border border-slate-200/80 flex items-center gap-3.5 hover:shadow-md transition-all h-full">
+                <div className="w-11 h-11 rounded-xl bg-blue-50 text-[#103F7C] flex items-center justify-center shrink-0">
+                  <Phone size={20} />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">{hospital.title}</p>
+                  <a
+                    href={`tel:${hospital.tel}`}
+                    className="text-sm font-extrabold text-slate-900 hover:text-[#103F7C] transition-colors truncate block"
                   >
-                    +91 72759 81480
-                </a>
+                    {hospital.phone}
+                  </a>
+                </div>
               </div>
-            </div>
-          </ScrollReveal>
-
-          {/* Card 2: Evening OPD Helpline */}
-          <ScrollReveal variant="scale-up" delay={200}>
-            <div className="bg-white rounded-2xl p-5 shadow-2xs border border-slate-200/80 flex items-center gap-3.5 hover:shadow-md transition-all h-full">
-              <div className="w-11 h-11 rounded-xl bg-blue-50 text-[#103F7C] flex items-center justify-center shrink-0">
-                <Phone size={20} />
-              </div>
-              <div className="min-w-0">
-                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Evening OPD Helpline</p>
-                <a
-                  href="tel:8604891955"
-                  className="text-sm font-extrabold text-slate-900 hover:text-[#103F7C] transition-colors truncate block"
-                >
-                  +91 86048 91955
-                </a>
-              </div>
-            </div>
-          </ScrollReveal>
+            </ScrollReveal>
+          ))}
 
           {/* Card 3: Official Email */}
           <ScrollReveal variant="scale-up" delay={300}>
@@ -367,7 +303,13 @@ export default function Contact() {
           
           {/* ================= Hospital Maps Cards (6 Cols) ================= */}
           <div className="lg:col-span-6 lg:col-start-1 lg:row-start-1 flex flex-col justify-between space-y-6">
-            {hospitalLocations.map((hospital, index) => (
+            {clinicsLoading ? (
+              <p className="text-sm text-slate-500">Loading clinic details...</p>
+            ) : clinicsError ? (
+              <p role="alert" className="text-sm text-red-700">{clinicsError}</p>
+            ) : hospitalLocations.length === 0 ? (
+              <p className="text-sm text-slate-500">No clinic locations are currently available.</p>
+            ) : hospitalLocations.map((hospital, index) => (
               <ScrollReveal key={hospital.id} variant="fade-up" delay={index * 150} className="flex-1 flex flex-col">
                 <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-all duration-300 border border-slate-200/90 flex-1 flex flex-col justify-between space-y-3">
                   
@@ -399,7 +341,7 @@ export default function Contact() {
                       </p>
                     </div>
 
-                    <a
+                      {hospital.mapUrl && <a
                       href={hospital.mapUrl}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -407,10 +349,11 @@ export default function Contact() {
                     >
                       <span>Open in Maps</span>
                       <ExternalLink size={12} />
-                    </a>
+                    </a>}
                   </div>
 
                   {/* Embedded Google Map (Clickable to open Google Maps in a new tab) */}
+                  {hospital.mapUrl && hospital.embedUrl && (
                   <a
                     href={hospital.mapUrl}
                     target="_blank"
@@ -436,6 +379,7 @@ export default function Contact() {
                       </span>
                     </div>
                   </a>
+                  )}
 
                   {/* Location & Helpline Details Footer */}
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1 text-xs">
@@ -443,13 +387,13 @@ export default function Contact() {
                       <MapPin size={13} className="inline text-orange-500 mr-1" />
                       {hospital.address}
                     </p>
-                    <a
+                    {hospital.phone && <a
                       href={`tel:${hospital.tel}`}
                       className="font-extrabold text-[#103F7C] hover:text-orange-600 hover:underline flex items-center gap-1 shrink-0"
                     >
                       <Phone size={13} />
                       <span>{hospital.phone}</span>
-                    </a>
+                    </a>}
                   </div>
 
                 </div>

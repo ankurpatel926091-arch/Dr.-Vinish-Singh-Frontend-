@@ -21,38 +21,6 @@ import PageHero from "../PageHero";
 import ScrollReveal from "../ScrollReveal/ScrollReveal";
 import { fetchPublicClinics } from "../../api/clinicApi";
 
-import hospitalBuildingImg from "../../assets/OurHospital/1.jpg";
-import shilpiBuildingImg from "../../assets/OurHospital/2.jpg";
-
-const defaultHospitalLocations = {
-  morning: {
-    id: "morning",
-    tag: "Morning OPD",
-    badgeLabel: "MORNING CONSULTATION CENTRE",
-    title: "Rudraksh IVF & Urology Centre",
-    timing: "10:00 AM – 03:00 PM",
-    phone: "+91 89600 68307, +91 72759 81480",
-    address: "1/795, Ratan Khand, Sharda Nagar, Lucknow",
-    image: hospitalBuildingImg,
-    mapUrl: "https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow",
-    embedUrl:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3561.428!2d80.9242723!3d26.7803631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bff149cec4b2d%3A0xe680ad74dd601b3b!2sDr.%20Vinish%20Singh%20%7C%20Rudraksh%20IVF%20%26%20Urology%20Centre!5e0!3m2!1sen!2sin",
-  },
-  evening: {
-    id: "evening",
-    tag: "Evening OPD",
-    badgeLabel: "EVENING CONSULTATION CENTRE",
-    title: "Dr. Shilpi Maternity & Urology Centre",
-    timing: "03:00 PM – 07:00 PM",
-    phone: "+91 86048 91955, +91 72759 81480",
-    address: "596Pb/1114/03, Ring Rd, Pakkabag, Lucknow",
-    image: shilpiBuildingImg,
-    mapUrl: "https://maps.app.goo.gl/w9mqio5fe4Hj8KLm9",
-    embedUrl:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3558.200!2d80.8609337!3d26.8566859!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bff2d7be105cf%3A0x87c6db827648df8!2sDr.%20Shilpi%20Maternity%20%26%20Urology%20Centre!5e0!3m2!1sen!2sin",
-  },
-};
-
 const getPhoneNumbers = (phone = "") =>
   phone.split(/[;,]/).map((number) => number.trim()).filter(Boolean);
 
@@ -61,39 +29,25 @@ const getPhoneHref = (phone) => `tel:${phone.replace(/[^\d+]/g, "")}`;
 export default function BookAppointment({ isHomePage = false }) {
   const navigate = useNavigate();
   const [modalImage, setModalImage] = useState(null);
-  const [hospitals, setHospitals] = useState(defaultHospitalLocations);
+  const [hospitals, setHospitals] = useState({ morning: null, evening: null });
+  const [clinicsLoading, setClinicsLoading] = useState(true);
+  const [clinicsError, setClinicsError] = useState("");
 
   const loadClinics = useCallback(async () => {
+    setClinicsLoading(true);
+    setClinicsError("");
     try {
       const data = await fetchPublicClinics();
-      if (Array.isArray(data) && data.length > 0) {
-        const morningData = data.find(c => (c.tag && c.tag.toLowerCase().includes('morning')) || (c.name && c.name.includes('Rudraksh'))) || data[0];
-        const eveningData = data.find(c => (c.tag && c.tag.toLowerCase().includes('evening')) || (c.name && c.name.includes('Shilpi'))) || data[1] || data[0];
-
-        setHospitals({
-          morning: {
-            ...defaultHospitalLocations.morning,
-            title: morningData.name || morningData.title || defaultHospitalLocations.morning.title,
-            timing: morningData.timings || morningData.timing || defaultHospitalLocations.morning.timing,
-            phone: morningData.phone || defaultHospitalLocations.morning.phone,
-            address: morningData.address || defaultHospitalLocations.morning.address,
-            image: morningData.image || defaultHospitalLocations.morning.image,
-            mapUrl: morningData.mapUrl || defaultHospitalLocations.morning.mapUrl,
-            embedUrl: morningData.embedUrl || defaultHospitalLocations.morning.embedUrl
-          },
-          evening: {
-            ...defaultHospitalLocations.evening,
-            title: eveningData.name || eveningData.title || defaultHospitalLocations.evening.title,
-            timing: eveningData.timings || eveningData.timing || defaultHospitalLocations.evening.timing,
-            phone: eveningData.phone || defaultHospitalLocations.evening.phone,
-            address: eveningData.address || defaultHospitalLocations.evening.address,
-            image: eveningData.image || defaultHospitalLocations.evening.image,
-            mapUrl: eveningData.mapUrl || defaultHospitalLocations.evening.mapUrl,
-            embedUrl: eveningData.embedUrl || defaultHospitalLocations.evening.embedUrl
-          }
-        });
-      }
-    } catch (err) {}
+      setHospitals({
+        morning: data.find((clinic) => (clinic.tag || clinic.type || clinic.clinicId || "").toLowerCase().includes("morning") || (clinic.name || "").toLowerCase().includes("rudraksh")),
+        evening: data.find((clinic) => (clinic.tag || clinic.type || clinic.clinicId || "").toLowerCase().includes("evening") || (clinic.name || "").toLowerCase().includes("shilpi")),
+      });
+    } catch (error) {
+      setHospitals({ morning: null, evening: null });
+      setClinicsError(error instanceof Error ? error.message : "Unable to load clinic details.");
+    } finally {
+      setClinicsLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -106,12 +60,12 @@ export default function BookAppointment({ isHomePage = false }) {
     };
   }, [loadClinics]);
 
-  const handleBookClick = (hospitalKey) => {
-    navigate(`/book-appointment?hospital=${hospitalKey}`);
+  const handleBookClick = (clinic) => {
+    navigate(`/book-appointment?hospital=${encodeURIComponent(clinic._id || clinic.id)}`);
   };
 
-  const morningPhoneNumbers = getPhoneNumbers(hospitals.morning.phone);
-  const eveningPhoneNumbers = getPhoneNumbers(hospitals.evening.phone);
+  const morningPhoneNumbers = getPhoneNumbers(hospitals.morning?.phone);
+  const eveningPhoneNumbers = getPhoneNumbers(hospitals.evening?.phone);
 
   return (
     <section id="book-appointment" className="bg-slate-50 font-sans py-8 sm:py-14 scroll-mt-28 sm:scroll-mt-36">
@@ -143,33 +97,38 @@ export default function BookAppointment({ isHomePage = false }) {
 
         {/* ================= 2 HOSPITAL CARDS GRID ================= */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+          {clinicsLoading && <p className="col-span-full text-center text-sm text-slate-500">Loading clinic details...</p>}
+          {clinicsError && <p role="alert" className="col-span-full text-center text-sm text-red-700">{clinicsError}</p>}
+          {!clinicsLoading && !clinicsError && !hospitals.morning && !hospitals.evening && (
+            <p className="col-span-full text-center text-sm text-slate-500">No clinic locations are currently available.</p>
+          )}
 
           {/* CARD 1: Rudraksh IVF & Urology Centre (Morning) */}
-          <ScrollReveal variant="fade-up" delay={100}>
+          {hospitals.morning && <ScrollReveal variant="fade-up" delay={100}>
             <div className="bg-white rounded-3xl border border-slate-200/90 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between h-full group">
               {/* Image Box */}
               <div className="relative h-52 sm:h-60 overflow-hidden bg-slate-100">
                 {/* Top-Left Badge */}
                 <div className="absolute top-3 left-3 z-10 px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-amber-700 text-[10px] sm:text-[11px] font-extrabold flex items-center gap-1.5 shadow-sm uppercase tracking-wider border border-amber-200/60">
                   <Sun size={13} className="text-amber-500 fill-amber-400" />
-                  <span>MORNING CONSULTATION CENTRE</span>
+                  <span>{hospitals.morning.badgeLabel || hospitals.morning.tag}</span>
                 </div>
 
                 {/* Top-Right Full Photo Button */}
-                <button
+                {hospitals.morning.image && <button
                   type="button"
-                  onClick={() => setModalImage(hospitals.morning.image || hospitalBuildingImg)}
+                  onClick={() => setModalImage(hospitals.morning.image)}
                   className="absolute top-3 right-3 z-10 px-3 py-1.5 rounded-full bg-white/90 hover:bg-white text-slate-800 text-[11px] font-bold flex items-center gap-1.5 shadow-sm transition-all cursor-pointer border border-slate-200"
                 >
                   <Maximize2 size={12} />
                   <span>Full Photo</span>
-                </button>
+                </button>}
 
-                <img
-                  src={hospitals.morning.image || hospitalBuildingImg}
-                  alt={hospitals.morning.title}
+                {hospitals.morning.image && <img
+                  src={hospitals.morning.image}
+                  alt={hospitals.morning.name || hospitals.morning.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+                />}
               </div>
 
               {/* Card Body */}
@@ -182,7 +141,7 @@ export default function BookAppointment({ isHomePage = false }) {
                       rel="noopener noreferrer"
                       className="hover:underline hover:text-orange-600 transition-colors inline-flex items-center gap-2"
                     >
-                      <span>{hospitals.morning.title}</span>
+                      <span>{hospitals.morning.name || hospitals.morning.title}</span>
                       <MapPin size={18} className="text-orange-500 shrink-0 inline" />
                     </a>
                   </h3>
@@ -199,13 +158,13 @@ export default function BookAppointment({ isHomePage = false }) {
                           OPD CONSULTATION HOURS
                         </p>
                         <p className="text-xs sm:text-sm font-extrabold text-[#0f2a4a]">
-                          {hospitals.morning.timing}
+                          {hospitals.morning.timings || hospitals.morning.timing}
                         </p>
                       </div>
                     </div>
 
                     {/* Helpline & Call Box */}
-                    <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-3 flex items-center justify-between gap-3">
+                    {hospitals.morning.phone && <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-3 flex items-center justify-between gap-3">
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-xl bg-blue-100/70 text-[#103F7C] flex items-center justify-center shrink-0">
                           <Phone size={16} />
@@ -235,20 +194,21 @@ export default function BookAppointment({ isHomePage = false }) {
                         <Phone size={12} />
                         <span>Call</span>
                       </a>
-                    </div>
+                    </div>}
                   </div>
 
                   {/* Embedded Google Map Location Frame (Clickable to open Google Maps) */}
+                  {(hospitals.morning.embedUrl || hospitals.morning.mapIframe) && (
                   <a
                     href={hospitals.morning.mapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    title={`Open ${hospitals.morning.title} in Google Maps`}
+                    title={`Open ${hospitals.morning.name || hospitals.morning.title} in Google Maps`}
                     className="mt-3 w-full h-40 sm:h-44 rounded-2xl overflow-hidden border border-slate-200/90 bg-slate-100 relative block group/map cursor-pointer"
                   >
                     <iframe
-                      title={`${hospitals.morning.title} Google Map Location`}
-                      src={hospitals.morning.embedUrl}
+                      title={`${hospitals.morning.name || hospitals.morning.title} Google Map Location`}
+                      src={hospitals.morning.embedUrl || hospitals.morning.mapIframe}
                       width="100%"
                       height="100%"
                       style={{ border: 0 }}
@@ -264,12 +224,13 @@ export default function BookAppointment({ isHomePage = false }) {
                       </span>
                     </div>
                   </a>
+                  )}
                 </div>
 
                 {/* Bottom CTA Button */}
                 <button
                   type="button"
-                  onClick={() => handleBookClick("morning")}
+                  onClick={() => handleBookClick(hospitals.morning)}
                   className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-sm sm:text-base shadow-md shadow-orange-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
                 >
                   <Calendar size={18} />
@@ -277,34 +238,34 @@ export default function BookAppointment({ isHomePage = false }) {
                 </button>
               </div>
             </div>
-          </ScrollReveal>
+          </ScrollReveal>}
 
           {/* CARD 2: Dr. Shilpi Maternity & Urology Centre (Evening) */}
-          <ScrollReveal variant="fade-up" delay={200}>
+          {hospitals.evening && <ScrollReveal variant="fade-up" delay={200}>
             <div className="bg-white rounded-3xl border border-slate-200/90 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between h-full group">
               {/* Image Box */}
               <div className="relative h-52 sm:h-60 overflow-hidden bg-slate-100">
                 {/* Top-Left Badge */}
                 <div className="absolute top-3 left-3 z-10 px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-blue-800 text-[10px] sm:text-[11px] font-extrabold flex items-center gap-1.5 shadow-sm uppercase tracking-wider border border-blue-200/60">
                   <Moon size={13} className="text-blue-600 fill-blue-500" />
-                  <span>EVENING CONSULTATION CENTRE</span>
+                  <span>{hospitals.evening.badgeLabel || hospitals.evening.tag}</span>
                 </div>
 
                 {/* Top-Right Full Photo Button */}
-                <button
+                {hospitals.evening.image && <button
                   type="button"
-                  onClick={() => setModalImage(hospitals.evening.image || shilpiBuildingImg)}
+                  onClick={() => setModalImage(hospitals.evening.image)}
                   className="absolute top-3 right-3 z-10 px-3 py-1.5 rounded-full bg-white/90 hover:bg-white text-slate-800 text-[11px] font-bold flex items-center gap-1.5 shadow-sm transition-all cursor-pointer border border-slate-200"
                 >
                   <Maximize2 size={12} />
                   <span>Full Photo</span>
-                </button>
+                </button>}
 
-                <img
-                  src={hospitals.evening.image || shilpiBuildingImg}
-                  alt={hospitals.evening.title}
+                {hospitals.evening.image && <img
+                  src={hospitals.evening.image}
+                  alt={hospitals.evening.name || hospitals.evening.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+                />}
               </div>
 
               {/* Card Body */}
@@ -317,7 +278,7 @@ export default function BookAppointment({ isHomePage = false }) {
                       rel="noopener noreferrer"
                       className="hover:underline hover:text-blue-700 transition-colors inline-flex items-center gap-2"
                     >
-                      <span>{hospitals.evening.title}</span>
+                      <span>{hospitals.evening.name || hospitals.evening.title}</span>
                       <MapPin size={18} className="text-[#103F7C] shrink-0 inline" />
                     </a>
                   </h3>
@@ -334,13 +295,13 @@ export default function BookAppointment({ isHomePage = false }) {
                           OPD CONSULTATION HOURS
                         </p>
                         <p className="text-xs sm:text-sm font-extrabold text-[#0f2a4a]">
-                          {hospitals.evening.timing}
+                          {hospitals.evening.timings || hospitals.evening.timing}
                         </p>
                       </div>
                     </div>
 
                     {/* Helpline & Call Box */}
-                    <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-3 flex items-center justify-between gap-3">
+                    {hospitals.evening.phone && <div className="bg-slate-50 border border-slate-200/80 rounded-2xl p-3 flex items-center justify-between gap-3">
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-xl bg-blue-100/70 text-[#103F7C] flex items-center justify-center shrink-0">
                           <Phone size={16} />
@@ -370,20 +331,21 @@ export default function BookAppointment({ isHomePage = false }) {
                         <Phone size={12} />
                         <span>Call</span>
                       </a>
-                    </div>
+                    </div>}
                   </div>
 
                   {/* Embedded Google Map Location Frame (Clickable to open Google Maps) */}
+                  {(hospitals.evening.embedUrl || hospitals.evening.mapIframe) && (
                   <a
                     href={hospitals.evening.mapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    title={`Open ${hospitals.evening.title} in Google Maps`}
+                    title={`Open ${hospitals.evening.name || hospitals.evening.title} in Google Maps`}
                     className="mt-3 w-full h-40 sm:h-44 rounded-2xl overflow-hidden border border-slate-200/90 bg-slate-100 relative block group/map cursor-pointer"
                   >
                     <iframe
-                      title={`${hospitals.evening.title} Google Map Location`}
-                      src={hospitals.evening.embedUrl}
+                      title={`${hospitals.evening.name || hospitals.evening.title} Google Map Location`}
+                      src={hospitals.evening.embedUrl || hospitals.evening.mapIframe}
                       width="100%"
                       height="100%"
                       style={{ border: 0 }}
@@ -399,12 +361,13 @@ export default function BookAppointment({ isHomePage = false }) {
                       </span>
                     </div>
                   </a>
+                  )}
                 </div>
 
                 {/* Bottom CTA Button */}
                 <button
                   type="button"
-                  onClick={() => handleBookClick("evening")}
+                  onClick={() => handleBookClick(hospitals.evening)}
                   className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-sm sm:text-base shadow-md shadow-orange-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
                 >
                   <Calendar size={18} />
@@ -412,7 +375,7 @@ export default function BookAppointment({ isHomePage = false }) {
                 </button>
               </div>
             </div>
-          </ScrollReveal>
+          </ScrollReveal>}
 
         </div>
 
