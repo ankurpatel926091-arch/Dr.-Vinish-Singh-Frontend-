@@ -108,12 +108,12 @@ export default function AndrologyService() {
             </div>
 
             {/* Confidentiality Commitment Banner */}
-            <div className="bg-gradient-to-r from-orange-500 to-amber-600 rounded-3xl p-6 sm:p-8 text-white shadow-xl">
+            <div className="bg-gradient-to-r from-orange-50 via-white to-blue-50 rounded-3xl p-6 sm:p-8 border border-orange-100 shadow-sm">
               <div className="flex items-center gap-3 mb-3">
-                <UserCheck size={24} className="text-white" />
-                <h3 className="text-xl font-extrabold">100% Patient Privacy &amp; Confidentiality</h3>
+                <UserCheck size={24} className="text-orange-600" />
+                <h3 className="text-xl font-extrabold text-slate-900">100% Patient Privacy &amp; Confidentiality</h3>
               </div>
-              <p className="text-xs sm:text-sm text-orange-50 font-normal leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed">
                 We understand that discussing sexual health and fertility concerns requires complete privacy. All consultations, clinical tests, and reports are handled with strict doctor-patient confidentiality.
               </p>
             </div>

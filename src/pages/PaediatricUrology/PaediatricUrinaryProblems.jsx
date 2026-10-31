@@ -14,8 +14,14 @@ export default function PaediatricUrinaryProblems() {
       overviewText="Paediatric urological problems range from bedwetting (nocturnal enuresis) and daytime wetting accidents to structural anomalies like Pelviureteric Junction (PUJ) obstruction and Vesicoureteral Reflux (VUR). Dr. Vinish Kumar Singh provides child-friendly, evidence-based diagnostic evaluation and advanced reconstructive laparoscopic pyeloplasty."
       treatmentCards={[
         {
+          id: "laparoscopic-pyeloplasty",
           title: "Laparoscopic / Robotic Pyeloplasty",
           desc: "Keyhole surgical correction of PUJ kidney blockage, restoring normal urine flow from kidney to bladder.",
+        },
+        {
+          id: "laparoscopic-ureteric-reimplantation",
+          title: "Laparoscopic Ureteric Reimplantation",
+          desc: "Minimally invasive reconstruction of the ureter-bladder junction to help correct urinary reflux.",
         },
         {
           title: "VUR Deflux Endoscopic Injection",

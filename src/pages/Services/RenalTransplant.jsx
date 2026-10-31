@@ -118,12 +118,12 @@ export default function RenalTransplantService() {
             </div>
 
             {/* Graft Protection Banner */}
-            <div className="bg-gradient-to-r from-emerald-700 via-teal-800 to-emerald-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl">
+            <div className="bg-gradient-to-r from-blue-50 via-white to-orange-50 rounded-3xl p-6 sm:p-8 border border-blue-100 shadow-sm">
               <div className="flex items-center gap-3 mb-3">
-                <Heart size={24} className="text-emerald-200" />
-                <h3 className="text-xl font-extrabold">Dedicated Long-term Graft Survival</h3>
+                <Heart size={24} className="text-[#103F7C]" />
+                <h3 className="text-xl font-extrabold text-slate-900">Dedicated Long-term Graft Survival</h3>
               </div>
-              <p className="text-xs sm:text-sm text-emerald-100 font-normal leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed">
                 Successful transplantation requires lifelong vigilance. Our dedicated post-transplant follow-up protocols focus on precise drug level monitoring, preventing acute rejection episodes, and maintaining optimal graft health for decades.
               </p>
             </div>

@@ -18,6 +18,7 @@ export default function BladderCancer() {
           desc: "Stitchless transurethral laser resection of bladder tumors preserving natural bladder integrity.",
         },
         {
+          id: "radical-cystectomy",
           title: "Radical Cystectomy & Orthotopic Neobladder",
           desc: "Complete removal of cancerous bladder with creation of a new intestine-derived bladder for normal voiding.",
         },

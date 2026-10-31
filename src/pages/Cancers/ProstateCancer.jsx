@@ -31,6 +31,7 @@ export default function ProstateCancer() {
       ]}
       detailedTreatments={[
         {
+          id: "laparoscopic-radical-prostatectomy",
           title: "Laparoscopic Radical Prostatectomy",
           desc: "Keyhole radical excision of prostate and pelvic lymph nodes with 3D visualization.",
           tag: "Keyhole Surgery",

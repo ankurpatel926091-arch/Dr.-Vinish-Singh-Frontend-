@@ -80,7 +80,13 @@ function CategoryMenuCard({
 
           const SubIcon = sub.icon;
           const isExplicitActive =
-            activeLabel && activeLabel.toLowerCase() === sub.label.toLowerCase();
+            sub.active !== false &&
+            activeLabel &&
+            activeLabel.toLowerCase() === sub.label.toLowerCase();
+          const [hrefPath, hrefHash] = sub.href.split("#", 2);
+          const isLocationActive =
+            location.pathname === hrefPath &&
+            (hrefHash ? location.hash === `#${hrefHash}` : !location.hash);
 
           return (
             <motion.div
@@ -93,9 +99,12 @@ function CategoryMenuCard({
             >
               <NavLink
                 to={sub.href}
+                end
                 onClick={onItemClick}
-                className={({ isActive }) => {
-                  const active = isActive || isExplicitActive || location.pathname === sub.href;
+                className={() => {
+                  const active =
+                    sub.active !== false &&
+                    (isLocationActive || (!location.hash && isExplicitActive));
                   return `group/item flex items-center justify-between gap-2.5 ${
                     compact ? "p-1" : "p-1.5 sm:p-2"
                   } rounded-xl sm:rounded-2xl transition-all duration-200 border ${

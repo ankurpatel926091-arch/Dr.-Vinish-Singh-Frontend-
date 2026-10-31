@@ -133,6 +133,7 @@ export default function OurHospitals() {
   const [copiedId, setCopiedId] = useState(null);
   const [lightboxImage, setLightboxImage] = useState(null);
   const [lightboxTitle, setLightboxTitle] = useState("");
+  const [showLightboxTitle, setShowLightboxTitle] = useState(true);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [rotation, setRotation] = useState(0);
 
@@ -186,9 +187,10 @@ export default function OurHospitals() {
     setTimeout(() => setCopiedId(null), 2500);
   };
 
-  const openLightbox = (image, title) => {
+  const openLightbox = (image, title, showTitle = true) => {
     setLightboxImage(image);
     setLightboxTitle(title);
+    setShowLightboxTitle(showTitle);
     setZoomLevel(1);
     setRotation(0);
   };
@@ -196,6 +198,7 @@ export default function OurHospitals() {
   const closeLightbox = useCallback(() => {
     setLightboxImage(null);
     setLightboxTitle("");
+    setShowLightboxTitle(true);
     setZoomLevel(1);
     setRotation(0);
   }, []);
@@ -217,11 +220,31 @@ export default function OurHospitals() {
 
   useEffect(() => {
     if (!lightboxImage) return;
+    const scrollY = window.scrollY;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+    const previousOverflow = document.body.style.overflow;
+    const previousPosition = document.body.style.position;
+    const previousTop = document.body.style.top;
+    const previousWidth = document.body.style.width;
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = "100%";
+
     const handleKeyDown = (e) => {
       if (e.key === "Escape") closeLightbox();
     };
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      document.documentElement.style.overflow = previousHtmlOverflow;
+      document.body.style.overflow = previousOverflow;
+      document.body.style.position = previousPosition;
+      document.body.style.top = previousTop;
+      document.body.style.width = previousWidth;
+      window.scrollTo(0, scrollY);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, [lightboxImage, closeLightbox]);
 
   const filteredHospitals = useMemo(() => {
@@ -519,17 +542,17 @@ export default function OurHospitals() {
                         href={hosp.mapUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full border border-slate-300 hover:border-[#103F7C] text-[#103F7C] hover:bg-[#103F7C] hover:text-white font-bold text-xs transition-all duration-300"
+                        className="min-w-0 flex-1 inline-flex items-center justify-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2.5 rounded-full border border-slate-300 hover:border-[#103F7C] text-[#103F7C] hover:bg-[#103F7C] hover:text-white font-bold text-[10px] sm:text-xs whitespace-nowrap transition-all duration-300"
                       >
-                        <Navigation size={14} />
+                        <Navigation size={12} className="shrink-0 sm:!w-[14px] sm:!h-[14px]" />
                         <span>Get Directions</span>
                       </a>
 
                       <NavLink
                         to="/appointment-request"
-                        className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-xs shadow-xs transition-all duration-300 hover:scale-102"
+                        className="min-w-0 flex-1 inline-flex items-center justify-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-2.5 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold text-[10px] sm:text-xs whitespace-nowrap shadow-xs transition-all duration-300 hover:scale-102"
                       >
-                        <Calendar size={14} />
+                        <Calendar size={12} className="shrink-0 sm:!w-[14px] sm:!h-[14px]" />
                         <span>Book Appointment</span>
                       </NavLink>
                     </div>
@@ -557,9 +580,14 @@ export default function OurHospitals() {
 
           <div className="grid card-grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {facilityGallery.map((fac, idx) => (
-              <ScrollReveal key={fac.id} variant="scale-up" delay={idx * 100}>
+              <ScrollReveal
+                key={fac.id}
+                variant="scale-up"
+                delay={idx * 100}
+                className={fac.id === "fac-1" ? "hidden sm:block" : ""}
+              >
                 <div
-                  onClick={() => openLightbox(fac.image, fac.title)}
+                  onClick={() => openLightbox(fac.image, fac.title, fac.id !== "fac-2")}
                   className="group cursor-pointer rounded-2xl overflow-hidden border border-slate-200/90 bg-white shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between h-full"
                 >
                   {/* Pure Bright Photo Box - NO BLACK GRADIENT OR SHADOW OVERLAY */}
@@ -698,12 +726,14 @@ export default function OurHospitals() {
           </div>
 
           {/* Title Banner */}
-          <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-50 bg-slate-900/80 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/15 text-white shadow-lg">
-            <h4 className="text-xs sm:text-sm font-bold flex items-center gap-2">
-              <Building2 size={16} className="text-orange-400" />
-              <span>{lightboxTitle}</span>
-            </h4>
-          </div>
+          {showLightboxTitle && (
+            <div className="hidden sm:block absolute top-16 left-4 right-4 sm:top-6 sm:left-6 sm:right-auto z-50 bg-slate-900/80 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/15 text-white shadow-lg">
+              <h4 className="text-xs sm:text-sm font-bold flex items-center justify-center sm:justify-start gap-2">
+                <Building2 size={16} className="shrink-0 text-orange-400" />
+                <span className="min-w-0 text-center sm:text-left break-words">{lightboxTitle}</span>
+              </h4>
+            </div>
+          )}
 
           {/* Centered Image */}
           <div

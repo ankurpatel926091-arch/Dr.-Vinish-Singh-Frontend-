@@ -34,7 +34,6 @@ import bannerImg from "../../assets/banner.png";
 
 export default function TermsOfService() {
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
     document.title = "Terms of Service | Dr. Vinish Kumar Singh Urology Clinic Lucknow";
   }, []);
 

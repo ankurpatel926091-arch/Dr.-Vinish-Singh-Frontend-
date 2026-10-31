@@ -140,8 +140,6 @@ export default function SmoothScroll({ children }) {
         if (stopTimer) clearTimeout(stopTimer);
         window.removeEventListener("load", handleImageLoad, true);
       };
-    } else {
-      lenisRef.current.scrollTo(0, { immediate: true });
     }
   }, [location.pathname, location.hash]);
 

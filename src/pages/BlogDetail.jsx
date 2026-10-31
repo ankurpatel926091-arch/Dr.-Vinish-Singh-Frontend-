@@ -50,7 +50,6 @@ export default function BlogDetail() {
   const [loadError, setLoadError] = useState("");
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
     let isMounted = true;
     setArticle(null);
     setAllBlogs([]);

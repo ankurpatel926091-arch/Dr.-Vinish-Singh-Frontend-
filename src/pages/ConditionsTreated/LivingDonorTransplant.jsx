@@ -16,6 +16,7 @@ export default function LivingDonorTransplant() {
       overviewText="Living donor kidney transplantation provides the best long-term outcomes and graft survival for patients with kidney failure. Dr. Vinish Kumar Singh performs laparoscopic keyhole donor nephrectomy—ensuring minimal pain and rapid 3-day recovery for the living donor—followed by precise vascular and ureteric reconstruction in the recipient."
       treatmentCards={[
         {
+          id: "laparoscopic-donor-nephrectomy",
           title: "Laparoscopic Donor Nephrectomy",
           desc: "Keyhole surgery for living donor kidney retrieval with small incision, quick healing, and high donor safety.",
         },

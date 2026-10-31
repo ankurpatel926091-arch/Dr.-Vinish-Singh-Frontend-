@@ -14,10 +14,12 @@ export default function KidneyCancer() {
       overviewText="Kidney cancer (Renal Cell Carcinoma) is often discovered incidentally on ultrasound or CT scans done for unrelated reasons. When detected early, nephron-sparing partial nephrectomy allows complete surgical removal of the tumor while preserving the rest of the healthy kidney. Dr. Vinish Kumar Singh specializes in laparoscopic partial and radical nephrectomy."
       treatmentCards={[
         {
+          id: "laparoscopic-partial-nephrectomy",
           title: "Laparoscopic Partial Nephrectomy",
           desc: "Keyhole tumor excision with real-time ultrasound guidance, preserving healthy kidney parenchyma.",
         },
         {
+          id: "laparoscopic-radical-nephrectomy",
           title: "Laparoscopic Radical Nephrectomy",
           desc: "Complete keyhole removal of kidney and surrounding Gerota's fascia for large renal masses.",
         },

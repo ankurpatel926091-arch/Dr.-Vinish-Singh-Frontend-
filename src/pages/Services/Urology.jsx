@@ -110,20 +110,20 @@ export default function UrologyService() {
             </ScrollReveal>
 
             {/* Patient Benefits Grid */}
-            <ScrollReveal variant="fade-up" delay={200} className="bg-gradient-to-r from-[#103F7C] to-blue-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl">
-              <h3 className="text-xl font-extrabold mb-4">Why Choose Laser Urology Care?</h3>
+            <ScrollReveal variant="fade-up" delay={200} className="bg-gradient-to-r from-blue-50 via-white to-orange-50 rounded-3xl p-6 sm:p-8 border border-blue-100 shadow-sm">
+              <h3 className="text-xl font-extrabold text-slate-900 mb-4">Why Choose Laser Urology Care?</h3>
               <div className="grid card-grid sm:grid-cols-3 gap-4 text-xs">
-                <div className="bg-white/10 p-4 rounded-2xl border border-white/10">
-                  <h4 className="font-bold text-orange-300 mb-1">Stitchless &amp; Painless</h4>
-                  <p className="text-blue-100 font-normal">Endoscopic laser fibers enter via natural passages with zero cuts.</p>
+                <div className="bg-white/80 p-4 rounded-2xl border border-slate-200/80">
+                  <h4 className="font-bold text-orange-600 mb-1">Stitchless &amp; Painless</h4>
+                  <p className="text-slate-600 font-normal">Endoscopic laser fibers enter via natural passages with zero cuts.</p>
                 </div>
-                <div className="bg-white/10 p-4 rounded-2xl border border-white/10">
-                  <h4 className="font-bold text-orange-300 mb-1">24-Hour Discharge</h4>
-                  <p className="text-blue-100 font-normal">Faster recovery timeline allowing patients to return home quickly.</p>
+                <div className="bg-white/80 p-4 rounded-2xl border border-slate-200/80">
+                  <h4 className="font-bold text-orange-600 mb-1">24-Hour Discharge</h4>
+                  <p className="text-slate-600 font-normal">Faster recovery timeline allowing patients to return home quickly.</p>
                 </div>
-                <div className="bg-white/10 p-4 rounded-2xl border border-white/10">
-                  <h4 className="font-bold text-orange-300 mb-1">High Success Rate</h4>
-                  <p className="text-blue-100 font-normal">Over 5,000+ successful laser stone &amp; prostate procedures executed.</p>
+                <div className="bg-white/80 p-4 rounded-2xl border border-slate-200/80">
+                  <h4 className="font-bold text-orange-600 mb-1">High Success Rate</h4>
+                  <p className="text-slate-600 font-normal">Over 5,000+ successful laser stone &amp; prostate procedures executed.</p>
                 </div>
               </div>
             </ScrollReveal>

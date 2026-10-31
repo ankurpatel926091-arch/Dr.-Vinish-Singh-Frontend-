@@ -316,7 +316,7 @@ export default function ConditionPage({
                 <div className="grid card-grid sm:grid-cols-2 gap-5 sm:gap-6 w-full">
                   {treatmentCards.map((card, idx) => (
                     <ScrollReveal key={idx} variant="scale-up" delay={idx * 70} className="h-full">
-                      <div className="bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/90 shadow-xs hover:border-[#103F7C] transition-all hover:shadow-md h-full group">
+                      <div id={card.id} className="scroll-mt-32 bg-white p-6 sm:p-7 rounded-2xl border border-slate-200/90 shadow-xs hover:border-[#103F7C] transition-all hover:shadow-md h-full group">
                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold mb-3 transition-transform group-hover:scale-110 ${idx % 2 === 0 ? "bg-blue-50 text-[#103F7C]" : "bg-orange-50 text-orange-600"}`}>
                           {idx % 2 === 0 ? <Activity size={20} /> : <ShieldCheck size={20} />}
                         </div>
@@ -340,7 +340,7 @@ export default function ConditionPage({
                 <div className="grid card-grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 w-full">
                   {detailedTreatments.map((item, idx) => (
                     <ScrollReveal key={idx} variant="fade-up" delay={idx * 60} className="h-full">
-                      <div className="relative bg-gradient-to-b from-white to-slate-50/70 p-6 sm:p-7 rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-lg hover:border-blue-300 transition-all duration-300 h-full flex flex-col justify-between group overflow-hidden">
+                      <div id={item.id} className="relative scroll-mt-32 bg-gradient-to-b from-white to-slate-50/70 p-6 sm:p-7 rounded-2xl border border-slate-200/90 shadow-xs hover:shadow-lg hover:border-blue-300 transition-all duration-300 h-full flex flex-col justify-between group overflow-hidden">
                         {/* Top Accent Gradient Pill Line */}
                         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-400 via-orange-500 to-[#103F7C] opacity-80 group-hover:opacity-100 transition-opacity" />
 
@@ -420,7 +420,7 @@ export default function ConditionPage({
 
       {/* Symptoms & Clinical Indicators Section */}
       {symptoms.length > 0 && (
-        <ScrollReveal variant="fade-up" className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-14">
+        <ScrollReveal variant="fade-up" className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-1">
           <div className="bg-white rounded-3xl p-5 sm:p-8 lg:p-14 text-slate-900 shadow-xl border border-slate-200/90 relative overflow-hidden">
             {/* Top Accent Gradient Line */}
             <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#103F7C] via-blue-600 to-orange-500" />

@@ -31,7 +31,6 @@ import bannerImg from "../../assets/banner.png";
 
 export default function PrivacyPolicy() {
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
     document.title = "Privacy Policy | Dr. Vinish Kumar Singh Urology Clinic Lucknow";
   }, []);
 

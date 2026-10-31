@@ -121,8 +121,10 @@ const navLinks = [
           { label: "Post-Transplant Care", href: "/conditions/post-transplant-care", icon: Stethoscope, iconBg: "bg-amber-50 text-amber-600" },
           { isHeader: true, heading: "Uro-Onco Surgery", icon: Target, iconBg: "bg-rose-50 text-rose-600 border border-rose-100" },
           { label: "Prostate Cancer Surgery", href: "/cancers/prostate-cancer", icon: ShieldAlert, iconBg: "bg-rose-50 text-rose-600" },
-          { label: "Radical Cystectomy", href: "/cancers/bladder-cancer", icon: Activity, iconBg: "bg-pink-50 text-pink-600" },
-          { label: "Radical Nephrectomy", href: "/cancers/kidney-cancer", icon: Target, iconBg: "bg-red-50 text-red-600" },
+          { label: "Radical Cystectomy", href: "/cancers/bladder-cancer", icon: Activity, iconBg: "bg-pink-50 text-pink-600", active: false },
+          { label: "Radical Nephrectomy", href: "/cancers/kidney-cancer", icon: Target, iconBg: "bg-red-50 text-red-600", active: false },
+          { label: "Kidney Cancer", href: "/cancers/kidney-cancer", icon: Target, iconBg: "bg-red-50 text-red-600" },
+          { label: "Bladder Cancer", href: "/cancers/bladder-cancer", icon: Activity, iconBg: "bg-pink-50 text-pink-600" },
         ],
       },
       {
@@ -134,14 +136,14 @@ const navLinks = [
           { label: "Phimosis", href: "/paediatric/phimosis", icon: Scissors, iconBg: "bg-cyan-50 text-cyan-600" },
           { label: "Hypospadias", href: "/paediatric/hypospadias", icon: Stethoscope, iconBg: "bg-blue-50 text-blue-600" },
           { label: "Paediatric Urinary", href: "/paediatric/urinary-problems", icon: Activity, iconBg: "bg-emerald-50 text-emerald-600" },
-          { isHeader: true, heading: "Urological Cancers", icon: ShieldAlert, iconBg: "bg-rose-50 text-rose-600 border border-rose-100" },
-          { label: "Prostate Cancer", href: "/cancers/prostate-cancer", icon: ShieldAlert, iconBg: "bg-rose-50 text-rose-600" },
-          { label: "Kidney Cancer", href: "/cancers/kidney-cancer", icon: Target, iconBg: "bg-red-50 text-red-600" },
-          { label: "Bladder Cancer", href: "/cancers/bladder-cancer", icon: Activity, iconBg: "bg-pink-50 text-pink-600" },
-          { isHeader: true, heading: "Laparoscopic", icon: Scissors, iconBg: "bg-blue-50 text-blue-600 border border-blue-100" },
-          { label: "Laparoscopic Radical Prostatectomy", href: "/cancers/prostate-cancer", icon: ShieldAlert, iconBg: "bg-rose-50 text-rose-600" },
-          { label: "Laparoscopic Partial Nephrectomy", href: "/cancers/kidney-cancer", icon: Target, iconBg: "bg-red-50 text-red-600" },
-          { label: "Laparoscopic Radical Cystectomy", href: "/cancers/bladder-cancer", icon: Activity, iconBg: "bg-pink-50 text-pink-600" },
+          { isHeader: true, heading: "Laparoscopic Surgery", icon: Scissors, iconBg: "bg-blue-50 text-blue-600 border border-blue-100" },
+          { label: "Laparoscopic Radical Prostatectomy", href: "/cancers/prostate-cancer#laparoscopic-radical-prostatectomy", icon: ShieldAlert, iconBg: "bg-rose-50 text-rose-600" },
+          { label: "Laparoscopic Partial Nephrectomy", href: "/cancers/kidney-cancer#laparoscopic-partial-nephrectomy", icon: Target, iconBg: "bg-red-50 text-red-600" },
+          { label: "Laparoscopic Radical Nephrectomy", href: "/cancers/kidney-cancer#laparoscopic-radical-nephrectomy", icon: Target, iconBg: "bg-red-50 text-red-600" },
+          { label: "Laparoscopic Radical Cystectomy", href: "/cancers/bladder-cancer#radical-cystectomy", icon: Activity, iconBg: "bg-pink-50 text-pink-600" },
+          { label: "Laparoscopic Donor Nephrectomy", href: "/conditions/living-donor-transplant#laparoscopic-donor-nephrectomy", icon: HeartPulse, iconBg: "bg-emerald-50 text-emerald-600" },
+          { label: "Laparoscopic Pyeloplasty", href: "/paediatric/urinary-problems#laparoscopic-pyeloplasty", icon: Activity, iconBg: "bg-cyan-50 text-cyan-600" },
+          { label: "Laparoscopic Ureteric Reimplantation", href: "/paediatric/urinary-problems#laparoscopic-ureteric-reimplantation", icon: Activity, iconBg: "bg-teal-50 text-teal-600" },
         ],
       },
     ],
@@ -354,10 +356,10 @@ function Navbar() {
                       </button>
                     )}
 
-                    {/* Dropdown Submenu Card */}
+                    {/* Dropdown Submenu Card (DESKTOP ONLY) */}
                     {item.dropdown && (
                       <div
-                        className={`absolute top-full pt-2 transition-all duration-300 ease-out z-50 ${
+                        className={`hidden lg:block absolute top-full pt-2 transition-all duration-300 ease-out z-50 ${
                           isHovered
                             ? "opacity-100 visible translate-y-0 pointer-events-auto"
                             : "opacity-0 invisible translate-y-3 pointer-events-none"
@@ -581,7 +583,7 @@ function Navbar() {
             {/* ================= Mobile Toggle Button ================= */}
             <button
               type="button"
-              className="nav-mobile-toggle p-2 rounded-xl text-slate-700 hover:text-[#103F7C] hover:bg-slate-100 transition-colors"
+              className="nav-mobile-toggle p-2 rounded-xl text-slate-700 hover:text-[#103F7C] hover:bg-slate-100 transition-colors lg:hidden"
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle navigation menu"
             >
@@ -598,11 +600,11 @@ function Navbar() {
               animate={{ height: "auto", opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.35, ease: [0.25, 1, 0.5, 1] }}
-              className="nav-mobile-drawer overflow-hidden"
+              className="nav-mobile-drawer overflow-hidden lg:hidden"
             >
               <div
-                data-lenis-prevent="true"
-                data-lenis-prevent-touch="true"
+                data-lenis-prevent
+                                data-lenis-prevent-touch="true"
                 className="bg-slate-50/95 backdrop-blur-md border-t border-slate-200/80 px-4 py-4 max-h-[calc(100dvh-120px)] overflow-y-auto overscroll-contain touch-pan-y custom-scrollbar"
               >
                 <div className="flex flex-col gap-2">
@@ -614,7 +616,7 @@ function Navbar() {
                       {/* Normal Link in Mobile */}
                       {!item.dropdown ? (
                         <NavLink
-                                                   to={item.href}
+                          to={item.href}
                           onClick={closeAllMenus}
                           className={({ isActive }) =>
                             `flex items-center justify-between px-4 py-3 text-[15px] font-semibold transition ${
@@ -658,19 +660,62 @@ function Navbar() {
                                 className="overflow-hidden border-t border-slate-100 bg-slate-50/50 p-2"
                               >
                                 {item.isMegaMenu ? (
-                                  <div className="flex flex-col gap-2 p-1">
+                                  /* ================= MOBILE MEGA MENU FIX ================= */
+                                  <div className="flex flex-col gap-3 p-1">
                                     {item.megaMenuColumns.map((col, cIdx) => (
-                                      <CategoryMenuCard
-                                        key={cIdx}
-                                        title={col.title}
-                                        icon={col.icon}
-                                        iconBg={col.iconBg}
-                                        items={col.items}
-                                        onItemClick={closeAllMenus}
-                                      />
+                                      <div key={cIdx} className="bg-white rounded-xl p-3 border border-slate-200/80 shadow-2xs space-y-2">
+                                        <div className="flex items-center justify-between pb-1.5 border-b border-slate-100">
+                                          <h5 className="font-extrabold text-[#103F7C] text-[13px]">
+                                            {col.title}
+                                          </h5>
+                                          <div className={`w-6 h-6 rounded-lg flex items-center justify-center ${col.iconBg}`}>
+                                            <col.icon size={13} />
+                                          </div>
+                                        </div>
+                                        <div className="grid grid-cols-1 gap-1.5">
+                                          {col.items.map((sub, sIdx) => {
+                                            if (sub.isHeader) {
+                                              return (
+                                                <div key={sIdx} className="mt-2 mb-1 px-1 flex items-center gap-1.5">
+                                                  <div className={`w-5 h-5 rounded-md flex items-center justify-center ${sub.iconBg}`}>
+                                                    <sub.icon size={11} />
+                                                  </div>
+                                                  <span className="text-[11px] font-extrabold text-slate-500 uppercase tracking-wider">
+                                                    {sub.heading}
+                                                  </span>
+                                                </div>
+                                              );
+                                            }
+                                            const SubIcon = sub.icon;
+                                            return (
+                                              <NavLink
+                                                key={sIdx}
+                                                to={sub.href}
+                                                end
+                                                onClick={closeAllMenus}
+                                                className={({ isActive }) =>
+                                                  `flex items-center gap-2.5 p-2 rounded-lg transition ${
+                                                    sub.active !== false && isActive
+                                                      ? "bg-blue-100/70 text-[#103F7C] font-semibold"
+                                                      : "bg-white hover:bg-slate-50 text-slate-700"
+                                                  }`
+                                                }
+                                              >
+                                                <div className={`w-7 h-7 rounded-md flex items-center justify-center shrink-0 ${sub.iconBg}`}>
+                                                  <SubIcon size={14} />
+                                                </div>
+                                                <div className="flex-1 min-w-0">
+                                                  <div className="text-xs font-bold text-slate-800 truncate">{sub.label}</div>
+                                                </div>
+                                              </NavLink>
+                                            );
+                                          })}
+                                        </div>
+                                      </div>
                                     ))}
                                   </div>
                                 ) : item.isUrologyGuide ? (
+                                  /* ================= MOBILE UROLOGY GUIDE FIX ================= */
                                   <div className="flex flex-col gap-3 p-1">
                                     {item.guideColumns.map((col, cIdx) => {
                                       const ColIcon = col.icon;
@@ -705,6 +750,11 @@ function Navbar() {
                                                   </div>
                                                   <div className="flex-1 min-w-0">
                                                     <div className="text-xs font-bold text-slate-800 truncate">{sub.label}</div>
+                                                    {sub.desc && (
+                                                      <div className="text-[9.5px] text-slate-500 truncate mt-0.5">
+                                                        {sub.desc}
+                                                      </div>
+                                                    )}
                                                   </div>
                                                 </NavLink>
                                               );
@@ -715,6 +765,7 @@ function Navbar() {
                                     })}
                                   </div>
                                 ) : (
+                                  /* ================= MOBILE STANDARD DROPDOWN ================= */
                                   <div className="flex flex-col gap-1.5">
                                     {item.children &&
                                       item.children.map((child) => {
@@ -760,7 +811,7 @@ function Navbar() {
                     </div>
                   ))}
 
-                  {/* Mobile CTA */}
+                  {/* Mobile CTA Button */}
                   <div className="pt-3 pb-2">
                     <a
                       href="/appointment-request"
@@ -782,4 +833,3 @@ function Navbar() {
 }
 
 export default React.memo(Navbar);
-                         
