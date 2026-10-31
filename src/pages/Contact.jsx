@@ -235,74 +235,18 @@ export default function Contact() {
     <div className="bg-slate-50/60 font-sans min-h-screen">
       {/* Top Banner Hero */}
       <PageHero
-        title="CONTACT & APPOINTMENTS"
-        subTitle="Connect with Our Care Team"
-        description="Schedule a consultation or find the contact details and directions for our specialised healthcare centres in Lucknow."
+        title="WE’RE HERE TO ASSIST YOU"
+        subTitle="How Can We Help?"
+        description="Contact our team for appointment scheduling, OPD timings, centre information, and consultation-related assistance."
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-        
-        {/* ================= Header Title & Subtitle Badge ================= */}
-        <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
-          <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#103F7C]/10 text-[#103F7C] border border-blue-200/80 text-xs font-extrabold uppercase tracking-wider mb-3">
-            <Sparkles size={13} className="text-orange-500" />
-            <span>WE’RE HERE TO ASSIST YOU</span>
-          </div>
-
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
-            How Can We Help?
-          </h1>
-
-          <p className="mt-3 text-sm sm:text-base text-slate-600 font-medium leading-relaxed">
-           Contact our team for appointment scheduling, OPD timings, centre information, and consultation-related assistance.
-          </p>
-        </ScrollReveal>
-
-        {/* ================= 3 Quick Contact Info Cards ================= */}
-        <div className="grid card-grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-          {hospitalLocations.filter((hospital) => hospital.phone).map((hospital, index) => (
-            <ScrollReveal key={hospital.id} variant="scale-up" delay={100 + index * 100}>
-              <div className="bg-white rounded-2xl p-5 shadow-2xs border border-slate-200/80 flex items-center gap-3.5 hover:shadow-md transition-all h-full">
-                <div className="w-11 h-11 rounded-xl bg-blue-50 text-[#103F7C] flex items-center justify-center shrink-0">
-                  <Phone size={20} />
-                </div>
-                <div className="min-w-0">
-                  <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">{hospital.title}</p>
-                  <a
-                    href={`tel:${hospital.tel}`}
-                    className="text-sm font-extrabold text-slate-900 hover:text-[#103F7C] transition-colors truncate block"
-                  >
-                    {hospital.phone}
-                  </a>
-                </div>
-              </div>
-            </ScrollReveal>
-          ))}
-
-          {/* Card 3: Official Email */}
-          <ScrollReveal variant="scale-up" delay={300}>
-            <div className="bg-white rounded-2xl p-5 shadow-2xs border border-slate-200/80 flex items-center gap-3.5 hover:shadow-md transition-all h-full">
-              <div className="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-                <Mail size={20} />
-              </div>
-              <div className="min-w-0">
-                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Email Inquiry</p>
-                <a
-                  href="mailto:info@urosurgeondrvinish.com"
-                  className="text-xs sm:text-sm font-extrabold text-slate-900 hover:text-orange-500 transition-colors truncate block"
-                >
-                  info@urosurgeondrvinish.com
-                </a>
-              </div>
-            </div>
-          </ScrollReveal>
-        </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
 
         {/* ================= Main 2-Column Grid (100% Equal Baseline Alignment) ================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
           
           {/* ================= Hospital Maps Cards (6 Cols) ================= */}
-          <div className="lg:col-span-6 lg:col-start-1 lg:row-start-1 flex flex-col justify-between space-y-6">
+          <div className="lg:col-span-6 lg:col-start-1 lg:row-start-1 flex flex-col gap-4">
             {clinicsLoading ? (
               <p className="text-sm text-slate-500">Loading clinic details...</p>
             ) : clinicsError ? (
@@ -382,18 +326,41 @@ export default function Contact() {
                   )}
 
                   {/* Location & Helpline Details Footer */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1 text-xs">
-                    <p className="text-slate-600 font-medium truncate max-w-sm">
-                      <MapPin size={13} className="inline text-orange-500 mr-1" />
-                      {hospital.address}
-                    </p>
-                    {hospital.phone && <a
-                      href={`tel:${hospital.tel}`}
-                      className="font-extrabold text-[#103F7C] hover:text-orange-600 hover:underline flex items-center gap-1 shrink-0"
-                    >
-                      <Phone size={13} />
-                      <span>{hospital.phone}</span>
-                    </a>}
+                  <div className="flex flex-col gap-2 pt-1 text-xs">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <p className="text-slate-600 font-medium truncate max-w-sm">
+                        <MapPin size={13} className="inline text-orange-500 mr-1" />
+                        {hospital.address}
+                      </p>
+                      {hospital.phone && (
+                        <div className="font-extrabold text-[#103F7C] flex items-center gap-1 shrink-0">
+                          <Phone size={13} />
+                          {hospital.phone.split(/[;,]/).map((phone, phoneIndex) => {
+                            const trimmedPhone = phone.trim();
+                            return (
+                              <React.Fragment key={`${trimmedPhone}-${phoneIndex}`}>
+                                {phoneIndex > 0 && <span>, </span>}
+                                <a
+                                  href={`tel:${trimmedPhone.replace(/\D/g, "")}`}
+                                  className="hover:text-orange-600 hover:underline"
+                                >
+                                  {trimmedPhone}
+                                </a>
+                              </React.Fragment>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                    {hospital.title?.toLowerCase().includes("rudraksh") && (
+                      <a
+                        href="mailto:info@urosurgeondrvinish.com"
+                        className="font-semibold text-[#103F7C] hover:text-orange-600 hover:underline flex items-center gap-1.5 break-all"
+                      >
+                        <Mail size={13} className="shrink-0" />
+                        <span>info@urosurgeondrvinish.com</span>
+                      </a>
+                    )}
                   </div>
 
                 </div>
@@ -402,7 +369,7 @@ export default function Contact() {
           </div>
 
           {/* ================= Form Card & Social Media Card (6 Cols) ================= */}
-          <div className="lg:col-span-6 lg:col-start-7 lg:row-start-1 flex flex-col justify-between space-y-6 order-first lg:order-none">
+          <div className="lg:col-span-6 lg:col-start-7 lg:row-start-1 flex flex-col gap-4 order-first lg:order-none">
             
             {/* Form Card */}
             <ScrollReveal variant="fade-up" delay={200}>
@@ -546,7 +513,7 @@ export default function Contact() {
             </ScrollReveal>
 
             {/* Social Media Connections Card */}
-            <ScrollReveal variant="fade-up" delay={300}>
+            <ScrollReveal variant="fade-up" delay={300} className="mt-1">
               <div className="bg-white rounded-2xl sm:rounded-3xl p-4 border border-slate-200/90 shadow-sm space-y-2">
                 <div className="flex items-center justify-between">
                   <h3 className="font-extrabold text-slate-900 text-sm flex items-center gap-2">
@@ -598,7 +565,7 @@ export default function Contact() {
         </div>
 
         {/* ================= Bottom Bar ================= */}
-        <ScrollReveal variant="fade-up" delay={350} className="mt-10 sm:mt-12">
+        <ScrollReveal variant="fade-up" delay={350} className="mt-4 sm:mt-5">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             
             {/* Left Button: Call Reception */}

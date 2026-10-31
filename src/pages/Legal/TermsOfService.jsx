@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import ClinicNameLinks from "../../components/ClinicNameLinks";
 import {
   FileText,
   AlertCircle,
@@ -130,7 +131,7 @@ export default function TermsOfService() {
                 ].map((item, idx) => (
                   <li key={idx} className="flex items-start gap-3 bg-slate-50/80 p-3 rounded-2xl border border-slate-100 text-xs sm:text-sm text-slate-700">
                     <CheckCircle2 size={16} className="text-orange-500 shrink-0 mt-0.5" />
-                    <span>{item}</span>
+                    <span><ClinicNameLinks>{item}</ClinicNameLinks></span>
                   </li>
                 ))}
               </ul>

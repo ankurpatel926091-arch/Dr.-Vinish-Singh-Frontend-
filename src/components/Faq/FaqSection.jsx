@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus, Sparkles, HelpCircle, PhoneCall, Calendar } from "lucide-react";
 import ScrollReveal from "../ScrollReveal/ScrollReveal";
+import ClinicNameLinks from "../ClinicNameLinks";
 
 const faqs = [
   {
@@ -120,7 +121,7 @@ export default function FaqSection() {
                         className="overflow-hidden"
                       >
                         <div className="px-5 sm:px-6 pb-6 pt-1 text-xs sm:text-sm md:text-base text-slate-600 leading-relaxed font-normal border-t border-slate-100 text-left">
-                          {faq.a}
+                          <ClinicNameLinks>{faq.a}</ClinicNameLinks>
                         </div>
                       </motion.div>
                     )}

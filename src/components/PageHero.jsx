@@ -1,6 +1,7 @@
 import { Sparkles } from 'lucide-react'
 import React from 'react'
 import ScrollReveal from './ScrollReveal/ScrollReveal'
+import ClinicNameLinks from './ClinicNameLinks'
 import urologyBanner from '../assets/page-hero-urology.svg'
 import kidneyBanner from '../assets/page-hero-kidney.svg'
 import prostateBanner from '../assets/page-hero-prostate.svg'
@@ -54,15 +55,15 @@ const PageHero = ({ title, subTitle, description }) => {
         <ScrollReveal variant="fade-up" className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 text-center sm:text-left">
           <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-slate-950/60 border border-white/20 text-orange-300 text-xs font-bold uppercase tracking-wider mb-2 backdrop-blur-md shadow-md">
             <Sparkles size={13} className="text-orange-400" />
-            <span>{title}</span>
+            <span><ClinicNameLinks>{title}</ClinicNameLinks></span>
           </div>
 
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.85)] leading-snug">
-            {subTitle}
+            <ClinicNameLinks>{subTitle}</ClinicNameLinks>
           </h1>
 
           <p className="mt-2 text-slate-100 text-xs sm:text-sm max-w-3xl font-medium leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
-            {description}
+            <ClinicNameLinks>{description}</ClinicNameLinks>
           </p>
         </ScrollReveal>
       </div>

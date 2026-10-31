@@ -1,4 +1,5 @@
 import React from "react";
+import ClinicNameLinks from "../ClinicNameLinks";
 
 export default function DoctorProfileCard() {
   return (
@@ -20,8 +21,8 @@ export default function DoctorProfileCard() {
 
         <p>
           With extensive <span className="font-medium text-slate-900">clinical, academic, and surgical experience</span>, Dr. Singh currently leads and manages two specialised healthcare facilities—
-          <span className="font-semibold text-[#103F7C]">Rudraksh IVF &amp; Urology Centre</span> and{" "}
-          <span className="font-semibold text-orange-600">Dr. Shilpi Maternity &amp; Urology Centre</span>—providing comprehensive treatment in urology, andrology, renal health, fertility, and maternity care.
+          <ClinicNameLinks className="font-semibold text-[#103F7C]">Rudraksh IVF &amp; Urology Centre</ClinicNameLinks> and{" "}
+          <ClinicNameLinks className="font-semibold text-orange-600">Dr. Shilpi Maternity &amp; Urology Centre</ClinicNameLinks>—providing comprehensive treatment in urology, andrology, renal health, fertility, and maternity care.
         </p>
 
         <p>

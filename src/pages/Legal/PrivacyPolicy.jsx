@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import ClinicNameLinks from "../../components/ClinicNameLinks";
 import {
   ShieldCheck,
   Lock,
@@ -93,7 +94,9 @@ export default function PrivacyPolicy() {
                     Your Privacy Matters To Us
                   </h2>
                   <p className="text-xs sm:text-sm text-blue-100 font-normal mt-2 leading-relaxed">
-                    This Privacy Policy explains how Dr. Vinish Kumar Singh, Rudraksh IVF &amp; Urology Centre, and Dr. Shilpi Maternity &amp; Urology Centre (“we”, “our”, or “us”) collect, use, store, and protect information submitted through this website.
+                    <ClinicNameLinks>
+                      This Privacy Policy explains how Dr. Vinish Kumar Singh, Rudraksh IVF &amp; Urology Centre, and Dr. Shilpi Maternity &amp; Urology Centre (“we”, “our”, or “us”) collect, use, store, and protect information submitted through this website.
+                    </ClinicNameLinks>
                   </p>
                   <p className="text-xs text-orange-200 font-medium mt-3 pt-3 border-t border-blue-700/50">
                     By accessing this website or submitting your information, you acknowledge the practices described in this Privacy Policy.
@@ -127,7 +130,7 @@ export default function PrivacyPolicy() {
                 ].map((item, idx) => (
                   <li key={idx} className="flex items-start gap-3 bg-slate-50/80 p-3 rounded-2xl border border-slate-100 text-xs sm:text-sm text-slate-700">
                     <CheckCircle2 size={16} className="text-orange-500 shrink-0 mt-0.5" />
-                    <span>{item}</span>
+                    <span><ClinicNameLinks>{item}</ClinicNameLinks></span>
                   </li>
                 ))}
               </ul>
@@ -246,7 +249,7 @@ export default function PrivacyPolicy() {
                 ].map((item, idx) => (
                   <li key={idx} className="flex items-start gap-3 bg-slate-50/80 p-3 rounded-2xl border border-slate-100 text-xs sm:text-sm text-slate-700">
                     <CheckCircle2 size={16} className="text-emerald-600 shrink-0 mt-0.5" />
-                    <span>{item}</span>
+                    <span><ClinicNameLinks>{item}</ClinicNameLinks></span>
                   </li>
                 ))}
               </ul>

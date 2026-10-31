@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import PageHero from "./PageHero";
 import CategoryMenuCard from "./CategoryMenuCard";
+import ClinicNameLinks from "./ClinicNameLinks";
 import ScrollReveal from "./ScrollReveal/ScrollReveal";
 import { conditionsMenuCategories, femaleUrologyGuideCategory, maleUrologyGuideCategory } from "../data/conditionsMenuData";
 
@@ -70,7 +71,7 @@ export default function ConditionPage({
     },
     {
       q: "Which hospitals does Dr. Vinish Kumar Singh consult at?",
-      a: "Dr. Vinish Kumar Singh conducts regular morning and evening OPD consultations at Rudraksh IVF & Shilpi Maternity in Lucknow.",
+      a: "Dr. Vinish Kumar Singh conducts regular morning and evening OPD consultations at Rudraksh IVF & Urology Centre and Dr. Shilpi Maternity & Urology Centre in Lucknow.",
     },
   ];
 
@@ -218,15 +219,26 @@ export default function ConditionPage({
                   <div className="flex items-start gap-2.5">
                     <Building2 size={15} className="text-orange-400 shrink-0 mt-0.5" />
                     <div>
-                      <a
-                        href="https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-bold text-white hover:text-orange-400 hover:underline inline-flex items-center gap-1 transition-colors"
-                      >
-                        <span>Rudraksh IVF &amp; Shilpi Maternity</span>
-                        <MapPin size={12} className="text-orange-400 shrink-0 inline" />
-                      </a>
+                      <div className="flex flex-wrap gap-x-2">
+                        <a
+                          href="https://www.google.com/maps?q=Rudraksh+IVF+And+Urology+Centre+Lucknow"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-bold text-white hover:text-orange-400 hover:underline inline-flex items-center gap-1 transition-colors"
+                        >
+                          Rudraksh IVF &amp; Urology Centre
+                          <MapPin size={12} className="text-orange-400 shrink-0 inline" />
+                        </a>
+                        <a
+                          href="https://maps.app.goo.gl/w9mqio5fe4Hj8KLm9"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-bold text-white hover:text-orange-400 hover:underline inline-flex items-center gap-1 transition-colors"
+                        >
+                          Dr. Shilpi Maternity &amp; Urology Centre
+                          <MapPin size={12} className="text-orange-400 shrink-0 inline" />
+                        </a>
+                      </div>
                       <span className="text-[11px] text-blue-200 block">OPD Consultation Clinics in Lucknow</span>
                     </div>
                   </div>
@@ -301,7 +313,7 @@ export default function ConditionPage({
               </h2>
 
               <p className="text-slate-700 text-sm sm:text-lg leading-relaxed font-normal">
-                {overviewText || description}
+                <ClinicNameLinks>{overviewText || description}</ClinicNameLinks>
               </p>
             </ScrollReveal>
 
@@ -352,7 +364,7 @@ export default function ConditionPage({
                             {item.title}
                           </h4>
                           <p className="text-xs sm:text-[13px] text-slate-600 mt-2 leading-relaxed font-normal text-left">
-                            {item.desc}
+                            <ClinicNameLinks>{item.desc}</ClinicNameLinks>
                           </p>
                         </div>
 
@@ -531,7 +543,7 @@ export default function ConditionPage({
                         className="overflow-hidden"
                       >
                         <div className="px-4 pb-4 sm:px-5 sm:pb-5 pt-1 text-slate-700 text-xs sm:text-sm leading-relaxed border-t border-blue-200/60 font-normal">
-                          {faq.a}
+                          <ClinicNameLinks>{faq.a}</ClinicNameLinks>
                         </div>
                       </motion.div>
                     )}

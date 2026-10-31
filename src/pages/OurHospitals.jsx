@@ -45,6 +45,7 @@ import otSuiteImg from "../assets/images/OT.png";
 import vinishImg from "../assets/images/img12.png";
 
 import { fetchPublicClinics } from "../api/clinicApi";
+import ClinicNameLinks from "../components/ClinicNameLinks";
 
 const facilityGallery = [
   {
@@ -296,8 +297,8 @@ export default function OurHospitals() {
                 }`}
               >
                 {tab === "All" && "🏥 All Consultation Centres"}
-                {tab === "Morning OPD" && "🌅 Rudraksh IVF & Urology Centre"}
-                {tab === "Evening OPD" && "🌆 Dr. Shilpi Maternity & Urology Centre"}
+                {tab === "Morning OPD" && "🌅 Morning OPD"}
+                {tab === "Evening OPD" && "🌆 Evening OPD"}
               </button>
             ))}
           </div>
@@ -614,7 +615,7 @@ export default function OurHospitals() {
                         {fac.title}
                       </h4>
                       <p className="text-xs text-slate-500 mt-1 font-medium truncate">
-                        {fac.subtitle}
+                        <ClinicNameLinks>{fac.subtitle}</ClinicNameLinks>
                       </p>
                     </div>
 
@@ -648,7 +649,9 @@ export default function OurHospitals() {
                       <IconComp size={20} />
                     </div>
                     <h4 className="font-bold text-sm text-white leading-snug">{item.title}</h4>
-                    <p className="text-xs text-blue-100 mt-1.5 leading-relaxed">{item.desc}</p>
+                    <p className="text-xs text-blue-100 mt-1.5 leading-relaxed">
+                      <ClinicNameLinks>{item.desc}</ClinicNameLinks>
+                    </p>
                   </div>
                 </div>
               );

@@ -128,7 +128,7 @@ const navLinks = [
         ],
       },
       {
-        title: "Paediatric & Cancers",
+        title: "Uro-Paediatric ",
         icon: UserCheck,
         iconBg: "bg-teal-50 text-teal-600 border border-teal-100",
         items: [

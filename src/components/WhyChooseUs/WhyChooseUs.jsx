@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import doctorImg from "../../assets/doctor.jpg";
 import ScrollReveal from "../ScrollReveal/ScrollReveal";
+import ClinicNameLinks from "../ClinicNameLinks";
 
 const whyUsFeatures = [
   {
@@ -206,7 +207,7 @@ export default function WhyChooseUs() {
                       </h3>
 
                       <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
-                        {item.desc}
+                        <ClinicNameLinks>{item.desc}</ClinicNameLinks>
                       </p>
                     </div>
 

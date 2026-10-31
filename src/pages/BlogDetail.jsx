@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { fetchBlogBySlug, fetchPublicBlogs } from "../api/blogApi";
 import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
+import ClinicNameLinks from "../components/ClinicNameLinks";
 import doctorThumb from "../assets/images/img12.png";
 
 const cleanBlogHtml = (html) => {
@@ -296,7 +297,7 @@ export default function BlogDetail() {
                         <span>{faq.q}</span>
                       </h4>
                       <p className="text-slate-600 text-xs sm:text-sm pl-5 font-normal leading-relaxed">
-                        {faq.a}
+                        <ClinicNameLinks>{faq.a}</ClinicNameLinks>
                       </p>
                     </div>
                   ))}

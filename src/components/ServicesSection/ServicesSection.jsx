@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import ClinicNameLinks from "../ClinicNameLinks";
 import {
   Stethoscope,
   Activity,
@@ -178,7 +179,7 @@ export default function ServicesSection() {
                       </p>
 
                       <p className="text-sm text-slate-600 leading-relaxed font-normal mb-6 flex-grow">
-                        {service.description}
+                        <ClinicNameLinks>{service.description}</ClinicNameLinks>
                       </p>
                     </div>
 
