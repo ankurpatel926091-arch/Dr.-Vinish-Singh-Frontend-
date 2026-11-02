@@ -57,27 +57,19 @@ export default function SmoothScroll({ children }) {
       const targetId = rawHash.replace(/[\s_]+/g, "-");
 
       let animFrameId;
-      let resizeObserver;
-      let stopTimer;
       let attempts = 0;
-      let lastTargetY = null;
-
-      const getElementDocumentTop = (el) => {
-        let top = 0;
-        let curr = el;
-        while (curr) {
-          top += curr.offsetTop;
-          curr = curr.offsetParent;
-        }
-        return top;
-      };
 
       const getTargetScrollY = (targetEl) => {
         const header = document.querySelector("header");
-        const headerHeight = header ? header.offsetHeight : 95;
-        const offset = -(headerHeight - 25);
-        const docTop = getElementDocumentTop(targetEl);
-        return Math.max(0, docTop + offset);
+        const headerHeight = header ? header.getBoundingClientRect().height : 0;
+        const scrollMargin = parseFloat(
+          window.getComputedStyle(targetEl).scrollMarginTop
+        ) || 0;
+        const offset = Math.max(scrollMargin, headerHeight + 16);
+        return Math.max(
+          0,
+          targetEl.getBoundingClientRect().top + window.scrollY - offset
+        );
       };
 
       const performScroll = () => {
@@ -94,51 +86,20 @@ export default function SmoothScroll({ children }) {
         }
 
         const currentTargetY = getTargetScrollY(targetEl);
-
-        // Only trigger scroll if initial call or document Y position shifted significantly (> 15px)
-        if (lastTargetY === null || Math.abs(currentTargetY - lastTargetY) > 15) {
-          lastTargetY = currentTargetY;
-          if (window.lenis) {
-            window.lenis.scrollTo(currentTargetY, {
-              duration: 0.6,
-              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            });
-          } else {
-            window.scrollTo({ top: currentTargetY, behavior: "smooth" });
-          }
+        if (window.lenis) {
+          window.lenis.scrollTo(currentTargetY, {
+            duration: 0.6,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          });
+        } else {
+          window.scrollTo({ top: currentTargetY, behavior: "smooth" });
         }
       };
 
-      // Initial scroll on next frame
       animFrameId = requestAnimationFrame(performScroll);
-
-      // Observe document layout size changes when lazy images load above
-      if (typeof ResizeObserver !== "undefined") {
-        let lastBodyHeight = document.body.scrollHeight;
-        resizeObserver = new ResizeObserver(() => {
-          const currentBodyHeight = document.body.scrollHeight;
-          if (Math.abs(currentBodyHeight - lastBodyHeight) > 15) {
-            lastBodyHeight = currentBodyHeight;
-            performScroll();
-          }
-        });
-        resizeObserver.observe(document.body);
-      }
-
-      // Listen for image load events
-      const handleImageLoad = () => performScroll();
-      window.addEventListener("load", handleImageLoad, true);
-
-      stopTimer = setTimeout(() => {
-        if (resizeObserver) resizeObserver.disconnect();
-        window.removeEventListener("load", handleImageLoad, true);
-      }, 2500);
 
       return () => {
         if (animFrameId) cancelAnimationFrame(animFrameId);
-        if (resizeObserver) resizeObserver.disconnect();
-        if (stopTimer) clearTimeout(stopTimer);
-        window.removeEventListener("load", handleImageLoad, true);
       };
     }
   }, [location.pathname, location.hash]);

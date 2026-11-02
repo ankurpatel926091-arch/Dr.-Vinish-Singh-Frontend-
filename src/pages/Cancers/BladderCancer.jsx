@@ -40,6 +40,7 @@ export default function BladderCancer() {
           tag: "Recurrence Prevention",
         },
         {
+          id: "laparoscopic-radical-cystectomy",
           title: "Radical Cystectomy with Ileal Conduit / Neobladder",
           desc: "Curative surgical excision for invasive cancer with continent or conduit urinary diversion.",
           tag: "Curative Oncology",

@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
+import isCurrentRoute from "../utils/isCurrentRoute";
 
 function CategoryMenuCard({
   title,
@@ -83,10 +84,7 @@ function CategoryMenuCard({
             sub.active !== false &&
             activeLabel &&
             activeLabel.toLowerCase() === sub.label.toLowerCase();
-          const [hrefPath, hrefHash] = sub.href.split("#", 2);
-          const isLocationActive =
-            location.pathname === hrefPath &&
-            (hrefHash ? location.hash === `#${hrefHash}` : !location.hash);
+          const isLocationActive = isCurrentRoute(sub.href, location);
 
           return (
             <motion.div

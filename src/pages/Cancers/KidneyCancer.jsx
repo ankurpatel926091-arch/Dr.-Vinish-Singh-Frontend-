@@ -36,6 +36,7 @@ export default function KidneyCancer() {
           tag: "Organ Preserving",
         },
         {
+          id: "radical-nephrectomy",
           title: "Radical Nephrectomy with Thrombus Excision",
           desc: "Advanced surgical removal of large kidney masses extending into the renal vein or inferior vena cava.",
           tag: "Complex Oncology",

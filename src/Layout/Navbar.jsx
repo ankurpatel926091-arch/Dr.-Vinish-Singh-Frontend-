@@ -3,6 +3,7 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaWhatsapp } from "react-icons/fa";
 import CategoryMenuCard from "../components/CategoryMenuCard";
+import isCurrentRoute from "../utils/isCurrentRoute";
 import {
   Menu,
   X,
@@ -121,8 +122,8 @@ const navLinks = [
           { label: "Post-Transplant Care", href: "/conditions/post-transplant-care", icon: Stethoscope, iconBg: "bg-amber-50 text-amber-600" },
           { isHeader: true, heading: "Uro-Onco Surgery", icon: Target, iconBg: "bg-rose-50 text-rose-600 border border-rose-100" },
           { label: "Prostate Cancer Surgery", href: "/cancers/prostate-cancer", icon: ShieldAlert, iconBg: "bg-rose-50 text-rose-600" },
-          { label: "Radical Cystectomy", href: "/cancers/bladder-cancer", icon: Activity, iconBg: "bg-pink-50 text-pink-600", active: false },
-          { label: "Radical Nephrectomy", href: "/cancers/kidney-cancer", icon: Target, iconBg: "bg-red-50 text-red-600", active: false },
+          { label: "Radical Cystectomy", href: "/cancers/bladder-cancer#radical-cystectomy", icon: Activity, iconBg: "bg-pink-50 text-pink-600" },
+          { label: "Radical Nephrectomy", href: "/cancers/kidney-cancer#radical-nephrectomy", icon: Target, iconBg: "bg-red-50 text-red-600" },
           { label: "Kidney Cancer", href: "/cancers/kidney-cancer", icon: Target, iconBg: "bg-red-50 text-red-600" },
           { label: "Bladder Cancer", href: "/cancers/bladder-cancer", icon: Activity, iconBg: "bg-pink-50 text-pink-600" },
         ],
@@ -140,7 +141,7 @@ const navLinks = [
           { label: "Laparoscopic Radical Prostatectomy", href: "/cancers/prostate-cancer#laparoscopic-radical-prostatectomy", icon: ShieldAlert, iconBg: "bg-rose-50 text-rose-600" },
           { label: "Laparoscopic Partial Nephrectomy", href: "/cancers/kidney-cancer#laparoscopic-partial-nephrectomy", icon: Target, iconBg: "bg-red-50 text-red-600" },
           { label: "Laparoscopic Radical Nephrectomy", href: "/cancers/kidney-cancer#laparoscopic-radical-nephrectomy", icon: Target, iconBg: "bg-red-50 text-red-600" },
-          { label: "Laparoscopic Radical Cystectomy", href: "/cancers/bladder-cancer#radical-cystectomy", icon: Activity, iconBg: "bg-pink-50 text-pink-600" },
+          { label: "Laparoscopic Radical Cystectomy", href: "/cancers/bladder-cancer#laparoscopic-radical-cystectomy", icon: Activity, iconBg: "bg-pink-50 text-pink-600" },
           { label: "Laparoscopic Donor Nephrectomy", href: "/conditions/living-donor-transplant#laparoscopic-donor-nephrectomy", icon: HeartPulse, iconBg: "bg-emerald-50 text-emerald-600" },
           { label: "Laparoscopic Pyeloplasty", href: "/paediatric/urinary-problems#laparoscopic-pyeloplasty", icon: Activity, iconBg: "bg-cyan-50 text-cyan-600" },
           { label: "Laparoscopic Ureteric Reimplantation", href: "/paediatric/urinary-problems#laparoscopic-ureteric-reimplantation", icon: Activity, iconBg: "bg-teal-50 text-teal-600" },
@@ -337,9 +338,8 @@ function Navbar() {
                       /* Dropdown Button */
                       <button
                         type="button"
-                        onClick={() =>
-                          setHoveredNav((prev) => (prev === item.label ? null : item.label))
-                        }
+                        onClick={() => setHoveredNav(item.label)}
+                        aria-expanded={isHovered}
                         className={`inline-flex items-center justify-center gap-1.5 px-2 py-1.5 text-[14.5px] lg:text-[15px] xl:text-[15.5px] font-semibold rounded-lg whitespace-nowrap transition-all duration-200 outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 cursor-pointer ${
                           isHovered
                             ? "text-[#103F7C] bg-slate-50"
@@ -413,9 +413,9 @@ function Navbar() {
                                         key={sIdx}
                                         to={sub.href}
                                         onClick={closeAllMenus}
-                                        className={({ isActive }) =>
+                                        className={() =>
                                           `group/item flex items-center gap-2 p-2 xl:p-2.5 rounded-xl transition-all duration-200 border ${
-                                            isActive
+                                            isCurrentRoute(sub.href, location)
                                               ? "bg-white text-[#103F7C] font-semibold shadow-xs border-blue-300 ring-1 ring-blue-500/10"
                                               : "bg-white hover:shadow-xs border border-slate-200/80 hover:border-blue-200 text-slate-800 hover:text-[#103F7C]"
                                           }`
@@ -460,9 +460,9 @@ function Navbar() {
                                         key={sIdx}
                                         to={sub.href}
                                         onClick={closeAllMenus}
-                                        className={({ isActive }) =>
+                                        className={() =>
                                           `group/item flex items-center gap-2 p-2 xl:p-2.5 rounded-xl transition-all duration-200 border ${
-                                            isActive
+                                            isCurrentRoute(sub.href, location)
                                               ? "bg-white text-[#103F7C] font-semibold shadow-xs border-blue-300 ring-1 ring-blue-500/10"
                                               : "bg-white hover:shadow-xs border border-slate-200/80 hover:border-blue-200 text-slate-800 hover:text-[#103F7C]"
                                           }`
@@ -525,9 +525,9 @@ function Navbar() {
                                       <NavLink
                                         to={child.href}
                                         onClick={closeAllMenus}
-                                        className={({ isActive }) =>
+                                        className={() =>
                                           `group/item flex items-center gap-2.5 p-2 rounded-xl transition-all duration-200 border ${
-                                            isActive
+                                            isCurrentRoute(child.href, location)
                                               ? "bg-blue-50 text-[#103F7C] font-semibold border-blue-200/80 shadow-sm"
                                               : "bg-white hover:bg-blue-50/70 border-transparent hover:border-blue-100 text-slate-800 hover:text-[#103F7C]"
                                           }`
@@ -635,9 +635,14 @@ function Navbar() {
                           <button
                             type="button"
                             onClick={() => toggleMobileDropdown(item.label)}
-                            className="w-full flex items-center justify-between px-4 py-3 text-[15px] font-semibold text-slate-800 hover:bg-slate-50 transition"
+                            aria-expanded={activeMobileDropdown === item.label}
+                            className={`w-full flex items-center justify-between px-4 py-3 text-[15px] font-semibold transition ${
+                              activeMobileDropdown === item.label
+                                ? "text-[#103F7C] bg-blue-50/60"
+                                : "text-slate-800 hover:bg-slate-50"
+                            }`}
                           >
-                            <span className="text-[#103F7C]">{item.label}</span>
+                            <span>{item.label}</span>
                             <ChevronDown
                               size={18}
                               className={`text-slate-500 transition-transform duration-300 ${
@@ -693,9 +698,9 @@ function Navbar() {
                                                 to={sub.href}
                                                 end
                                                 onClick={closeAllMenus}
-                                                className={({ isActive }) =>
+                                                className={() =>
                                                   `flex items-center gap-2.5 p-2 rounded-lg transition ${
-                                                    sub.active !== false && isActive
+                                                    sub.active !== false && isCurrentRoute(sub.href, location)
                                                       ? "bg-blue-100/70 text-[#103F7C] font-semibold"
                                                       : "bg-white hover:bg-slate-50 text-slate-700"
                                                   }`
@@ -737,9 +742,9 @@ function Navbar() {
                                                   key={sIdx}
                                                   to={sub.href}
                                                   onClick={closeAllMenus}
-                                                  className={({ isActive }) =>
+                                                  className={() =>
                                                     `flex items-center gap-2.5 p-2 rounded-lg transition ${
-                                                      isActive
+                                                    isCurrentRoute(sub.href, location)
                                                         ? "bg-blue-100/70 text-[#103F7C] font-semibold"
                                                         : "bg-white hover:bg-slate-50 text-slate-700"
                                                     }`
@@ -775,9 +780,9 @@ function Navbar() {
                                             key={child.label}
                                             to={child.href}
                                             onClick={closeAllMenus}
-                                            className={({ isActive }) =>
+                                            className={() =>
                                               `flex items-center gap-3 p-2.5 rounded-xl transition ${
-                                                isActive
+                                                isCurrentRoute(child.href, location)
                                                   ? "bg-blue-100/70 text-[#103F7C] font-semibold"
                                                   : "bg-[#fff] hover:bg-blue-50/60 text-slate-700"
                                               }`
