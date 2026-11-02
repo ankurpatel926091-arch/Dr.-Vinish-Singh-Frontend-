@@ -52,6 +52,12 @@ export default function SmoothScroll({ children }) {
   useEffect(() => {
     if (!lenisRef.current) return;
 
+    if (location.state?.scrollToTop) {
+      lenisRef.current.scrollTo(0, { immediate: true });
+      window.scrollTo(0, 0);
+      return;
+    }
+
     if (location.hash) {
       const rawHash = decodeURIComponent(location.hash.replace("#", "")).trim();
       const targetId = rawHash.replace(/[\s_]+/g, "-");
@@ -102,7 +108,7 @@ export default function SmoothScroll({ children }) {
         if (animFrameId) cancelAnimationFrame(animFrameId);
       };
     }
-  }, [location.pathname, location.hash]);
+  }, [location.key, location.pathname, location.hash, location.state]);
 
   return <>{children}</>;
 }

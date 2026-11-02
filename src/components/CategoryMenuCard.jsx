@@ -97,6 +97,7 @@ function CategoryMenuCard({
             >
               <NavLink
                 to={sub.href}
+                state={sub.href.includes("#") ? { scrollToTop: true } : undefined}
                 end
                 onClick={onItemClick}
                 className={() => {

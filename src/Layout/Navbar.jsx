@@ -696,6 +696,7 @@ function Navbar() {
                                               <NavLink
                                                 key={sIdx}
                                                 to={sub.href}
+                                                state={sub.href.includes("#") ? { scrollToTop: true } : undefined}
                                                 end
                                                 onClick={closeAllMenus}
                                                 className={() =>
