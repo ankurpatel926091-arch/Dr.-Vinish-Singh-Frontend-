@@ -35,8 +35,8 @@ import {
 } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
-import doctorImage from "../assets/doctor.jpg";
-import headerBannerBg from "../assets/About/About .png";
+import doctorImage from "../assets/doctor.webp";
+import headerBannerBg from "../assets/About/About .webp";
 import PageHero from "../components/PageHero";
 import DoctorProfileCard from "../components/DoctorProfileCard/DoctorProfileCard";
 import ScrollReveal from "../components/ScrollReveal/ScrollReveal";

@@ -19,7 +19,6 @@ import {
   Check,
   X,
 } from "lucide-react";
-import doctorImg from "../../assets/doctor.jpg";
 import ScrollReveal from "../ScrollReveal/ScrollReveal";
 import ClinicNameLinks from "../ClinicNameLinks";
 

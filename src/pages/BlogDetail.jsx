@@ -21,7 +21,7 @@ import {
 import { fetchBlogBySlug, fetchPublicBlogs } from "../api/blogApi";
 import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
 import ClinicNameLinks from "../components/ClinicNameLinks";
-import doctorThumb from "../assets/images/img12.png";
+import doctorThumb from "../assets/images/img12.webp";
 
 const cleanBlogHtml = (html) => {
   const parsedContent = new DOMParser().parseFromString(html, "text/html");

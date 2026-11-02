@@ -38,11 +38,11 @@ import hospitalBuildingImg from "../assets/OurHospital/1.jpg";
 import ourHospitalsBanner from "../assets/About/OurHospitals.png";
 
 // Facility Showcase Images
-import opdRoomImg from "../assets/images/opdRoom.png";
-import receptionImg from "../assets/images/Reception.png";
-import laserTechImg from "../assets/images/Laser Tech.png";
-import otSuiteImg from "../assets/images/OT.png";
-import vinishImg from "../assets/images/img12.png";
+import opdRoomImg from "../assets/images/opdRoom.webp";
+import receptionImg from "../assets/images/Reception.webp";
+import laserTechImg from "../assets/images/Laser Tech.webp";
+import otSuiteImg from "../assets/images/OT.webp";
+import vinishImg from "../assets/images/img12.webp";
 
 import { fetchPublicClinics } from "../api/clinicApi";
 import ClinicNameLinks from "../components/ClinicNameLinks";

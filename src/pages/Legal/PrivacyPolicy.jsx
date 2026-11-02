@@ -28,7 +28,7 @@ import {
 } from "lucide-react";
 import PageHero from "../../components/PageHero";
 import ScrollReveal from "../../components/ScrollReveal/ScrollReveal";
-import bannerImg from "../../assets/banner.png";
+import bannerImg from "../../assets/banner.webp";
 
 export default function PrivacyPolicy() {
   useEffect(() => {

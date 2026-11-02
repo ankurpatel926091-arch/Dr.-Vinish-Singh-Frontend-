@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dr-vinish-singh-frontend.vercel.app/sitemap.xml
+

@@ -12,12 +12,12 @@ import {
 } from "lucide-react";
 import ScrollReveal from "../ScrollReveal/ScrollReveal";
 
-import img1 from "../../assets/images/Img1.jpeg";
-import img2 from "../../assets/images/img3.jpeg";
-import img3 from "../../assets/images/img12.png";
-import img4 from "../../assets/OurHospital/1.jpg";
+import img1 from "../../assets/images/Img1.webp";
+import img2 from "../../assets/images/img3.webp";
+import img3 from "../../assets/images/img12.webp";
+import img4 from "../../assets/OurHospital/1.webp";
 import img5 from "../../assets/images/img15.webp";
-import img7 from "../../assets/images/img6.jpeg";
+import img7 from "../../assets/images/img6.webp";
 
 const galleryPhotos = [
   {
@@ -167,6 +167,10 @@ export default function HomeGallery() {
                   <img
                     src={item.image}
                     alt={item.title}
+                    width={400}
+                    height={320}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover object-[center_28%] transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
