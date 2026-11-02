@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import {
   Sparkles,
@@ -42,15 +42,19 @@ const SkeletonCard = () => (
 export default function Gallery() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [galleryList, setGalleryList] = useState([]);
+  const [categoryCounts, setCategoryCounts] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [brokenMedia, setBrokenMedia] = useState({});
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [rotation, setRotation] = useState(0);
+  const requestIdRef = useRef(0);
 
   // Fetch active gallery items from backend API
-  const fetchPublicGallery = useCallback(async () => {
+  const fetchPublicGallery = useCallback(async (category) => {
+    const requestId = ++requestIdRef.current;
+
     try {
       setLoading(true);
       setError(null);
@@ -77,13 +81,21 @@ export default function Gallery() {
         window.location.hostname !== "127.0.0.1";
 
       let fetchedData = null;
+      let fetchedCategoryCounts = null;
+      const errors = [];
 
       for (const baseUrl of apiUrls) {
         try {
-          const res = await fetch(`${baseUrl}/gallery/public`);
+          const query = new URLSearchParams({ category }).toString();
+          const res = await fetch(`${baseUrl}/gallery/public?${query}`);
           if (res.ok) {
             const json = await res.json();
-            if (json && json.success && Array.isArray(json.data)) {
+            if (
+              json?.success &&
+              Array.isArray(json.data) &&
+              json.categoryCounts &&
+              typeof json.categoryCounts === "object"
+            ) {
               fetchedData = json.data.map((item) => {
                 let mediaUrl = item.url;
                 if (typeof mediaUrl === "string") {
@@ -122,54 +134,47 @@ export default function Gallery() {
                   tag: item.tag || item.category,
                 };
               });
+              fetchedCategoryCounts = json.categoryCounts;
               break;
             }
+            errors.push(`${baseUrl} returned an invalid gallery response`);
+          } else {
+            errors.push(`${baseUrl} returned ${res.status}`);
           }
         } catch (err) {
-          // Try next URL fallback
+          errors.push(`${baseUrl}: ${err instanceof Error ? err.message : String(err)}`);
         }
       }
 
-      if (fetchedData !== null) {
+      if (requestId !== requestIdRef.current) return;
+
+      if (fetchedData !== null && fetchedCategoryCounts !== null) {
         setGalleryList(fetchedData);
+        setCategoryCounts(fetchedCategoryCounts);
       } else {
+        console.error("Public Gallery API Error:", errors.join("; "));
         setError("Unable to load gallery. Please try again.");
       }
     } catch (err) {
+      if (requestId !== requestIdRef.current) return;
       console.error("Public Gallery API Error:", err.message);
       setError("Unable to load gallery. Please try again.");
     } finally {
-      setLoading(false);
+      if (requestId === requestIdRef.current) {
+        setLoading(false);
+      }
     }
   }, []);
 
   useEffect(() => {
-    fetchPublicGallery();
+    fetchPublicGallery("All");
   }, [fetchPublicGallery]);
 
-  const filteredItems = useMemo(() => {
-    return galleryList.filter((item) => {
-      if (activeCategory === "All") return true;
-      if (activeCategory === "Photos") return item.type === "photo" || item.category === "Photos";
-      if (activeCategory === "Videos") return item.type === "video" || item.category === "Videos";
-      return item.category === activeCategory;
-    });
-  }, [galleryList, activeCategory]);
+  const filteredItems = galleryList;
 
   const getCategoryCount = useCallback(
-    (catName) => {
-      if (catName === "All") return galleryList.length;
-      if (catName === "Photos")
-        return galleryList.filter(
-          (item) => item.type === "photo" || item.category === "Photos"
-        ).length;
-      if (catName === "Videos")
-        return galleryList.filter(
-          (item) => item.type === "video" || item.category === "Videos"
-        ).length;
-      return galleryList.filter((item) => item.category === catName).length;
-    },
-    [galleryList]
+    (catName) => categoryCounts[catName] || 0,
+    [categoryCounts]
   );
 
   const handleMediaError = (id) => {
@@ -303,6 +308,7 @@ export default function Gallery() {
                 onClick={() => {
                   setActiveCategory(cat);
                   setSelectedIndex(null);
+                  fetchPublicGallery(cat);
                 }}
                 className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center gap-1.5 cursor-pointer ${
                   activeCategory === cat
@@ -344,7 +350,7 @@ export default function Gallery() {
             <p className="text-xs text-slate-500 mt-1 mb-4">{error}</p>
             <button
               type="button"
-              onClick={fetchPublicGallery}
+              onClick={() => fetchPublicGallery(activeCategory)}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#103F7C] hover:bg-blue-900 text-white text-xs font-bold transition-all shadow-md cursor-pointer"
             >
               <RefreshCw size={14} />
@@ -421,24 +427,11 @@ export default function Gallery() {
                         )}
                       </div>
 
-                      {/* Overlay Text */}
-                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10 flex items-end justify-between gap-3">
-                        <div className="min-w-0 flex-1">
-                          <h3 className="text-white font-bold text-xs sm:text-sm leading-snug truncate drop-shadow-sm">
-                            {item.title}
-                          </h3>
-                          <p className="text-[10px] text-orange-300 font-semibold uppercase tracking-wider mt-0.5 flex items-center gap-1">
-                            {item.type === "video" ? (
-                              <Video size={11} className="text-orange-400" />
-                            ) : (
-                              <ImageIcon size={11} className="text-blue-300" />
-                            )}
-                            <span>{item.category}</span>
-                          </p>
-                        </div>
-                        <span className="text-[9.5px] font-bold text-white bg-black/60 backdrop-blur-xs px-2.5 py-1 rounded-full border border-white/20 shrink-0 uppercase tracking-wider">
-                          {item.tag || item.category}
-                        </span>
+                      {/* Show only the media name on hover */}
+                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/90 to-transparent px-4 pt-10 pb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-10">
+                        <h3 className="text-white font-bold text-xs sm:text-sm leading-snug truncate drop-shadow-sm">
+                          {item.title}
+                        </h3>
                       </div>
                     </div>
                   </ScrollReveal>
