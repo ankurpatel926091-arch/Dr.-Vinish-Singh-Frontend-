@@ -47,11 +47,11 @@ function HeroSlider() {
 
   return (
     <section
-      className="relative w-full overflow-hidden flex flex-col lg:h-[calc(100vh-118px)]"
+      className="relative w-full overflow-hidden flex flex-col"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="relative w-full flex-1 min-h-0 aspect-[1920/650] lg:aspect-auto bg-[#0b3367] overflow-hidden">
+      <div className="relative w-full aspect-[1920/650] bg-[#0b3367] overflow-hidden">
         {slides.map((slide, i) => {
           if (i > 0 && !loadOthers && active === 0) return null;
           return (

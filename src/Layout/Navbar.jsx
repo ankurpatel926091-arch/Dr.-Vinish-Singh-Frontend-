@@ -302,8 +302,8 @@ function Navbar() {
                 <img
                   src={logo}
                   alt="Dr. Vinish Kumar Singh Logo"
-                  width={200}
-                  height={60}
+                  width={213}
+                  height={64}
                   fetchpriority="high"
                   className="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-102 max-h-full"
                 />
