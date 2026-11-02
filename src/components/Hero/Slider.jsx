@@ -23,9 +23,16 @@ const AUTOPLAY_MS = 3000;
 function HeroSlider() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [loadOthers, setLoadOthers] = useState(false);
   const timerRef = useRef(null);
 
+  useEffect(() => {
+    const t = setTimeout(() => setLoadOthers(true), 2500);
+    return () => clearTimeout(t);
+  }, []);
+
   const goTo = useCallback((i) => {
+    setLoadOthers(true);
     setActive((i + slides.length) % slides.length);
   }, []);
 
@@ -45,7 +52,9 @@ function HeroSlider() {
       onMouseLeave={() => setPaused(false)}
     >
       <div className="relative w-full flex-1 min-h-0 aspect-[1920/650] lg:aspect-auto bg-[#0b3367] overflow-hidden">
-        {slides.map((slide, i) => (
+        {slides.map((slide, i) => {
+          if (i > 0 && !loadOthers && active === 0) return null;
+          return (
           <div
             key={i}
             className="absolute inset-0 transition-opacity duration-700 ease-in-out"
@@ -81,7 +90,8 @@ function HeroSlider() {
               </div>
             )}
           </div>
-        ))}
+            );
+          })}
 
         {/* Prev / Next arrows */}
         <button
