@@ -9,6 +9,7 @@ export default defineConfig({
   },
   build: {
     target: 'es2020',
+    modulePreload: { polyfill: false },
     cssCodeSplit: true,
     chunkSizeWarningLimit: 800,
     rollupOptions: {
@@ -31,4 +32,3 @@ export default defineConfig({
     },
   },
 });
-

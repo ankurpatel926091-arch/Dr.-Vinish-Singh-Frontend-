@@ -26,7 +26,6 @@ function ScrollProgressBar() {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    updateScrollProgress();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
