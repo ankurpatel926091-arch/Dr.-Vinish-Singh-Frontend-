@@ -18,7 +18,7 @@ const slides = [
   { image: banner4, title: "", subtitle: "" },
 ];
 
-const AUTOPLAY_MS = 3000;
+const AUTOPLAY_MS = 6000;
 
 function HeroSlider() {
   const [active, setActive] = useState(0);
@@ -27,8 +27,16 @@ function HeroSlider() {
   const timerRef = useRef(null);
 
   useEffect(() => {
-    const t = setTimeout(() => setLoadOthers(true), 2500);
-    return () => clearTimeout(t);
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      const id = window.requestIdleCallback(() => {
+        const t = setTimeout(() => setLoadOthers(true), 5000);
+        return () => clearTimeout(t);
+      }, { timeout: 8000 });
+      return () => window.cancelIdleCallback(id);
+    } else {
+      const t = setTimeout(() => setLoadOthers(true), 6000);
+      return () => clearTimeout(t);
+    }
   }, []);
 
   const goTo = useCallback((i) => {
@@ -47,11 +55,12 @@ function HeroSlider() {
 
   return (
     <section
-      className="relative w-full overflow-hidden flex flex-col"
-      onMouseEnter={() => setPaused(true)}
+      className="relative w-full overflow-hidden flex flex-col lg:h-[calc(100vh-118px)]"
+      onMouseEnter={() => { setPaused(true); setLoadOthers(true); }}
+      onTouchStart={() => setLoadOthers(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="relative w-full aspect-[1920/650] bg-[#0b3367] overflow-hidden">
+      <div className="relative w-full flex-1 min-h-0 aspect-[1920/650] lg:aspect-auto bg-[#0b3367] overflow-hidden">
         {slides.map((slide, i) => {
           if (i > 0 && !loadOthers && active === 0) return null;
           return (

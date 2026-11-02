@@ -79,7 +79,7 @@ export default function InstagramFeed() {
 
             {/* Elfsight Live Widget */}
             <div
-              className="elfsight-app-7043849e-6810-4a13-b861-643061affb06 w-full"
+              className="elfsight-app-7043849e-6810-4a13-b861-643061affb06 w-full min-h-[280px]"
               data-elfsight-app-lazy
             ></div>
           </div>

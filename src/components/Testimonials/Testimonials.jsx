@@ -96,7 +96,7 @@ export default function Testimonials() {
         <ScrollReveal
           variant="fade-in"
           delay={150}
-          className="w-full mb-2 min-h-[100px]"
+          className="w-full mb-2 min-h-[260px] sm:min-h-[300px]"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
