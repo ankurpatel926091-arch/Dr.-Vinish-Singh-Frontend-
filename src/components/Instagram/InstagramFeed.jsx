@@ -1,11 +1,38 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { FaInstagram } from "react-icons/fa";
 import { ExternalLink, ArrowRight } from "lucide-react";
 import ScrollReveal from "../ScrollReveal/ScrollReveal";
 
 export default function InstagramFeed() {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          const scriptId = "elfsight-platform-script";
+          let script = document.getElementById(scriptId);
+          if (!script) {
+            script = document.createElement("script");
+            script.id = scriptId;
+            script.src = "https://static.elfsight.com/platform/platform.js";
+            script.async = true;
+            document.body.appendChild(script);
+          }
+        }
+      },
+      { rootMargin: "350px 0px" }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="py-14 lg:py-20 bg-slate-50/80 font-sans relative overflow-hidden border-t border-slate-200/70">
+    <section ref={sectionRef} className="py-14 lg:py-20 bg-slate-50/80 font-sans relative overflow-hidden border-t border-slate-200/70">
       {/* Background Decorative Soft Light Blobs */}
       <div className="absolute top-0 right-1/4 -mt-20 w-96 h-96 bg-blue-100/30 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-1/4 -mb-20 w-96 h-96 bg-orange-100/30 rounded-full blur-3xl pointer-events-none" />

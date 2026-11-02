@@ -12,7 +12,7 @@ import {
 import { FaXTwitter } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import codeCrafterLogo from "../assets/CLogoFooter.png";
-import logo from "../assets/logo.png";
+import logo from "../assets/logo.webp";
 
 const NAVY_DARK = "#072348";
 const ORANGE = "#F5821F";
@@ -56,6 +56,10 @@ function Footer() {
                 <img
                   src={logo}
                   alt="Dr. Vinish Kumar Singh Logo"
+                  width={200}
+                  height={56}
+                  loading="lazy"
+                  decoding="async"
                   className="h-12 sm:h-14 w-auto object-contain max-w-full"
                 />
               </div>
@@ -302,6 +306,10 @@ function Footer() {
               <img
                 src={codeCrafterLogo}
                 alt="CodeCrafter Web Solutions"
+                width={120}
+                height={36}
+                loading="lazy"
+                decoding="async"
                 className="h-8 sm:h-9 w-auto object-contain"
               />
             </a>

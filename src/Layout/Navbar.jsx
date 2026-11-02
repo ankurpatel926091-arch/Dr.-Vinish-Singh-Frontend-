@@ -36,7 +36,7 @@ import {
   Target,
 } from "lucide-react";
 
-import logo from "../assets/logo.png";
+import logo from "../assets/logo.webp";
 
 const navLinks = [
   {
@@ -302,6 +302,9 @@ function Navbar() {
                 <img
                   src={logo}
                   alt="Dr. Vinish Kumar Singh Logo"
+                  width={200}
+                  height={60}
+                  fetchpriority="high"
                   className="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-102 max-h-full"
                 />
               </div>

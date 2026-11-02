@@ -142,6 +142,7 @@ export default function BookAppointmentPage() {
 
   const [formData, setFormData] = useState({
     name: "",
+    age: "",
     phone: "",
     email: "",
     clinic: "",
@@ -418,6 +419,11 @@ export default function BookAppointmentPage() {
       } else if (!/^[6-9]\d{9}$/.test(digitsOnly)) {
         error = "Please enter a valid 10-digit Indian mobile number (e.g. 9876543210).";
       }
+    } else if (name === "age") {
+      const trimmed = String(value).trim();
+      if (trimmed && (!/^\d{1,3}$/.test(trimmed) || Number(trimmed) > 120)) {
+        error = "Age must be a whole number between 0 and 120.";
+      }
     } else if (name === "email") {
       const trimmed = value.trim();
       if (trimmed && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
@@ -433,6 +439,9 @@ export default function BookAppointmentPage() {
       return;
     }
     if (name === "phone" && value && !/^[0-9\s\-\+\(\)]*$/.test(value)) {
+      return;
+    }
+    if (name === "age" && value && !/^\d{0,3}$/.test(value)) {
       return;
     }
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -541,10 +550,11 @@ export default function BookAppointmentPage() {
     }
 
     const nameErr = validateField("name", formData.name);
+    const ageErr = validateField("age", formData.age);
     const phoneErr = validateField("phone", formData.phone);
 
-    if (nameErr || phoneErr) {
-      setFormErrors({ name: nameErr, phone: phoneErr });
+    if (nameErr || ageErr || phoneErr) {
+      setFormErrors({ name: nameErr, age: ageErr, phone: phoneErr });
       setErrorMessage("Please correct the highlighted errors before submitting.");
       return;
     }
@@ -586,6 +596,7 @@ export default function BookAppointmentPage() {
             signal: controller.signal,
             body: JSON.stringify({
               name: formData.name.trim(),
+              age: formData.age === "" ? null : Number(formData.age),
               phone: formData.phone.trim(),
               email: submittedUserEmail,
               clinic: formData.clinic,
@@ -617,6 +628,7 @@ export default function BookAppointmentPage() {
       setEmailSentStatus(isEmailDispatched || !!submittedUserEmail);
       setFormData({
         name: "",
+        age: "",
         phone: "",
         email: "",
         clinic: formData.clinic,
@@ -1105,7 +1117,7 @@ export default function BookAppointmentPage() {
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
                         <div>
                           <label className="block text-xs font-extrabold uppercase tracking-wider text-[#0f2a4a] mb-2">
                             Your Name *
@@ -1127,6 +1139,35 @@ export default function BookAppointmentPage() {
                             <p className="text-[11px] font-bold text-red-500 mt-1.5 flex items-center gap-1">
                               <AlertCircle size={12} className="shrink-0" />
                               <span>{formErrors.name}</span>
+                            </p>
+                          )}
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-extrabold uppercase tracking-wider text-[#0f2a4a] mb-2">
+                            Enter Age
+                          </label>
+                          <input
+                            type="number"
+                            name="age"
+                            min="0"
+                            max="120"
+                            step="1"
+                            inputMode="numeric"
+                            placeholder="Age in years"
+                            value={formData.age}
+                            onChange={handleInputChange}
+                            aria-describedby={formErrors.age ? "appointment-age-error" : undefined}
+                            className={`w-full px-4 py-3.5 rounded-2xl border text-base sm:text-sm font-semibold text-[#0f2a4a] focus:outline-none transition-all ${
+                              formErrors.age
+                                ? "border-red-400 focus:border-red-500 focus:ring-2 focus:ring-red-100 bg-red-50/20"
+                                : "border-slate-200 bg-slate-50/50 focus:bg-white focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500"
+                            }`}
+                          />
+                          {formErrors.age && (
+                            <p id="appointment-age-error" className="text-[11px] font-bold text-red-500 mt-1.5 flex items-center gap-1">
+                              <AlertCircle size={12} className="shrink-0" />
+                              <span>{formErrors.age}</span>
                             </p>
                           )}
                         </div>
@@ -1162,9 +1203,7 @@ export default function BookAppointmentPage() {
                             <label className="block text-xs font-extrabold uppercase tracking-wider text-[#0f2a4a]">
                               Gmail ID / Email Address
                             </label>
-                            <span className="text-[9px] sm:text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full shrink-0">
-                              Instant Email Alert
-                            </span>
+                            
                           </div>
                           <input
                             type="email"

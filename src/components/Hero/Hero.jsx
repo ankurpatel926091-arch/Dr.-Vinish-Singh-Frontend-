@@ -14,7 +14,7 @@ import {
   Briefcase,
   Building2,
 } from "lucide-react";
-import doctorImg from "../../assets/doctor.jpg";
+import doctorImg from "../../assets/doctor.webp";
 import ScrollReveal from "../ScrollReveal/ScrollReveal";
 import DoctorProfileCard from "../DoctorProfileCard/DoctorProfileCard";
 
@@ -39,6 +39,10 @@ export default function Hero() {
                     <img
                       src={doctorImg}
                       alt="Dr. Vinish Kumar Singh - Senior Urologist & Kidney Transplant Surgeon"
+                      width={480}
+                      height={560}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                     />
                     
@@ -108,15 +112,15 @@ export default function Hero() {
           {/* ================= RIGHT COLUMN: ABOUT DOCTOR BIO, QUALIFICATIONS & EXPERIENCE ================= */}
           <div className="lg:col-span-7 flex flex-col justify-between h-full order-1 lg:order-2">
             
-            {/* Headline */}
-            <ScrollReveal variant="fade-up" delay={150} className="shrink-0">
+            {/* Headline: Clean container for immediate LCP paint */}
+            <div className="shrink-0">
               <h1 className="text-2xl sm:text-3xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
                 Leading Consultant Urologist &amp;{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#103F7C] via-blue-700 to-orange-500">
                   Transplant Surgeon
                 </span>
               </h1>
-            </ScrollReveal>
+            </div>
 
             {/* Rich Doctor Profile Card */}
             <ScrollReveal variant="fade-up" delay={200} className="my-auto py-3 w-full flex-1 flex flex-col justify-center">

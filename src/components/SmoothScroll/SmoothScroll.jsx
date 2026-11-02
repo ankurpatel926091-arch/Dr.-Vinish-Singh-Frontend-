@@ -12,7 +12,19 @@ export default function SmoothScroll({ children }) {
       window.history.scrollRestoration = 'manual';
     }
 
-    // Initialize Lenis with smooth wheel and touch configuration
+    // Keep native hardware-accelerated touch scrolling on mobile devices to prevent main-thread blocking
+    const isMobile =
+      typeof window !== "undefined" &&
+      ("ontouchstart" in window || navigator.maxTouchPoints > 0 || window.innerWidth < 1024);
+
+    if (isMobile) {
+      if (!window.location.hash) {
+        window.scrollTo(0, 0);
+      }
+      return;
+    }
+
+    // Initialize Lenis with smooth wheel for desktop
     const lenis = new Lenis({
       duration: 0.7,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Smooth cubic easing

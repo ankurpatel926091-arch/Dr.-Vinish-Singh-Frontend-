@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import banner1 from "../../assets/banner-1-650.jpg";
-import banner2 from "../../assets/banner-2-650.jpg";
-import banner3 from "../../assets/banner-3-650.jpg";
-import banner4 from "../../assets/banner-4-650.jpg";
+import banner1 from "../../assets/banner-1-650.webp";
+import banner2 from "../../assets/banner-2-650.webp";
+import banner3 from "../../assets/banner-3-650.webp";
+import banner4 from "../../assets/banner-4-650.webp";
 
 import Marquee from "./Marquee";
 
@@ -12,7 +12,7 @@ const ORANGE = "#F5821F";
 
 // Just drop your full banner image path here for each slide.
 const slides = [
-  { image: banner2, title: "", subtitle: "" },
+  { image: "/hero-banner.webp", title: "", subtitle: "" },
   { image: banner3, title: "", subtitle: "" },
   { image: banner1, title: "", subtitle: "" },
   { image: banner4, title: "", subtitle: "" },
@@ -56,6 +56,8 @@ function HeroSlider() {
             <img
               src={slide.image}
               alt={slide.title || `Slide ${i + 1}`}
+              width={1920}
+              height={650}
               loading={i === 0 ? "eager" : "lazy"}
               fetchpriority={i === 0 ? "high" : "low"}
               decoding="async"

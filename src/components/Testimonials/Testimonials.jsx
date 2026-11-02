@@ -1,60 +1,66 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Star, Sparkles } from "lucide-react";
 import ScrollReveal from "../ScrollReveal/ScrollReveal";
 
 export default function Testimonials() {
   const [isPaused, setIsPaused] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
 
-  // Load Elfsight Platform Script
+  // Lazy-load Elfsight Platform Script only when section is near viewport
   useEffect(() => {
-    const scriptId = "elfsight-platform-script";
-    let script = document.getElementById(scriptId);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsVisible(true);
+          const scriptId = "elfsight-platform-script";
+          let script = document.getElementById(scriptId);
 
-    if (!script) {
-      script = document.createElement("script");
-      script.id = scriptId;
-      script.src = "https://static.elfsight.com/platform/platform.js";
-      script.async = true;
-      document.body.appendChild(script);
+          if (!script) {
+            script = document.createElement("script");
+            script.id = scriptId;
+            script.src = "https://static.elfsight.com/platform/platform.js";
+            script.async = true;
+            document.body.appendChild(script);
+          }
+        }
+      },
+      { rootMargin: "350px 0px" }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
     }
+
+    return () => observer.disconnect();
   }, []);
 
-  // Auto-move Elfsight Google Reviews Widget every 2 seconds (2000ms)
+  // Smooth slide advance without forced reflow thrashing
   useEffect(() => {
-    if (isPaused) return;
+    if (!isVisible || isPaused) return;
 
     const autoElfsight = setInterval(() => {
-      const elfsightContainer = document.querySelector(".elfsight-app-05ca5de9-0458-4330-937a-98a07e1a1bc1");
+      const elfsightContainer = document.querySelector(
+        ".elfsight-app-05ca5de9-0458-4330-937a-98a07e1a1bc1"
+      );
       if (!elfsightContainer) return;
 
-      const containerRect = elfsightContainer.getBoundingClientRect();
-      const allButtons = Array.from(
-        elfsightContainer.querySelectorAll("button, [role='button'], div[class*='arrow'], div[class*='Arrow'], [class*='Control']")
+      const nextBtn = elfsightContainer.querySelector(
+        "[class*='arrow-next'], [class*='ArrowNext'], [class*='Right'], [aria-label*='Next'], [aria-label*='next']"
       );
-
-      // Find the right-arrow button located on the right side of the Elfsight widget
-      const rightArrow = allButtons.find((btn) => {
-        const rect = btn.getBoundingClientRect();
-        return rect.width > 0 && rect.height > 0 && rect.left > containerRect.left + containerRect.width / 2;
-      });
-
-      if (rightArrow) {
-        rightArrow.click();
-      } else {
-        const nextBtn = elfsightContainer.querySelector(
-          "[class*='arrow-next'], [class*='ArrowNext'], [class*='right'], [class*='Right'], [aria-label*='Next'], [aria-label*='next']"
-        );
-        if (nextBtn) {
-          nextBtn.click();
-        }
+      if (nextBtn && typeof nextBtn.click === "function") {
+        nextBtn.click();
       }
-    }, 2000); // 2 Seconds
+    }, 3500);
 
     return () => clearInterval(autoElfsight);
-  }, [isPaused]);
+  }, [isVisible, isPaused]);
 
   return (
-    <section className="py-8 sm:py-10 lg:py-12 bg-gradient-to-b from-slate-50 via-white to-blue-50/30 overflow-hidden font-sans">
+    <section
+      ref={sectionRef}
+      className="py-8 sm:py-10 lg:py-12 bg-gradient-to-b from-slate-50 via-white to-blue-50/30 overflow-hidden font-sans"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         
         {/* Section Header (Centered Layout) */}
@@ -104,5 +110,3 @@ export default function Testimonials() {
     </section>
   );
 }
-
-
