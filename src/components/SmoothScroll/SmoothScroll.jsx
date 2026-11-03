@@ -24,38 +24,60 @@ export default function SmoothScroll({ children }) {
       return;
     }
 
-    // Initialize Lenis with smooth wheel for desktop
-    const lenis = new Lenis({
-      duration: 0.7,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Smooth cubic easing
-      orientation: "vertical",
-      gestureOrientation: "vertical",
-      smoothWheel: true,
-      wheelMultiplier: 1.2,
-      touchMultiplier: 1.8,
-      infinite: false,
-    });
+    // Initialize Lenis with smooth wheel for desktop (deferred to idle to eliminate main-thread blocking)
+    let lenis = null;
+    let animationFrameId = null;
+    let isInitialized = false;
 
-    lenisRef.current = lenis;
-    window.lenis = lenis;
+    const startLenis = () => {
+      if (isInitialized) return;
+      isInitialized = true;
 
-    // Reset scroll to top on initial page load / refresh if no hash
-    if (!window.location.hash) {
-      lenis.scrollTo(0, { immediate: true });
-      window.scrollTo(0, 0);
-    }
+      lenis = new Lenis({
+        duration: 0.7,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: "vertical",
+        gestureOrientation: "vertical",
+        smoothWheel: true,
+        wheelMultiplier: 1.2,
+        touchMultiplier: 1.8,
+        infinite: false,
+      });
 
-    let animationFrameId;
-    function raf(time) {
-      lenis.raf(time);
+      lenisRef.current = lenis;
+      window.lenis = lenis;
+
+      function raf(time) {
+        if (lenis) {
+          lenis.raf(time);
+          animationFrameId = requestAnimationFrame(raf);
+        }
+      }
       animationFrameId = requestAnimationFrame(raf);
-    }
+    };
 
-    animationFrameId = requestAnimationFrame(raf);
+    window.addEventListener("wheel", startLenis, { passive: true, once: true });
+    window.addEventListener("keydown", startLenis, { passive: true, once: true });
+
+    let idleTimer = null;
+    if ("requestIdleCallback" in window) {
+      idleTimer = window.requestIdleCallback(startLenis, { timeout: 1500 });
+    } else {
+      idleTimer = setTimeout(startLenis, 1000);
+    }
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
-      lenis.destroy();
+      window.removeEventListener("wheel", startLenis);
+      window.removeEventListener("keydown", startLenis);
+      if (idleTimer) {
+        if ("cancelIdleCallback" in window) {
+          window.cancelIdleCallback(idleTimer);
+        } else {
+          clearTimeout(idleTimer);
+        }
+      }
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      if (lenis) lenis.destroy();
       window.lenis = null;
     };
   }, []);
