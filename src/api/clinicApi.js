@@ -6,7 +6,9 @@ const getApiUrls = () => {
   if (import.meta.env.VITE_API_BASE_URL) {
     urls.push(import.meta.env.VITE_API_BASE_URL);
   }
-  urls.push("https://dr-vinish-backend.onrender.com/api");
+  if (!urls.length) {
+    urls.push("https://api.urosurgeondrvinish.com/api");
+  }
   return Array.from(new Set(urls));
 };
 

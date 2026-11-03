@@ -12,9 +12,12 @@ const getApiBaseUrls = () => {
     urls.push(import.meta.env.VITE_API_BASE_URL);
   }
 
-  urls.push('https://dr-vinish-backend.onrender.com/api');
+  // Only use main domain / env configured API
+  if (!urls.length) {
+    urls.push('https://api.urosurgeondrvinish.com/api');
+  }
 
-  return Array.from(new Set(urls));
+  return Array.from(new Set (urls));
 };
 
 const API_URLS = getApiBaseUrls();

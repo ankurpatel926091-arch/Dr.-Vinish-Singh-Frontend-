@@ -179,7 +179,9 @@ export default function Contact() {
         if (typeof window !== "undefined" && (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")) {
           urls.push("http://localhost:5000/api");
         }
-        urls.push("https://dr-vinish-backend.onrender.com/api");
+        if (!urls.length) {
+          urls.push("https://api.urosurgeondrvinish.com/api");
+        }
         return urls;
       };
 

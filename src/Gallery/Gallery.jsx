@@ -49,10 +49,20 @@ export default function Gallery() {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [rotation, setRotation] = useState(0);
+  
   const requestIdRef = useRef(0);
+  const abortControllerRef = useRef(null);
 
-  // Fetch active gallery items from backend API
+  // Fetch active gallery items from backend API (Backend Filtering)
   const fetchPublicGallery = useCallback(async (category) => {
+    // Cancel any ongoing request
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
     const requestId = ++requestIdRef.current;
 
     try {
@@ -70,7 +80,9 @@ export default function Gallery() {
         ) {
           urls.push("http://localhost:5000/api");
         }
-        urls.push("https://dr-vinish-backend.onrender.com/api");
+        if (!urls.length) {
+          urls.push("https://api.urosurgeondrvinish.com/api");
+        }
         return urls;
       };
 
@@ -86,8 +98,12 @@ export default function Gallery() {
 
       for (const baseUrl of apiUrls) {
         try {
+          // Backend ko category bhej rahe hain filter karne ke liye
           const query = new URLSearchParams({ category }).toString();
-          const res = await fetch(`${baseUrl}/gallery/public?${query}`);
+          const res = await fetch(`${baseUrl}/gallery/public?${query}`, {
+            signal: controller.signal,
+          });
+          
           if (res.ok) {
             const json = await res.json();
             if (
@@ -111,7 +127,7 @@ export default function Gallery() {
                       const pathWithSlash = cleanPath.startsWith("/")
                         ? cleanPath
                         : `/${cleanPath}`;
-                      mediaUrl = `https://dr-vinish-backend.onrender.com${pathWithSlash}`;
+                      mediaUrl = `${baseUrl.replace(/\/api$/, "")}${pathWithSlash}`;
                     }
                   } else if (
                     mediaUrl.startsWith("/uploads/") ||
@@ -142,6 +158,10 @@ export default function Gallery() {
             errors.push(`${baseUrl} returned ${res.status}`);
           }
         } catch (err) {
+          if (err.name === 'AbortError') {
+            // Request was aborted, silently return
+            return;
+          }
           errors.push(`${baseUrl}: ${err instanceof Error ? err.message : String(err)}`);
         }
       }
@@ -156,6 +176,7 @@ export default function Gallery() {
         setError("Unable to load gallery. Please try again.");
       }
     } catch (err) {
+      if (err.name === 'AbortError') return;
       if (requestId !== requestIdRef.current) return;
       console.error("Public Gallery API Error:", err.message);
       setError("Unable to load gallery. Please try again.");
@@ -170,6 +191,7 @@ export default function Gallery() {
     fetchPublicGallery("All");
   }, [fetchPublicGallery]);
 
+  // Backend already filtered data de raha hai, toh directly use karenge
   const filteredItems = galleryList;
 
   const getCategoryCount = useCallback(
@@ -230,7 +252,6 @@ export default function Gallery() {
     setRotation((prev) => (prev + 90) % 360);
   };
 
-  // Keyboard Arrow Keys Navigation & Escape to Close
   useEffect(() => {
     if (selectedIndex === null) return;
 
@@ -306,9 +327,12 @@ export default function Gallery() {
                 key={cat}
                 type="button"
                 onClick={() => {
+                  // Agar same category par click kiya toh API call na kare
+                  if (activeCategory === cat) return;
+                  
                   setActiveCategory(cat);
                   setSelectedIndex(null);
-                  fetchPublicGallery(cat);
+                  fetchPublicGallery(cat); // Backend API call with category filter
                 }}
                 className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center gap-1.5 cursor-pointer ${
                   activeCategory === cat
