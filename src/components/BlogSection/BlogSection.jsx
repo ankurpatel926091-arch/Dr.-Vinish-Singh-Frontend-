@@ -93,12 +93,18 @@ export default function BlogSection() {
             <span>UROLOGY INSIGHTS & RESOURCES</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
-           Expert Articles for Better Urological Health
+          <h2 className="text-[21px] min-[380px]:text-2xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            <span className="block sm:inline">Expert Articles for</span>{" "}
+            <span className="block sm:inline">Better Urological Health</span>
           </h2>
 
-          <p className="mt-2.5 text-sm sm:text-base text-slate-600 font-medium leading-relaxed max-w-2xl mx-auto">
-            Explore specialist-led insights on kidney stone prevention, prostate health, urinary conditions, male wellness, advanced treatments, and everyday urological care from Dr. Vinish Kumar Singh.
+          <p className="mt-2 text-xs sm:text-base text-slate-600 font-medium leading-relaxed max-w-2xl mx-auto">
+            <span className="sm:hidden">
+              Explore specialist-led insights on kidney stone prevention, prostate health, and advanced urological care.
+            </span>
+            <span className="hidden sm:inline">
+              Explore specialist-led insights on kidney stone prevention, prostate health, urinary conditions, male wellness, advanced treatments, and everyday urological care from Dr. Vinish Kumar Singh.
+            </span>
           </p>
 
           {/* Centered Navigation Buttons (Only if multiple pages exist) */}

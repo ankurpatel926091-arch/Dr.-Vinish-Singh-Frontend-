@@ -144,29 +144,37 @@ export default function WhyChooseUs() {
           </p>
 
           {/* Sub Navigation Switcher Tabs */}
-          <div className="flex items-center justify-center gap-3 mt-6">
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mt-6 max-w-md mx-auto px-1">
             <button
               type="button"
               onClick={() => setActiveTab("features")}
-              className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-extrabold transition-all duration-300 ${
+              className={`flex-1 sm:flex-initial min-h-[42px] px-3 sm:px-5 py-2 sm:py-2.5 rounded-full text-[11px] min-[380px]:text-xs sm:text-sm font-extrabold transition-all duration-200 text-center flex items-center justify-center gap-1.5 ${
                 activeTab === "features"
-                  ? "bg-[#103F7C] text-white shadow-md shadow-blue-900/20 scale-105"
+                  ? "bg-[#103F7C] text-white shadow-md shadow-blue-900/20"
                   : "bg-white text-slate-600 hover:text-[#103F7C] border border-slate-200"
               }`}
             >
-              ⭐ Key Clinical Advantages
+              <span>⭐</span>
+              <span>
+                <span className="sm:hidden">Clinical Advantages</span>
+                <span className="hidden sm:inline">Key Clinical Advantages</span>
+              </span>
             </button>
 
             <button
               type="button"
               onClick={() => setActiveTab("comparison")}
-              className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-extrabold transition-all duration-300 ${
+              className={`flex-1 sm:flex-initial min-h-[42px] px-3 sm:px-5 py-2 sm:py-2.5 rounded-full text-[11px] min-[380px]:text-xs sm:text-sm font-extrabold transition-all duration-200 text-center flex items-center justify-center gap-1.5 ${
                 activeTab === "comparison"
-                  ? "bg-[#103F7C] text-white shadow-md shadow-blue-900/20 scale-105"
+                  ? "bg-[#103F7C] text-white shadow-md shadow-blue-900/20"
                   : "bg-white text-slate-600 hover:text-[#103F7C] border border-slate-200"
               }`}
             >
-              ⚡ Laser vs. Conventional Surgery
+              <span>⚡</span>
+              <span>
+                <span className="sm:hidden">Laser vs Conventional</span>
+                <span className="hidden sm:inline">Laser vs. Conventional Surgery</span>
+              </span>
             </button>
           </div>
         </ScrollReveal>
@@ -274,50 +282,54 @@ export default function WhyChooseUs() {
         )}
 
         {/* Live Numbers & Stats Bar */}
-        <ScrollReveal variant="fade-up" delay={250} className="mt-14">
-          <div className="rounded-3xl bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#103F7C] text-white p-8 sm:p-10 shadow-xl">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-              <div className="p-3">
-                <h4 className="text-3xl sm:text-4xl font-extrabold text-orange-400">15+</h4>
-                <p className="text-xs sm:text-sm text-blue-100 mt-1 font-semibold">Years of Clinical Excellence</p>
-                <p className="text-[12px] text-blue-200/80 mt-0.5">Advanced Urological Care</p>
+        <ScrollReveal variant="fade-up" delay={250} className="mt-8 sm:mt-14">
+          <div className="rounded-3xl bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#103F7C] text-white p-5 sm:p-10 shadow-xl">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 text-center">
+              <div className="p-2 sm:p-3">
+                <h4 className="text-2xl sm:text-4xl font-extrabold text-orange-400">15+</h4>
+                <p className="text-xs sm:text-sm text-blue-100 mt-0.5 sm:mt-1 font-semibold">Years of Clinical Excellence</p>
+                <p className="text-[11px] sm:text-[12px] text-blue-200/80 mt-0.5">Advanced Urological Care</p>
               </div>
 
-              <div className="p-3 border-l border-white/15">
-                <h4 className="text-3xl sm:text-4xl font-extrabold text-orange-400">15000+</h4>
-                <p className="text-xs sm:text-sm text-blue-100 mt-1 font-semibold">Successful Procedures</p>
-                <p className="text-[12px] text-blue-200/80 mt-0.5">RIRS, HoLEP & PCNL</p>
+              <div className="p-2 sm:p-3 border-l border-white/15">
+                <h4 className="text-2xl sm:text-4xl font-extrabold text-orange-400">15000+</h4>
+                <p className="text-xs sm:text-sm text-blue-100 mt-0.5 sm:mt-1 font-semibold">Successful Procedures</p>
+                <p className="text-[11px] sm:text-[12px] text-blue-200/80 mt-0.5">RIRS, HoLEP &amp; PCNL</p>
               </div>
 
-              <div className="p-3 border-l border-white/15">
-                <h4 className="text-3xl sm:text-4xl font-extrabold text-orange-400">2</h4>
-                <p className="text-xs sm:text-sm text-blue-100 mt-1 font-semibold">Specialised Care Centres</p>
-                <p className="text-[12px] text-blue-200/80 mt-0.5">Comprehensive Urology Services</p>
+              <div className="p-2 sm:p-3 border-t sm:border-t-0 lg:border-l border-white/15">
+                <h4 className="text-2xl sm:text-4xl font-extrabold text-orange-400">2</h4>
+                <p className="text-xs sm:text-sm text-blue-100 mt-0.5 sm:mt-1 font-semibold">Specialised Care Centres</p>
+                <p className="text-[11px] sm:text-[12px] text-blue-200/80 mt-0.5">Comprehensive Urology Services</p>
               </div>
 
-              <div className="p-3 border-l border-white/15">
-                <h4 className="text-3xl sm:text-4xl font-extrabold text-orange-400">99%</h4>
-                <p className="text-xs sm:text-sm text-blue-100 mt-1 font-semibold">Patient Satisfaction</p>
-                <p className="text-[12px] text-blue-200/80 mt-0.5">Trusted & Ethical Care</p>
+              <div className="p-2 sm:p-3 border-t sm:border-t-0 border-l border-white/15">
+                <h4 className="text-2xl sm:text-4xl font-extrabold text-orange-400">99%</h4>
+                <p className="text-xs sm:text-sm text-blue-100 mt-0.5 sm:mt-1 font-semibold">Patient Satisfaction</p>
+                <p className="text-[11px] sm:text-[12px] text-blue-200/80 mt-0.5">Trusted &amp; Ethical Care</p>
               </div>
             </div>
 
             {/* CTA Row inside Bar */}
-            <div className="mt-8 pt-6 border-t border-white/15 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="mt-5 pt-4 sm:mt-8 sm:pt-6 border-t border-white/15 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
               <div className="flex items-center gap-3 text-center sm:text-left">
                 <div className="w-10 h-10 rounded-xl bg-orange-500/20 border border-orange-400/40 flex items-center justify-center shrink-0">
                   <Stethoscope size={20} className="text-orange-300" />
                 </div>
                 <div>
                   <h4 className="font-bold text-sm sm:text-base">Consult Dr. Vinish Kumar Singh</h4>
-                  <p className="text-xs text-blue-100">Receive expert guidance for kidney stones, prostate disorders, male health concerns, and complex urological conditions in Lucknow.</p>
+                  <p className="text-[11px] sm:text-xs text-blue-100 mt-1 leading-relaxed">
+                    <span className="block sm:inline">Receive expert guidance for kidney stones,</span>{" "}
+                    <span className="block sm:inline">prostate disorders, male health concerns,</span>{" "}
+                    <span className="block sm:inline">and complex urological conditions in Lucknow.</span>
+                  </p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 shrink-0">
+              <div className="flex items-center gap-3 shrink-0 w-full sm:w-auto">
                 <NavLink
                   to="/appointment-request"
-                  className="px-6 py-2.5 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs sm:text-sm shadow-md transition-all hover:scale-105 flex items-center gap-1.5"
+                  className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs sm:text-sm shadow-md transition-all hover:scale-105 flex items-center justify-center gap-1.5"
                 >
                   <Calendar size={15} />
                   <span>Book Appointment</span>

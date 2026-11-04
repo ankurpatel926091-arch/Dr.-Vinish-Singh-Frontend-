@@ -61,10 +61,10 @@ export default function FaqSection() {
             <span>PATIENT INFORMATION</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+          <h2 className="text-[19px] min-[375px]:text-[22px] min-[410px]:text-2xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight whitespace-nowrap sm:whitespace-normal">
             Frequently Asked Questions
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-slate-600 font-medium leading-relaxed max-w-2xl mx-auto">
+          <p className="mt-2.5 text-xs sm:text-base text-slate-600 font-medium leading-relaxed max-w-2xl mx-auto">
             Find clear answers to common questions about urological conditions, consultations, diagnostic procedures, laser treatments, surgery, recovery, and appointment scheduling.
           </p>
         </ScrollReveal>
@@ -133,33 +133,49 @@ export default function FaqSection() {
         </div>
 
         {/* Bottom CTA Banner (Replaces Clinic Card utility with clean interactive helper) */}
-        <ScrollReveal variant="fade-up" delay={200} className="w-full mt-12">
-          <div className="bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#103F7C] text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-4 text-center sm:text-left">
-              <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/20 text-orange-400">
-                <HelpCircle size={26} />
+        <ScrollReveal variant="fade-up" delay={200} className="w-full mt-8 sm:mt-12">
+          <div className="bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#103F7C] text-white rounded-3xl p-5 sm:p-8 shadow-xl relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 text-left w-full sm:w-auto">
+              {/* Mobile Header Row: Icon aligned with Heading */}
+              <div className="flex items-center gap-3 shrink-0">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/10 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/20 text-orange-400">
+                  <HelpCircle size={22} className="sm:hidden" />
+                  <HelpCircle size={26} className="hidden sm:block" />
+                </div>
+                <h3 className="sm:hidden text-base font-extrabold text-white leading-snug">
+                  Still Have Questions?
+                </h3>
               </div>
+
               <div>
-                <h3 className="text-lg sm:text-xl font-extrabold text-white">Still Have Questions?</h3>
-                <p className="text-xs sm:text-sm text-blue-100 mt-1 max-w-md">
-                  Our medical coordination team is available to assist you with urology-related queries, appointment scheduling, and consultation guidance. </p>
+                <h3 className="hidden sm:block text-lg sm:text-xl font-extrabold text-white">
+                  Still Have Questions?
+                </h3>
+                <p className="text-[11px] sm:text-sm text-blue-100 mt-1 sm:mt-0.5 font-normal leading-relaxed text-left max-w-md">
+                  <span className="sm:hidden">
+                    Our team is available to assist you with urology queries, appointment scheduling, and guidance.
+                  </span>
+                  <span className="hidden sm:inline">
+                    Our medical coordination team is available to assist you with urology-related queries, appointment scheduling, and consultation guidance.
+                  </span>
+                </p>
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-center gap-3 w-full sm:w-auto shrink-0">
+            <div className="flex items-center justify-center gap-2 sm:gap-3 w-full sm:w-auto shrink-0">
               <a
                 href="tel:+917275981480"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs sm:text-sm shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] w-full sm:w-auto"
+                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3 sm:px-5 py-2.5 sm:py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-[11px] min-[380px]:text-xs sm:text-sm shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
               >
-                <PhoneCall size={16} />
-                <span>Call +91 &nbsp;72759 81480</span>
+                <PhoneCall size={14} className="shrink-0" />
+                <span className="truncate">Call +91 72759 81480</span>
               </a>
               <a
                 href="/appointment-request"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-white/15 hover:bg-white/25 text-white font-semibold text-xs sm:text-sm border border-white/20 backdrop-blur-sm transition-all duration-300 w-full sm:w-auto"
+                className="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-3 sm:px-5 py-2.5 sm:py-3 rounded-full bg-white/15 hover:bg-white/25 text-white font-semibold text-[11px] min-[380px]:text-xs sm:text-sm border border-white/20 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] whitespace-nowrap"
               >
-                <Calendar size={16} />
-                <span> Book an Appointment</span>
+                <Calendar size={14} className="shrink-0" />
+                <span className="truncate">Book Appointment</span>
               </a>
             </div>
           </div>

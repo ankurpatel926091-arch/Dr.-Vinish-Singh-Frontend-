@@ -20,7 +20,7 @@ import DoctorProfileCard from "../DoctorProfileCard/DoctorProfileCard";
 
 export default function Hero() {
   return (
-    <section className="relative bg-gradient-to-b from-slate-50 via-white to-blue-50/40 py-8 sm:py-10 lg:py-12 overflow-hidden font-sans">
+    <section className="relative bg-gradient-to-b from-slate-50 via-white to-blue-50/40 pt-6 pb-4 sm:py-10 lg:py-12 overflow-hidden font-sans">
       
       {/* Background Subtle Gradient Blurs */}
       <div className="absolute left-0 top-1/4 w-96 h-96 bg-blue-200/25 rounded-full blur-3xl pointer-events-none" />
@@ -114,9 +114,9 @@ export default function Hero() {
             
             {/* Headline: Clean container for immediate LCP paint */}
             <div className="shrink-0">
-              <h1 className="text-2xl sm:text-3xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                Leading Consultant Urologist &amp;{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#103F7C] via-blue-700 to-orange-500">
+              <h1 className="text-[19px] min-[375px]:text-[21px] sm:text-3xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-snug sm:leading-tight">
+                <span className="block sm:inline">Leading Consultant Urologist &amp;</span>{" "}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#103F7C] via-blue-700 to-orange-500 whitespace-nowrap sm:whitespace-normal">
                   Transplant Surgeon
                 </span>
               </h1>
@@ -128,34 +128,34 @@ export default function Hero() {
             </ScrollReveal>
 
             {/* 3 Quick Highlight Stats */}
-            <div className="mt-auto pt-2 grid grid-cols-3 gap-3 w-full shrink-0">
+            <div className="mt-auto pt-2 grid grid-cols-3 gap-2 sm:gap-3 w-full shrink-0">
               <ScrollReveal variant="scale-up" delay={450} className="h-full">
-                <div className="bg-white rounded-2xl p-3 border border-slate-200/80 shadow-2xs h-full">
-                  <div className="flex items-center gap-1.5 mb-0.5">
+                <div className="bg-white rounded-2xl p-2 sm:p-3 border border-slate-200/80 shadow-2xs h-full">
+                  <div className="flex items-center gap-1 sm:gap-1.5 mb-0.5">
                     <Award size={16} className="text-orange-500 shrink-0" />
-                    <h4 className="text-base sm:text-lg font-extrabold text-[#103F7C]">15+ Yrs</h4>
+                    <h4 className="text-sm min-[390px]:text-base sm:text-lg font-extrabold text-[#103F7C] whitespace-nowrap">15+ Yrs</h4>
                   </div>
-                  <p className="text-[10px] font-medium text-slate-500">Excellence</p>
+                  <p className="text-[10px] font-medium text-slate-500 truncate">Excellence</p>
                 </div>
               </ScrollReveal>
 
               <ScrollReveal variant="scale-up" delay={520} className="h-full">
-                <div className="bg-white rounded-2xl p-3 border border-slate-200/80 shadow-2xs h-full">
-                  <div className="flex items-center gap-1.5 mb-0.5">
+                <div className="bg-white rounded-2xl p-2 sm:p-3 border border-slate-200/80 shadow-2xs h-full">
+                  <div className="flex items-center gap-1 sm:gap-1.5 mb-0.5">
                     <UserCheck size={16} className="text-blue-600 shrink-0" />
-                    <h4 className="text-base sm:text-lg font-extrabold text-[#103F7C]">15000+</h4>
+                    <h4 className="text-sm min-[390px]:text-base sm:text-lg font-extrabold text-[#103F7C] whitespace-nowrap">15000+</h4>
                   </div>
-                  <p className="text-[10px] font-medium text-slate-500">Laser Procedures</p>
+                  <p className="text-[10px] font-medium text-slate-500 truncate">Laser Procedures</p>
                 </div>
               </ScrollReveal>
 
               <ScrollReveal variant="scale-up" delay={590} className="h-full">
-                <div className="bg-white rounded-2xl p-3 border border-slate-200/80 shadow-2xs h-full">
-                  <div className="flex items-center gap-1.5 mb-0.5">
+                <div className="bg-white rounded-2xl p-2 sm:p-3 border border-slate-200/80 shadow-2xs h-full">
+                  <div className="flex items-center gap-1 sm:gap-1.5 mb-0.5">
                     <ShieldCheck size={16} className="text-emerald-500 shrink-0" />
-                    <h4 className="text-base sm:text-lg font-extrabold text-[#103F7C]">99%</h4>
+                    <h4 className="text-sm min-[390px]:text-base sm:text-lg font-extrabold text-[#103F7C] whitespace-nowrap">99%</h4>
                   </div>
-                  <p className="text-[10px] font-medium text-slate-500">Success Rate</p>
+                  <p className="text-[10px] font-medium text-slate-500 truncate">Success Rate</p>
                 </div>
               </ScrollReveal>
             </div>

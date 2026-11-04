@@ -170,7 +170,7 @@ export default function BookAppointment({ isHomePage = false }) {
                           <Phone size={16} />
                         </div>
                         <div>
-                          <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
+                          <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 whitespace-nowrap">
                             APPOINTMENTS &amp; HELPLINE
                           </p>
                           <div className="flex flex-wrap items-center gap-x-1">
@@ -307,7 +307,7 @@ export default function BookAppointment({ isHomePage = false }) {
                           <Phone size={16} />
                         </div>
                         <div>
-                          <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
+                          <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 whitespace-nowrap">
                             APPOINTMENTS &amp; HELPLINE
                           </p>
                           <div className="flex flex-wrap items-center gap-x-1">

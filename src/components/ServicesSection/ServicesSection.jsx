@@ -112,7 +112,7 @@ export const servicesData = [
 
 export default function ServicesSection() {
   return (
-    <section className="py-14 lg:py-20 bg-slate-50/80 font-sans relative overflow-hidden border-t border-slate-200/60">
+    <section className="pt-6 pb-12 sm:py-14 lg:py-20 bg-slate-50/80 font-sans relative overflow-hidden border-t border-slate-200/60">
       {/* Background Decorative Gradient Blobs */}
       <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-100/40 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 -ml-20 -mb-20 w-96 h-96 bg-orange-100/40 rounded-full blur-3xl pointer-events-none" />
@@ -198,14 +198,15 @@ export default function ServicesSection() {
 
         {/* ================= BOTTOM QUALITY ASSURANCE BANNER ================= */}
         <ScrollReveal variant="fade-up" delay={300} className="mt-14 sm:mt-16">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-sm flex flex-col lg:flex-row items-center justify-between gap-6 text-center lg:text-left">
+          <div className="bg-white rounded-3xl p-5 sm:p-8 border border-slate-200/90 shadow-sm flex flex-col lg:flex-row items-center justify-between gap-6 text-center lg:text-left">
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-left">
               <div className="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center shrink-0 shadow-2xs">
                 <ShieldCheck size={28} />
               </div>
               <div>
-                <h4 className="text-lg sm:text-xl font-extrabold text-slate-900 leading-snug">
-                  15+ Years of Surgical Excellence &amp; 5,000+ Successful Procedures
+                <h4 className="text-[15px] min-[390px]:text-base sm:text-xl font-extrabold text-slate-900 leading-snug">
+                  <span className="block sm:inline">15+ Years of Surgical Excellence</span>{" "}
+                  <span className="block sm:inline">&amp; 5,000+ Successful Procedures</span>
                 </h4>
                 <p className="text-sm text-slate-600 font-medium mt-1.5 leading-relaxed max-w-3xl">
                   Leading advanced urological care at{" "}

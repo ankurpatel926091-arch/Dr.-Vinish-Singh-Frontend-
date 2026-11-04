@@ -270,33 +270,35 @@ export default function OurHospitals() {
         
         {/* Section Intro */}
         <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100/80 text-[#103F7C] text-xs font-bold uppercase tracking-wider mb-4 border border-blue-200/60 shadow-xs">
-            <Building2 size={15} className="text-orange-500 animate-pulse" />
-            <span>TWO SPECIALISED CARE CENTRES IN LUCKNOW</span>
+          <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 min-[360px]:px-3 sm:px-4 py-1 sm:py-1.5 rounded-full bg-blue-100/80 text-[#103F7C] text-[10px] min-[360px]:text-[10.5px] min-[390px]:text-[11px] sm:text-xs font-bold uppercase tracking-normal min-[360px]:tracking-wide sm:tracking-wider mb-3 sm:mb-4 border border-blue-200/60 shadow-xs max-w-full">
+            <Building2 size={13} className="text-orange-500 animate-pulse shrink-0 sm:w-[15px] sm:h-[15px]" />
+            <span className="whitespace-nowrap sm:whitespace-normal">TWO SPECIALISED CARE CENTRES IN LUCKNOW</span>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Choose Your Preferred Consultation Centre
-
+          <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-snug">
+            <span className="block sm:inline">Choose Your Preferred</span>{" "}
+            <span>Consultation Centre</span>
           </h2>
           <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
             Explore centre details, facilities, OPD timings, complete addresses, directions, and appointment options to plan your consultation conveniently.
           </p>
 
           {/* Filter Tabs */}
-          <div className="flex items-center justify-center flex-wrap gap-2.5 mt-6">
+          <div className="flex items-center justify-center flex-nowrap sm:flex-wrap gap-1.5 min-[375px]:gap-2 sm:gap-2.5 mt-6 w-full overflow-x-auto no-scrollbar py-1">
             {["All", "Morning OPD", "Evening OPD"].map((tab) => (
               <button
                 key={tab}
                 type="button"
                 onClick={() => setActiveTab(tab)}
-                className={`px-4 py-2 rounded-full text-xs font-bold transition-all duration-300 ${
+                className={`px-2.5 min-[375px]:px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[11px] sm:text-xs font-bold transition-all duration-300 whitespace-nowrap shrink-0 ${
                   activeTab === tab
-                    ? "bg-[#103F7C] text-white shadow-md shadow-blue-900/20 scale-105"
+                    ? "bg-[#103F7C] text-white shadow-md shadow-blue-900/20 sm:scale-105"
                     : "bg-white text-slate-600 hover:text-[#103F7C] hover:bg-slate-100 border border-slate-200"
                 }`}
               >
-                {tab === "All" && "🏥 All Consultation Centres"}
+                {tab === "All" && (
+                  <span>🏥 All<span className="hidden min-[420px]:inline"> Consultation</span> Centres</span>
+                )}
                 {tab === "Morning OPD" && "🌅 Morning OPD"}
                 {tab === "Evening OPD" && "🌆 Evening OPD"}
               </button>
@@ -355,11 +357,11 @@ export default function OurHospitals() {
 
                     {/* Top Floating Badges (Only in Grid View to Keep Single Card Photo Clean like Reference Photo 2) */}
                     {!isSingle && hosp.image && (
-                      <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2 z-10">
+                      <div className="absolute top-3 left-3 right-3 sm:top-4 sm:left-4 sm:right-4 flex items-center justify-between gap-1.5 sm:gap-2 z-10">
                         <span
-                          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-md border ${hosp.badgeColor}`}
+                          className={`inline-flex items-center gap-1 sm:gap-1.5 px-2 min-[360px]:px-2.5 sm:px-3 py-1 rounded-full text-[10px] min-[360px]:text-[10.5px] sm:text-xs font-bold uppercase tracking-normal min-[360px]:tracking-wide sm:tracking-wider backdrop-blur-md shadow-md border whitespace-nowrap shrink-0 ${hosp.badgeColor}`}
                         >
-                          <Clock size={13} />
+                          <Clock size={12} className="shrink-0 sm:w-[13px] sm:h-[13px]" />
                           <span>{hosp.tagline}</span>
                         </span>
 
@@ -369,9 +371,9 @@ export default function OurHospitals() {
                             e.stopPropagation();
                             openLightbox(hosp.image, hosp.name);
                           }}
-                          className="px-3 py-1.5 rounded-xl bg-white/90 hover:bg-[#103F7C] hover:text-white text-slate-800 text-xs font-bold backdrop-blur-md border border-slate-200 flex items-center gap-1.5 transition-all duration-300 shadow-md hover:scale-105 cursor-pointer"
+                          className="px-2 min-[360px]:px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-xl bg-white/90 hover:bg-[#103F7C] hover:text-white text-slate-800 text-[10px] min-[360px]:text-[11px] sm:text-xs font-bold backdrop-blur-md border border-slate-200 flex items-center gap-1 sm:gap-1.5 transition-all duration-300 shadow-md hover:scale-105 cursor-pointer whitespace-nowrap shrink-0"
                         >
-                          <Maximize2 size={13} />
+                          <Maximize2 size={12} className="shrink-0 sm:w-[13px] sm:h-[13px]" />
                           <span>Full Photo</span>
                         </button>
                       </div>
@@ -424,7 +426,7 @@ export default function OurHospitals() {
                           </div>
                           <div className="flex-1 flex items-center justify-between gap-2">
                             <div>
-                              <span className="text-xs font-bold uppercase tracking-wider text-slate-400 block">
+                              <span className="text-[10px] min-[360px]:text-[10.5px] min-[390px]:text-[11px] sm:text-xs font-bold uppercase tracking-normal min-[360px]:tracking-wide sm:tracking-wider text-slate-400 block whitespace-nowrap">
                                 Appointments &amp; Helpline
                               </span>
                               <div className="flex flex-row flex-wrap items-center gap-x-2">
@@ -565,11 +567,11 @@ export default function OurHospitals() {
         </div>
 
         {/* Hospital Facilities & Infrastructure Showcase Gallery (100% Shadow-Free & Bright) */}
-        <ScrollReveal variant="fade-up" className="mt-16 bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/90 shadow-sm">
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-xs font-bold uppercase tracking-wider mb-2">
-              <Sparkles size={13} />
-              <span>World-Class Medical Care Infrastructure</span>
+        <ScrollReveal variant="fade-up" className="mt-12 sm:mt-16 bg-white rounded-3xl p-4 sm:p-8 lg:p-10 border border-slate-200/90 shadow-sm">
+          <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
+            <div className="inline-flex items-center gap-1.5 px-3 min-[360px]:px-3.5 sm:px-4 py-1.5 rounded-full bg-orange-100 text-orange-700 text-[9.5px] min-[360px]:text-[10px] min-[390px]:text-[11px] sm:text-xs font-bold uppercase tracking-normal min-[360px]:tracking-wide sm:tracking-wider mb-2">
+              <Sparkles size={12} className="shrink-0 sm:w-[13px] sm:h-[13px]" />
+              <span className="whitespace-nowrap sm:whitespace-normal">World-Class Medical Care Infrastructure</span>
             </div>
             <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
               Hospital Facilities &amp; Clinical Care Suite
@@ -645,11 +647,13 @@ export default function OurHospitals() {
                   className="bg-white/10 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/15 hover:bg-white/15 transition-all duration-300 flex flex-col justify-between h-full"
                 >
                   <div>
-                    <div className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center mb-3 shadow-md">
-                      <IconComp size={20} />
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 rounded-xl bg-orange-500 text-white flex items-center justify-center shrink-0 shadow-md">
+                        <IconComp size={20} />
+                      </div>
+                      <h4 className="font-bold text-sm text-white leading-snug">{item.title}</h4>
                     </div>
-                    <h4 className="font-bold text-sm text-white leading-snug">{item.title}</h4>
-                    <p className="text-xs text-blue-100 mt-1.5 leading-relaxed">
+                    <p className="text-xs text-blue-100 leading-relaxed">
                       <ClinicNameLinks>{item.desc}</ClinicNameLinks>
                     </p>
                   </div>
@@ -659,23 +663,32 @@ export default function OurHospitals() {
           </div>
 
           {/* Direct Emergency Call Strip */}
-          <div className="mt-10 pt-8 border-t border-white/15 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-orange-500/20 border border-orange-400/40 flex items-center justify-center shrink-0">
-                <Phone size={22} className="text-orange-300 animate-bounce" />
+          <div className="mt-8 sm:mt-10 pt-6 sm:pt-8 border-t border-white/15 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+            <div className="flex flex-col sm:flex-row items-center gap-2.5 sm:gap-3 text-center sm:text-left w-full sm:w-auto">
+              <div className="flex items-center gap-2.5 sm:gap-0 justify-center">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-full bg-orange-500/20 border border-orange-400/40 flex items-center justify-center shrink-0">
+                  <Phone size={18} className="text-orange-300 animate-bounce sm:w-[22px] sm:h-[22px]" />
+                </div>
+                <h4 className="font-extrabold text-sm sm:text-base sm:hidden">
+                  Need Immediate OPD Consultation?
+                </h4>
               </div>
               <div>
-                <h4 className="font-bold text-base">Need Immediate OPD Consultation?</h4>
-                <p className="text-xs text-blue-100">Call our Lucknow clinic helpline to confirm daily timing or emergency slots.</p>
+                <h4 className="font-bold text-base hidden sm:block">
+                  Need Immediate OPD Consultation?
+                </h4>
+                <p className="text-xs text-blue-100 max-w-xl leading-relaxed mt-0.5 sm:mt-0">
+                  Call our Lucknow clinic helpline to confirm daily timing or emergency slots.
+                </p>
               </div>
             </div>
 
             <a
               href="tel:+917275981480"
-              className="px-6 py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs sm:text-sm shadow-lg transition-transform hover:scale-105 shrink-0 flex items-center gap-2"
+              className="w-full sm:w-auto px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs sm:text-sm shadow-lg transition-transform hover:scale-105 shrink-0 flex items-center justify-center gap-2"
             >
-              <Phone size={16} />
-              <span>Call for Appointment: +91 72759 81480</span>
+              <Phone size={15} />
+              <span>Call for Appointment </span>
             </a>
           </div>
         </ScrollReveal>

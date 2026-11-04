@@ -451,19 +451,26 @@ export default function DrVinishKumarSingh() {
             </h1>
 
             {/* Quick Credentials Pills */}
-            <div className="flex flex-wrap gap-2 mt-4 w-full">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white border border-slate-200 text-slate-700 text-xs font-bold shadow-2xs">
-                <GraduationCap size={14} className="text-[#103F7C]" />
-                <span>KGMU &amp; INU Alumnus</span>
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white border border-slate-200 text-slate-700 text-xs font-bold shadow-2xs">
-                <Briefcase size={14} className="text-orange-500" />
-                <span> Specialised Urology Expertise</span>
-              </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-white border border-slate-200 text-slate-700 text-xs font-bold shadow-2xs">
-                <Activity size={14} className="text-emerald-600" />
-                <span>Advanced Laser Procedures</span>
-              </span>
+            <div className="flex flex-col gap-1.5 sm:flex-row sm:flex-wrap sm:gap-2 mt-3.5 sm:mt-4 w-full">
+              {/* Row 1 on mobile: KGMU + Specialised Urology */}
+              <div className="flex items-center gap-1.5 sm:contents">
+                <span className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-xl bg-white border border-slate-200 text-slate-700 text-[10px] min-[360px]:text-[10.5px] min-[390px]:text-[11px] sm:text-xs font-bold shadow-2xs whitespace-nowrap shrink-0">
+                  <GraduationCap size={13} className="text-[#103F7C] shrink-0 sm:w-3.5 sm:h-3.5" />
+                  <span>KGMU &amp; INU Alumnus</span>
+                </span>
+                <span className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-xl bg-white border border-slate-200 text-slate-700 text-[10px] min-[360px]:text-[10.5px] min-[390px]:text-[11px] sm:text-xs font-bold shadow-2xs whitespace-nowrap shrink-0">
+                  <Briefcase size={13} className="text-orange-500 shrink-0 sm:w-3.5 sm:h-3.5" />
+                  <span>Specialised Urology Expertise</span>
+                </span>
+              </div>
+
+              {/* Row 2 on mobile: Advanced Laser Procedures */}
+              <div className="flex items-center sm:contents">
+                <span className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 rounded-xl bg-white border border-slate-200 text-slate-700 text-[10px] min-[360px]:text-[10.5px] min-[390px]:text-[11px] sm:text-xs font-bold shadow-2xs whitespace-nowrap">
+                  <Activity size={13} className="text-emerald-600 shrink-0 sm:w-3.5 sm:h-3.5" />
+                  <span>Advanced Laser Procedures</span>
+                </span>
+              </div>
             </div>
 
             {/* Doctor Bio Profile Card */}
@@ -520,7 +527,7 @@ export default function DrVinishKumarSingh() {
 
           {/* Academic Table Card */}
           <ScrollReveal variant="fade-up" delay={150} className="bg-slate-50/80 rounded-3xl p-4 sm:p-6 border border-slate-200/90 shadow-2xs overflow-hidden">
-            <div className="sm:hidden text-right mb-2">
+            <div className="sm:hidden flex justify-center mb-2.5">
               <span className="inline-flex items-center gap-1 text-[10px] font-bold text-orange-600 bg-orange-50 px-2.5 py-1 rounded-full border border-orange-200/60">
                 Swipe horizontal to view full table ➔
               </span>
@@ -550,8 +557,8 @@ export default function DrVinishKumarSingh() {
                       </td>
 
                       {/* Passing Year */}
-                      <td className="py-4 px-5 font-bold text-orange-600">
-                        <span className="inline-flex items-center gap-1.5 bg-orange-50 px-3 py-1 rounded-full border border-orange-200">
+                      <td className="py-4 px-5 font-bold text-orange-600 whitespace-nowrap">
+                        <span className="inline-flex items-center gap-1.5 bg-orange-50 px-3 py-1 rounded-full border border-orange-200 whitespace-nowrap">
                           <Calendar size={12} />
                           <span>{item.passingYear}</span>
                         </span>
@@ -651,7 +658,7 @@ export default function DrVinishKumarSingh() {
           {/* TAB 1: WORK EXPERIENCE TABLE */}
           {activeTab === "experience" && (
             <ScrollReveal variant="fade-up" className="bg-white rounded-3xl p-4 sm:p-6 border border-slate-200/90 shadow-sm overflow-hidden">
-              <div className="sm:hidden text-right mb-2">
+              <div className="sm:hidden flex justify-center mb-2.5">
                 <span className="inline-flex items-center gap-1 text-[10px] font-bold text-orange-600 bg-orange-50 px-2.5 py-1 rounded-full border border-orange-200/60">
                   Swipe horizontal to view full table ➔
                 </span>
@@ -680,8 +687,8 @@ export default function DrVinishKumarSingh() {
                         <td className="py-4 px-5 font-semibold text-[#103F7C]">
                           {item.designation}
                         </td>
-                        <td className="py-4 px-5 font-extrabold text-orange-600">
-                          <span className="bg-orange-50 px-3 py-1 rounded-full border border-orange-200">
+                        <td className="py-4 px-5 font-extrabold text-orange-600 whitespace-nowrap">
+                          <span className="inline-block bg-orange-50 px-3 py-1 rounded-full border border-orange-200 whitespace-nowrap">
                             {item.duration}
                           </span>
                         </td>

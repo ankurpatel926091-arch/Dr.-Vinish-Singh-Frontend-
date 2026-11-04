@@ -134,40 +134,48 @@ export default function AwardsRecognition() {
       />
 
       {/* Main Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6 pb-6 sm:py-12 lg:py-16">
         
         {/* Top 4 Quick Impact Highlights */}
-        <ScrollReveal variant="fade-up" className="grid card-grid grid-cols-2 md:grid-cols-4 gap-4 mb-14">
-          <div className="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-2xs hover:shadow-md transition-all">
-            <div className="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center mb-3">
-              <Trophy size={20} />
+        <ScrollReveal variant="fade-up" className="grid card-grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-10 sm:mb-14">
+          <div className="bg-white rounded-2xl p-3.5 min-[375px]:p-4 sm:p-5 border border-slate-200/90 shadow-2xs hover:shadow-md transition-all">
+            <div className="flex items-center gap-2.5 sm:gap-3 mb-1.5">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">
+                <Trophy size={17} className="sm:w-5 sm:h-5" />
+              </div>
+              <h4 className="font-extrabold text-[15px] min-[375px]:text-base sm:text-xl text-[#103F7C] whitespace-nowrap">15+ Years</h4>
             </div>
-            <h4 className="font-extrabold text-xl text-[#103F7C]">15+ Years</h4>
-            <p className="text-xs font-medium text-slate-500 mt-0.5">Surgical Excellence</p>
+            <p className="text-[11px] sm:text-xs font-medium text-slate-500 leading-snug">Surgical Excellence</p>
           </div>
 
-          <div className="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-2xs hover:shadow-md transition-all">
-            <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#103F7C] flex items-center justify-center mb-3">
-              <Medal size={20} />
+          <div className="bg-white rounded-2xl p-3.5 min-[375px]:p-4 sm:p-5 border border-slate-200/90 shadow-2xs hover:shadow-md transition-all">
+            <div className="flex items-center gap-2.5 sm:gap-3 mb-1.5">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-50 text-[#103F7C] flex items-center justify-center shrink-0">
+                <Medal size={17} className="sm:w-5 sm:h-5" />
+              </div>
+              <h4 className="font-extrabold text-[15px] min-[375px]:text-base sm:text-xl text-[#103F7C] whitespace-nowrap">6+ Major</h4>
             </div>
-            <h4 className="font-extrabold text-xl text-[#103F7C]">6+ Major</h4>
-            <p className="text-xs font-medium text-slate-500 mt-0.5">Awards &amp; Honors</p>
+            <p className="text-[11px] sm:text-xs font-medium text-slate-500 leading-snug">Awards &amp; Honors</p>
           </div>
 
-          <div className="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-2xs hover:shadow-md transition-all">
-            <div className="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center mb-3">
-              <BadgeCheck size={20} />
+          <div className="bg-white rounded-2xl p-3.5 min-[375px]:p-4 sm:p-5 border border-slate-200/90 shadow-2xs hover:shadow-md transition-all">
+            <div className="flex items-center gap-2.5 sm:gap-3 mb-1.5">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center shrink-0">
+                <BadgeCheck size={17} className="sm:w-5 sm:h-5" />
+              </div>
+              <h4 className="font-extrabold text-[15px] min-[375px]:text-base sm:text-xl text-[#103F7C] whitespace-nowrap">15,000+</h4>
             </div>
-            <h4 className="font-extrabold text-xl text-[#103F7C]">15,000+</h4>
-            <p className="text-xs font-medium text-slate-500 mt-0.5">Laser Surgeries</p>
+            <p className="text-[11px] sm:text-xs font-medium text-slate-500 leading-snug">Laser Surgeries</p>
           </div>
 
-          <div className="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-2xs hover:shadow-md transition-all">
-            <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#103F7C] flex items-center justify-center mb-3">
-              <ShieldCheck size={20} />
+          <div className="bg-white rounded-2xl p-3.5 min-[375px]:p-4 sm:p-5 border border-slate-200/90 shadow-2xs hover:shadow-md transition-all">
+            <div className="flex items-center gap-2.5 sm:gap-3 mb-1.5">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-blue-50 text-[#103F7C] flex items-center justify-center shrink-0">
+                <ShieldCheck size={17} className="sm:w-5 sm:h-5" />
+              </div>
+              <h4 className="font-extrabold text-[15px] min-[375px]:text-base sm:text-xl text-[#103F7C] whitespace-nowrap">99%</h4>
             </div>
-            <h4 className="font-extrabold text-xl text-[#103F7C]">99%</h4>
-            <p className="text-xs font-medium text-slate-500 mt-0.5">Success Rate</p>
+            <p className="text-[11px] sm:text-xs font-medium text-slate-500 leading-snug">Success Rate</p>
           </div>
         </ScrollReveal>
 
@@ -237,7 +245,7 @@ export default function AwardsRecognition() {
         </div>
 
         {/* Professional Memberships Section */}
-        <ScrollReveal variant="fade-up" className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/90 shadow-xs mb-16">
+        <ScrollReveal variant="fade-up" className="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200/90 shadow-xs mb-6 sm:mb-12">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
             <div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-[#103F7C] text-xs font-semibold uppercase tracking-wider mb-2">
@@ -271,19 +279,19 @@ export default function AwardsRecognition() {
         </ScrollReveal>
 
         {/* Minimal CTA Banner */}
-        <ScrollReveal variant="fade-up" delay={200} className="my-6 sm:my-8 rounded-3xl bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#103F7C] text-white p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
-          <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-orange-300 text-xs font-bold uppercase tracking-wider mb-2">
-              <Sparkles size={13} />
+        <ScrollReveal variant="fade-up" delay={200} className="mt-4 sm:mt-8 mb-2 sm:mb-4 rounded-3xl bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#103F7C] text-white p-5 sm:p-8 lg:p-10 flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-6 shadow-xl border border-blue-800/60">
+          <div className="w-full sm:w-auto text-left">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-orange-300 text-[11px] sm:text-xs font-bold uppercase tracking-wider mb-2.5 backdrop-blur-sm border border-white/10">
+              <Sparkles size={13} className="text-orange-400" />
               <span>Evidence-Based Care</span>
             </div>
-            <h3 className="text-xl sm:text-2xl font-extrabold">Need Expert Medical Consultation?</h3>
-            <p className="text-xs sm:text-sm text-blue-100 mt-1 font-normal">Get in touch with Dr. Vinish Kumar Singh for specialized urological treatment in Lucknow.</p>
+            <h3 className="text-lg sm:text-2xl font-extrabold text-white leading-snug">Need Expert Medical Consultation?</h3>
+            <p className="text-xs sm:text-sm text-blue-100 mt-1.5 font-normal leading-relaxed max-w-xl">Get in touch with Dr. Vinish Kumar Singh for specialized urological treatment in Lucknow.</p>
           </div>
           
           <NavLink
             to="/appointment-request"
-            className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-bold shadow-md transition-all hover:scale-105 active:scale-95 shrink-0"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-orange-500 hover:bg-orange-600 active:scale-95 text-white text-xs sm:text-sm font-bold shadow-md transition-all hover:scale-105 shrink-0"
           >
             <Calendar size={16} />
             <span>Book Appointment</span>

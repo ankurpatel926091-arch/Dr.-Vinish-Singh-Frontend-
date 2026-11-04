@@ -140,12 +140,17 @@ export default function HomeGallery() {
             <span>OUR GALLERY</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#103F7C] tracking-tight leading-tight">
+          <h2 className="text-[21px] min-[380px]:text-2xl sm:text-4xl lg:text-5xl font-extrabold text-[#103F7C] tracking-tight leading-tight whitespace-nowrap sm:whitespace-normal">
             Visual Tour Of Our Center
           </h2>
 
-          <p className="mt-2.5 text-sm sm:text-base text-slate-600 font-medium leading-relaxed max-w-2xl mx-auto">
-            A Glimpse Inside Our Centres Explore our modern facilities, advanced clinical environment, medical initiatives, and meaningful moments from our journey of patient care and recovery.
+          <p className="mt-2 text-xs sm:text-base text-slate-600 font-medium leading-relaxed max-w-2xl mx-auto">
+            <span className="sm:hidden">
+              Explore our modern facilities, advanced clinical environment, and patient care journey.
+            </span>
+            <span className="hidden sm:inline">
+              A Glimpse Inside Our Centres Explore our modern facilities, advanced clinical environment, medical initiatives, and meaningful moments from our journey of patient care and recovery.
+            </span>
           </p>
         </ScrollReveal>
 

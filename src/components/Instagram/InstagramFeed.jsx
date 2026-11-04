@@ -40,22 +40,25 @@ export default function InstagramFeed() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         
         {/* ================= SECTION HEADER ================= */}
-        <ScrollReveal variant="fade-up" className="flex flex-col md:flex-row items-center justify-between gap-6 mb-10 sm:mb-12">
+        <ScrollReveal variant="fade-up" className="flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6 mb-6 sm:mb-12">
           <div className="text-center md:text-left max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-100/80 text-orange-600 border border-orange-200/60 text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-3">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-100/80 text-orange-600 border border-orange-200/60 text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-2.5 sm:mb-3">
               <FaInstagram size={15} className="text-orange-500" />
-              <span>IUROLOGY INSIGHTS &amp; UPDATES</span>
+              <span>UROLOGY INSIGHTS &amp; UPDATES</span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#103F7C] tracking-tight leading-tight">
-              Follow Dr. Vinish Kumar Singh{" "}
-              <span className="text-[#103F7C]">
-                @drvinishurosurgeon
-              </span>
+            <h2 className="text-[20px] min-[380px]:text-[22px] sm:text-3xl lg:text-4xl font-extrabold text-[#103F7C] tracking-tight leading-tight">
+              <span className="block sm:inline">Follow Dr. Vinish Kumar Singh</span>{" "}
+              <span className="text-orange-500 block sm:inline">@drvinishurosurgeon</span>
             </h2>
 
-            <p className="mt-2.5 text-sm sm:text-base text-[#103F7C] leading-relaxed font-semibold">
-              Stay informed with expert urology tips, patient-awareness videos, treatment insights, and updates on advanced laser procedures.
+            <p className="mt-2 text-xs sm:text-base text-slate-600 sm:text-[#103F7C] leading-relaxed font-medium sm:font-semibold max-w-xl mx-auto md:mx-0">
+              <span className="sm:hidden">
+                Stay informed with expert urology tips, patient awareness videos, and laser treatment updates.
+              </span>
+              <span className="hidden sm:inline">
+                Stay informed with expert urology tips, patient-awareness videos, treatment insights, and updates on advanced laser procedures.
+              </span>
             </p>
           </div>
 
@@ -63,7 +66,7 @@ export default function InstagramFeed() {
             href="https://www.instagram.com/drvinishurosurgeon/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-bold shadow-md transition-all hover:scale-105 shrink-0"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-2.5 sm:py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-bold shadow-md transition-all hover:scale-105 shrink-0"
           >
             <FaInstagram size={16} />
             <span>Follow on Instagram</span>
@@ -86,18 +89,33 @@ export default function InstagramFeed() {
         </ScrollReveal>
 
         {/* ================= BOTTOM FOLLOW PROMPT BANNER ================= */}
-        <ScrollReveal variant="fade-up" delay={250} className="mt-10 sm:mt-12">
-          <div className="rounded-3xl bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#103F7C] text-white p-7 sm:p-9 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl border border-white/10">
-            <div className="flex items-center gap-4 text-center sm:text-left">
-              <div className="w-14 h-14 rounded-2xl bg-orange-500 p-0.5 shrink-0 shadow-md">
-                <div className="w-full h-full bg-[#103F7C] rounded-[14px] flex items-center justify-center text-white">
-                  <FaInstagram size={28} />
+        <ScrollReveal variant="fade-up" delay={250} className="mt-8 sm:mt-12">
+          <div className="rounded-3xl bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#103F7C] text-white p-5 sm:p-9 flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 shadow-xl border border-white/10">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 text-left w-full sm:w-auto">
+              {/* Mobile Header Row: Icon aligned with Heading */}
+              <div className="flex items-center gap-3 shrink-0">
+                <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-2xl bg-orange-500 p-0.5 shrink-0 shadow-md">
+                  <div className="w-full h-full bg-[#103F7C] rounded-[14px] flex items-center justify-center text-white">
+                    <FaInstagram size={22} className="sm:hidden" />
+                    <FaInstagram size={28} className="hidden sm:block" />
+                  </div>
                 </div>
+                <h3 className="sm:hidden text-[15px] font-extrabold text-white leading-snug">
+                  Stay Informed on Urology Health
+                </h3>
               </div>
+
               <div>
-                <h3 className="text-lg sm:text-xl font-extrabold">Stay Informed on Urology Health</h3>
-                <p className="text-xs sm:text-sm text-blue-100 mt-0.5 font-normal">
-                  Follow @drvinishurosurgeon for trusted health guidance, patient-awareness videos, advanced treatment insights, and practical urology tips.
+                <h3 className="hidden sm:block text-lg sm:text-xl font-extrabold text-white">
+                  Stay Informed on Urology Health
+                </h3>
+                <p className="text-[11px] sm:text-sm text-blue-100 mt-1 sm:mt-0.5 font-normal leading-relaxed text-left">
+                  <span className="sm:hidden">
+                    Follow @drvinishurosurgeon for trusted health guidance, patient awareness videos, and urology tips.
+                  </span>
+                  <span className="hidden sm:inline">
+                    Follow @drvinishurosurgeon for trusted health guidance, patient-awareness videos, advanced treatment insights, and practical urology tips.
+                  </span>
                 </p>
               </div>
             </div>
@@ -106,7 +124,7 @@ export default function InstagramFeed() {
               href="https://www.instagram.com/drvinishurosurgeon/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-bold shadow-md transition-all hover:scale-105 shrink-0"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 sm:px-7 sm:py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-bold shadow-md transition-all hover:scale-105 shrink-0"
             >
               <FaInstagram size={16} />
               <span>Follow on Instagram</span>

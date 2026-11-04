@@ -53,9 +53,9 @@ const PageHero = ({ title, subTitle, description }) => {
         <div className="absolute right-0 bottom-0 w-80 h-80 bg-orange-400/10 rounded-full blur-3xl pointer-events-none z-10" />
 
         <ScrollReveal variant="fade-up" className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 text-center sm:text-left">
-          <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-slate-950/60 border border-white/20 text-orange-300 text-xs font-bold uppercase tracking-wider mb-2 backdrop-blur-md shadow-md">
-            <Sparkles size={13} className="text-orange-400" />
-            <span><ClinicNameLinks>{title}</ClinicNameLinks></span>
+          <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-0.5 rounded-full bg-slate-950/60 border border-white/20 text-orange-300 text-[10px] min-[360px]:text-[11px] sm:text-xs font-bold uppercase tracking-normal min-[360px]:tracking-wide sm:tracking-wider mb-2 backdrop-blur-md shadow-md max-w-full">
+            <Sparkles size={12} className="text-orange-400 shrink-0 sm:w-[13px] sm:h-[13px]" />
+            <span className="whitespace-nowrap sm:whitespace-normal"><ClinicNameLinks>{title}</ClinicNameLinks></span>
           </div>
 
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white drop-shadow-[0_4px_10px_rgba(0,0,0,0.85)] leading-snug">
