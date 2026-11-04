@@ -189,7 +189,7 @@ function Footer() {
                     <FaHospital size={12} />
                     <span>Morning OPD</span>
                   </span>
-                  <span className="text-xs bg-orange-500/20 px-2.5 py-0.5 rounded-full border border-orange-400/30 text-orange-300 font-bold">
+                  <span className="text-xs bg-orange-500/20 px-2.5 py-0.5 rounded-full border border-orange-400/30 text-orange-300 font-bold whitespace-nowrap">
                     10 AM - 03 PM
                   </span>
                 </div>
@@ -238,7 +238,7 @@ function Footer() {
                     <FaHospital size={12} />
                     <span>Evening OPD</span>
                   </span>
-                  <span className="text-xs bg-blue-500/20 px-2.5 py-0.5 rounded-full border border-blue-400/30 text-blue-200 font-bold">
+                  <span className="text-xs bg-blue-500/20 px-2.5 py-0.5 rounded-full border border-blue-400/30 text-blue-200 font-bold whitespace-nowrap">
                     05 PM - 07 PM
                   </span>
                 </div>

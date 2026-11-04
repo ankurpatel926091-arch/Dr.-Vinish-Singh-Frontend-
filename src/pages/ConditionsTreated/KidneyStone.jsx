@@ -291,10 +291,10 @@ export default function KidneyStone() {
       </div>
 
       {/* ================= 2. WHY CHOOSE LASER SURGERY (4 BENEFITS) ================= */}
-      <div className="bg-white py-14 lg:py-16 border-y border-slate-200/80">
+      <div className="bg-white py-8 sm:py-14 lg:py-16 border-y border-slate-200/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-orange-100/70 text-orange-700 text-xs font-extrabold uppercase tracking-wider mb-2">
+          <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-orange-100/70 text-orange-700 text-xs font-extrabold uppercase tracking-wider mb-2 whitespace-nowrap">
               <Zap size={13} className="text-orange-500" />
               <span>TECHNOLOGY ADVANTAGES</span>
             </div>
@@ -312,17 +312,21 @@ export default function KidneyStone() {
               return (
                 <ScrollReveal key={i} variant="scale-up" delay={i * 80} className="h-full">
                   <div
-                    className="bg-slate-50/90 rounded-2xl p-5 border border-slate-200/80 hover:bg-white hover:shadow-lg transition-all duration-300 h-full"
+                    className="bg-slate-50/90 rounded-2xl p-5 border border-slate-200/80 hover:bg-white hover:shadow-lg transition-all duration-300 h-full flex flex-col justify-between"
                   >
-                    <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#103F7C] flex items-center justify-center mb-3 border border-blue-200">
-                      <IconComp size={20} />
+                    <div>
+                      <div className="flex items-center gap-3 mb-2.5">
+                        <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#103F7C] flex items-center justify-center border border-blue-200 shrink-0">
+                          <IconComp size={20} />
+                        </div>
+                        <h3 className="font-extrabold text-slate-900 text-base leading-snug">
+                          {b.title}
+                        </h3>
+                      </div>
+                      <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                        {b.desc}
+                      </p>
                     </div>
-                    <h3 className="font-extrabold text-slate-900 text-base mb-1">
-                      {b.title}
-                    </h3>
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      {b.desc}
-                    </p>
                   </div>
                 </ScrollReveal>
               );
@@ -405,15 +409,15 @@ export default function KidneyStone() {
       </div>
 
       {/* ================= 4. CTA BANNER ================= */}
-      <ScrollReveal variant="fade-up" delay={200} className="max-w-7xl mx-auto px-4 sm:px-6 pb-16">
-        <div className="rounded-3xl bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#103F7C] text-white p-8 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
+      <ScrollReveal variant="fade-up" delay={200} className="max-w-7xl mx-auto px-4 sm:px-6 pb-10 sm:pb-16">
+        <div className="rounded-3xl bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#103F7C] text-white p-6 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-6 shadow-xl text-center sm:text-left">
           <div>
             <h3 className="text-xl sm:text-2xl font-extrabold">Facing Kidney Stone Pain?</h3>
             <p className="text-xs sm:text-sm text-blue-100 mt-1 font-normal">Get expert guidance &amp; painless laser treatment from Dr. Vinish Kumar Singh in Lucknow.</p>
           </div>
           <NavLink
             to="/appointment-request"
-            className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-bold shadow-md transition-all hover:scale-105 active:scale-95 shrink-0"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-bold shadow-md transition-all hover:scale-105 active:scale-95 shrink-0"
           >
             <Calendar size={16} />
             <span>Book Appointment</span>

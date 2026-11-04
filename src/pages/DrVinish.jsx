@@ -315,10 +315,7 @@ export default function DrVinishKumarSingh() {
 
                   {/* Top Right Floating Verification Badge - Hidden on phone view */}
                   <div className="absolute top-4 right-4 z-20 hidden sm:block">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/90 text-white text-[10.5px] font-extrabold tracking-wide backdrop-blur-md shadow-md border border-white/20">
-                      <BadgeCheck size={13} />
-                      <span>Verified Urosurgeon</span>
-                    </span>
+                    
                   </div>
 
                   {/* Designation Tag & Info Overlay */}
@@ -890,7 +887,7 @@ export default function DrVinishKumarSingh() {
             className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-bold shadow-md transition-all hover:scale-105 active:scale-95 shrink-0"
           >
             <Calendar size={16} />
-            <span>Book a Consultation</span>
+            <span>Book  Consultation</span>
             <ArrowRight size={16} />
           </NavLink>
         </div>

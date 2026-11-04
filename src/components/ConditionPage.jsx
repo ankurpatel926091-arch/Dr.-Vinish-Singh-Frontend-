@@ -418,9 +418,9 @@ export default function ConditionPage({
 
             {/* Right Column Bottom OPD Consultation Banner */}
             <div className="w-full pt-3 mt-auto shrink-0">
-              <div className="bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#0c2e5c] text-white rounded-3xl p-5 sm:p-6 shadow-xl border border-blue-800/40 flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-5 relative overflow-hidden">
+              <div className="bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#0c2e5c] text-white rounded-3xl p-5 sm:p-6 shadow-xl border border-blue-800/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-5 relative overflow-hidden">
                 <div className="absolute -right-6 -bottom-6 w-36 h-36 bg-orange-500/15 rounded-full blur-2xl pointer-events-none" />
-                <div className="space-y-1 relative z-10 text-center sm:text-left">
+                <div className="space-y-1 relative z-10 text-left">
                   <h4 className="font-extrabold text-base sm:text-lg text-white">Ready for Expert Medical Consultation?</h4>
                   <p className="text-xs text-blue-100 font-medium">Direct OPD confirmation with Senior Urologist Dr. Vinish Kumar Singh.</p>
                 </div>
@@ -449,7 +449,7 @@ export default function ConditionPage({
             
             <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
               <div className="lg:col-span-5">
-                <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100/90 text-orange-700 text-xs font-black uppercase tracking-wider border border-orange-200">
+                <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-100/90 text-orange-700 text-xs font-black uppercase tracking-wider border border-orange-200 whitespace-nowrap">
                   <HeartPulse size={15} className="text-orange-600" />
                   <span>WHEN TO CONSULT A DOCTOR</span>
                 </span>
@@ -462,7 +462,7 @@ export default function ConditionPage({
                 <div className="mt-5 sm:mt-8">
                   <NavLink
                     to="/appointment-request"
-                    className="inline-flex items-center gap-2.5 px-6 py-3.5 sm:px-8 sm:py-4 rounded-full bg-[#103F7C] hover:bg-blue-900 text-white font-extrabold text-xs sm:text-base shadow-lg transition-all hover:scale-102"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 sm:px-8 sm:py-4 rounded-full bg-[#103F7C] hover:bg-blue-900 text-white font-extrabold text-xs sm:text-base shadow-lg transition-all hover:scale-102"
                   >
                     <Calendar size={16} className="sm:w-5 sm:h-5" />
                     <span>Schedule Appointment</span>
@@ -495,7 +495,7 @@ export default function ConditionPage({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
         <ScrollReveal variant="fade-up" className="bg-white rounded-3xl p-5 sm:p-8 lg:p-12 border border-slate-200/90 shadow-lg">
           <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-10">
-            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 text-[#103F7C] text-xs font-black uppercase tracking-wider border border-blue-100">
+            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 text-[#103F7C] text-xs font-black uppercase tracking-wider border border-blue-100 whitespace-nowrap">
               <HelpCircle size={14} className="text-orange-500" />
               <span>FREQUENTLY ASKED QUESTIONS</span>
             </span>
@@ -569,7 +569,7 @@ export default function ConditionPage({
       <ScrollReveal variant="scale-up" className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 text-center">
         <div className="bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#0c2e5c] text-white rounded-3xl p-6 sm:p-8 border border-blue-900/30 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-6 relative overflow-hidden">
           <div className="absolute right-0 top-0 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="text-center sm:text-left relative z-10">
+          <div className="text-left relative z-10">
             <h4 className="text-xl sm:text-3xl font-black text-white">Need Expert Medical Advice for {title}?</h4>
             <p className="text-xs sm:text-lg text-blue-100 mt-1.5 sm:mt-2 font-normal">Consult Senior Urologist &amp; Kidney Transplant Surgeon Dr. Vinish Kumar Singh in Lucknow.</p>
           </div>

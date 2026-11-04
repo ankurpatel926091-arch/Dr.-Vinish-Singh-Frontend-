@@ -78,31 +78,30 @@ export default function TermsOfService() {
           <div className="lg:col-span-2 space-y-8">
             
             {/* Top Disclaimer Card */}
-            <ScrollReveal variant="fade-up" className="bg-gradient-to-r from-[#103F7C] to-blue-900 rounded-3xl p-6 sm:p-8 text-white shadow-md border border-blue-800/60 relative overflow-hidden">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-orange-500/20 text-orange-400 border border-orange-500/30 flex items-center justify-center shrink-0">
-                  <Scale size={26} />
-                </div>
-                <div>
-                  <div className="flex flex-wrap items-center gap-2 mb-2">
-                    <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-orange-500/20 text-orange-300 text-[10px] font-black uppercase tracking-wider">
-                      <Sparkles size={12} className="text-orange-400" />
-                      <span>Clinical Terms &amp; Medical Disclaimer</span>
-                    </div>
-                    <span className="text-[11px] font-semibold text-blue-200/90 bg-white/10 px-2.5 py-0.5 rounded-full">
-                      Last Updated: 25 August 2026
-                    </span>
+            <ScrollReveal variant="fade-up" className="bg-gradient-to-r from-[#103F7C] to-blue-900 rounded-3xl p-5 sm:p-8 text-white shadow-md border border-blue-800/60 relative overflow-hidden">
+              <div className="w-full text-left">
+                {/* Header row: Icon & Badges */}
+                <div className="flex flex-wrap items-center gap-2 mb-3">
+                  
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/20 text-orange-300 text-[10px] sm:text-xs font-black uppercase tracking-wider whitespace-nowrap">
+                    <Sparkles size={12} className="text-orange-400 shrink-0" />
+                    <span>Clinical Terms &amp; Medical Disclaimer</span>
                   </div>
-                  <h2 className="text-xl sm:text-2xl font-extrabold text-white leading-tight">
-                    Terms &amp; Conditions of Website Usage
-                  </h2>
-                  <p className="text-xs sm:text-sm text-blue-100 font-normal mt-2 leading-relaxed">
-                    Welcome to the official website of Dr. Vinish Kumar Singh. These Terms of Service govern your access to and use of this website, its appointment-request facilities, contact forms, health information, and related online services.
-                  </p>
-                  <p className="text-xs text-orange-200 font-medium mt-3 pt-3 border-t border-blue-700/50">
-                    By accessing or using this website, you agree to these terms. If you do not agree, please discontinue its use.
-                  </p>
+                  <span className="text-[10px] sm:text-[11px] font-semibold text-blue-200/90 bg-white/10 px-2.5 py-0.5 rounded-full whitespace-nowrap">
+                    Last Updated: 25 August 2026
+                  </span>
                 </div>
+
+                {/* Left Aligned Content Starting from Left Edge */}
+                <h2 className="text-xl sm:text-2xl font-extrabold text-white leading-tight">
+                  Terms &amp; Conditions of Website Usage
+                </h2>
+                <p className="text-xs sm:text-sm text-blue-100 font-normal mt-2 leading-relaxed">
+                  Welcome to the official website of Dr. Vinish Kumar Singh. These Terms of Service govern your access to and use of this website, its appointment-request facilities, contact forms, health information, and related online services.
+                </p>
+                <p className="text-xs text-orange-200 font-medium mt-3 pt-3 border-t border-blue-700/50">
+                  By accessing or using this website, you agree to these terms. If you do not agree, please discontinue its use.
+                </p>
               </div>
             </ScrollReveal>
 

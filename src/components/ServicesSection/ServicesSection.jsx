@@ -120,8 +120,8 @@ export default function ServicesSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         
         {/* ================= CENTERED SECTION HEADER ================= */}
-        <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-50 text-[#103F7C] border border-blue-200/60 text-xs font-bold uppercase tracking-wider mb-3">
+        <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-8 sm:mb-14">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-50 text-[#103F7C] border border-blue-200/60 text-xs font-bold uppercase tracking-wider mb-3 whitespace-nowrap">
             <Sparkles size={13} className="text-orange-500" />
             <span>CORE MEDICAL SPECIALTIES</span>
           </div>
@@ -197,11 +197,11 @@ export default function ServicesSection() {
         </div>
 
         {/* ================= BOTTOM QUALITY ASSURANCE BANNER ================= */}
-        <ScrollReveal variant="fade-up" delay={300} className="mt-14 sm:mt-16">
-          <div className="bg-white rounded-3xl p-5 sm:p-8 border border-slate-200/90 shadow-sm flex flex-col lg:flex-row items-center justify-between gap-6 text-center lg:text-left">
-            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 text-center sm:text-left">
-              <div className="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center shrink-0 shadow-2xs">
-                <ShieldCheck size={28} />
+        <ScrollReveal variant="fade-up" delay={300} className="mt-8 sm:mt-14">
+          <div className="bg-white rounded-3xl p-5 sm:p-8 border border-slate-200/90 shadow-sm flex flex-col lg:flex-row items-center justify-between gap-6 text-left">
+            <div className="flex items-center sm:items-start gap-3.5 sm:gap-5 text-left">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-100 flex items-center justify-center shrink-0 shadow-2xs">
+                <ShieldCheck size={26} className="sm:w-7 sm:h-7" />
               </div>
               <div>
                 <h4 className="text-[15px] min-[390px]:text-base sm:text-xl font-extrabold text-slate-900 leading-snug">

@@ -125,8 +125,8 @@ export default function WhyChooseUs() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         
         {/* Section Header */}
-        <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100/80 text-[#103F7C] text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-3 border border-blue-200/60 shadow-xs">
+        <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100/80 text-[#103F7C] text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-3 border border-blue-200/60 shadow-xs whitespace-nowrap">
             <Sparkles size={15} className="text-orange-500" />
             <span>PILLARS OF CLINICAL EXCELLENCE</span>
           </div>
@@ -203,7 +203,7 @@ export default function WhyChooseUs() {
                           <IconComp size={22} />
                         </div>
 
-                        <span className="text-[11px] font-extrabold text-orange-600 bg-orange-50 px-3 py-1 rounded-full border border-orange-200 uppercase tracking-wider">
+                        <span className="text-[9.5px] min-[360px]:text-[10px] sm:text-[11px] font-extrabold text-orange-600 bg-orange-50 px-2.5 sm:px-3 py-1 rounded-full border border-orange-200 uppercase tracking-wider whitespace-nowrap">
                           {item.badge}
                         </span>
                       </div>
@@ -284,26 +284,26 @@ export default function WhyChooseUs() {
         {/* Live Numbers & Stats Bar */}
         <ScrollReveal variant="fade-up" delay={250} className="mt-8 sm:mt-14">
           <div className="rounded-3xl bg-gradient-to-r from-[#103F7C] via-blue-900 to-[#103F7C] text-white p-5 sm:p-10 shadow-xl">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 text-center">
-              <div className="p-2 sm:p-3">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 text-left">
+              <div className="p-2 sm:p-3 text-left">
                 <h4 className="text-2xl sm:text-4xl font-extrabold text-orange-400">15+</h4>
                 <p className="text-xs sm:text-sm text-blue-100 mt-0.5 sm:mt-1 font-semibold">Years of Clinical Excellence</p>
                 <p className="text-[11px] sm:text-[12px] text-blue-200/80 mt-0.5">Advanced Urological Care</p>
               </div>
 
-              <div className="p-2 sm:p-3 border-l border-white/15">
+              <div className="p-2 sm:p-3 pl-3.5 sm:pl-4 border-l border-white/15 text-left">
                 <h4 className="text-2xl sm:text-4xl font-extrabold text-orange-400">15000+</h4>
                 <p className="text-xs sm:text-sm text-blue-100 mt-0.5 sm:mt-1 font-semibold">Successful Procedures</p>
                 <p className="text-[11px] sm:text-[12px] text-blue-200/80 mt-0.5">RIRS, HoLEP &amp; PCNL</p>
               </div>
 
-              <div className="p-2 sm:p-3 border-t sm:border-t-0 lg:border-l border-white/15">
+              <div className="p-2 sm:p-3 border-t sm:border-t-0 lg:border-l border-white/15 text-left">
                 <h4 className="text-2xl sm:text-4xl font-extrabold text-orange-400">2</h4>
                 <p className="text-xs sm:text-sm text-blue-100 mt-0.5 sm:mt-1 font-semibold">Specialised Care Centres</p>
                 <p className="text-[11px] sm:text-[12px] text-blue-200/80 mt-0.5">Comprehensive Urology Services</p>
               </div>
 
-              <div className="p-2 sm:p-3 border-t sm:border-t-0 border-l border-white/15">
+              <div className="p-2 sm:p-3 pl-3.5 sm:pl-4 border-t sm:border-t-0 border-l border-white/15 text-left">
                 <h4 className="text-2xl sm:text-4xl font-extrabold text-orange-400">99%</h4>
                 <p className="text-xs sm:text-sm text-blue-100 mt-0.5 sm:mt-1 font-semibold">Patient Satisfaction</p>
                 <p className="text-[11px] sm:text-[12px] text-blue-200/80 mt-0.5">Trusted &amp; Ethical Care</p>
@@ -312,13 +312,13 @@ export default function WhyChooseUs() {
 
             {/* CTA Row inside Bar */}
             <div className="mt-5 pt-4 sm:mt-8 sm:pt-6 border-t border-white/15 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4">
-              <div className="flex items-center gap-3 text-center sm:text-left">
+              <div className="flex items-center gap-3 text-left w-full sm:w-auto">
                 <div className="w-10 h-10 rounded-xl bg-orange-500/20 border border-orange-400/40 flex items-center justify-center shrink-0">
                   <Stethoscope size={20} className="text-orange-300" />
                 </div>
-                <div>
-                  <h4 className="font-bold text-sm sm:text-base">Consult Dr. Vinish Kumar Singh</h4>
-                  <p className="text-[11px] sm:text-xs text-blue-100 mt-1 leading-relaxed">
+                <div className="text-left">
+                  <h4 className="font-bold text-sm sm:text-base text-left">Consult Dr. Vinish Kumar Singh</h4>
+                  <p className="text-[11px] sm:text-xs text-blue-100 mt-1 leading-relaxed text-left">
                     <span className="block sm:inline">Receive expert guidance for kidney stones,</span>{" "}
                     <span className="block sm:inline">prostate disorders, male health concerns,</span>{" "}
                     <span className="block sm:inline">and complex urological conditions in Lucknow.</span>

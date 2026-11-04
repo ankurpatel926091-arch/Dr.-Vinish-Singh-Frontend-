@@ -73,16 +73,16 @@ export default function Qualifications() {
       />
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14 lg:py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-14 lg:py-20">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           
           {/* Left Summary Column */}
           <ScrollReveal variant="slide-right" className="lg:col-span-5 flex flex-col items-start">
-            <span className="text-xs font-bold text-orange-500 uppercase tracking-widest">
+            <span className="text-[11px] sm:text-xs font-bold text-orange-500 uppercase tracking-widest whitespace-nowrap">
               EDUCATION &amp; SURGICAL TRAINING
             </span>
 
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 mt-2 leading-tight">
+            <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 mt-2 leading-tight">
               Academic Excellence &amp; Super-Speciality Credentials
             </h2>
 
@@ -123,7 +123,7 @@ export default function Qualifications() {
                         <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${item.bgIcon}`}>
                           <IconComponent size={24} />
                         </div>
-                        <span className="text-xs font-extrabold text-orange-600 bg-orange-50 px-3 py-1 rounded-full border border-orange-200">
+                        <span className="text-xs font-extrabold text-orange-600 bg-orange-50 px-3 py-1 rounded-full border border-orange-200 whitespace-nowrap">
                           {item.year}
                         </span>
                       </div>
@@ -154,15 +154,15 @@ export default function Qualifications() {
       </div>
 
       {/* CTA Section */}
-      <ScrollReveal variant="fade-up" delay={200} className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        <div className="rounded-3xl bg-gradient-to-r from-[#103F7C] to-blue-900 text-white p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-md">
+      <ScrollReveal variant="fade-up" delay={200} className="max-w-7xl mx-auto px-4 sm:px-6 pt-2 pb-6 sm:py-8">
+        <div className="rounded-3xl bg-gradient-to-r from-[#103F7C] to-blue-900 text-white p-5 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-6 shadow-md text-center sm:text-left">
           <div>
-            <h3 className="text-xl sm:text-2xl font-extrabold">Schedule Your Consultation</h3>
+            <h3 className="text-lg sm:text-2xl font-extrabold">Schedule Your Consultation</h3>
             <p className="text-xs sm:text-sm text-blue-100 mt-1 font-normal">Get expert guidance &amp; evidence-based medical treatment from Dr. Vinish Kumar Singh.</p>
           </div>
           <NavLink
             to="/appointment-request"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-semibold shadow-md transition-transform hover:scale-105 active:scale-95 shrink-0"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-semibold shadow-md transition-transform hover:scale-105 active:scale-95 shrink-0"
           >
             <Calendar size={16} />
             <span>Book Appointment</span>

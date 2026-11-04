@@ -53,15 +53,15 @@ export default function NephrologyService() {
         description="Expert clinical evaluation, kidney function preservation, CKD management, diabetic nephropathy care, and dialysis preparation."
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 lg:py-16">
         <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-start">
           
           {/* Main Content (8 Cols) */}
           <div className="lg:col-span-8 space-y-8">
             
             {/* Overview Card */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-2xs">
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-50 text-[#103F7C] border border-blue-200/60 text-xs font-bold uppercase tracking-wider mb-3">
+            <div className="bg-white rounded-3xl p-5 sm:p-8 border border-slate-200/90 shadow-2xs">
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-50 text-[#103F7C] border border-blue-200/60 text-xs font-bold uppercase tracking-wider mb-3 whitespace-nowrap">
                 <HeartPulse size={14} className="text-orange-500" />
                 <span>Specialty Overview</span>
               </div>
@@ -80,7 +80,7 @@ export default function NephrologyService() {
             </div>
 
             {/* Key Clinical Services Grid */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-2xs">
+            <div className="bg-white rounded-3xl p-5 sm:p-8 border border-slate-200/90 shadow-2xs">
               <h3 className="text-xl font-extrabold text-slate-900 mb-6 flex items-center gap-2">
                 <Activity size={20} className="text-orange-500" />
                 <span>Core Nephrology Services</span>
@@ -107,7 +107,7 @@ export default function NephrologyService() {
             </div>
 
             {/* Integrated Care Banner */}
-            <div className="bg-gradient-to-r from-[#103F7C] to-indigo-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl">
+            <div className="bg-gradient-to-r from-[#103F7C] to-indigo-900 rounded-3xl p-5 sm:p-8 text-white shadow-xl">
               <h3 className="text-xl font-extrabold mb-3">Holistic Uro-Nephrology Synergy</h3>
               <p className="text-xs sm:text-sm text-blue-100 font-normal leading-relaxed">
                 By combining medical nephrology with advanced surgical urology under one roof, we provide seamless care for complex cases involving kidney stones with renal dysfunction, obstructed uropathy, and kidney failure.

@@ -579,7 +579,7 @@ export default function Gallery() {
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-semibold shadow-md transition-transform hover:scale-105 active:scale-95 shrink-0"
           >
             <Calendar size={16} />
-            <span>Book a Consultation</span>
+            <span>Book Consultation</span>
             <ArrowRight size={16} />
           </NavLink>
         </div>

@@ -54,15 +54,15 @@ export default function AndrologyService() {
         description="Confidential, evidence-based diagnostic and surgical care for male infertility, erectile dysfunction, varicocele, and hormonal health."
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 lg:py-16">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           
           {/* Main Content (8 Cols) */}
           <div className="lg:col-span-8 space-y-8">
             
             {/* Overview Card */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-2xs">
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-orange-50 text-orange-600 border border-orange-200/60 text-xs font-bold uppercase tracking-wider mb-3">
+            <div className="bg-white rounded-3xl p-5 sm:p-8 border border-slate-200/90 shadow-2xs">
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-orange-50 text-orange-600 border border-orange-200/60 text-xs font-bold uppercase tracking-wider mb-3 whitespace-nowrap">
                 <Activity size={14} className="text-orange-500" />
                 <span>Specialty Overview</span>
               </div>
@@ -81,7 +81,7 @@ export default function AndrologyService() {
             </div>
 
             {/* Key Treatments Grid */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-2xs">
+            <div className="bg-white rounded-3xl p-5 sm:p-8 border border-slate-200/90 shadow-2xs">
               <h3 className="text-xl font-extrabold text-slate-900 mb-6 flex items-center gap-2">
                 <Heart size={20} className="text-orange-500" />
                 <span>Specialized Andrological Treatments</span>
@@ -108,7 +108,7 @@ export default function AndrologyService() {
             </div>
 
             {/* Confidentiality Commitment Banner */}
-            <div className="bg-gradient-to-r from-orange-50 via-white to-blue-50 rounded-3xl p-6 sm:p-8 border border-orange-100 shadow-sm">
+            <div className="bg-gradient-to-r from-orange-50 via-white to-blue-50 rounded-3xl p-5 sm:p-8 border border-orange-100 shadow-sm">
               <div className="flex items-center gap-3 mb-3">
                 <UserCheck size={24} className="text-orange-600" />
                 <h3 className="text-xl font-extrabold text-slate-900">100% Patient Privacy &amp; Confidentiality</h3>

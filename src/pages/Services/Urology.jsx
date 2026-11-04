@@ -55,15 +55,15 @@ export default function UrologyService() {
         description="Comprehensive diagnostic & stitchless laser surgical care for kidney stones, enlarged prostate (BPH), bladder care, and reconstructive urology."
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 lg:py-16">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           
           {/* Main Content (8 Cols) */}
           <div className="lg:col-span-8 space-y-8">
             
             {/* Overview Card */}
-            <ScrollReveal variant="fade-up" className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-2xs">
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-50 text-[#103F7C] text-xs font-bold uppercase tracking-wider mb-3">
+            <ScrollReveal variant="fade-up" className="bg-white rounded-3xl p-5 sm:p-8 border border-slate-200/90 shadow-2xs">
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blue-50 text-[#103F7C] text-xs font-bold uppercase tracking-wider mb-3 whitespace-nowrap">
                 <Stethoscope size={14} className="text-orange-500" />
                 <span>Specialty Overview</span>
               </div>
@@ -82,7 +82,7 @@ export default function UrologyService() {
             </ScrollReveal>
 
             {/* Key Procedures Grid */}
-            <ScrollReveal variant="fade-up" delay={100} className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-2xs">
+            <ScrollReveal variant="fade-up" delay={100} className="bg-white rounded-3xl p-5 sm:p-8 border border-slate-200/90 shadow-2xs">
               <h3 className="text-xl font-extrabold text-slate-900 mb-6 flex items-center gap-2">
                 <Zap size={20} className="text-orange-500" />
                 <span>Specialized Surgical Procedures</span>
@@ -110,7 +110,7 @@ export default function UrologyService() {
             </ScrollReveal>
 
             {/* Patient Benefits Grid */}
-            <ScrollReveal variant="fade-up" delay={200} className="bg-gradient-to-r from-blue-50 via-white to-orange-50 rounded-3xl p-6 sm:p-8 border border-blue-100 shadow-sm">
+            <ScrollReveal variant="fade-up" delay={200} className="bg-gradient-to-r from-blue-50 via-white to-orange-50 rounded-3xl p-5 sm:p-8 border border-blue-100 shadow-sm">
               <h3 className="text-xl font-extrabold text-slate-900 mb-4">Why Choose Laser Urology Care?</h3>
               <div className="grid card-grid sm:grid-cols-3 gap-4 text-xs">
                 <div className="bg-white/80 p-4 rounded-2xl border border-slate-200/80">

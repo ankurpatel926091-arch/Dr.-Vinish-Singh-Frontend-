@@ -56,12 +56,12 @@ const steps = [
         
         {/* Minimal Header */}
         <ScrollReveal variant="fade-up" className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
-          <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-blue-100/70 text-[#103F7C] text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-3">
+          <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-blue-100/70 text-[#103F7C] text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-3 whitespace-nowrap">
             <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
             <span>PATIENT CARE JOURNEY</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
             Your Path to{" "}
             <span className="bg-gradient-to-r from-[#103F7C] to-blue-600 bg-clip-text text-transparent">
               Better Health
@@ -123,7 +123,7 @@ const steps = [
                     )}
 
                     {/* Description */}
-                    <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed max-w-[220px]">
+                    <p className="text-xs sm:text-sm text-slate-600 font-medium leading-relaxed max-w-none sm:max-w-[220px]">
                       {step.desc}
                     </p>
                   </div>
@@ -137,10 +137,10 @@ const steps = [
         <ScrollReveal variant="fade-up" delay={250} className="flex flex-col items-center justify-center text-center">
           <NavLink
             to="/appointment-request"
-            className="inline-flex items-center gap-2 px-7 py-3 rounded-full bg-[#103F7C] hover:bg-blue-900 text-white font-semibold text-sm shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] group"
+            className="w-full min-[400px]:w-auto inline-flex items-center justify-center gap-2 px-7 py-3 rounded-full bg-[#103F7C] hover:bg-blue-900 text-white font-semibold text-sm shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] group"
           >
             <Calendar size={16} className="text-orange-400" />
-            <span>Book a Consultation</span>
+            <span>Book  Consultation</span>
             <ArrowRight
               size={16}
               className="group-hover:translate-x-1 transition-transform"

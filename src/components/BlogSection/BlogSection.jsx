@@ -79,7 +79,7 @@ export default function BlogSection() {
 
   return (
     <section
-      className="py-12 lg:py-16 bg-slate-50/70 overflow-hidden font-sans border-t border-slate-200/60"
+      className="py-8 sm:py-12 lg:py-16 bg-slate-50/70 overflow-hidden font-sans border-t border-slate-200/60"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -88,7 +88,7 @@ export default function BlogSection() {
         {/* ================= CENTERED SECTION HEADER ================= */}
         <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
           {/* Top Pill Badge */}
-          <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-orange-50 border border-orange-200/80 text-orange-600 text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-3 shadow-2xs">
+          <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-orange-50 border border-orange-200/80 text-orange-600 text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-3 shadow-2xs whitespace-nowrap">
             <BookOpen size={14} className="text-orange-500" />
             <span>UROLOGY INSIGHTS & RESOURCES</span>
           </div>

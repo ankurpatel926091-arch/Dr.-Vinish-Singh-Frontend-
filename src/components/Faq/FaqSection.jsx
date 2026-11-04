@@ -47,7 +47,7 @@ export default function FaqSection() {
   };
 
   return (
-    <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-transparent via-blue-50/30 to-transparent font-sans relative overflow-hidden">
+    <section className="py-8 sm:py-14 lg:py-20 bg-gradient-to-b from-transparent via-blue-50/30 to-transparent font-sans relative overflow-hidden">
       {/* Background Decorative Blur Orbs */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-200/20 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 right-10 w-72 h-72 bg-orange-100/30 rounded-full blur-3xl pointer-events-none" />
@@ -56,7 +56,7 @@ export default function FaqSection() {
 
         {/* Section Header */}
         <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100/80 text-[#103F7C] text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-4 border border-blue-200/50 shadow-xs">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100/80 text-[#103F7C] text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-4 border border-blue-200/50 shadow-xs whitespace-nowrap">
             <Sparkles size={14} className="text-orange-500 animate-pulse" />
             <span>PATIENT INFORMATION</span>
           </div>

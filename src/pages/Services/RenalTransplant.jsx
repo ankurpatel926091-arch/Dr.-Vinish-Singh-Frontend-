@@ -60,15 +60,15 @@ export default function RenalTransplantService() {
         description="Comprehensive donor & recipient pre-transplant workup, immunological compatibility assessment, surgical planning, and long-term graft protection."
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 lg:py-16">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           
           {/* Main Content (8 Cols) */}
           <div className="lg:col-span-8 space-y-8">
             
             {/* Overview Card */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-2xs">
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/60 text-xs font-bold uppercase tracking-wider mb-3">
+            <div className="bg-white rounded-3xl p-5 sm:p-8 border border-slate-200/90 shadow-2xs">
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/60 text-xs font-bold uppercase tracking-wider mb-3 whitespace-nowrap">
                 <RefreshCw size={14} className="text-emerald-600" />
                 <span>Specialty Overview</span>
               </div>
@@ -87,7 +87,7 @@ export default function RenalTransplantService() {
             </div>
 
             {/* Transplant Protocol Phases Grid */}
-            <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-2xs">
+            <div className="bg-white rounded-3xl p-5 sm:p-8 border border-slate-200/90 shadow-2xs">
               <h3 className="text-xl font-extrabold text-slate-900 mb-6 flex items-center gap-2">
                 <ShieldCheck size={20} className="text-emerald-600" />
                 <span>Comprehensive Transplant Care Pathway</span>
@@ -118,7 +118,7 @@ export default function RenalTransplantService() {
             </div>
 
             {/* Graft Protection Banner */}
-            <div className="bg-gradient-to-r from-blue-50 via-white to-orange-50 rounded-3xl p-6 sm:p-8 border border-blue-100 shadow-sm">
+            <div className="bg-gradient-to-r from-blue-50 via-white to-orange-50 rounded-3xl p-5 sm:p-8 border border-blue-100 shadow-sm">
               <div className="flex items-center gap-3 mb-3">
                 <Heart size={24} className="text-[#103F7C]" />
                 <h3 className="text-xl font-extrabold text-slate-900">Dedicated Long-term Graft Survival</h3>

@@ -75,33 +75,34 @@ export default function PrivacyPolicy() {
           <div className="lg:col-span-2 space-y-8">
             
             {/* Top Commitment Banner */}
-            <ScrollReveal variant="fade-up" className="bg-gradient-to-r from-[#103F7C] to-blue-900 rounded-3xl p-6 sm:p-8 text-white shadow-md border border-blue-800/60 relative overflow-hidden">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-orange-500/20 text-orange-400 border border-orange-500/30 flex items-center justify-center shrink-0">
-                  <ShieldCheck size={26} />
-                </div>
-                <div>
-                  <div className="flex flex-wrap items-center gap-2 mb-2">
-                    <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-orange-500/20 text-orange-300 text-[10px] font-black uppercase tracking-wider">
-                      <Sparkles size={12} className="text-orange-400" />
-                      <span>Strict Data Confidentiality</span>
-                    </div>
-                    <span className="text-[11px] font-semibold text-blue-200/90 bg-white/10 px-2.5 py-0.5 rounded-full">
-                      Last Updated: 25 August 2026
-                    </span>
+            <ScrollReveal variant="fade-up" className="bg-gradient-to-r from-[#103F7C] to-blue-900 rounded-3xl p-5 sm:p-8 text-white shadow-md border border-blue-800/60 relative overflow-hidden">
+              <div className="w-full text-left">
+                {/* Header row: Icon & Badges */}
+                <div className="flex flex-wrap items-center gap-2 mb-3">
+                  <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-orange-500/20 text-orange-400 border border-orange-500/30 flex items-center justify-center shrink-0">
+                    <ShieldCheck size={20} className="sm:w-[24px] sm:h-[24px]" />
                   </div>
-                  <h2 className="text-xl sm:text-2xl font-extrabold text-white leading-tight">
-                    Your Privacy Matters To Us
-                  </h2>
-                  <p className="text-xs sm:text-sm text-blue-100 font-normal mt-2 leading-relaxed">
-                    <ClinicNameLinks>
-                      This Privacy Policy explains how Dr. Vinish Kumar Singh, Rudraksh IVF &amp; Urology Centre, and Dr. Shilpi Maternity &amp; Urology Centre (“we”, “our”, or “us”) collect, use, store, and protect information submitted through this website.
-                    </ClinicNameLinks>
-                  </p>
-                  <p className="text-xs text-orange-200 font-medium mt-3 pt-3 border-t border-blue-700/50">
-                    By accessing this website or submitting your information, you acknowledge the practices described in this Privacy Policy.
-                  </p>
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-500/20 text-orange-300 text-[10px] sm:text-xs font-black uppercase tracking-wider whitespace-nowrap">
+                    <Sparkles size={12} className="text-orange-400 shrink-0" />
+                    <span>Strict Data Confidentiality</span>
+                  </div>
+                  <span className="text-[10px] sm:text-[11px] font-semibold text-blue-200/90 bg-white/10 px-2.5 py-0.5 rounded-full whitespace-nowrap">
+                    Last Updated: 25 August 2026
+                  </span>
                 </div>
+
+                {/* Left Aligned Content Starting from Left Edge */}
+                <h2 className="text-xl sm:text-2xl font-extrabold text-white leading-tight">
+                  Your Privacy Matters To Us
+                </h2>
+                <p className="text-xs sm:text-sm text-blue-100 font-normal mt-2 leading-relaxed">
+                  <ClinicNameLinks>
+                    This Privacy Policy explains how Dr. Vinish Kumar Singh, Rudraksh IVF &amp; Urology Centre, and Dr. Shilpi Maternity &amp; Urology Centre (“we”, “our”, or “us”) collect, use, store, and protect information submitted through this website.
+                  </ClinicNameLinks>
+                </p>
+                <p className="text-xs text-orange-200 font-medium mt-3 pt-3 border-t border-blue-700/50">
+                  By accessing this website or submitting your information, you acknowledge the practices described in this Privacy Policy.
+                </p>
               </div>
             </ScrollReveal>
 
