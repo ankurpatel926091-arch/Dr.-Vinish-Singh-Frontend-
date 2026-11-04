@@ -58,9 +58,12 @@ const socialAccounts = [
   },
 ];
 
+import ClinicLoader from "../components/LoadingFallback/ClinicLoader";
 import { fetchPublicClinics } from "../api/clinicApi";
+import { useToast } from "../context/ToastContext";
 
 export default function Contact() {
+  const { showToast } = useToast();
   const [hospitalLocations, setHospitalLocations] = useState([]);
   const [clinicsLoading, setClinicsLoading] = useState(true);
   const [clinicsError, setClinicsError] = useState("");
@@ -212,12 +215,24 @@ export default function Contact() {
       }
 
       if (!savedToBackend) {
-        setErrorMessage("We could not submit your message right now. Please try again or contact the clinic directly.");
+        const err = "We could not submit your message right now. Please try again or contact the clinic directly.";
+        setErrorMessage(err);
+        showToast({
+          type: "error",
+          title: "Submission Failed",
+          message: err,
+          duration: 5000,
+        });
         return;
       }
 
       setSubmitted(true);
       setLastSubmittedPhone(formData.phone);
+      showToast({
+        type: "success",
+        title: "Message Sent Successfully!",
+        duration: 4000,
+      });
       setFormData({
         name: "",
         phone: "",
@@ -225,9 +240,14 @@ export default function Contact() {
         message: "",
       });
     } catch (err) {
-      setErrorMessage(
-        "Network error occurred. Please check your connection and try again."
-      );
+      const errText = "Network error occurred. Please check your connection and try again.";
+      setErrorMessage(errText);
+      showToast({
+        type: "error",
+        title: "Network Error",
+        message: errText,
+        duration: 5000,
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -250,7 +270,7 @@ export default function Contact() {
           {/* ================= Hospital Maps Cards (6 Cols) ================= */}
           <div className="lg:col-span-6 lg:col-start-1 lg:row-start-1 flex flex-col gap-4">
             {clinicsLoading ? (
-              <p className="text-sm text-slate-500">Loading clinic details...</p>
+              <ClinicLoader />
             ) : clinicsError ? (
               <p role="alert" className="text-sm text-red-700">{clinicsError}</p>
             ) : hospitalLocations.length === 0 ? (

@@ -622,7 +622,7 @@ function Navbar() {
                           to={item.href}
                           onClick={closeAllMenus}
                           className={({ isActive }) =>
-                            `flex items-center justify-between px-4 py-3 text-[15px] font-semibold transition ${
+                            `flex items-center px-4 py-3 text-[15px] font-semibold transition ${
                               isActive
                                 ? "text-[#103F7C] bg-blue-50/60"
                                 : "text-slate-800 hover:bg-slate-50"
@@ -630,7 +630,6 @@ function Navbar() {
                           }
                         >
                           <span>{item.label}</span>
-                          <ChevronRight size={16} className="text-slate-400" />
                         </NavLink>
                       ) : (
                         /* Dropdown Accordion Header */

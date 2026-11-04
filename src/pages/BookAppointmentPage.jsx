@@ -18,6 +18,8 @@ import {
   ChevronDown,
 } from "lucide-react";
 import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
+import ClinicLoader from "../components/LoadingFallback/ClinicLoader";
+import { useToast } from "../context/ToastContext";
 
 import { fetchPublicClinics } from "../api/clinicApi";
 
@@ -135,6 +137,7 @@ export default function BookAppointmentPage() {
     } catch (err) {}
   };
 
+  const { showToast } = useToast();
   const [clinicsList, setClinicsList] = useState([]);
   const [clinicsLoading, setClinicsLoading] = useState(true);
   const [clinicsError, setClinicsError] = useState("");
@@ -622,7 +625,14 @@ export default function BookAppointmentPage() {
       }
 
       if (!savedToBackend) {
-        setErrorMessage("Server is unreachable right now. Please check your connection and try again later.");
+        const err = "Server is unreachable right now. Please check your connection and try again later.";
+        setErrorMessage(err);
+        showToast({
+          type: "error",
+          title: "Submission Failed",
+          message: err,
+          duration: 5000,
+        });
         return;
       }
 
@@ -630,6 +640,11 @@ export default function BookAppointmentPage() {
       setLastSubmittedPhone(formData.phone);
       setLastSubmittedEmail(submittedUserEmail);
       setEmailSentStatus(isEmailDispatched || !!submittedUserEmail);
+      showToast({
+        type: "success",
+        title: "Appointment Request Submitted Successfully!",
+        duration: 4000,
+      });
       setFormData({
         name: "",
         age: "",
@@ -643,9 +658,14 @@ export default function BookAppointmentPage() {
         message: "",
       });
     } catch (err) {
-      setErrorMessage(
-        "Network error occurred. Please check your connection and try again."
-      );
+      const errText = "Network error occurred. Please check your connection and try again.";
+      setErrorMessage(errText);
+      showToast({
+        type: "error",
+        title: "Network Error",
+        message: errText,
+        duration: 5000,
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -653,10 +673,14 @@ export default function BookAppointmentPage() {
 
   if (clinicsLoading || !activeClinic) {
     return (
-      <div className="min-h-[60vh] flex items-center justify-center px-4 text-center">
-        <p role={clinicsError ? "alert" : undefined} className={clinicsError ? "text-sm text-red-700" : "text-sm text-slate-500"}>
-          {clinicsLoading ? "Loading clinic details..." : clinicsError || "No clinic locations are currently available."}
-        </p>
+      <div className="min-h-[60vh] flex items-center justify-center px-4 max-w-lg mx-auto">
+        {clinicsLoading ? (
+          <ClinicLoader />
+        ) : (
+          <p role={clinicsError ? "alert" : undefined} className={clinicsError ? "text-sm text-red-700" : "text-sm text-slate-500"}>
+            {clinicsError || "No clinic locations are currently available."}
+          </p>
+        )}
       </div>
     );
   }

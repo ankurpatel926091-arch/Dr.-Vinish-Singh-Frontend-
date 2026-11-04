@@ -117,7 +117,7 @@ export default function WhyChooseUs() {
   const [activeTab, setActiveTab] = useState("features");
 
   return (
-    <section className="bg-slate-50/80 py-12 lg:py-16 font-sans relative overflow-hidden">
+    <section className="bg-slate-50/80 py-12 lg:py-16 font-sans relative overflow-hidden border-t border-slate-200">
       {/* Decorative Glow Elements */}
       <div className="absolute left-0 top-1/3 w-80 h-80 bg-blue-300/20 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute right-0 bottom-1/3 w-80 h-80 bg-orange-300/20 rounded-full blur-3xl pointer-events-none" />
@@ -144,18 +144,18 @@ export default function WhyChooseUs() {
           </p>
 
           {/* Sub Navigation Switcher Tabs */}
-          <div className="flex items-center justify-center gap-2 sm:gap-3 mt-6 max-w-md mx-auto px-1">
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mt-6 max-w-md sm:max-w-2xl mx-auto px-1">
             <button
               type="button"
               onClick={() => setActiveTab("features")}
-              className={`flex-1 sm:flex-initial min-h-[42px] px-3 sm:px-5 py-2 sm:py-2.5 rounded-full text-[11px] min-[380px]:text-xs sm:text-sm font-extrabold transition-all duration-200 text-center flex items-center justify-center gap-1.5 ${
+              className={`flex-1 sm:flex-initial min-h-[42px] px-3 sm:px-6 py-2 sm:py-2.5 rounded-full text-[11px] min-[380px]:text-xs sm:text-sm font-extrabold transition-all duration-200 text-center flex items-center justify-center gap-1.5 whitespace-nowrap ${
                 activeTab === "features"
                   ? "bg-[#103F7C] text-white shadow-md shadow-blue-900/20"
                   : "bg-white text-slate-600 hover:text-[#103F7C] border border-slate-200"
               }`}
             >
               <span>⭐</span>
-              <span>
+              <span className="whitespace-nowrap">
                 <span className="sm:hidden">Clinical Advantages</span>
                 <span className="hidden sm:inline">Key Clinical Advantages</span>
               </span>
@@ -164,14 +164,14 @@ export default function WhyChooseUs() {
             <button
               type="button"
               onClick={() => setActiveTab("comparison")}
-              className={`flex-1 sm:flex-initial min-h-[42px] px-3 sm:px-5 py-2 sm:py-2.5 rounded-full text-[11px] min-[380px]:text-xs sm:text-sm font-extrabold transition-all duration-200 text-center flex items-center justify-center gap-1.5 ${
+              className={`flex-1 sm:flex-initial min-h-[42px] px-3 sm:px-6 py-2 sm:py-2.5 rounded-full text-[11px] min-[380px]:text-xs sm:text-sm font-extrabold transition-all duration-200 text-center flex items-center justify-center gap-1.5 whitespace-nowrap ${
                 activeTab === "comparison"
                   ? "bg-[#103F7C] text-white shadow-md shadow-blue-900/20"
                   : "bg-white text-slate-600 hover:text-[#103F7C] border border-slate-200"
               }`}
             >
               <span>⚡</span>
-              <span>
+              <span className="whitespace-nowrap">
                 <span className="sm:hidden">Laser vs Conventional</span>
                 <span className="hidden sm:inline">Laser vs. Conventional Surgery</span>
               </span>

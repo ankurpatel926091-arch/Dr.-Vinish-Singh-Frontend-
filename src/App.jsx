@@ -6,21 +6,24 @@ import FloatingActions from './components/FloatingActions/FloatingActions'
 import ScrollToTop from './utils/ScrollToTop'
 import ScrollProgressBar from './components/ScrollProgressBar/ScrollProgressBar'
 import SmoothScroll from './components/SmoothScroll/SmoothScroll'
+import { ToastProvider } from './context/ToastContext'
 
 const App = () => {
   return (
-    <SmoothScroll>
-      <div className="min-h-screen bg-gradient-to-br from-slate-50/90 via-blue-50/50 to-sky-50/40 text-slate-800 selection:bg-blue-600 selection:text-white font-sans antialiased overflow-x-clip w-full max-w-full">
-        <ScrollProgressBar />
-        <ScrollToTop />
-        <Navbar />
-        <main className="relative pt-[102px] sm:pt-[110px] lg:pt-[118px] overflow-x-clip w-full max-w-full">
-          <AppRoutes />
-        </main> 
-        <FloatingActions />
-        <Footer />
-      </div>
-    </SmoothScroll>
+    <ToastProvider>
+      <SmoothScroll>
+        <div className="min-h-screen bg-gradient-to-br from-slate-50/90 via-blue-50/50 to-sky-50/40 text-slate-800 selection:bg-blue-600 selection:text-white font-sans antialiased overflow-x-clip w-full max-w-full">
+          <ScrollProgressBar />
+          <ScrollToTop />
+          <Navbar />
+          <main className="relative pt-[102px] sm:pt-[110px] lg:pt-[118px] overflow-x-clip w-full max-w-full">
+            <AppRoutes />
+          </main> 
+          <FloatingActions />
+          <Footer />
+        </div>
+      </SmoothScroll>
+    </ToastProvider>
   )
 }
 

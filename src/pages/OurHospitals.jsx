@@ -45,6 +45,7 @@ import otSuiteImg from "../assets/images/OT.webp";
 import vinishImg from "../assets/images/img12.webp";
 
 import { fetchPublicClinics } from "../api/clinicApi";
+import ClinicLoader from "../components/LoadingFallback/ClinicLoader";
 import ClinicNameLinks from "../components/ClinicNameLinks";
 
 const facilityGallery = [
@@ -315,7 +316,7 @@ export default function OurHospitals() {
           }
         >
           {clinicsLoading ? (
-            <p className="col-span-full text-center text-sm text-slate-500">Loading clinic details...</p>
+            <ClinicLoader />
           ) : clinicsError ? (
             <p role="alert" className="col-span-full text-center text-sm text-red-700">{clinicsError}</p>
           ) : filteredHospitals.length === 0 ? (

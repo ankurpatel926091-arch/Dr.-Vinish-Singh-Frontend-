@@ -16,9 +16,11 @@ import {
   ShieldCheck,
   Award,
   Lock,
+  Loader2,
 } from "lucide-react";
 import PageHero from "../PageHero";
 import ScrollReveal from "../ScrollReveal/ScrollReveal";
+import ClinicLoader from "../LoadingFallback/ClinicLoader";
 import { fetchPublicClinics } from "../../api/clinicApi";
 
 const getPhoneNumbers = (phone = "") =>
@@ -32,6 +34,7 @@ export default function BookAppointment({ isHomePage = false }) {
   const [hospitals, setHospitals] = useState({ morning: null, evening: null });
   const [clinicsLoading, setClinicsLoading] = useState(true);
   const [clinicsError, setClinicsError] = useState("");
+  const [navigatingHospitalId, setNavigatingHospitalId] = useState(null);
 
   const loadClinics = useCallback(async () => {
     setClinicsLoading(true);
@@ -61,7 +64,9 @@ export default function BookAppointment({ isHomePage = false }) {
   }, [loadClinics]);
 
   const handleBookClick = (clinic) => {
-    navigate(`/book-appointment?hospital=${encodeURIComponent(clinic._id || clinic.id)}`);
+    const clinicId = clinic._id || clinic.id;
+    setNavigatingHospitalId(clinicId);
+    navigate(`/book-appointment?hospital=${encodeURIComponent(clinicId)}`);
   };
 
   const morningPhoneNumbers = getPhoneNumbers(hospitals.morning?.phone);
@@ -97,7 +102,7 @@ export default function BookAppointment({ isHomePage = false }) {
 
         {/* ================= 2 HOSPITAL CARDS GRID ================= */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-          {clinicsLoading && <p className="col-span-full text-center text-sm text-slate-500">Loading clinic details...</p>}
+          {clinicsLoading && <ClinicLoader />}
           {clinicsError && <p role="alert" className="col-span-full text-center text-sm text-red-700">{clinicsError}</p>}
           {!clinicsLoading && !clinicsError && !hospitals.morning && !hospitals.evening && (
             <p className="col-span-full text-center text-sm text-slate-500">No clinic locations are currently available.</p>
@@ -230,11 +235,21 @@ export default function BookAppointment({ isHomePage = false }) {
                 {/* Bottom CTA Button */}
                 <button
                   type="button"
+                  disabled={navigatingHospitalId !== null}
                   onClick={() => handleBookClick(hospitals.morning)}
-                  className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-sm sm:text-base shadow-md shadow-orange-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                  className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-sm sm:text-base shadow-md shadow-orange-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98 disabled:opacity-90 disabled:cursor-wait"
                 >
-                  <Calendar size={18} />
-                  <span>Book Appointment</span>
+                  {navigatingHospitalId === (hospitals.morning._id || hospitals.morning.id) ? (
+                    <>
+                      <Loader2 size={18} className="animate-spin text-white" />
+                      <span>Loading...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Calendar size={18} />
+                      <span>Book Appointment</span>
+                    </>
+                  )}
                 </button>
               </div>
             </div>
@@ -367,11 +382,21 @@ export default function BookAppointment({ isHomePage = false }) {
                 {/* Bottom CTA Button */}
                 <button
                   type="button"
+                  disabled={navigatingHospitalId !== null}
                   onClick={() => handleBookClick(hospitals.evening)}
-                  className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-sm sm:text-base shadow-md shadow-orange-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                  className="w-full py-3.5 px-6 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-extrabold text-sm sm:text-base shadow-md shadow-orange-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98 disabled:opacity-90 disabled:cursor-wait"
                 >
-                  <Calendar size={18} />
-                  <span>Book Appointment</span>
+                  {navigatingHospitalId === (hospitals.evening._id || hospitals.evening.id) ? (
+                    <>
+                      <Loader2 size={18} className="animate-spin text-white" />
+                      <span>Loading...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Calendar size={18} />
+                      <span>Book Appointment</span>
+                    </>
+                  )}
                 </button>
               </div>
             </div>

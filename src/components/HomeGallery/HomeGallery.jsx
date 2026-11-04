@@ -135,7 +135,7 @@ export default function HomeGallery() {
         
         {/* Section Header */}
         <ScrollReveal variant="fade-up" className="text-center max-w-3xl mx-auto mb-6 sm:mb-8">
-          <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-blue-100/70 text-[#103F7C] text-xs sm:text-sm font-bold uppercase tracking-wider mb-3 whitespace-nowrap">
+          <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-blue-100/80 text-[#103F7C] text-xs sm:text-sm font-extrabold uppercase tracking-wider mb-3 whitespace-nowrap">
             <Sparkles size={14} className="text-orange-500" />
             <span>OUR GALLERY</span>
           </div>
