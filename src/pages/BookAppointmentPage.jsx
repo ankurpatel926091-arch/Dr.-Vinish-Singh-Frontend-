@@ -22,6 +22,7 @@ import ClinicLoader from "../components/LoadingFallback/ClinicLoader";
 import { useToast } from "../context/ToastContext";
 
 import { fetchPublicClinics } from "../api/clinicApi";
+import { fetchConfirmedSlots, bookOnlineAppointment } from "../api/appointmentApi";
 
 const hospitalServicesMap = {
   morning: [
@@ -219,54 +220,15 @@ export default function BookAppointmentPage() {
   const loadConfirmedAppointments = useCallback(async () => {
     setSlotAvailabilityLoading(true);
     setSlotAvailabilityError("");
-    const getApiUrls = () => {
-      const urls = [];
-      const hostname = typeof window !== "undefined" ? window.location.hostname : "";
-      if (hostname === "localhost" || hostname === "127.0.0.1") {
-        urls.push(`http://${hostname}:5000/api`);
-      }
-      if (import.meta.env.VITE_API_BASE_URL) {
-        urls.push(import.meta.env.VITE_API_BASE_URL);
-      }
-      if (!urls.length) {
-        urls.push("https://api.urosurgeondrvinish.com/api");
-      }
-      return Array.from(new Set(urls));
-    };
-
-    const apiUrls = getApiUrls();
-    const errors = [];
-
-    for (const baseUrl of apiUrls) {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 3000);
-      try {
-        const res = await fetch(`${baseUrl}/appointments/public/confirmed-slots`, {
-          signal: controller.signal,
-        });
-        if (res.ok) {
-          const json = await res.json();
-          if (json.success && Array.isArray(json.data)) {
-            setConfirmedAppointments(json.data);
-            setSlotAvailabilityError("");
-            setSlotAvailabilityLoading(false);
-            return;
-          }
-          errors.push(`${baseUrl} returned an invalid confirmed-slots response`);
-        } else {
-          errors.push(`${baseUrl} returned ${res.status}`);
-        }
-      } catch (error) {
-        errors.push(`${baseUrl}: ${error instanceof Error ? error.message : String(error)}`);
-      } finally {
-        clearTimeout(timeoutId);
-      }
-    }
-
-    setConfirmedAppointments([]);
-    setSlotAvailabilityLoading(false);
-    throw new Error(`Unable to load appointment availability. ${errors.join("; ")}`);
-  }, []);
+    try {
+      const slots = await fetchConfirmedSlots();
+      setConfirmedAppointments(slots);
+      setSlotAvailabilityLoading(false);
+    } catch (error) {
+      setConfirmedAppointments([]);
+      setSlotAvailabilityLoading(false);
+      throw error;
+    }  }, []);
 
   useEffect(() => {
     loadConfirmedAppointments().catch((error) => {
@@ -590,47 +552,29 @@ export default function BookAppointmentPage() {
       const formattedAptDate = formatDateFormatted(formData.preferredDate);
       const submittedUserEmail = formData.email ? formData.email.trim() : "";
 
-      for (const baseUrl of apiUrls) {
-        try {
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 15000);
-
-          const res = await fetch(`${baseUrl}/appointments`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            signal: controller.signal,
-            body: JSON.stringify({
-              name: formData.name.trim(),
-              age: formData.age === "" ? null : Number(formData.age),
-              phone: formData.phone.trim(),
-              email: submittedUserEmail,
-              clinic: formData.clinic,
-              problem: formData.service || "General Urology Consultation",
-              date: formattedAptDate,
-              time: formData.preferredTime || "10:00 AM",
-              consultationType: formData.consultationType || "First Visit",
-              message: formData.message ? formData.message.trim() : "",
-            }),
-          });
-          clearTimeout(timeoutId);
-
-          if (res.ok) {
-            savedToBackend = true;
-            isEmailDispatched = true;
-            break;
-          }
-        } catch (err) {}
-      }
-
-      if (!savedToBackend) {
-        const err = "Server is unreachable right now. Please check your connection and try again later.";
-        setErrorMessage(err);
+      try {
+        await bookOnlineAppointment({
+          name: formData.name.trim(),
+          age: formData.age === "" ? null : Number(formData.age),
+          phone: formData.phone.trim(),
+          email: submittedUserEmail,
+          clinic: formData.clinic,
+          problem: formData.service || "General Urology Consultation",
+          date: formattedAptDate,
+          time: formData.preferredTime || "10:00 AM",
+          consultationType: formData.consultationType || "First Visit",
+          source: "Online",
+          message: formData.message ? formData.message.trim() : "",
+        });
+        savedToBackend = true;
+        isEmailDispatched = true;
+      } catch (err) {
+        const errMsg = err.message || "Server is unreachable right now. Please check your connection and try again later.";
+        setErrorMessage(errMsg);
         showToast({
           type: "error",
           title: "Submission Failed",
-          message: err,
+          message: errMsg,
           duration: 5000,
         });
         return;

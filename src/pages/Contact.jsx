@@ -19,6 +19,7 @@ import { FaXTwitter } from "react-icons/fa6";
 import PageHero from "../components/PageHero";
 import ScrollReveal from "../components/ScrollReveal/ScrollReveal";
 import CustomSelect from "../components/CustomSelect";
+import { submitContactEnquiry } from "../api/contactApi";
 
 const socialAccounts = [
   {
@@ -174,57 +175,7 @@ export default function Contact() {
     setFormErrors({});
 
     try {
-      const getApiUrls = () => {
-        const urls = [];
-        if (import.meta.env.VITE_API_BASE_URL) {
-          urls.push(import.meta.env.VITE_API_BASE_URL);
-        }
-        if (typeof window !== "undefined" && (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")) {
-          urls.push("http://localhost:5000/api");
-        }
-        if (!urls.length) {
-          urls.push("https://api.urosurgeondrvinish.com/api");
-        }
-        return urls;
-      };
-
-      const apiUrls = Array.from(new Set(getApiUrls()));
-      let savedToBackend = false;
-
-      for (const baseUrl of apiUrls) {
-        try {
-          const res = await fetch(`${baseUrl}/enquiries`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              name: formData.name,
-              phone: formData.phone,
-              service: formData.service || "General Inquiry",
-              subject: formData.service || "General Inquiry",
-              message: formData.message || "",
-            }),
-          });
-
-          if (res.ok) {
-            savedToBackend = true;
-            break;
-          }
-        } catch (err) {}
-      }
-
-      if (!savedToBackend) {
-        const err = "We could not submit your message right now. Please try again or contact the clinic directly.";
-        setErrorMessage(err);
-        showToast({
-          type: "error",
-          title: "Submission Failed",
-          message: err,
-          duration: 5000,
-        });
-        return;
-      }
+      await submitContactEnquiry(formData);
 
       setSubmitted(true);
       setLastSubmittedPhone(formData.phone);

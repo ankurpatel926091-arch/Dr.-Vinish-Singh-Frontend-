@@ -56,10 +56,8 @@ export default function BookAppointment({ isHomePage = false }) {
   useEffect(() => {
     loadClinics();
     window.addEventListener('storage', loadClinics);
-    const interval = setInterval(loadClinics, 30000);
     return () => {
       window.removeEventListener('storage', loadClinics);
-      clearInterval(interval);
     };
   }, [loadClinics]);
 
@@ -113,21 +111,26 @@ export default function BookAppointment({ isHomePage = false }) {
             <div className="bg-white rounded-3xl border border-slate-200/90 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between h-full group">
               {/* Image Box */}
               <div className="relative h-52 sm:h-60 overflow-hidden bg-slate-100">
-                {/* Top-Left Badge */}
-                <div className="absolute top-3 left-3 z-10 px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-amber-700 text-[10px] sm:text-[11px] font-extrabold flex items-center gap-1.5 shadow-sm uppercase tracking-wider border border-amber-200/60">
-                  <Sun size={13} className="text-amber-500 fill-amber-400" />
-                  <span>{hospitals.morning.badgeLabel || hospitals.morning.tag}</span>
-                </div>
+                {/* Top Overlay Badges */}
+                <div className="absolute top-2.5 sm:top-3 left-2.5 right-2.5 sm:left-3 sm:right-3 z-10 flex items-center justify-between gap-2 pointer-events-none">
+                  {/* Top-Left Badge */}
+                  <div className="pointer-events-auto px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-white/95 backdrop-blur-md text-amber-700 text-[10px] sm:text-[11px] font-extrabold flex items-center gap-1.5 shadow-sm uppercase tracking-wider border border-amber-200/60 min-w-0 max-w-[calc(100%-85px)] sm:max-w-none">
+                    <Sun size={13} className="text-amber-500 fill-amber-400 shrink-0" />
+                    <span className="truncate">{hospitals.morning.badgeLabel || hospitals.morning.tag}</span>
+                  </div>
 
-                {/* Top-Right Full Photo Button */}
-                {hospitals.morning.image && <button
-                  type="button"
-                  onClick={() => setModalImage(hospitals.morning.image)}
-                  className="absolute top-3 right-3 z-10 px-3 py-1.5 rounded-full bg-white/90 hover:bg-white text-slate-800 text-[11px] font-bold flex items-center gap-1.5 shadow-sm transition-all cursor-pointer border border-slate-200"
-                >
-                  <Maximize2 size={12} />
-                  <span>Full Photo</span>
-                </button>}
+                  {/* Top-Right Full Photo Button */}
+                  {hospitals.morning.image && (
+                    <button
+                      type="button"
+                      onClick={() => setModalImage(hospitals.morning.image)}
+                      className="pointer-events-auto px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-white/95 hover:bg-white text-slate-800 text-[10px] sm:text-[11px] font-bold flex items-center gap-1.5 shadow-sm transition-all cursor-pointer border border-slate-200 shrink-0 whitespace-nowrap"
+                    >
+                      <Maximize2 size={12} className="shrink-0" />
+                      <span>Full Photo</span>
+                    </button>
+                  )}
+                </div>
 
                 {hospitals.morning.image && <img
                   src={hospitals.morning.image}
@@ -260,21 +263,26 @@ export default function BookAppointment({ isHomePage = false }) {
             <div className="bg-white rounded-3xl border border-slate-200/90 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between h-full group">
               {/* Image Box */}
               <div className="relative h-52 sm:h-60 overflow-hidden bg-slate-100">
-                {/* Top-Left Badge */}
-                <div className="absolute top-3 left-3 z-10 px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-blue-800 text-[10px] sm:text-[11px] font-extrabold flex items-center gap-1.5 shadow-sm uppercase tracking-wider border border-blue-200/60">
-                  <Moon size={13} className="text-blue-600 fill-blue-500" />
-                  <span>{hospitals.evening.badgeLabel || hospitals.evening.tag}</span>
-                </div>
+                {/* Top Overlay Badges */}
+                <div className="absolute top-2.5 sm:top-3 left-2.5 right-2.5 sm:left-3 sm:right-3 z-10 flex items-center justify-between gap-2 pointer-events-none">
+                  {/* Top-Left Badge */}
+                  <div className="pointer-events-auto px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-white/95 backdrop-blur-md text-blue-800 text-[10px] sm:text-[11px] font-extrabold flex items-center gap-1.5 shadow-sm uppercase tracking-wider border border-blue-200/60 min-w-0 max-w-[calc(100%-85px)] sm:max-w-none">
+                    <Moon size={13} className="text-blue-600 fill-blue-500 shrink-0" />
+                    <span className="truncate">{hospitals.evening.badgeLabel || hospitals.evening.tag}</span>
+                  </div>
 
-                {/* Top-Right Full Photo Button */}
-                {hospitals.evening.image && <button
-                  type="button"
-                  onClick={() => setModalImage(hospitals.evening.image)}
-                  className="absolute top-3 right-3 z-10 px-3 py-1.5 rounded-full bg-white/90 hover:bg-white text-slate-800 text-[11px] font-bold flex items-center gap-1.5 shadow-sm transition-all cursor-pointer border border-slate-200"
-                >
-                  <Maximize2 size={12} />
-                  <span>Full Photo</span>
-                </button>}
+                  {/* Top-Right Full Photo Button */}
+                  {hospitals.evening.image && (
+                    <button
+                      type="button"
+                      onClick={() => setModalImage(hospitals.evening.image)}
+                      className="pointer-events-auto px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-white/95 hover:bg-white text-slate-800 text-[10px] sm:text-[11px] font-bold flex items-center gap-1.5 shadow-sm transition-all cursor-pointer border border-slate-200 shrink-0 whitespace-nowrap"
+                    >
+                      <Maximize2 size={12} className="shrink-0" />
+                      <span>Full Photo</span>
+                    </button>
+                  )}
+                </div>
 
                 {hospitals.evening.image && <img
                   src={hospitals.evening.image}
