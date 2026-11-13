@@ -147,6 +147,7 @@ export default function BookAppointmentPage() {
   const [formData, setFormData] = useState({
     name: "",
     age: "",
+    gender: "Male",
     phone: "",
     email: "",
     clinic: "",
@@ -556,6 +557,7 @@ export default function BookAppointmentPage() {
         await bookOnlineAppointment({
           name: formData.name.trim(),
           age: formData.age === "" ? null : Number(formData.age),
+          gender: formData.gender || "Male",
           phone: formData.phone.trim(),
           email: submittedUserEmail,
           clinic: formData.clinic,
@@ -1089,7 +1091,7 @@ export default function BookAppointmentPage() {
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5">
                         <div>
                           <label className="block text-xs font-extrabold uppercase tracking-wider text-[#0f2a4a] mb-2">
                             Your Name *
@@ -1142,6 +1144,22 @@ export default function BookAppointmentPage() {
                               <span>{formErrors.age}</span>
                             </p>
                           )}
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-extrabold uppercase tracking-wider text-[#0f2a4a] mb-2">
+                            Gender *
+                          </label>
+                          <select
+                            name="gender"
+                            value={formData.gender}
+                            onChange={handleInputChange}
+                            className="w-full px-4 py-3.5 rounded-2xl border text-base sm:text-sm font-semibold text-[#0f2a4a] focus:outline-none transition-all border-slate-200 bg-slate-50/50 focus:bg-white focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500 cursor-pointer"
+                          >
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                          </select>
                         </div>
 
                         <div>
